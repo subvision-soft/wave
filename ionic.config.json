@@ -1,0 +1,8 @@
+{
+  "name": "Sub'IA",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular",
+  "id": "d4c51368"
+}
