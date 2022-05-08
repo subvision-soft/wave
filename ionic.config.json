@@ -1,8 +1,7 @@
 {
-  "name": "Sub'IA",
+  "name": "subia",
   "integrations": {
     "capacitor": {}
   },
-  "type": "angular",
-  "id": "d4c51368"
+  "type": "angular"
 }
