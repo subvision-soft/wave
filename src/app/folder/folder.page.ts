@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import {Camera, CameraResultType, CameraSource} from "@capacitor/camera";
 
 @Component({
   selector: 'app-folder',
@@ -14,5 +15,13 @@ export class FolderPage implements OnInit {
   ngOnInit() {
     this.folder = this.activatedRoute.snapshot.paramMap.get('id');
   }
-
+  image = '';
+  async captureImage(){
+    const image = await Camera.getPhoto({
+      quality : 100,
+      allowEditing:false,
+      source: CameraSource.Prompt,
+      resultType:CameraResultType.Base64
+    })
+  }
 }

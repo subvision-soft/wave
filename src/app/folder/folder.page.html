@@ -15,6 +15,13 @@
   </ion-header>
 
   <div id="container">
+    <div class="card-container">
+      <button class="card card-small" (click)="captureImage()">
+        <span>Capture Image</span>
+      </button>
+    </div>
+    <img [src]="image" *ngIf="image" [style.width]="'300px'" [style.height]="'300px'">
+
     <strong class="capitalize">{{ folder }}</strong>
     <p>Explore <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
   </div>
