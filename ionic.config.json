@@ -1,7 +1,0 @@
-{
-  "name": "subia",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular"
-}
