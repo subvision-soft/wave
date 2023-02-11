@@ -1,8 +1,0 @@
-#ifdef __cplusplus
-#import <opencv2/opencv.hpp>
-#endif
-
-#ifndef PrefixHeader_pch
-#define PrefixHeader_pch
-
-#endif
