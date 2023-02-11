@@ -1,4 +1,4 @@
-name: MAIN_PULL_REQUEST
+name: MASTER_PULL_REQUEST
 on:
   pull_request:
     branches:
