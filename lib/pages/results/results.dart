@@ -62,7 +62,7 @@ enum Epreuve {
 class _ResultsState extends State<Results> {
   bool _isAscending = true;
   late int _sortColumnIndex = 0;
-  late List<Person> _persons = [
+  late final List<Person> _persons = [
     Person(
       id: 592,
       name: "BONBEUR Jean",
@@ -108,16 +108,13 @@ class _ResultsState extends State<Results> {
     var myRows = _persons.map((person) {
       return DataRow(cells: [
         DataCell(Text('${person.id}')),
-        DataCell(Text(person.name + "\n" + person.categorie)),
+        DataCell(Text("${person.name}\n${person.categorie}")),
         DataCell(Text(selection.first.getValue(person))),
       ]);
     });
     int sort(a, b) {
       return _isAscending ? a.compareTo(b) : b.compareTo(a);
     }
-
-    ;
-
     void onSort(int columnIndex, bool ascending) {
       switch (columnIndex) {
         case 0:
@@ -151,7 +148,7 @@ class _ResultsState extends State<Results> {
         ),
         body: Column(
           children: [
-            Container(
+            SizedBox(
               width:MediaQuery.of(context).size.width,
               child: DataTable(
                   sortColumnIndex: _sortColumnIndex,
