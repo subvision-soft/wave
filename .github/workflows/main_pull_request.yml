@@ -1,4 +1,4 @@
-name: PR
+name: MAIN_PULL_REQUEST
 on:
   pull_request:
     branches:
