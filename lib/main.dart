@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:subapp/pages/results/results.dart';
+import 'package:subapp/pages/scan/scan.dart';
 
 void main() => runApp(const ExampleApp());
 
 class ExampleApp extends StatelessWidget {
   const ExampleApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(home: Navigation());
@@ -22,6 +24,7 @@ class _NavigationState extends State<Navigation> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       bottomNavigationBar: NavigationBar(
         onDestinationSelected: (int index) {
@@ -39,26 +42,22 @@ class _NavigationState extends State<Navigation> {
           NavigationDestination(
             icon: Icon(Icons.format_list_numbered_outlined),
             selectedIcon: Icon(Icons.format_list_numbered),
-            label: 'Results',
+            label: 'Résultats',
           ),
           NavigationDestination(
             icon: Icon(Icons.people_outline),
             selectedIcon: Icon(Icons.people),
-            label: 'Competitors',
+            label: 'Compétiteurs',
           ),
           NavigationDestination(
             selectedIcon: Icon(Icons.settings),
             icon: Icon(Icons.settings_outlined),
-            label: 'Settings',
+            label: 'Paramètres',
           ),
         ],
       ),
       body: <Widget>[
-        Container(
-          color: Colors.red,
-          alignment: Alignment.center,
-          child: const Text('Scan page'),
-        ),
+        const Scan(),
         const Results(),
         Container(
           color: Colors.blue,
