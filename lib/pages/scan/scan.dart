@@ -60,7 +60,7 @@ class _ScanState extends State<Scan> {
               child: Column(
 
                 children: [
-                  Spacer(),
+                  const Spacer(),
                   Center(
                     child: FloatingActionButton(
                       child: const Icon(Icons.camera_alt_outlined),
