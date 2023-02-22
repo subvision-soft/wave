@@ -1,16 +1,4 @@
-# subapp
 
-Application mobile pour le calcul des points d'une compétition de tir sur cible subaquatique
+# SUBAPP|WIP
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Subapp est une application mobile qui permet de prendre en photo les cibles lors d'une compétition de [tir sur cible subaquatique](https://tirsub.ffessm.fr/). Cette photo est ensuite transmise à l'[application desktop](https://github.com/DayUx/subapp-desktop) qui va calculer les points à l'aide d'opencv et ensuite les stocker pour pouvoir obtenir les résultats finaux de la compétition.
