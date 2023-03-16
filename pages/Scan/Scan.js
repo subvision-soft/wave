@@ -109,14 +109,28 @@ function Cam() {
     <>
       {isFocused && (
         <Camera
-          style={{
-            height: height,
-            width: "100%",
-            position: "absolute",
-          }}
+          style={[
+            StyleSheet.absoluteFill,
+            {
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            },
+          ]}
           ref={cameraRef}
           ratio={"16:9"}
-        ></Camera>
+        >
+          <View
+            style={{
+              height: Math.min(height, width) - 40,
+              width: Math.min(height, width) - 40,
+              borderWidth: 5,
+              borderColor: "rgba(255,255,255,0.8)",
+              borderRadius: 30,
+              borderStyle: "dotted",
+            }}
+          ></View>
+        </Camera>
       )}
 
       <View

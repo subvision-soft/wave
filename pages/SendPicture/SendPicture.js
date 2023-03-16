@@ -76,7 +76,7 @@ const SendPicture = ({ route, navigation }) => {
         <Button
           onPress={() => {
             console.log("send");
-            fetch(`http://192.168.1.42:8080/api/cible/uploadCible`, {
+            fetch(`${global.url}/cible/uploadCible`, {
               method: "POST",
               body: picture.base64,
             }).then((res) => {
