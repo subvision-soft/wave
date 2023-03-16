@@ -3,7 +3,6 @@
     "name": "subapp",
     "slug": "subapp",
     "scheme": "subapp",
-
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -23,7 +22,12 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.dayux.subapp"
     },
     "web": {
       "favicon": "./assets/icon.png",
@@ -36,6 +40,11 @@
           "cameraPermission": "Allow $(PRODUCT_NAME) to access your camera."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "82d365f4-4983-4adb-94eb-eb41496969d9"
+      }
+    }
   }
 }
