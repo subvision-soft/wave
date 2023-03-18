@@ -1,8 +1,5 @@
-import { Text } from "react-native-paper";
 import { Button, Image, TextInput, View } from "react-native";
-import { useEffect, useState } from "react";
-
-var BASE64_MARKER = ";base64,";
+import { useState } from "react";
 
 const SendPicture = ({ route, navigation }) => {
   const { picture } = route.params;

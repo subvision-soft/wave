@@ -3,16 +3,11 @@ import {
   StyleSheet,
   Text,
   View,
-  SafeAreaView,
-  Button,
-  Image,
   useWindowDimensions,
   TouchableOpacity,
 } from "react-native";
 import { useEffect, useRef, useState } from "react";
 import { Camera } from "expo-camera";
-import { shareAsync } from "expo-sharing";
-import * as MediaLibrary from "expo-media-library";
 import { useIsFocused, useNavigation } from "@react-navigation/native";
 import SendPicture from "../SendPicture/SendPicture";
 import * as React from "react";
@@ -34,8 +29,6 @@ function Cam() {
 
   let cameraRef = useRef();
   const [hasCameraPermission, setHasCameraPermission] = useState();
-  const [hasMediaLibraryPermission, setHasMediaLibraryPermission] = useState();
-  const [photo, setPhoto] = useState();
   const { width } = useWindowDimensions();
   const height = Math.round((width * 16) / 9);
   useEffect(() => {
@@ -45,12 +38,7 @@ function Cam() {
         console.log();
         const cameraPermission = await Camera.requestCameraPermissionsAsync();
         console.log(cameraPermission);
-        const mediaLibraryPermission =
-          await MediaLibrary.requestPermissionsAsync();
         setHasCameraPermission(cameraPermission.status === "granted");
-        setHasMediaLibraryPermission(
-          mediaLibraryPermission.status === "granted"
-        );
       })();
     }
   }, [isFocused]);
@@ -76,35 +64,6 @@ function Cam() {
     navigation.navigate("Calculer", { picture: newPhoto });
   };
 
-  if (photo) {
-    console.log(Object.keys(photo));
-    let sharePic = () => {
-      shareAsync(photo.uri).then(() => {
-        setPhoto(undefined);
-      });
-    };
-
-    let savePhoto = () => {
-      MediaLibrary.saveToLibraryAsync(photo.uri).then(() => {
-        setPhoto(undefined);
-      });
-    };
-
-    return (
-      <SafeAreaView style={styles.container}>
-        <Image
-          style={styles.preview}
-          source={{ uri: "data:image/jpg;base64," + photo.base64 }}
-        />
-        <Button title="Share" onPress={sharePic} />
-        {hasMediaLibraryPermission ? (
-          <Button title="Save" onPress={savePhoto} />
-        ) : undefined}
-        <Button title="Discard" onPress={() => setPhoto(undefined)} />
-      </SafeAreaView>
-    );
-  }
-
   return (
     <>
       {isFocused && (
@@ -112,7 +71,6 @@ function Cam() {
           style={[
             StyleSheet.absoluteFill,
             {
-              display: "flex",
               justifyContent: "center",
               alignItems: "center",
             },
@@ -135,7 +93,6 @@ function Cam() {
 
       <View
         style={{
-          display: "flex",
           justifyContent: "flex-end",
           alignItems: "center",
           height: "100%",

@@ -49,9 +49,7 @@ const QrCode = ({ onScan }) => {
         width: "100%",
         flexDirection: "column",
         justifyContent: "flex-end",
-
         alignItems: "center",
-        display: "flex",
       }}
     >
       <BarCodeScanner
@@ -59,7 +57,6 @@ const QrCode = ({ onScan }) => {
         style={[
           StyleSheet.absoluteFillObject,
           {
-            display: "flex",
             justifyContent: "center",
             alignItems: "center",
           },
