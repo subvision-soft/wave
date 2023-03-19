@@ -16,31 +16,6 @@ import Settings from "./pages/Settings/Settings";
 const Tab = createBottomTabNavigator();
 
 function App() {
-  const [hasPermission, setHasPermission] = useState(null);
-  const [scanned, setScanned] = useState(false);
-  const [previouslyScanned, setPreviouslyScanned] = useState("");
-  const [url, setUrl] = useState(undefined);
-
-  useEffect(() => {
-    setUrl(global.url);
-    const getBarCodeScannerPermissions = async () => {
-      const { status } = await BarCodeScanner.requestPermissionsAsync();
-      setHasPermission(status === "granted");
-    };
-
-    getBarCodeScannerPermissions();
-  }, []);
-
-  if (!url) {
-    return (
-      <QrCode
-        onScan={(url) => {
-          setUrl(url);
-        }}
-      ></QrCode>
-    );
-  }
-
   return (
     <NavigationContainer>
       <Tab.Navigator
