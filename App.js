@@ -26,7 +26,7 @@ function App() {
               case "Accueil":
                 iconName = focused ? "home" : "home-outline";
                 break;
-              case "Camera":
+              case "Caméra":
                 iconName = focused ? "camera" : "camera-outline";
                 break;
               case "Paramètres":
@@ -39,10 +39,9 @@ function App() {
         <Tab.Screen name={"Accueil"} component={Home} />
         <Tab.Screen
           options={{ headerShown: false }}
-          name={"Camera"}
+          name={"Caméra"}
           component={Scan}
         />
-        <Tab.Screen name={"Paramètres"} component={Settings} />
       </Tab.Navigator>
     </NavigationContainer>
   );

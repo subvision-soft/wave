@@ -9,7 +9,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 
 const Settings = () => {
   const [showQrCode, setShowQrCode] = useState(false);
-  const [url, setUrl] = useState(global.url);
+  const [adress, setAdress] = useState(global.adress);
 
   if (showQrCode) {
     return (
@@ -58,7 +58,7 @@ const Settings = () => {
             paddingBottom: 10,
             flex: 1,
           }}
-          value={global.url}
+          value={global.adress}
         ></TextInput>
         <TouchableOpacity>
           <Ionicons

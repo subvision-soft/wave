@@ -1,5 +1,6 @@
 import { Button, Image, TextInput, View } from "react-native";
 import { useState } from "react";
+import getUrl from "../../utils/NetworkUtils";
 
 const SendPicture = ({ route, navigation }) => {
   const { picture } = route.params;
@@ -73,7 +74,7 @@ const SendPicture = ({ route, navigation }) => {
         <Button
           onPress={() => {
             console.log("send");
-            fetch(`${global.url}/cible/uploadCible`, {
+            fetch(`${getUrl()}/cible/uploadCible`, {
               method: "POST",
               body: picture.base64,
             }).then((res) => {

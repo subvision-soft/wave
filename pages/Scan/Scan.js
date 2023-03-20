@@ -17,20 +17,21 @@ const Stack = createStackNavigator();
 export default function Scan() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Scanner" component={Cam} />
+      <Stack.Screen name="Caméra" component={Cam} />
       <Stack.Screen name="Calculer" component={SendPicture} />
     </Stack.Navigator>
   );
 }
+const backgroundColor = "rgba(0,0,0,0.1)";
 
 function Cam() {
   const navigation = useNavigation();
   const isFocused = useIsFocused();
-
+  const { width, height } = useWindowDimensions();
+  const size = Math.min(width, height) - Math.min(width, height) / 7;
+  const [borderColor, setBorderColor] = useState("#fff");
   let cameraRef = useRef();
   const [hasCameraPermission, setHasCameraPermission] = useState();
-  const { width } = useWindowDimensions();
-  const height = Math.round((width * 16) / 9);
   useEffect(() => {
     console.log(isFocused);
     if (isFocused) {
@@ -73,6 +74,7 @@ function Cam() {
             {
               justifyContent: "center",
               alignItems: "center",
+              backgroundColor: "#000000",
             },
           ]}
           ref={cameraRef}
@@ -80,12 +82,112 @@ function Cam() {
         >
           <View
             style={{
-              height: Math.min(height, width) - 40,
-              width: Math.min(height, width) - 40,
-              borderWidth: 5,
-              borderColor: "rgba(255,255,255,0.8)",
-              borderRadius: 30,
-              borderStyle: "dotted",
+              width: width,
+              height: (height - size) / 2,
+              backgroundColor: backgroundColor,
+            }}
+          ></View>
+          <View
+            style={{
+              width: width,
+              height: size,
+              flexDirection: "row",
+            }}
+          >
+            <View
+              style={{
+                width: (width - size) / 2,
+                backgroundColor: backgroundColor,
+              }}
+            ></View>
+
+            <View
+              style={{
+                width: size,
+                height: size,
+                borderWidth: 1,
+                borderColor: borderColor,
+                flexDirection: "column",
+                justifyContent: "space-between",
+                padding: 1,
+              }}
+            >
+              <View
+                style={{
+                  width: "100%",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+
+                  flex: 1,
+                }}
+              >
+                <View
+                  style={{
+                    height: 10,
+                    width: 10,
+                    borderWidth: 3,
+                    borderRightWidth: 0,
+                    borderBottomWidth: 0,
+                    borderColor: borderColor,
+                  }}
+                ></View>
+                <View
+                  style={{
+                    height: 10,
+                    width: 10,
+                    borderWidth: 3,
+                    borderLeftWidth: 0,
+                    borderBottomWidth: 0,
+                    borderColor: borderColor,
+                  }}
+                ></View>
+              </View>
+              <View
+                style={{
+                  width: "100%",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "flex-end",
+
+                  flex: 1,
+                }}
+              >
+                <View
+                  style={{
+                    height: 10,
+                    width: 10,
+                    borderWidth: 3,
+                    borderRightWidth: 0,
+                    borderTopWidth: 0,
+                    borderColor: borderColor,
+                  }}
+                ></View>
+                <View
+                  style={{
+                    height: 10,
+                    width: 10,
+                    borderWidth: 3,
+                    borderLeftWidth: 0,
+                    borderTopWidth: 0,
+                    borderColor: borderColor,
+                  }}
+                ></View>
+              </View>
+            </View>
+
+            <View
+              style={{
+                width: (width - size) / 2,
+                backgroundColor: backgroundColor,
+              }}
+            ></View>
+          </View>
+
+          <View
+            style={{
+              width: width,
+              height: (height - size) / 2,
+              backgroundColor: backgroundColor,
             }}
           ></View>
         </Camera>

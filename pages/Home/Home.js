@@ -17,19 +17,21 @@ import { useIsFocused } from "@react-navigation/native";
 import PopupDialog from "react-native-popup-dialog";
 import { DialogButton, DialogContent } from "react-native-popup-dialog/src";
 import QrCode from "../QrCode/QrCode";
+import MaterialCommunityIcon from "react-native-paper/src/components/MaterialCommunityIcon";
+import getUrl from "../../utils/NetworkUtils";
 
 const Home = function ({ navigation }) {
-  const [url, setUrl] = useState(undefined);
+  const [adress, setAdress] = useState(undefined);
   const [isVisible, setIsVisible] = useState(false);
   const isFocused = useIsFocused();
   const popupDialog = useRef(null);
 
   useEffect(() => {
-    setUrl(global.url);
+    setAdress(global.adress);
   }, [isFocused]);
 
   useEffect(() => {
-    setUrl(global.url);
+    setAdress(global.adress);
   }, []);
 
   useEffect(() => {
@@ -44,6 +46,7 @@ const Home = function ({ navigation }) {
         <View style={styles.container}>
           <QrCode
             onScan={() => {
+              setAdress(global.adress);
               setIsVisible(false);
             }}
           />
@@ -53,29 +56,32 @@ const Home = function ({ navigation }) {
         onPress={() => {
           setIsVisible(true);
         }}
-        style={
-          url
-            ? {
-                backgroundColor: "#49b40c",
-              }
-            : {
-                backgroundColor: "#ececec",
-              }
-        }
+        bgColor={adress ? "rgb(235,255,224)" : "#ffe4e4"}
+        borderColor={adress ? "#49b40c" : "#dc1818"}
       >
-        <Text
-          style={
-            url
-              ? {
-                  color: "white",
-                }
-              : {
-                  color: "black",
-                }
-          }
+        <View
+          style={{
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 10,
+          }}
         >
-          Home
-        </Text>
+          <MaterialCommunityIcon
+            name={adress ? "wifi" : "wifi-off"}
+            size={50}
+            color={adress ? "#49b40c" : "#dc1818"}
+          />
+          <Text
+            style={{
+              color: adress ? "#49b40c" : "#dc1818",
+              fontWeight: "bold",
+              fontSize: 15,
+            }}
+          >
+            {adress ? `${global.adress}` : "Non connecté"}
+          </Text>
+        </View>
       </Card>
     </View>
   );

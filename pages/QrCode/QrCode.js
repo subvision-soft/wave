@@ -38,12 +38,11 @@ const QrCode = ({ onScan }) => {
     fetch("http://" + data + "/api/subapp")
       .then((response) => {
         if (response.status === 200) {
-          // global.url = "http://" + data + "/api";
-          // onScan("http://" + data + "/api");
           setBorderColor("#00ff00");
           setTimeout(() => {
-            onScan("data");
-          }, 1000);
+            global.adress = data;
+            onScan();
+          }, 500);
         }
       }, [])
       .catch((error) => {
@@ -57,10 +56,38 @@ const QrCode = ({ onScan }) => {
   };
 
   if (hasPermission === null) {
-    return <Text>Requesting for camera permission</Text>;
+    return (
+      <SafeAreaView
+        style={{
+          width: width,
+          height: height,
+          backgroundColor: "#000",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Text style={{ color: "#fff" }}>
+          En attente de l'autorisation d'accès à l'appareil photo
+        </Text>
+      </SafeAreaView>
+    );
   }
   if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
+    return (
+      <SafeAreaView
+        style={{
+          width: width,
+          height: height,
+          backgroundColor: "#000",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Text style={{ color: "#fff" }}>Aucun accès à la camera</Text>
+      </SafeAreaView>
+    );
   }
   return (
     <SafeAreaView
@@ -203,18 +230,9 @@ const QrCode = ({ onScan }) => {
           gap: 5,
         }}
       >
-        <Text
-          style={{
-            color: "#fff",
-            fontSize: 18,
-            textAlign: "center",
-          }}
-        >
-          Quitter
-        </Text>
         <Ionicons
           color={"#fff"}
-          size={18}
+          size={40}
           name={"close-circle-outline"}
         ></Ionicons>
       </TouchableOpacity>
