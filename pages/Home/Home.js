@@ -29,6 +29,10 @@ const Home = function ({ navigation }) {
   const isFocused = useIsFocused();
   const popupDialog = useRef(null);
 
+  navigation.setOptions({
+    headerShown: false,
+  });
+
   useEffect(() => {
     setAdress(global.adress);
   }, [isFocused]);
@@ -45,6 +49,7 @@ const Home = function ({ navigation }) {
 
   return (
     <ImageBackground
+      resizeMode={"cover"}
       source={background}
       style={{
         flex: 1,

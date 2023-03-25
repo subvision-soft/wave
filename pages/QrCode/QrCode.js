@@ -96,7 +96,7 @@ const QrCode = ({ onScan }) => {
         height: height,
         backgroundColor: "#000",
         flexDirection: "column",
-        justifyContent: "flex-end",
+        justifyContent: "space-between",
       }}
     >
       <BarCodeScanner
@@ -220,6 +220,20 @@ const QrCode = ({ onScan }) => {
           }}
         ></View>
       </BarCodeScanner>
+      <View
+        style={{
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+          paddingTop: 30,
+          gap: 5,
+        }}
+      >
+        <Text style={{ color: "#fff" }}>
+          Scannez le QR code pour vous connecter
+        </Text>
+        <Ionicons name={"qr-code-outline"} size={30} color={"#fff"}></Ionicons>
+      </View>
       <TouchableOpacity
         onPress={() => onScan()}
         style={{
