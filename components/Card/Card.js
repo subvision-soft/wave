@@ -1,4 +1,4 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { TouchableRipple } from "react-native-paper";
 
 const Card = ({
@@ -18,8 +18,7 @@ const Card = ({
         },
       ]}
     >
-      <TouchableRipple
-        rippleColor={"rgba(255,255,255,0.3)"}
+      <TouchableOpacity
         onPress={() => {
           console.log(onPress);
           if (onPress) {
@@ -29,7 +28,7 @@ const Card = ({
         style={styles.cardContent}
       >
         {children}
-      </TouchableRipple>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -44,9 +43,8 @@ const styles = StyleSheet.create({
     margin: 10,
     shadowColor: "black",
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.26,
-    shadowRadius: 6,
-    elevation: 5,
+    shadowOpacity: 0.2,
+    shadowRadius: 1,
     overflow: "hidden",
     borderWidth: 1,
   },
