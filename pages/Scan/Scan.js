@@ -5,6 +5,7 @@ import {
   View,
   useWindowDimensions,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import { useEffect, useRef, useState } from "react";
 import { Camera } from "expo-camera";

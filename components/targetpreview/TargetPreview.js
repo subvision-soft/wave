@@ -5,11 +5,25 @@ import {
   useWindowDimensions,
   ImageBackground,
   Text,
+  Touchable,
+  TouchableOpacity,
+  FlatList,
+  StyleSheet,
 } from "react-native";
 import TargetZone from "../../utils/target/TargetUtils";
-import { useState } from "react";
+import { forwardRef, useImperativeHandle, useState } from "react";
+import { ReactNativeZoomableView } from "@openspacelabs/react-native-zoomable-view";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
-const TargetPreview = ({ impacts = [] }) => {
+const TargetPreview = forwardRef(({ impacts = [] }, ref) => {
+  useImperativeHandle(ref, () => ({
+    setImpacts: (impacts) => {
+      setImpactsArray(impacts);
+    },
+  }));
+
+  const [impactsArray, setImpactsArray] = useState(impacts);
+
   const { width, height } = useWindowDimensions();
   const windowSize = Math.min(width, height);
 
@@ -18,6 +32,7 @@ const TargetPreview = ({ impacts = [] }) => {
   const visuelSize = 810;
   const globalPadding = 180;
   const arrowSize = 9 * 6;
+  const [selectedImpact, setSelectedImpact] = useState();
 
   const pointToDistance = (points) => {
     let i;
@@ -83,8 +98,8 @@ const TargetPreview = ({ impacts = [] }) => {
           key={key}
           style={{
             position: "absolute",
-            height: sizeToPercent(arrowSize),
-            width: sizeToPercent(arrowSize),
+            height: sizeToPercent(arrowSize) + (selectedImpact === key ? 4 : 0),
+            width: sizeToPercent(arrowSize) + (selectedImpact === key ? 4 : 0),
             transform: [
               {
                 rotate: `${impact.angle + 180}deg`,
@@ -96,11 +111,25 @@ const TargetPreview = ({ impacts = [] }) => {
               },
             ],
             borderRadius: windowSize,
+            borderWidth: selectedImpact === key ? 2 : 0,
+            borderColor: "rgba(255,105,0,0.5)",
             backgroundColor: "red",
-            bottom: center.y - sizeToPercent(arrowSize) / 2,
-            left: center.x - sizeToPercent(arrowSize) / 2,
+            bottom:
+              center.y -
+              (sizeToPercent(arrowSize) + (selectedImpact === key ? 4 : 0)) / 2,
+            left:
+              center.x -
+              (sizeToPercent(arrowSize) + (selectedImpact === key ? 4 : 0)) / 2,
           }}
-        ></Animated.View>
+        >
+          <TouchableOpacity
+            onPress={() => setSelectedImpact(key)}
+            style={{
+              width: "300%",
+              height: "300%",
+            }}
+          ></TouchableOpacity>
+        </Animated.View>
       );
     }
   };
@@ -113,10 +142,31 @@ const TargetPreview = ({ impacts = [] }) => {
   return (
     <View
       style={{
+        flex: 1,
         flexDirection: "column",
         alignItems: "center",
       }}
     >
+      <View
+        style={{
+          width: windowSize,
+          backgroundColor: "#fff",
+          padding: 10,
+          flexDirection: "row",
+          justifyContent: "space-between",
+        }}
+      >
+        <Text>
+          Total :{" "}
+          {impactsArray
+            .map((impact) => impact.points)
+            .reduce((a, b) => a + b, 0)}
+        </Text>
+        <Text>
+          Hors cible :{" "}
+          {impactsArray.filter((impact) => impact.points === 0).length}
+        </Text>
+      </View>
       <View
         className="target-preview"
         style={{
@@ -126,33 +176,97 @@ const TargetPreview = ({ impacts = [] }) => {
           backgroundColor: "#fff",
         }}
       >
-        <ImageBackground
-          source={targetBlueprint}
-          resizeMode={"contain"}
-          style={{ width: "100%", height: "100%" }}
-        >
-          {impacts.map((impact, index) => {
-            return placeImpact(impact, index);
-          })}
-        </ImageBackground>
+        <ReactNativeZoomableView maxZoom={4}>
+          <ImageBackground
+            source={targetBlueprint}
+            resizeMode={"contain"}
+            style={{ width: "100%", height: "100%" }}
+          >
+            {impactsArray.map((impact, index) => {
+              return placeImpact(impact, index);
+            })}
+          </ImageBackground>
+        </ReactNativeZoomableView>
       </View>
-      <View
-        style={{
-          width: windowSize,
-          backgroundColor: "#fff",
-          padding: 10,
-        }}
-      >
-        <Text>
-          Total :{" "}
-          {impacts.map((impact) => impact.points).reduce((a, b) => a + b, 0)}
-        </Text>
-        <Text>
-          Hors cible : {impacts.filter((impact) => impact.points === 0).length}
-        </Text>
+      <View style={styles.container}>
+        <FlatList
+          data={impactsArray}
+          renderItem={({ item, index }) => {
+            return (
+              <TouchableOpacity
+                style={[
+                  styles.item,
+                  {
+                    backgroundColor:
+                      selectedImpact === index ? "transparent" : "#fff",
+                  },
+                ]}
+                onPress={() => setSelectedImpact(index)}
+              >
+                <Text
+                  style={{
+                    fontSize: 20,
+                  }}
+                >
+                  {item.points}
+                </Text>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    gap: 20,
+                  }}
+                >
+                  <TouchableOpacity
+                    onPress={() => {
+                      let newImpacts = [...impactsArray];
+                      newImpacts.push(item);
+                      setImpactsArray(newImpacts);
+                    }}
+                  >
+                    <Ionicons
+                      name={"duplicate-outline"}
+                      size={30}
+                      color={"#000"}
+                    ></Ionicons>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => {
+                      let newImpacts = [...impactsArray];
+                      newImpacts.splice(index, 1);
+                      setImpactsArray(newImpacts);
+                    }}
+                  >
+                    <Ionicons
+                      name={"trash-outline"}
+                      size={30}
+                      color={"#000"}
+                    ></Ionicons>
+                  </TouchableOpacity>
+                </View>
+              </TouchableOpacity>
+            );
+          }}
+        />
       </View>
     </View>
   );
-};
+});
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    width: "100%",
+  },
+  item: {
+    padding: 5,
+    backgroundColor: "#fff",
+    flexDirection: "row",
+    marginTop: 2,
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 2,
+    fontSize: 30,
+  },
+});
 
 export default TargetPreview;

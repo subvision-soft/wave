@@ -10,7 +10,9 @@
   },
   "dependencies": {
     "@expo/webpack-config": "^18.0.1",
+    "@openspacelabs/react-native-zoomable-view": "^2.1.1",
     "@react-navigation/bottom-tabs": "^6.5.7",
+    "@react-navigation/material-top-tabs": "^6.6.2",
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/native-stack": "^6.9.12",
     "@react-navigation/stack": "^6.3.16",
@@ -19,6 +21,7 @@
     "expo-camera": "^13.2.1",
     "expo-constants": "~14.2.1",
     "expo-linking": "~4.0.1",
+    "expo-screen-orientation": "^5.1.1",
     "expo-sharing": "^11.2.2",
     "expo-status-bar": "~1.4.4",
     "prettier": "^2.8.4",

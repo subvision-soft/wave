@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import {
+  ActivityIndicator,
   Button,
   SafeAreaView,
   StyleSheet,
@@ -16,6 +17,7 @@ const backgroundColor = "rgba(0,0,0,0.3)";
 const QrCode = ({ onScan }) => {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [previouslyScanned, setPreviouslyScanned] = useState("");
   const { width, height } = useWindowDimensions();
   const size = Math.min(width, height) - Math.min(width, height) / 4;
@@ -34,9 +36,11 @@ const QrCode = ({ onScan }) => {
     if (data === previouslyScanned) {
       return;
     }
+    setLoading(true);
     setScanned(true);
     fetch("http://" + data + "/api/subapp")
       .then((response) => {
+        setLoading(false);
         if (response.status === 200) {
           setBorderColor("#00ff00");
           setTimeout(() => {
@@ -46,6 +50,7 @@ const QrCode = ({ onScan }) => {
         }
       }, [])
       .catch((error) => {
+        setLoading(false);
         setBorderColor("#ff0000");
         setPreviouslyScanned(data);
         setTimeout(() => {
@@ -232,8 +237,17 @@ const QrCode = ({ onScan }) => {
         <Text style={{ color: "#fff" }}>
           Scannez le QR code pour vous connecter
         </Text>
-        <Ionicons name={"qr-code-outline"} size={30} color={"#fff"}></Ionicons>
+        {loading ? (
+          <ActivityIndicator color={"#fff"} size={"large"}></ActivityIndicator>
+        ) : (
+          <Ionicons
+            name={"qr-code-outline"}
+            size={30}
+            color={"#fff"}
+          ></Ionicons>
+        )}
       </View>
+
       <TouchableOpacity
         onPress={() => onScan()}
         style={{

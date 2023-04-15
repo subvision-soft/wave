@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   Button,
   Image,
   Modal,
@@ -12,16 +13,70 @@ import TargetPreview from "../../components/targetpreview/TargetPreview";
 import Toast from "react-native-root-toast";
 import QrCode from "../QrCode/QrCode";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import * as ScreenOrientation from "expo-screen-orientation";
 import { TouchableRipple } from "react-native-paper";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { ReactNativeZoomableView } from "@openspacelabs/react-native-zoomable-view";
+
+const Tab = createMaterialTopTabNavigator();
 
 const SendPicture = ({ route, navigation }) => {
   const { picture } = route.params;
   const [competitorNumber, setCompetitorNumber] = useState();
   const [resultImageUrl, setResultImageUrl] = useState();
+  const [isLoading, setIsLoading] = useState(false);
   const [impacts, setImpacts] = useState();
   const [isVisible, setIsVisible] = useState(false);
+  const [isLandscape, setIsLandscape] = useState(false);
 
-  if (resultImageUrl && impacts) {
+  ScreenOrientation.addOrientationChangeListener((event) => {
+    console.log(event.orientationInfo.orientation);
+    if (
+      event.orientationInfo.orientation ===
+        ScreenOrientation.Orientation.LANDSCAPE_LEFT ||
+      event.orientationInfo.orientation ===
+        ScreenOrientation.Orientation.LANDSCAPE_RIGHT
+    ) {
+      setIsLandscape(true);
+    } else {
+      setIsLandscape(false);
+    }
+  });
+
+  const sendPicture = () => {
+    if (isLoading) return;
+    setIsLoading(true);
+    fetch(`${getUrl()}/cible/uploadCible`, {
+      method: "POST",
+      body: picture.base64,
+    })
+      .then((res) => {
+        setIsLoading(false);
+        const ok = res.ok;
+        if (!ok) {
+          return res.text().then((text) => {
+            throw new Error(text);
+          });
+        } else {
+          res.json().then(async (json) => {
+            setResultImageUrl("data:image/png;base64," + json.image);
+            setImpacts(json.impacts);
+          });
+        }
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        Toast.show(err.message, {
+          duration: 2000,
+        });
+        navigation.goBack();
+      });
+  };
+
+  function ResultatPreview({ navigation }) {
+    navigation.setOptions({
+      swipeEnabled: false,
+    });
     return (
       <View
         style={{
@@ -30,63 +85,44 @@ const SendPicture = ({ route, navigation }) => {
           width: "100%",
         }}
       >
-        <TouchableOpacity
-          onPress={() => {
-            setIsVisible(true);
-          }}
-          style={{
-            flex: 1,
-          }}
-        >
+        <TargetPreview impacts={impacts}></TargetPreview>
+      </View>
+    );
+  }
+  function PhotoPreview({ navigation }) {
+    navigation.setOptions({
+      swipeEnabled: false,
+    });
+    return (
+      <View
+        style={{
+          flex: 1,
+          height: "100%",
+          width: "100%",
+          backgroundColor: "black",
+        }}
+      >
+        <ReactNativeZoomableView maxZoom={4}>
           <Image
-            resizeMode={"cover"}
+            resizeMode={"contain"}
             style={{
+              height: "100%",
+              width: "100%",
               flex: 1,
             }}
             source={{ uri: resultImageUrl }}
           />
-        </TouchableOpacity>
-
-        <Modal animationType={"slide"} transparent={true} visible={isVisible}>
-          <View
-            style={{
-              flex: 1,
-              justifyContent: "center",
-              alignItems: "center",
-              backgroundColor: "rgba(0,0,0,0.8)",
-            }}
-          >
-            <Image
-              resizeMode={"contain"}
-              style={{
-                flex: 1,
-                width: "100%",
-              }}
-              source={{ uri: resultImageUrl }}
-            />
-            <TouchableOpacity
-              onPress={() => {
-                setIsVisible(false);
-              }}
-              style={{
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-                marginBottom: 20,
-                gap: 5,
-              }}
-            >
-              <Ionicons
-                color={"#fff"}
-                size={40}
-                name={"close-circle-outline"}
-              ></Ionicons>
-            </TouchableOpacity>
-          </View>
-        </Modal>
-
-        <TargetPreview impacts={impacts}></TargetPreview>
+        </ReactNativeZoomableView>
       </View>
+    );
+  }
+
+  if (resultImageUrl && impacts) {
+    return (
+      <Tab.Navigator>
+        <Tab.Screen name={"Résultat"} component={ResultatPreview}></Tab.Screen>
+        <Tab.Screen name={"Photo"} component={PhotoPreview}></Tab.Screen>
+      </Tab.Navigator>
     );
   }
 
@@ -129,35 +165,13 @@ const SendPicture = ({ route, navigation }) => {
             justifyContent: "center",
             alignItems: "center",
           }}
-          onPress={() => {
-            console.log("send");
-            fetch(`${getUrl()}/cible/uploadCible`, {
-              method: "POST",
-              body: picture.base64,
-            })
-              .then((res) => {
-                const ok = res.ok;
-
-                if (!ok) {
-                  return res.text().then((text) => {
-                    throw new Error(text);
-                  });
-                } else {
-                  res.json().then(async (json) => {
-                    setResultImageUrl("data:image/png;base64," + json.image);
-                    setImpacts(json.impacts);
-                  });
-                }
-              })
-              .catch((err) => {
-                Toast.show(err.message, {
-                  duration: 2000,
-                });
-                navigation.goBack();
-              });
-          }}
+          onPress={sendPicture}
         >
-          <Ionicons color={"#fff"} size={30} name={"cloud-upload"}></Ionicons>
+          {isLoading ? (
+            <ActivityIndicator size="large" color="#fff" />
+          ) : (
+            <Ionicons color={"#fff"} size={30} name={"cloud-upload"}></Ionicons>
+          )}
         </TouchableOpacity>
       </View>
     </View>
