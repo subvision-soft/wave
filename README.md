@@ -1,3 +1,6 @@
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://github.com/DayUx/subapp/blob/master/LICENCE)
+
+
 # WIP
 # Subapp - Application de calcul des points pour le tir sur cible subaquatique
 subapp est une application mobile conçue pour faciliter le calcul des points pour le tir sur cible subaquatique à partir d'une photo de la cible. L'application utilise les technologies React, Capacitor et Rust (compilé en WebAssembly) pour offrir une expérience utilisateur fluide et des calculs précis.
