@@ -3,7 +3,7 @@
 
 # WIP
 # Subapp - Application de calcul des points pour le tir sur cible subaquatique
-subapp est une application mobile conçue pour faciliter le calcul des points pour le tir sur cible subaquatique à partir d'une photo de la cible. L'application utilise les technologies React, Capacitor et Rust (compilé en WebAssembly) pour offrir une expérience utilisateur fluide et des calculs précis.
+subapp est une application mobile conçue pour faciliter le calcul des points pour le tir sur cible subaquatique à partir d'une photo de la cible. L'application utilise les technologies TypeScript ,React, Capacitor et Rust (compilé en WebAssembly) pour offrir une expérience utilisateur fluide et des calculs précis.
 
 ## Fonctionnalités
 - Prendre en photo la cible
