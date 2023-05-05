@@ -25,7 +25,7 @@ npm install
 ```
 4. Ensuite, exécutez la commande suivante pour démarrer l'application en mode de développement :
 ```bash
-npm run start
+ionic serve
 ```
 Cela lancera l'application dans votre navigateur par défaut.
 
