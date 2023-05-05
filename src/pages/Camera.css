@@ -1,0 +1,6 @@
+.content-camera-preview {
+  --background: transparent;
+  -webkit-user-select: none;
+  pointer-events: none;
+  -webkit-pointer-events: none;
+}
