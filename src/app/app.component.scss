@@ -1,0 +1,10 @@
+router-outlet{
+    flex: 1;
+    background: var(--primary-background);
+
+  height: 20px;
+  box-shadow: var(--primary-shadow);
+  border-radius: var(--primary-border-radius);
+  padding: var(--elements-padding);
+  }
+
