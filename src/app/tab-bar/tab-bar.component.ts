@@ -1,12 +1,12 @@
 import {Component, Input} from '@angular/core';
 import {iconoirHome} from "@ng-icons/iconoir";
+import {Router} from "@angular/router";
 
 class Tab {
-  constructor(public icon: string, public label: string, public link: string) {
-    this.icon = icon;
-    this.label = label;
-    this.link = link;
-  }
+  active?: boolean = false;
+  link: string = '';
+  label: string = '';
+  icon: string = '';
 }
 
 @Component({
@@ -16,6 +16,17 @@ class Tab {
 })
 export class TabBarComponent {
   @Input() tabs: Tab[] = [];
-
   protected readonly iconoirHome = iconoirHome;
+  constructor(private router: Router) {
+    router.events.subscribe((val) => {
+      this.updateActive();
+    });
+  }
+
+  private updateActive() {
+    const path = this.router.url;
+    this.tabs.forEach((tab) => {
+      tab.active = (tab.link === path);
+    });
+  }
 }

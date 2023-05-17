@@ -9,6 +9,5 @@ export class TabBarButtonComponent {
   @Input() icon: string = '';
   @Input() label: string = '';
   @Input() link: string = '';
-
-
+  @Input() active?: boolean = false;
 }

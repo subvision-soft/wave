@@ -8,7 +8,9 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'subapp';
   tabs = [
-    { icon: 'iconoirHome', label: 'Home', link: '/home' },
-    { icon: 'iconoirCamera', label: 'Camera', link: '/camera' }];
+    { icon: 'iconoirHome', label: 'Accueil', link: '/home' },
+    { icon: 'iconoirCamera', label: 'Caméra', link: '/camera' },
+    { icon: 'iconoirSettings', label: 'Paramètres', link: '/settings' },
+  ];
 
 }
