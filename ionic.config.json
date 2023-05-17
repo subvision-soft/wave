@@ -1,7 +1,0 @@
-{
-  "name": "subapp",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "react-vite"
-}
