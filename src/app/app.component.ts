@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
   title = 'subapp';
@@ -13,4 +13,8 @@ export class AppComponent {
     { icon: 'iconoirSettings', label: 'Paramètres', link: '/settings' },
   ];
 
+  tabSelected(tab: any) {
+    console.log(tab);
+    this.title = tab.label;
+  }
 }
