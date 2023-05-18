@@ -1,9 +1,11 @@
-.tab-bar{
+.tab-bar {
   display: flex;
   align-items: stretch;
   justify-content: center;
+  padding: 20px;
+  box-sizing: border-box;
   gap: 10px;
-  app-tab-bar-button{
+  app-tab-bar-button {
     position: relative;
     display: flex;
     justify-content: center;

@@ -8,9 +8,9 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'subapp';
   tabs = [
-    { icon: 'iconoirHome', label: 'Accueil', link: '/home' },
+    { icon: 'iconoirHomeSimpleDoor', label: 'Accueil', link: '/home' },
     { icon: 'iconoirCamera', label: 'Caméra', link: '/camera' },
-    { icon: 'iconoirSettings', label: 'Paramètres', link: '/settings' },
+    { icon: 'iconoirDashboardDots', label: 'Paramètres', link: '/settings' },
   ];
 
   tabSelected(tab: any) {
