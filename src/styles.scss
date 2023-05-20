@@ -1,0 +1,81 @@
+/* You can add global styles to this file, and also import other style files */
+
+@font-face {
+  font-family: "Work Sans";
+  src: url("./assets/fonts/WorkSans.ttf");
+}
+
+* {
+  font-family: var(--primary-font);
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+  --app-background: #fbfeff;
+  --primary-background: #fff;
+
+  --primary-border-radius: 10px;
+  --space-between-elements: 10px;
+  --elements-padding: 10px;
+  --primary-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  --primary-color: #fff;
+  --primary-transition: all 0.3s ease;
+  --secondary-transition: all 0.6s ease;
+  --primary-font: "Work Sans", sans-serif;
+}
+
+body {
+  background: url("./assets/img/background.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333;
+  app-root {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    height: 100vh;
+    gap: var(--space-between-elements);
+    padding: var(--space-between-elements);
+    box-sizing: border-box;
+  }
+  .glass {
+    backdrop-filter: blur(4px);
+    box-shadow: 0px 0px 0px 0px var(--primary-background);
+    transition: var(--primary-transition);
+
+    &:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      transition: var(--primary-transition);
+      border: solid 1px var(--primary-background);
+      box-sizing: border-box;
+      border-radius: 10px;
+      opacity: 0.1;
+    }
+    &:after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      transition: var(--primary-transition);
+      background-color: var(--primary-background);
+      box-sizing: border-box;
+      border-radius: 10px;
+      opacity: 0.1;
+    }
+  }
+}

@@ -1,0 +1,11 @@
+<div class="tab-bar">
+  <app-tab-bar-button
+    *ngFor="let tab of tabs; index as i; first as isFirst"
+    [link]="tab.link"
+    [icon]="tab.icon"
+    [label]="tab.label"
+    [active]="tab.active"
+  >
+
+  </app-tab-bar-button>
+</div>

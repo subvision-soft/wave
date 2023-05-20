@@ -32,7 +32,7 @@ Cela lancera l'application dans votre navigateur par défaut.
 5. Pour générer une version de production de l'application, utilisez la commande suivante :
 
 ```bash
-ng build
+npm build
 ```
 
 Les fichiers de build seront générés dans le répertoire **dist/**.
