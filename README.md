@@ -3,7 +3,7 @@
 
 # WIP
 # Subapp - Application de calcul des points pour le tir sur cible subaquatique
-subapp est une application mobile conçue pour faciliter le calcul des points pour le tir sur cible subaquatique à partir d'une photo de la cible. L'application utilise les technologies TypeScript ,React, Capacitor et Rust (compilé en WebAssembly) pour offrir une expérience utilisateur fluide et des calculs précis.
+subapp est une application mobile conçue pour faciliter le calcul des points pour le tir sur cible subaquatique à partir d'une photo de la cible. L'application utilise les technologies TypeScript ,Angular ainsi que Opencv compilé en wasm.
 
 ## Fonctionnalités
 - Prendre en photo la cible
@@ -25,20 +25,20 @@ npm install
 ```
 4. Ensuite, exécutez la commande suivante pour démarrer l'application en mode de développement :
 ```bash
-ionic serve
+npm start
 ```
 Cela lancera l'application dans votre navigateur par défaut.
 
 5. Pour générer une version de production de l'application, utilisez la commande suivante :
 
 ```bash
-npm run build
+ng build
 ```
 
 Les fichiers de build seront générés dans le répertoire **dist/**.
 
 ## Configuration
-Aucune configuration supplémentaire n'est requise pour exécuter l'application subapp. Cependant, assurez-vous d'avoir correctement configuré l'environnement de développement pour React et Capacitor.
+Aucune configuration supplémentaire n'est requise pour exécuter l'application subapp. Cependant, assurez-vous d'avoir correctement configuré l'environnement de développement pour Angular et Capacitor.
 
 ## Contributions
 Les contributions à subapp sont les bienvenues ! Si vous souhaitez contribuer à ce projet, veuillez suivre les étapes ci-dessous :
