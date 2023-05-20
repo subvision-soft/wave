@@ -1,27 +1,64 @@
-# Subapp
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://github.com/DayUx/subapp/blob/master/LICENCE)
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.0.1.
 
-## Development server
+# WIP
+# Subapp - Application de calcul des points pour le tir sur cible subaquatique
+subapp est une application mobile conçue pour faciliter le calcul des points pour le tir sur cible subaquatique à partir d'une photo de la cible. L'application utilise les technologies TypeScript ,Angular ainsi que Opencv compilé en wasm.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Fonctionnalités
+- Prendre en photo la cible
+- Analyse de la photo pour détecter les impacts
+- Calcul des points en fonction de la position des impacts
+- Affichage des résultats de manière claire et concise
+- Possibilité de sauvegarder les résultats pour référence ultérieure
+## Installation
+Pour installer et exécuter l'application subapp sur votre appareil, suivez les étapes ci-dessous :
 
-## Code scaffolding
+1. Clonez ce dépôt sur votre machine locale.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+2. Assurez-vous d'avoir Node.js et npm installés sur votre machine.
 
-## Build
+3. Accédez au répertoire racine du projet et exécutez la commande suivante pour installer les dépendances :
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+```bash
+npm install
+```
+4. Ensuite, exécutez la commande suivante pour démarrer l'application en mode de développement :
+```bash
+npm start
+```
+Cela lancera l'application dans votre navigateur par défaut.
 
-## Running unit tests
+5. Pour générer une version de production de l'application, utilisez la commande suivante :
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```bash
+npm build
+```
 
-## Running end-to-end tests
+Les fichiers de build seront générés dans le répertoire **dist/**.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+## Configuration
+Aucune configuration supplémentaire n'est requise pour exécuter l'application subapp. Cependant, assurez-vous d'avoir correctement configuré l'environnement de développement pour Angular et Capacitor.
 
-## Further help
+## Contributions
+Les contributions à subapp sont les bienvenues ! Si vous souhaitez contribuer à ce projet, veuillez suivre les étapes ci-dessous :
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+1. Fork ce dépôt et clonez-le localement.
+
+2. Créez une branche pour vos modifications :
+
+```bash
+git checkout -b feature/nouvelle-fonctionnalite
+```
+
+3. Effectuez les modifications nécessaires et committez vos changements :
+
+```bash
+git commit -m "Ajouter une nouvelle fonctionnalité"
+```
+4. Poussez les modifications vers votre dépôt forké :
+
+```bash
+git push origin feature/nouvelle-fonctionnalite
+```
+5. Ouvrez une pull request sur ce dépôt en fournissant une description détaillée des modifications apportées.

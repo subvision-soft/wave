@@ -21,6 +21,7 @@ export class CameraComponent {
   currentFps: number = 0;
   coordinates: any = null;
   coordinatesPercent: any = null;
+  private frame: any = null;
 
   coordinatesToPercent(coordinates: any) {
     if (!coordinates) {
@@ -145,11 +146,14 @@ export class CameraComponent {
           // @ts-ignore
           cap.read(frame);
           // cv.imshow('canvas', frame);
-          new Promise((resolve, reject) => {
-            scope.coordinates =
-              scope.plastronService.getPlastronCoordinates(frame);
-            scope.coordinatesToPercent(scope.coordinates);
-          });
+          scope.coordinates =
+            scope.plastronService.getPlastronCoordinates(frame);
+          if (!scope.coordinates) {
+            scope.frame = frame;
+          } else {
+            scope.frame = null;
+          }
+          scope.coordinatesToPercent(scope.coordinates);
         } catch (err) {}
       } else {
         video = document.getElementById('video');
