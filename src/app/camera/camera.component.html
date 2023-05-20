@@ -1,7 +1,16 @@
 <!--webcam video-->
 <div class="camera-preview-container">
-  <canvas id="canvas" width="640" height="480"></canvas>
+  <div class="canvas" [ngStyle]="{
+  'height': '100%',
+  'aspect-ratio': width +'/'+ height,
+  '--polygon':getPolygon(),
+  '--opacity':coordinates ? 0.5 : 0,
+  }
+  ">
+    <video id="video" width="1920" height="1080" autoplay></video>
+
+  </div>
 </div>
-<video id="video" width="1920" height="1080" autoplay></video>
+<div class="fps">{{currentFps}}</div>
 
 
