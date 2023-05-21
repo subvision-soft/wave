@@ -7,8 +7,10 @@
   '--opacity':coordinates ? 0.5 : 0,
   }
   ">
-    <video id="video" width="1920" height="1080" autoplay></video>
+    <video id="video" width="4096" height="4096" autoplay></video>
     <button (click)="capture()" [class]="coordinates ? 'capture active' :'capture'"></button>
   </div>
   <app-loading [loading]="loading"></app-loading>
 </div>
+<!--<canvas id="debug" width="4096" height="4096"></canvas>-->
+<!--<canvas id="debug2" width="4096" height="4096"></canvas>-->

@@ -1,4 +1,4 @@
-import { Component, Inject, isDevMode, ViewChild } from '@angular/core';
+import { Component, Inject, ViewChild } from '@angular/core';
 import { NgxOpenCVService } from '../../lib/ngx-open-cv.service';
 import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
@@ -25,9 +25,13 @@ export class CameraPreviewComponent {
   loading: boolean = false;
 
   capture() {
+    this.loading = true;
     const scope = this;
     this.plastronService.setFrame(this.frame);
+    // this.plastronService.process();
+
     scope.router.navigate(['camera/result']);
+    this.loading = false;
   }
 
   coordinatesToPercent(coordinates: any) {
@@ -68,7 +72,12 @@ export class CameraPreviewComponent {
     console.log(navigator.mediaDevices);
     navigator.mediaDevices
       .getUserMedia({
-        video: isDevMode() ? true : { facingMode: { exact: 'environment' } },
+        video: {
+          width: { ideal: 4096 },
+          height: { ideal: 2160 },
+          facingMode: 'environment',
+        },
+
         audio: false,
       })
       .then(function (stream: MediaStream) {
@@ -154,8 +163,13 @@ export class CameraPreviewComponent {
           // @ts-ignore
           cap.read(frame);
           // cv.imshow('canvas', frame);
-          scope.coordinates =
-            scope.plastronService.getPlastronCoordinates(frame);
+          try {
+            scope.coordinates =
+              scope.plastronService.getPlastronCoordinates(frame);
+          } catch (err) {
+            console.log(err);
+          }
+
           if (!scope.coordinates) {
             scope.frame = null;
           } else {

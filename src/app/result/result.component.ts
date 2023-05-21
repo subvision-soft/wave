@@ -25,6 +25,11 @@ export class ResultComponent implements OnInit {
   ngOnInit(): void {
     this.canvas = document.getElementById('canvas');
     const cv = (window as any).cv;
-    cv.imshow(this.canvas, this.plastronService.getPlastronMat(this.frame));
+    try {
+      const cible = this.plastronService.process();
+      cv.imshow(this.canvas, cible.image);
+    } catch (error) {
+      console.error(error);
+    }
   }
 }
