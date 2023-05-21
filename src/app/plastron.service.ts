@@ -10,6 +10,8 @@ class PointCv {
 export class PlastronService {
   private cv: any;
 
+  private frame: any = null;
+
   constructor() {}
 
   private getDistance(p1: PointCv, p2: PointCv) {
@@ -216,6 +218,17 @@ export class PlastronService {
     let transform = this.cv.getPerspectiveTransform(approx, matFromArray);
     let warped = new this.cv.Mat();
     this.cv.warpPerspective(mat, warped, transform, mat.size());
+    this.cv.resize(warped, warped, new this.cv.Size(1500, 1500));
+    this.cv.flip(warped, warped, 1);
     return warped;
+  }
+
+  setFrame(frame: any) {
+    console.log('setFrame', frame);
+    this.frame = frame;
+  }
+  getFrame() {
+    console.log('getFrame', this.frame);
+    return this.frame;
   }
 }

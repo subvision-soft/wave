@@ -28,9 +28,8 @@ export class TabBarComponent {
 
   private updateActive() {
     const path = this.router.url;
-
     this.tabs.forEach((tab) => {
-      tab.active = tab.link === path;
+      tab.active = path.startsWith(tab.link);
       this.title = tab.label;
       if (tab.active) {
         this.select.emit(tab);

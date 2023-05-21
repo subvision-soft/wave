@@ -14,7 +14,6 @@ export class AppComponent {
   ];
 
   tabSelected(tab: any) {
-    console.log(tab);
     this.title = tab.label;
   }
 }
