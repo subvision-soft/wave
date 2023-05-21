@@ -20,6 +20,7 @@ import { HeaderComponent } from './header/header.component';
 import { IconButtonComponent } from './icon-button/icon-button.component';
 import { NgxOpenCVModule } from '../lib/ngx-opencv.module';
 import { OpenCVConfig } from '../lib/models';
+import { LoadingComponent } from './loading/loading.component';
 
 const openCVConfig: OpenCVConfig = {
   openCVDirPath: 'assets/opencv',
@@ -35,6 +36,7 @@ const openCVConfig: OpenCVConfig = {
     CameraComponent,
     HeaderComponent,
     IconButtonComponent,
+    LoadingComponent,
   ],
   imports: [
     NgxOpenCVModule.forRoot(openCVConfig),

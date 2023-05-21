@@ -22,6 +22,16 @@ export class CameraComponent {
   coordinates: any = null;
   coordinatesPercent: any = null;
   private frame: any = null;
+  loading: boolean = false;
+
+  capture() {
+    this.loading = true;
+    const scope = this;
+    setTimeout(() => {
+      scope.loading = false;
+      // scope.router.navigate(['/result']);
+    }, 2000);
+  }
 
   coordinatesToPercent(coordinates: any) {
     if (!coordinates) {

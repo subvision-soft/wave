@@ -61,10 +61,13 @@
       padding: 0;
       transition: var(--primary-transition);
       opacity: 0.5;
+      cursor: pointer;
+      pointer-events: none;
       &.active:active {
         transform: translateX(-50%) scale(0.9);
       }
       &.active {
+        pointer-events: visible;
         opacity: 1;
         transform: translateX(-50%) scale(1);
       }
