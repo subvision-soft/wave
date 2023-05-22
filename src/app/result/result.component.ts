@@ -22,6 +22,7 @@ export class ResultComponent implements OnInit {
       return;
     }
   }
+
   ngOnInit(): void {
     this.canvas = document.getElementById('canvas');
     const cv = (window as any).cv;

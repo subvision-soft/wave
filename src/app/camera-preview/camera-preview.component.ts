@@ -145,8 +145,14 @@ export class CameraPreviewComponent {
     this.width = video.videoWidth;
     // @ts-ignore
     video.width = this.width;
+
+    let frame: any = null;
+    if (this.plastronService.getFrame()) {
+      frame = this.plastronService.getFrame();
+    } else {
+      frame = new cv.Mat(this.height, this.width, cv.CV_8UC4);
+    }
     // @ts-ignore
-    let frame = new cv.Mat(this.height, this.width, cv.CV_8UC4);
     const fps = 24;
     const scope = this;
 

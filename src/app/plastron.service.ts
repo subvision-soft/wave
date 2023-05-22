@@ -100,7 +100,6 @@ export class PlastronService {
       C
     );
     this.cv.Canny(gray, edged, 100, 200);
-    this.cv.imshow('debug', edged);
     kernel.delete();
     kernel = new this.cv.Mat.ones(3, 3, this.cv.CV_8UC1);
     this.cv.bitwise_not(gray, gray);
@@ -136,7 +135,6 @@ export class PlastronService {
       this.cv.RETR_CCOMP,
       this.cv.CHAIN_APPROX_SIMPLE
     );
-    this.cv.imshow('debug', gray);
 
     this.cv.drawContours(img, contours, -1, [255, 0, 255, 255], 1);
 
@@ -748,7 +746,6 @@ export class PlastronService {
       color,
       thickness
     );
-    // this.cv.imshow('debug', mat);
     return ellipse;
   }
 
