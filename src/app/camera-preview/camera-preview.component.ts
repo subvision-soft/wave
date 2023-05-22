@@ -139,7 +139,7 @@ export class CameraPreviewComponent {
     video.width = this.width;
     // @ts-ignore
     let frame = new cv.Mat(this.height, this.width, cv.CV_8UC4);
-    const fps = 60;
+    const fps = 24;
     const scope = this;
 
     let currentFps = 0;
