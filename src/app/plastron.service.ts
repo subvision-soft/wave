@@ -62,8 +62,12 @@ export class PlastronService {
   }
 
   getPlastronCoordinates(mat: any) {
+    console.log('getPlastronCoordinates');
+    console.log('img', mat);
+
     // @ts-ignore
     let img = mat.clone();
+    console.log('after clone');
     this.cv.resize(
       img,
       img,
@@ -79,12 +83,13 @@ export class PlastronService {
       new this.cv.Point(-1, -1),
       3
     );
-
     const maxValue = 255; // Maximum pixel value for the thresholded image
     const blockSize = 11; // Size of the neighborhood for thresholding
     const C = 2; // Constant subtracted from the mean
     let gray = new this.cv.Mat();
     this.cv.cvtColor(img, gray, this.cv.COLOR_BGR2GRAY);
+    let edged = new this.cv.Mat();
+
     this.cv.adaptiveThreshold(
       gray,
       gray,
@@ -94,6 +99,8 @@ export class PlastronService {
       blockSize,
       C
     );
+    this.cv.Canny(gray, edged, 100, 200);
+    this.cv.imshow('debug', edged);
     kernel.delete();
     kernel = new this.cv.Mat.ones(3, 3, this.cv.CV_8UC1);
     this.cv.bitwise_not(gray, gray);
@@ -109,14 +116,16 @@ export class PlastronService {
 
     this.cv.dilate(gray, gray, kernel, new this.cv.Point(-1, -1), 3);
 
-    this.cv.morphologyEx(
-      gray,
-      gray,
-      this.cv.MORPH_CLOSE,
-      kernel,
-      new this.cv.Point(-1, -1),
-      2
-    );
+    this.cv.bitwise_not(gray, gray);
+
+    // this.cv.morphologyEx(
+    //   gray,
+    //   gray,
+    //   this.cv.MORPH_CLOSE,
+    //   kernel,
+    //   new this.cv.Point(-1, -1),
+    //   2
+    // );
 
     let contours = new this.cv.MatVector();
     let hierarchy = new this.cv.Mat();
@@ -124,34 +133,32 @@ export class PlastronService {
       gray,
       contours,
       hierarchy,
-      this.cv.RETR_EXTERNAL,
+      this.cv.RETR_CCOMP,
       this.cv.CHAIN_APPROX_SIMPLE
     );
+    this.cv.imshow('debug', gray);
 
-    this.cv.drawContours(
-      gray,
-      contours,
-      -1,
-      [255, 255, 255, 255],
-      this.cv.FILLED
-    );
-    this.cv.morphologyEx(
-      gray,
-      gray,
-      this.cv.MORPH_OPEN,
-      kernel,
-      new this.cv.Point(-1, -1),
-      10
-    );
-    this.cv.erode(gray, gray, kernel, new this.cv.Point(-1, -1), 3);
+    this.cv.drawContours(img, contours, -1, [255, 0, 255, 255], 1);
 
-    this.cv.findContours(
-      gray,
-      contours,
-      hierarchy,
-      this.cv.RETR_EXTERNAL,
-      this.cv.CHAIN_APPROX_SIMPLE
-    );
+    //
+    // this.cv.morphologyEx(
+    //   gray,
+    //   gray,
+    //   this.cv.MORPH_OPEN,
+    //   kernel,
+    //   new this.cv.Point(-1, -1),
+    //   10
+    // );
+    //
+    // this.cv.erode(gray, gray, kernel, new this.cv.Point(-1, -1), 3);
+    //
+    // this.cv.findContours(
+    //   gray,
+    //   contours,
+    //   hierarchy,
+    //   this.cv.RETR_EXTERNAL,
+    //   this.cv.CHAIN_APPROX_SIMPLE
+    // );
 
     //
     // let edged = new this.cv.Mat();
@@ -195,56 +202,61 @@ export class PlastronService {
 
     contoursArray.sort(
       (contour1, contour2) =>
-        this.cv.contourArea(contour2) - this.cv.contourArea(contour1)
+        this.cv.contourArea(contour1) - this.cv.contourArea(contour2)
     );
 
     let screenCnt = null;
+    let contourToDraw = null;
     for (let contour of contoursArray) {
       let approxDistance = this.cv.arcLength(contour, true) * 0.1;
       let approx = new this.cv.Mat();
       this.cv.approxPolyDP(contour, approx, approxDistance, true);
       let valid = true;
       if (approx.total() === 4) {
-        // let angles = [];
-        // for (let i = 0; i < 4; i++) {
-        //   let p1 = {
-        //     x: approx.data32F[i * 2],
-        //     y: approx.data32F[i * 2 + 1],
-        //   };
-        //   let p2 = {
-        //     x: approx.data32F[((i + 1) % 4) * 2],
-        //     y: approx.data32F[((i + 1) % 4) * 2 + 1],
-        //   };
-        //   let p3 = {
-        //     x: approx.data32F[((i + 2) % 4) * 2],
-        //     y: approx.data32F[((i + 2) % 4) * 2 + 1],
-        //   };
-        //   let dx1 = p1.x - p2.x;
-        //   let dy1 = p1.y - p2.y;
-        //   let dx2 = p3.x - p2.x;
-        //   let dy2 = p3.y - p2.y;
-        //   let angle = Math.abs(
-        //     (Math.atan2(dx1 * dy2 - dy1 * dx2, dx1 * dx2 + dy1 * dy2) * 180) /
-        //       Math.PI
-        //   );
-        //   angles.push(angle);
-        // }
-        //
-        // for (let angle of angles) {
-        //   if (angle < 70 || angle > 110) {
-        //     valid = false;
-        //     break;
-        //   }
-        // }
+        let angles = [];
+        for (let i = 0; i < 4; i++) {
+          let p1 = {
+            x: approx.data32F[i * 2],
+            y: approx.data32F[i * 2 + 1],
+          };
+          let p2 = {
+            x: approx.data32F[((i + 1) % 4) * 2],
+            y: approx.data32F[((i + 1) % 4) * 2 + 1],
+          };
+          let p3 = {
+            x: approx.data32F[((i + 2) % 4) * 2],
+            y: approx.data32F[((i + 2) % 4) * 2 + 1],
+          };
+          let dx1 = p1.x - p2.x;
+          let dy1 = p1.y - p2.y;
+          let dx2 = p3.x - p2.x;
+          let dy2 = p3.y - p2.y;
+          let angle = Math.abs(
+            (Math.atan2(dx1 * dy2 - dy1 * dx2, dx1 * dx2 + dy1 * dy2) * 180) /
+              Math.PI
+          );
+          angles.push(angle);
+        }
+
+        for (let angle of angles) {
+          if (angle < 70 || angle > 110) {
+            valid = false;
+            break;
+          }
+        }
 
         let area = this.cv.contourArea(approx);
         let ratio = area / (img.cols * img.rows);
         if (ratio < 0.1) {
           valid = false;
         }
+        if (ratio > 0.7) {
+          valid = false;
+        }
 
         if (valid) {
           screenCnt = approx;
+          contourToDraw = contour;
           break;
         }
         approx.delete();
@@ -254,6 +266,7 @@ export class PlastronService {
     if (screenCnt === null) {
       return null;
     }
+
     // for (let i = 0; i < screenCnt.total(); i++) {
     //   let p1 = new this.cv.Point(
     //     screenCnt.data32S[i * 2],

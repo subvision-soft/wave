@@ -65,6 +65,13 @@ export class CameraPreviewComponent {
     private plastronService: PlastronService
   ) {
     router.events.subscribe((val) => {
+      let video = document.getElementById('video');
+      if (video) {
+        // @ts-ignore
+        video.pause();
+        // @ts-ignore
+        video.srcObject = null;
+      }
       this.playing = false;
     });
 
@@ -117,6 +124,7 @@ export class CameraPreviewComponent {
   }
 
   startWebcam() {
+    console.log('startWebcam');
     // @ts-ignore
     const cv = window['cv'];
     this.plastronService.setCv(cv);
@@ -145,6 +153,7 @@ export class CameraPreviewComponent {
     let currentFps = 0;
     let currentTimestamp = new Date().getTime();
     function processVideo() {
+      console.log('processVideo');
       if (new Date().getTime() - currentTimestamp > 1000) {
         scope.currentFps = currentFps;
         currentFps = 0;
@@ -160,8 +169,10 @@ export class CameraPreviewComponent {
       }
       if (scope.height > 0 && scope.width > 0) {
         try {
+          console.log('try');
           // @ts-ignore
           cap.read(frame);
+          console.log('read');
           // cv.imshow('canvas', frame);
           try {
             scope.coordinates =
