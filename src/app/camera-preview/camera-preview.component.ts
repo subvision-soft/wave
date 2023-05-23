@@ -27,11 +27,13 @@ export class CameraPreviewComponent {
   capture() {
     this.loading = true;
     const scope = this;
-    this.plastronService.setFrame(this.frame);
-    // this.plastronService.process();
+    this.playing = false;
 
-    scope.router.navigate(['camera/result']);
-    this.loading = false;
+    this.plastronService.setFrame(this.frame);
+    setTimeout(() => {
+      scope.router.navigate(['camera/result']);
+      this.loading = false;
+    }, 1000);
   }
 
   coordinatesToPercent(coordinates: any) {

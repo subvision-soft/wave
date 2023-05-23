@@ -10,6 +10,8 @@ import { Router } from '@angular/router';
 export class ResultComponent implements OnInit {
   private frame: any = null;
   private canvas: any = null;
+  public impacts: any[] = [];
+  public total: number = 0;
 
   constructor(
     private plastronService: PlastronService,
@@ -29,6 +31,11 @@ export class ResultComponent implements OnInit {
     try {
       const cible = this.plastronService.process();
       cv.imshow(this.canvas, cible.image);
+      this.impacts = cible.impacts;
+      this.total = cible.impacts
+        .map((impact: any) => impact.points)
+        .reduce((a: number, b: number) => a + b, 0);
+      cible.image.delete();
     } catch (error) {
       console.error(error);
     }

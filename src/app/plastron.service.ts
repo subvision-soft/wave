@@ -114,6 +114,7 @@ export class PlastronService {
     );
 
     this.cv.dilate(gray, gray, kernel, new this.cv.Point(-1, -1), 3);
+    kernel.delete();
 
     this.cv.bitwise_not(gray, gray);
 
@@ -260,6 +261,10 @@ export class PlastronService {
         approx.delete();
       }
     }
+    img.delete();
+    gray.delete();
+    contours.delete();
+    hierarchy.delete();
 
     if (screenCnt === null) {
       return null;
@@ -373,10 +378,12 @@ export class PlastronService {
       destCoordinates.flat()
     );
     let transform = this.cv.getPerspectiveTransform(approx, matFromArray);
+
     let warped = new this.cv.Mat();
     this.cv.warpPerspective(mat, warped, transform, mat.size());
     this.cv.resize(warped, warped, new this.cv.Size(1500, 1500));
     console.log('end getPlastronMat');
+    approx.delete();
     return warped;
   }
 
@@ -446,7 +453,6 @@ export class PlastronService {
         new this.cv.Point(-1, -1),
         1
       );
-      kernel.delete();
       const contours = new this.cv.MatVector();
       const tempMat = new this.cv.Mat();
       this.cv.findContours(
@@ -456,8 +462,7 @@ export class PlastronService {
         this.cv.RETR_LIST,
         this.cv.CHAIN_APPROX_SIMPLE
       );
-      tempMat.delete();
-      impactsMask.delete();
+
       console.log('getImpactsCenters contours', contours);
       let contoursArray = [];
       for (let i = 0; i < contours.size(); i++) {
@@ -471,6 +476,10 @@ export class PlastronService {
         const impact = this.cv.fitEllipse(contour);
         points.push(impact.center);
       }
+      kernel.delete();
+      tempMat.delete();
+      impactsMask.delete();
+      contours.delete();
     }
     console.log('end getImpactsCenters');
     return points;
@@ -488,14 +497,11 @@ export class PlastronService {
 
     const matVector = new this.cv.MatVector();
     matVector.push_back(gray);
-    this.cv.calcHist(
-      matVector,
-      [0],
-      new this.cv.Mat(),
-      hist,
-      histSize,
-      histRange
-    );
+    const mat1 = new this.cv.Mat();
+    this.cv.calcHist(matVector, [0], mat1, hist, histSize, histRange);
+    mat1.delete();
+    matVector.delete();
+
     console.log('end calcHist');
 
     let histSizeTotal = hist.total();
@@ -518,6 +524,11 @@ export class PlastronService {
 
     let range = maximumGray - minimumGray;
     if (range === 0) {
+      gray.delete();
+      hist.delete();
+      histSize.delete();
+      histRange.delete();
+      accumulator.delete();
       return mat;
     }
 
@@ -533,6 +544,7 @@ export class PlastronService {
     histSize.delete();
     histRange.delete();
     accumulator.delete();
+    autoResult.delete();
 
     return autoResult;
   }
@@ -579,12 +591,8 @@ export class PlastronService {
         this.cv.CV_8UC3,
         [0, 0, 0, 255]
       );
-      console.log('wesh');
-
       this.cv.cvtColor(redDots, mask3, this.cv.COLOR_GRAY2BGR);
-      console.log('wesh');
-
-      // this.cv.bitwise_and(mat, mask3, removeHoles);
+      redDots.delete();
       mask3.delete();
     }
 
@@ -593,6 +601,7 @@ export class PlastronService {
 
     let hsvChannels = new this.cv.MatVector();
     this.cv.split(hsv, hsvChannels);
+
     let value = hsvChannels.get(2);
 
     let value_mask = new this.cv.Mat();
@@ -642,6 +651,13 @@ export class PlastronService {
     );
     let biggestContour = this.getBiggestContour(contours);
     if (biggestContour == null) {
+      hsv.delete();
+      hsvChannels.delete();
+      kernel.delete();
+      circle.delete();
+      close.delete();
+      open.delete();
+      kernel2.delete();
       throw new Error('Problème lors de la détection des visuels');
     }
     const biggestContourVector = new this.cv.MatVector();
@@ -657,19 +673,32 @@ export class PlastronService {
     biggestContourVector.delete();
     this.cv.morphologyEx(close, open, this.cv.MORPH_OPEN, kernel2);
     let newContours = new this.cv.MatVector();
+    const mat2 = new this.cv.Mat();
     this.cv.findContours(
       open,
       newContours,
-      new this.cv.Mat(),
+      mat2,
       this.cv.RETR_EXTERNAL,
       this.cv.CHAIN_APPROX_SIMPLE
     );
+    mat2.delete();
 
     biggestContour = this.getBiggestContour(newContours);
     if (biggestContour == null || biggestContour.size().height < 5) {
+      hsv.delete();
+      hsvChannels.delete();
+      kernel.delete();
+      circle.delete();
+      close.delete();
+      open.delete();
+      newContours.delete();
+      biggestContour.delete();
+      kernel2.delete();
       throw new Error('Problème lors de la détection des visuels');
     }
-    let ellipse = this.cv.fitEllipse(new this.cv.Mat(biggestContour));
+    const mat3 = new this.cv.Mat(biggestContour);
+    let ellipse = this.cv.fitEllipse(mat3);
+    mat3.delete();
     // Nettoyage des contours
     for (let i = 0; i < 4; i++) {
       let empty = new this.cv.Mat.zeros(mat.size(), mat.type());
@@ -705,23 +734,50 @@ export class PlastronService {
       this.cv.bitwise_and(open, xor, xor);
 
       let xorContours = new this.cv.MatVector();
+      const mat1 = new this.cv.Mat();
       this.cv.findContours(
         xor,
         xorContours,
-        new this.cv.Mat(),
+        mat1,
         this.cv.RETR_EXTERNAL,
         this.cv.CHAIN_APPROX_SIMPLE
       );
 
       biggestContour = this.getBiggestContour(xorContours);
+      mat1.delete();
+      xorContours.delete();
+      empty.delete();
+      xor.delete();
       if (biggestContour == null || biggestContour.size().height < 5) {
+        hsv.delete();
+        hsvChannels.delete();
+        kernel.delete();
+        circle.delete();
+        close.delete();
+        open.delete();
+        newContours.delete();
+        biggestContour.delete();
+        kernel2.delete();
         throw new Error('Problème lors de la détection des visuels');
       }
-      ellipse = this.cv.fitEllipse(new this.cv.Mat(biggestContour));
+      const biggestContourMat = new this.cv.Mat(biggestContour);
+      ellipse = this.cv.fitEllipse(biggestContourMat);
+
+      biggestContourMat.delete();
       if (
         ellipse.size.width < ellipse.size.height * 0.7 ||
         ellipse.size.width > ellipse.size.height * 1.3
       ) {
+        hsv.delete();
+        hsvChannels.delete();
+        kernel.delete();
+        circle.delete();
+        close.delete();
+        open.delete();
+        newContours.delete();
+        biggestContour.delete();
+        kernel2.delete();
+
         throw new Error('Problème lors de la détection des visuels');
       }
     }
@@ -746,6 +802,17 @@ export class PlastronService {
       color,
       thickness
     );
+
+    hsv.delete();
+    hsvChannels.delete();
+    kernel.delete();
+    circle.delete();
+    close.delete();
+    open.delete();
+    newContours.delete();
+    biggestContour.delete();
+    kernel2.delete();
+
     return ellipse;
   }
 
@@ -819,8 +886,9 @@ export class PlastronService {
     biggestContour.delete();
     kernel.delete();
     cropped.delete();
+    low.delete();
+    high.delete();
 
-    console.log(color);
     return color;
   }
   getColorMask(mat: any, color: any) {
@@ -828,11 +896,9 @@ export class PlastronService {
     const colorMat = new this.cv.Mat(1, 1, this.cv.CV_8UC3, color);
     const hsv = new this.cv.Mat();
     this.cv.cvtColor(colorMat, hsv, this.cv.COLOR_BGR2HSV);
-    colorMat.delete();
 
     const min = new this.cv.Scalar(hsv.ucharPtr(0, 0)[0] - 10, 100, 50);
     const max = new this.cv.Scalar(hsv.ucharPtr(0, 0)[0] + 10, 255, 255);
-    hsv.delete();
     const mask = new this.cv.Mat();
     const hsvMat = new this.cv.Mat();
     this.cv.cvtColor(mat, hsvMat, this.cv.COLOR_BGR2HSV);
@@ -843,7 +909,6 @@ export class PlastronService {
     let highMat = new this.cv.Mat(hsvMat.rows, hsvMat.cols, hsvMat.type(), max);
 
     this.cv.inRange(hsvMat, minMat, highMat, mask);
-    hsvMat.delete();
     const kernel = this.cv.Mat.ones(5, 5, this.cv.CV_8UC1);
     this.cv.morphologyEx(
       mask,
@@ -853,7 +918,13 @@ export class PlastronService {
       new this.cv.Point(-1, -1),
       3
     );
+    minMat.delete();
+    highMat.delete();
     kernel.delete();
+    colorMat.delete();
+    hsv.delete();
+    hsvMat.delete();
+    hsvChannels.delete();
     console.log('end getColorMask');
     return mask;
   }
@@ -1088,6 +1159,11 @@ export class PlastronService {
       impactDTO.angle = this.toDegrees(radAngle);
       result.impacts.push(impactDTO);
     }
+
+    for (let zone in hashMapVisuels) {
+      hashMapVisuels[zone];
+    }
+
     result.image = mat;
     console.log('end process');
     console.log(result);
@@ -1097,23 +1173,31 @@ export class PlastronService {
   getHashMapVisuels(mat: any) {
     console.log('getHashMapVisuels');
     console.log('getTopLeftTarget');
-    let ellipseTopLeft = this.getOuterCircle(this.getTopLeftTarget(mat));
+    const topLeftTarget = this.getTopLeftTarget(mat);
+    let ellipseTopLeft = this.getOuterCircle(topLeftTarget);
+    topLeftTarget.delete();
     console.log('getTopRightTarget');
-    let ellipseTopRight = this.getOuterCircle(this.getTopRightTarget(mat));
+    const topRightTarget = this.getTopRightTarget(mat);
+    let ellipseTopRight = this.getOuterCircle(topRightTarget);
+    topRightTarget.delete();
     const width = mat.cols;
     ellipseTopRight.center.x += width / 2;
     console.log('getCenterTarget');
-    let ellipseCenter = this.getOuterCircle(this.getCenterTarget(mat));
+    const centerTarget = this.getCenterTarget(mat);
+    let ellipseCenter = this.getOuterCircle(centerTarget);
+    centerTarget.delete();
     ellipseCenter.center.x += mat.cols / 4;
     const height = mat.rows;
     ellipseCenter.center.y += height / 4;
     console.log('getBottomLeftTarget');
-    let ellipseBottomLeft = this.getOuterCircle(this.getBottomLeftTarget(mat));
+    const bottomLeftTarget = this.getBottomLeftTarget(mat);
+    let ellipseBottomLeft = this.getOuterCircle(bottomLeftTarget);
+    bottomLeftTarget.delete();
     ellipseBottomLeft.center.y += height / 2;
     console.log('getBottomRightTarget');
-    let ellipseBottomRight = this.getOuterCircle(
-      this.getBottomRightTarget(mat)
-    );
+    const bottomRightTarget = this.getBottomRightTarget(mat);
+    let ellipseBottomRight = this.getOuterCircle(bottomRightTarget);
+    bottomRightTarget.delete();
     ellipseBottomRight.center.x += width / 2;
     ellipseBottomRight.center.y += height / 2;
     let ellipseMap: any = {};
