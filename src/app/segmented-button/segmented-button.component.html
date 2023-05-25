@@ -1,0 +1,7 @@
+<a *ngFor="let option of items"
+   style="--button-color:#fff;"
+   (click)="onClick(option)"
+   class="{{option.key === selected ? 'active' : ''}}">
+
+  {{option.label}}
+</a>

@@ -1,10 +1,12 @@
 <div class="result-preview">
   <canvas id="canvas" height="1000" width="1000"></canvas>
 </div>
+<app-segmented-button selected="precision" [items]="itemsSegmented"></app-segmented-button>
+<input [style.display]="">
 <div class="result-list">
-<!--  <span *ngFor="let impact of impacts; index as i; first as isFirst ">-->
-<!--    {{impact.points}}-->
-<!--  </span>-->
+  <!--  <span *ngFor="let impact of impacts; index as i; first as isFirst ">-->
+  <!--    {{impact.points}}-->
+  <!--  </span>-->
   <div>Total : {{total}}</div>
 </div>
 

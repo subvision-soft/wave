@@ -23,6 +23,8 @@ import { OpenCVConfig } from '../lib/models';
 import { LoadingComponent } from './loading/loading.component';
 import { ResultComponent } from './result/result.component';
 import { CameraPreviewComponent } from './camera-preview/camera-preview.component';
+import { SegmentedButtonComponent } from './segmented-button/segmented-button.component';
+import { TextfieldComponent } from './textfield/textfield.component';
 
 const openCVConfig: OpenCVConfig = {
   openCVDirPath: 'assets/opencv',
@@ -41,6 +43,8 @@ const openCVConfig: OpenCVConfig = {
     LoadingComponent,
     ResultComponent,
     CameraPreviewComponent,
+    SegmentedButtonComponent,
+    TextfieldComponent,
   ],
   imports: [
     NgxOpenCVModule.forRoot(openCVConfig),

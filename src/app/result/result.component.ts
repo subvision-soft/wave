@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PlastronService } from '../plastron.service';
 import { Router } from '@angular/router';
+import { SegmentedButtonItem } from '../segmented-button/segmented-button.component';
 
 @Component({
   selector: 'app-result',
@@ -12,6 +13,17 @@ export class ResultComponent implements OnInit {
   private canvas: any = null;
   public impacts: any[] = [];
   public total: number = 0;
+  public itemsSegmented: SegmentedButtonItem[] = [
+    new SegmentedButtonItem('Précision', 'precision', () => {
+      console.log('Camera');
+    }),
+    new SegmentedButtonItem('Biathlon', 'biathlon', () => {
+      console.log('Gallery');
+    }),
+    new SegmentedButtonItem('Super-biathlon', 'superBiathlon', () => {
+      console.log('Gallery');
+    }),
+  ];
 
   constructor(
     private plastronService: PlastronService,
@@ -20,7 +32,7 @@ export class ResultComponent implements OnInit {
     this.frame = this.plastronService.getFrame();
     if (!this.frame) {
       console.error('No frame found');
-      this.router.navigate(['camera']);
+      // this.router.navigate(['camera']);
       return;
     }
   }

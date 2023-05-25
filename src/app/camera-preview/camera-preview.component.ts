@@ -1,4 +1,11 @@
-import { Component, Inject, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  HostListener,
+  Inject,
+  ViewChild,
+} from '@angular/core';
 import { NgxOpenCVService } from '../../lib/ngx-open-cv.service';
 import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
@@ -10,11 +17,28 @@ import { OpenCVState } from '../../lib/models';
   templateUrl: './camera-preview.component.html',
   styleUrls: ['./camera-preview.component.scss'],
 })
-export class CameraPreviewComponent {
+export class CameraPreviewComponent implements AfterViewInit {
   private cvState: string = '';
   stream: MediaStream | undefined;
   @ViewChild('video', { static: true }) video: any;
+  @ViewChild('cameraPreview') cameraPreview: ElementRef | undefined;
   private playing: boolean = true;
+  parentHeight: number = 0;
+  parentWidth: number = 0;
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.updateParentSize();
+  }
+
+  private updateParentSize() {
+    this.parentHeight = this.cameraPreview?.nativeElement.offsetHeight;
+    this.parentWidth = this.cameraPreview?.nativeElement.offsetWidth;
+  }
+
+  ngAfterViewInit() {
+    this.updateParentSize();
+  }
 
   height: number = 0;
   width: number = 0;
@@ -28,7 +52,6 @@ export class CameraPreviewComponent {
     this.loading = true;
     const scope = this;
     this.playing = false;
-
     this.plastronService.setFrame(this.frame);
     setTimeout(() => {
       scope.router.navigate(['camera/result']);
@@ -47,6 +70,7 @@ export class CameraPreviewComponent {
       };
     });
   }
+
   getPolygon() {
     let result = '';
     if (!this.coordinatesPercent) {
@@ -160,6 +184,7 @@ export class CameraPreviewComponent {
 
     let currentFps = 0;
     let currentTimestamp = new Date().getTime();
+
     function processVideo() {
       console.log('processVideo');
       if (new Date().getTime() - currentTimestamp > 1000) {

@@ -1,16 +1,24 @@
 :host {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  gap: 20px;
+
   .result-preview {
     width: 100%;
     aspect-ratio: 1;
     position: relative;
     overflow: hidden;
     border-radius: 10px;
-    border: 1px solid var(--primary-background);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 10px #ffffff1a;
     display: flex;
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
     flex: 1;
+
     canvas {
       position: absolute;
       top: 0;
@@ -20,6 +28,7 @@
       height: 100%;
     }
   }
+
   .result-list {
     display: flex;
     flex-direction: column;
