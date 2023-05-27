@@ -9,7 +9,7 @@ import {
 import { NgxOpenCVService } from '../../lib/ngx-open-cv.service';
 import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
-import { PlastronService } from '../plastron.service';
+import { PlastronService } from '../services/plastron.service';
 import { OpenCVState } from '../../lib/models';
 
 @Component({

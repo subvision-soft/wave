@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PlastronService } from '../plastron.service';
+import { PlastronService } from '../services/plastron.service';
 import { Router } from '@angular/router';
 import { SegmentedButtonItem } from '../segmented-button/segmented-button.component';
 
@@ -32,7 +32,7 @@ export class ResultComponent implements OnInit {
     this.frame = this.plastronService.getFrame();
     if (!this.frame) {
       console.error('No frame found');
-      // this.router.navigate(['camera']);
+      this.router.navigate(['camera']);
       return;
     }
   }

@@ -25,6 +25,8 @@ import { ResultComponent } from './result/result.component';
 import { CameraPreviewComponent } from './camera-preview/camera-preview.component';
 import { SegmentedButtonComponent } from './segmented-button/segmented-button.component';
 import { TextfieldComponent } from './textfield/textfield.component';
+import { NumberSpinnerComponent } from './number-spinner/number-spinner.component';
+import { SlideSheetComponent } from './slide-sheet/slide-sheet.component';
 
 const openCVConfig: OpenCVConfig = {
   openCVDirPath: 'assets/opencv',
@@ -45,6 +47,8 @@ const openCVConfig: OpenCVConfig = {
     CameraPreviewComponent,
     SegmentedButtonComponent,
     TextfieldComponent,
+    NumberSpinnerComponent,
+    SlideSheetComponent,
   ],
   imports: [
     NgxOpenCVModule.forRoot(openCVConfig),
