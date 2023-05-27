@@ -10,6 +10,7 @@ import {
   iconoirHomeSimpleDoor,
   iconoirNavArrowLeft,
   iconoirSettings,
+  iconoirTimer,
 } from '@ng-icons/iconoir';
 import { NgIconsModule } from '@ng-icons/core';
 import { TabBarButtonComponent } from './tab-bar-button/tab-bar-button.component';
@@ -20,6 +21,14 @@ import { HeaderComponent } from './header/header.component';
 import { IconButtonComponent } from './icon-button/icon-button.component';
 import { NgxOpenCVModule } from '../lib/ngx-opencv.module';
 import { OpenCVConfig } from '../lib/models';
+import { LoadingComponent } from './loading/loading.component';
+import { ResultComponent } from './result/result.component';
+import { CameraPreviewComponent } from './camera-preview/camera-preview.component';
+import { SegmentedButtonComponent } from './segmented-button/segmented-button.component';
+import { TextfieldComponent } from './textfield/textfield.component';
+import { NumberSpinnerComponent } from './number-spinner/number-spinner.component';
+import { SlideSheetComponent } from './slide-sheet/slide-sheet.component';
+import { ChronoPickerComponent } from './chrono-picker/chrono-picker.component';
 
 const openCVConfig: OpenCVConfig = {
   openCVDirPath: 'assets/opencv',
@@ -35,6 +44,14 @@ const openCVConfig: OpenCVConfig = {
     CameraComponent,
     HeaderComponent,
     IconButtonComponent,
+    LoadingComponent,
+    ResultComponent,
+    CameraPreviewComponent,
+    SegmentedButtonComponent,
+    TextfieldComponent,
+    NumberSpinnerComponent,
+    SlideSheetComponent,
+    ChronoPickerComponent,
   ],
   imports: [
     NgxOpenCVModule.forRoot(openCVConfig),
@@ -46,6 +63,7 @@ const openCVConfig: OpenCVConfig = {
       iconoirSettings,
       iconoirNavArrowLeft,
       iconoirDashboardDots,
+      iconoirTimer,
     }),
   ],
   providers: [],

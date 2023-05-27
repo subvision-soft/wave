@@ -1,15 +1,4 @@
-<!--webcam video-->
-<div class="camera-preview-container">
-  <div class="canvas" [ngStyle]="{
-  'height': '100%',
-  'aspect-ratio': width +'/'+ height,
-  '--polygon':getPolygon(),
-  '--opacity':coordinates ? 0.5 : 0,
-  }
-  ">
-    <video id="video" width="1920" height="1080" autoplay></video>
-<button  [class]="coordinates ? 'capture active' :'capture'"></button>
-  </div>
-</div>
+
+<router-outlet></router-outlet>
 
 

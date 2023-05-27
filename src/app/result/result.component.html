@@ -1,0 +1,18 @@
+<div class="result-preview">
+  <canvas id="canvas" height="1000" width="1000"></canvas>
+</div>
+<app-segmented-button [(selected)]="epreuve" [items]="itemsSegmented"></app-segmented-button>
+<div *ngIf="precision">
+</div>
+<div *ngIf="biathlon">
+  <app-chrono-picker></app-chrono-picker>
+</div>
+<div *ngIf="superBiathlon">
+  <app-chrono-picker></app-chrono-picker>
+</div>
+<div *ngFor="let impact of impacts">
+  {{impact.points}}
+</div>
+
+
+<!--<canvas id="debug" width="4096" height="4096"></canvas>-->

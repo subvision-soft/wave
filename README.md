@@ -1,11 +1,11 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://github.com/DayUx/subapp/blob/master/LICENCE)
 
-
 # WIP
 
 # Subapp - Application de calcul des points pour le tir sur cible subaquatique
 
-subapp est une application mobile conçue pour faciliter le calcul des points pour le tir sur cible subaquatique à partir d'une photo de la cible. L'application utilise les technologies TypeScript ,Angular ainsi que Opencv compilé en wasm.
+subapp est une application mobile conçue pour faciliter le calcul des points pour le tir sur cible subaquatique à partir
+d'une photo de la cible. L'application utilise les technologies TypeScript ,Angular ainsi que Opencv compilé en wasm.
 
 ## Fonctionnalités
 
@@ -21,7 +21,12 @@ subapp est une application mobile conçue pour faciliter le calcul des points po
 
 <img src="./github/preview1.gif" width=300>
 
+### Saisie d'un temps à l'aide d'un composant personnalisé
+
+<img src="./github/preview2.gif" width=300>
+
 ## Installation
+
 Pour installer et exécuter l'application subapp sur votre appareil, suivez les étapes ci-dessous :
 
 1. Clonez ce dépôt sur votre machine locale.
@@ -33,10 +38,13 @@ Pour installer et exécuter l'application subapp sur votre appareil, suivez les 
 ```bash
 npm install
 ```
+
 4. Ensuite, exécutez la commande suivante pour démarrer l'application en mode de développement :
+
 ```bash
 npm start
 ```
+
 Cela lancera l'application dans votre navigateur par défaut.
 
 5. Pour générer une version de production de l'application, utilisez la commande suivante :
@@ -48,10 +56,14 @@ npm build
 Les fichiers de build seront générés dans le répertoire **dist/**.
 
 ## Configuration
-Aucune configuration supplémentaire n'est requise pour exécuter l'application subapp. Cependant, assurez-vous d'avoir correctement configuré l'environnement de développement pour Angular et Capacitor.
+
+Aucune configuration supplémentaire n'est requise pour exécuter l'application subapp. Cependant, assurez-vous d'avoir
+correctement configuré l'environnement de développement pour Angular et Capacitor.
 
 ## Contributions
-Les contributions à subapp sont les bienvenues ! Si vous souhaitez contribuer à ce projet, veuillez suivre les étapes ci-dessous :
+
+Les contributions à subapp sont les bienvenues ! Si vous souhaitez contribuer à ce projet, veuillez suivre les étapes
+ci-dessous :
 
 1. Fork ce dépôt et clonez-le localement.
 
@@ -66,9 +78,11 @@ git checkout -b feature/nouvelle-fonctionnalite
 ```bash
 git commit -m "Ajouter une nouvelle fonctionnalité"
 ```
+
 4. Poussez les modifications vers votre dépôt forké :
 
 ```bash
 git push origin feature/nouvelle-fonctionnalite
 ```
+
 5. Ouvrez une pull request sur ce dépôt en fournissant une description détaillée des modifications apportées.

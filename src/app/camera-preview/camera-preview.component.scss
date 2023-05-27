@@ -1,0 +1,86 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100%;
+  width: 100%;
+
+  .camera-preview-container {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 10px #ffffff1a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    flex: 1;
+    height: 100%;
+
+    .canvas {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+
+      &:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #00ff00;
+        transition: var(--primary-transition);
+        opacity: var(--opacity);
+        clip-path: var(--polygon);
+        pointer-events: none;
+      }
+    }
+
+    video {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .capture {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      width: 50px;
+      height: 50px;
+      border-radius: 100%;
+      transform: translateX(-50%) scale(0.8);
+      background: transparent;
+      border: 4px solid var(--primary-color);
+      box-sizing: border-box;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0;
+      transition: var(--primary-transition);
+      opacity: 0.5;
+      cursor: pointer;
+      pointer-events: none;
+
+      &.active:active {
+        transform: translateX(-50%) scale(0.9);
+      }
+
+      &.active {
+        pointer-events: visible;
+        opacity: 1;
+        transform: translateX(-50%) scale(1);
+      }
+    }
+  }
+
+  canvas {
+    width: 100%;
+    height: 300px;
+  }
+}
