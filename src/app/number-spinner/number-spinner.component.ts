@@ -1,4 +1,11 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+} from '@angular/core';
 
 @Component({
   selector: 'app-number-spinner',
@@ -12,7 +19,8 @@ export class NumberSpinnerComponent {
   _max: number = 10;
   @Input() step: number = 1;
   values: number[] = [];
-  @Input() value: number = 0;
+  _value: number = 0;
+  @Output() valueChange = new EventEmitter<number>();
   @Input() title?: string = undefined;
   private dragging: boolean = false;
   startY: number = 0;
@@ -22,6 +30,22 @@ export class NumberSpinnerComponent {
   lastPositionY: number = 0;
   lastPositionYDate: Date = new Date();
   speed: number = 0;
+
+  @Input()
+  set value(value: number) {
+    if (value < this._min) {
+      value = this._min;
+    }
+    if (value > this._max) {
+      value = this._max;
+    }
+    this._value = value;
+    console.log('value', value);
+  }
+
+  get value(): number {
+    return this._value;
+  }
 
   @Input()
   set max(max: number) {
@@ -52,7 +76,8 @@ export class NumberSpinnerComponent {
     if (event.type === 'touchstart') {
       event.clientY = event.touches[0].clientY;
     }
-    this.currentValue = this.value;
+    this.currentValue = this._value;
+    this.valueChange.emit(this._value);
 
     this.dragging = true;
     this.startY = event.clientY;
@@ -73,20 +98,21 @@ export class NumberSpinnerComponent {
         if (
           time < new Date().getTime() ||
           speed === 0 ||
-          [scope._min, scope._max].includes(scope.value)
+          [scope._min, scope._max].includes(scope._value)
         ) {
-          console.log('momentum end', speed);
           resolve(true);
         } else {
           if (speed > 0) {
-            scope.value = scope.value - 1;
+            scope._value = scope._value - 1;
+
             speed = speed - 1;
           } else {
-            scope.value = scope.value + 1;
+            scope._value = scope._value + 1;
             speed = speed + 1;
           }
+          scope.valueChange.emit(scope._value);
+
           setTimeout(async () => {
-            console.log('momentum', speed);
             await momentum(speed);
             resolve(true);
           }, 200 / Math.abs(speed));
@@ -113,12 +139,8 @@ export class NumberSpinnerComponent {
         this.speed = 0;
       }
       const offsetHeight = this.container?.nativeElement.offsetHeight / 3;
-      console.log('offsetHeight', event.clientY, this.startY);
       const indexAdd = (event.clientY - this.startY) / offsetHeight;
-
       let index = indexAdd + this.currentValue * -1;
-      console.log('index', index, indexAdd, this.currentValue);
-
       if (index * -1 < 0) {
         index = 0;
       }
@@ -126,7 +148,12 @@ export class NumberSpinnerComponent {
         index = (this.values.length - 1) * -1;
       }
       index = Math.round(index);
-      this.value = index * -1;
+
+      if (this._value !== index * -1) {
+        this._value = index * -1;
+        this.valueChange.emit(this._value);
+        navigator.vibrate(200);
+      }
     }
   }
 }

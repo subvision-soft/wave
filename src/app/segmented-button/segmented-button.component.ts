@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-segmented-button',
@@ -6,13 +6,21 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./segmented-button.component.scss'],
 })
 export class SegmentedButtonComponent {
-  @Input() public selected?: string = undefined;
+  public _selected: string = '';
   @Input() public items: SegmentedButtonItem[] = [];
+  @Output() public selectedChange = new EventEmitter<string>();
+
+  @Input()
+  set selected(selected: string) {
+    this._selected = selected;
+  }
+
   onClick = (item: SegmentedButtonItem) => {
     if (item.onClick) {
       item.onClick();
     }
-    this.selected = item.key;
+    this._selected = item.key;
+    this.selectedChange.emit(this._selected);
   };
 }
 

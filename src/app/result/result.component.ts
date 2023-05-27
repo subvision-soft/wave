@@ -13,6 +13,20 @@ export class ResultComponent implements OnInit {
   private canvas: any = null;
   public impacts: any[] = [];
   public total: number = 0;
+  public epreuve: string = 'precision';
+
+  get precision(): boolean {
+    return this.epreuve === 'precision';
+  }
+
+  get biathlon(): boolean {
+    return this.epreuve === 'biathlon';
+  }
+
+  get superBiathlon(): boolean {
+    return this.epreuve === 'superBiathlon';
+  }
+
   public itemsSegmented: SegmentedButtonItem[] = [
     new SegmentedButtonItem('Précision', 'precision', () => {
       console.log('Camera');
@@ -32,7 +46,7 @@ export class ResultComponent implements OnInit {
     this.frame = this.plastronService.getFrame();
     if (!this.frame) {
       console.error('No frame found');
-      this.router.navigate(['camera']);
+      // this.router.navigate(['camera']);
       return;
     }
   }

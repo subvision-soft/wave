@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { LogService } from './log.service';
 
 class PointCv {
   constructor(public x: number = -1, public y: number = -1) {}
@@ -16,6 +17,7 @@ export enum Zone {
 class Cible {
   constructor(public impacts: Impact[] = [], public image: any = null) {}
 }
+
 class Impact {
   constructor(
     public points: number = 0,
@@ -36,7 +38,7 @@ export class PlastronService {
 
   private impactColor = null;
 
-  constructor() {}
+  constructor(private logger: LogService) {}
 
   private getDistance(p1: PointCv, p2: PointCv) {
     return Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
@@ -62,12 +64,12 @@ export class PlastronService {
   }
 
   getPlastronCoordinates(mat: any) {
-    console.log('getPlastronCoordinates');
-    console.log('img', mat);
+    this.logger.debug('getPlastronCoordinates');
+    this.logger.debug('img', mat);
 
     // @ts-ignore
     let img = mat.clone();
-    console.log('after clone');
+    this.logger.debug('after clone');
     this.cv.resize(
       img,
       img,
@@ -324,7 +326,7 @@ export class PlastronService {
   }
 
   getBiggestContour(contours: any) {
-    console.log('start getBiggestContour');
+    this.logger.debug('start getBiggestContour');
     let maxArea = 0;
     let biggestContour = null;
     let contoursArray = [];
@@ -339,12 +341,12 @@ export class PlastronService {
         biggestContour = contour;
       }
     }
-    console.log('end getBiggestContour');
+    this.logger.debug('end getBiggestContour');
     return biggestContour;
   }
 
   getPlastronMat(mat: any) {
-    console.log('start getPlastronMat');
+    this.logger.debug('start getPlastronMat');
     const coordinates = this.getPlastronCoordinates(mat);
     if (coordinates === null) {
       return mat;
@@ -382,7 +384,7 @@ export class PlastronService {
     let warped = new this.cv.Mat();
     this.cv.warpPerspective(mat, warped, transform, mat.size());
     this.cv.resize(warped, warped, new this.cv.Size(1500, 1500));
-    console.log('end getPlastronMat');
+    this.logger.debug('end getPlastronMat');
     approx.delete();
     return warped;
   }
@@ -440,11 +442,11 @@ export class PlastronService {
   }
 
   getImpactsCenters(mat: any): PointCv[] {
-    console.log('start getImpactsCenters');
+    this.logger.debug('start getImpactsCenters');
     const points: PointCv[] = [];
     if (this.impactColor !== null) {
       const impactsMask = this.getColorMask(mat, this.impactColor);
-      console.log('getImpactsCenters impactsMask', impactsMask);
+      this.logger.debug('getImpactsCenters impactsMask', impactsMask);
       const kernel = this.cv.Mat.ones(3, 3, this.cv.CV_8UC1);
       this.cv.dilate(
         impactsMask,
@@ -463,7 +465,7 @@ export class PlastronService {
         this.cv.CHAIN_APPROX_SIMPLE
       );
 
-      console.log('getImpactsCenters contours', contours);
+      this.logger.debug('getImpactsCenters contours', contours);
       let contoursArray = [];
       for (let i = 0; i < contours.size(); i++) {
         contoursArray.push(contours.get(i));
@@ -472,7 +474,7 @@ export class PlastronService {
         if (contour.size().height < 5) {
           continue;
         }
-        console.log('getImpactsCenters contour', contour);
+        this.logger.debug('getImpactsCenters contour', contour);
         const impact = this.cv.fitEllipse(contour);
         points.push(impact.center);
       }
@@ -481,7 +483,7 @@ export class PlastronService {
       impactsMask.delete();
       contours.delete();
     }
-    console.log('end getImpactsCenters');
+    this.logger.debug('end getImpactsCenters');
     return points;
   }
 
@@ -493,7 +495,7 @@ export class PlastronService {
     let histSize = new this.cv.Mat(256, 1, this.cv.CV_32SC1);
     let histRange = new this.cv.Mat(1, 2, this.cv.CV_32FC1);
     histRange.data32F.set([0, 256]);
-    console.log('start calcHist');
+    this.logger.debug('start calcHist');
 
     const matVector = new this.cv.MatVector();
     matVector.push_back(gray);
@@ -502,7 +504,7 @@ export class PlastronService {
     mat1.delete();
     matVector.delete();
 
-    console.log('end calcHist');
+    this.logger.debug('end calcHist');
 
     let histSizeTotal = hist.total();
     let accumulator = new this.cv.Mat();
@@ -550,7 +552,7 @@ export class PlastronService {
   }
 
   getOuterCircle(mat: any) {
-    console.log('start getOuterCircle');
+    this.logger.debug('start getOuterCircle');
     let show = false;
 
     // mat = this.autoBrightnessAndContrast(mat, 2);
@@ -817,7 +819,7 @@ export class PlastronService {
   }
 
   getAverageColor(mat: any) {
-    console.log('start getAverageColor');
+    this.logger.debug('start getAverageColor');
     let hsv = new this.cv.Mat();
     this.cv.cvtColor(mat, hsv, this.cv.COLOR_BGR2HSV);
 
@@ -848,7 +850,7 @@ export class PlastronService {
 
     this.cv.inRange(saturation, low, high, saturation);
 
-    console.log('inRange done');
+    this.logger.debug('inRange done');
     let contours = new this.cv.MatVector();
     let hierarchy = new this.cv.Mat();
     this.cv.findContours(
@@ -863,7 +865,7 @@ export class PlastronService {
     if (biggestContour == null) {
       return null;
     }
-    console.log('biggestContour done', biggestContour);
+    this.logger.debug('biggestContour done', biggestContour);
 
     let rect = this.cv.boundingRect(biggestContour);
     let biggestEdge = Math.max(rect.width, rect.height);
@@ -891,8 +893,9 @@ export class PlastronService {
 
     return color;
   }
+
   getColorMask(mat: any, color: any) {
-    console.log('start getColorMask');
+    this.logger.debug('start getColorMask');
     const colorMat = new this.cv.Mat(1, 1, this.cv.CV_8UC3, color);
     const hsv = new this.cv.Mat();
     this.cv.cvtColor(colorMat, hsv, this.cv.COLOR_BGR2HSV);
@@ -925,12 +928,12 @@ export class PlastronService {
     hsv.delete();
     hsvMat.delete();
     hsvChannels.delete();
-    console.log('end getColorMask');
+    this.logger.debug('end getColorMask');
     return mask;
   }
 
   getTopLeftTarget(mat: any) {
-    console.log('start getTopLeftTarget');
+    this.logger.debug('start getTopLeftTarget');
     const img = mat.clone();
     const rectCrop = new this.cv.Rect(0, 0, img.cols / 2, img.rows / 2);
     const croppedImage = img.roi(rectCrop);
@@ -952,7 +955,7 @@ export class PlastronService {
   }
 
   getBottomLeftTarget(mat: any) {
-    console.log('start getBottomLeftTarget');
+    this.logger.debug('start getBottomLeftTarget');
     const img = mat.clone();
     const rectCrop = new this.cv.Rect(
       0,
@@ -962,28 +965,30 @@ export class PlastronService {
     );
     const croppedImage = img.roi(rectCrop);
     img.delete();
-    console.log('end getBottomLeftTarget');
+    this.logger.debug('end getBottomLeftTarget');
 
     return croppedImage;
   }
+
   getAngle(p1: PointCv, p2: PointCv) {
-    console.log('start getAngle');
-    console.log('end getAngle');
+    this.logger.debug('start getAngle');
+    this.logger.debug('end getAngle');
     return Math.atan2(p2.y - p1.y, p2.x - p1.x);
   }
+
   toRadians = (degrees: number) => {
-    console.log('start toRadians');
-    console.log('end toRadians');
+    this.logger.debug('start toRadians');
+    this.logger.debug('end toRadians');
     return (degrees * Math.PI) / 180;
   };
   toDegrees = (radians: number) => {
-    console.log('start toDegrees');
-    console.log('end toDegrees');
+    this.logger.debug('start toDegrees');
+    this.logger.debug('end toDegrees');
     return radians * (180 / Math.PI);
   };
 
   process() {
-    console.log('start process');
+    this.logger.debug('start process');
     let mat = this.getPlastronMat(this.frame);
     this.impactColor = this.getAverageColor(mat);
     let hashMapVisuels = this.getHashMapVisuels(mat);
@@ -1080,12 +1085,12 @@ export class PlastronService {
       );
     }
 
-    console.log('Impact points :' + impactPoints.length);
+    this.logger.debug('Impact points :' + impactPoints.length);
     for (let point of impactPoints) {
       this.cv.circle(mat, point, 1, [0, 255, 0, 255], -1);
       let minDistance = Number.MAX_VALUE;
       let closestZone = null;
-      console.log('hashMapVisuels :' + hashMapVisuels);
+      this.logger.debug('hashMapVisuels :' + hashMapVisuels);
       for (let zone in hashMapVisuels) {
         let distance = this.getDistance(point, hashMapVisuels[zone].center);
         if (minDistance > distance) {
@@ -1115,9 +1120,9 @@ export class PlastronService {
         ellipseAngle + this.toRadians(180)
       );
 
-      console.log('pointOnEllipse :', pointOnEllipse);
-      console.log('ellipse :', hashMapVisuels[closestZone]);
-      console.log('mat :', mat);
+      this.logger.debug('pointOnEllipse :', pointOnEllipse);
+      this.logger.debug('ellipse :', hashMapVisuels[closestZone]);
+      this.logger.debug('mat :', mat);
       this.cv.circle(mat, pointOnEllipse, 2, [255, 0, 0, 255], -1);
       this.cv.putText(
         mat,
@@ -1165,36 +1170,36 @@ export class PlastronService {
     }
 
     result.image = mat;
-    console.log('end process');
-    console.log(result);
+    this.logger.debug('end process');
+    this.logger.debug(result);
     return result;
   }
 
   getHashMapVisuels(mat: any) {
-    console.log('getHashMapVisuels');
-    console.log('getTopLeftTarget');
+    this.logger.debug('getHashMapVisuels');
+    this.logger.debug('getTopLeftTarget');
     const topLeftTarget = this.getTopLeftTarget(mat);
     let ellipseTopLeft = this.getOuterCircle(topLeftTarget);
     topLeftTarget.delete();
-    console.log('getTopRightTarget');
+    this.logger.debug('getTopRightTarget');
     const topRightTarget = this.getTopRightTarget(mat);
     let ellipseTopRight = this.getOuterCircle(topRightTarget);
     topRightTarget.delete();
     const width = mat.cols;
     ellipseTopRight.center.x += width / 2;
-    console.log('getCenterTarget');
+    this.logger.debug('getCenterTarget');
     const centerTarget = this.getCenterTarget(mat);
     let ellipseCenter = this.getOuterCircle(centerTarget);
     centerTarget.delete();
     ellipseCenter.center.x += mat.cols / 4;
     const height = mat.rows;
     ellipseCenter.center.y += height / 4;
-    console.log('getBottomLeftTarget');
+    this.logger.debug('getBottomLeftTarget');
     const bottomLeftTarget = this.getBottomLeftTarget(mat);
     let ellipseBottomLeft = this.getOuterCircle(bottomLeftTarget);
     bottomLeftTarget.delete();
     ellipseBottomLeft.center.y += height / 2;
-    console.log('getBottomRightTarget');
+    this.logger.debug('getBottomRightTarget');
     const bottomRightTarget = this.getBottomRightTarget(mat);
     let ellipseBottomRight = this.getOuterCircle(bottomRightTarget);
     bottomRightTarget.delete();
@@ -1206,12 +1211,12 @@ export class PlastronService {
     ellipseMap[Zone.CENTER] = ellipseCenter;
     ellipseMap[Zone.BOTTOM_LEFT] = ellipseBottomLeft;
     ellipseMap[Zone.BOTTOM_RIGHT] = ellipseBottomRight;
-    console.log('end getHashMapVisuels');
+    this.logger.debug('end getHashMapVisuels');
     return ellipseMap;
   }
 
   getBottomRightTarget(mat: any) {
-    console.log('start getBottomRightTarget');
+    this.logger.debug('start getBottomRightTarget');
     const img = mat.clone();
     const rectCrop = new this.cv.Rect(
       img.cols / 2,
@@ -1221,12 +1226,12 @@ export class PlastronService {
     );
     const croppedImage = img.roi(rectCrop);
     img.delete();
-    console.log('end getBottomRightTarget');
+    this.logger.debug('end getBottomRightTarget');
     return croppedImage;
   }
 
   getCenterTarget(mat: any) {
-    console.log('start getCenterTarget');
+    this.logger.debug('start getCenterTarget');
     const img = mat.clone();
     const rectCrop = new this.cv.Rect(
       img.cols / 4,
@@ -1236,16 +1241,17 @@ export class PlastronService {
     );
     const croppedImage = img.roi(rectCrop);
     img.delete();
-    console.log('end getCenterTarget');
+    this.logger.debug('end getCenterTarget');
     return croppedImage;
   }
 
   setFrame(frame: any) {
-    console.log('setFrame', frame);
+    this.logger.debug('setFrame', frame);
     this.frame = frame;
   }
+
   getFrame() {
-    console.log('getFrame', this.frame);
+    this.logger.debug('getFrame', this.frame);
     return this.frame;
   }
 }

@@ -10,6 +10,7 @@ import {
   iconoirHomeSimpleDoor,
   iconoirNavArrowLeft,
   iconoirSettings,
+  iconoirTimer,
 } from '@ng-icons/iconoir';
 import { NgIconsModule } from '@ng-icons/core';
 import { TabBarButtonComponent } from './tab-bar-button/tab-bar-button.component';
@@ -27,6 +28,7 @@ import { SegmentedButtonComponent } from './segmented-button/segmented-button.co
 import { TextfieldComponent } from './textfield/textfield.component';
 import { NumberSpinnerComponent } from './number-spinner/number-spinner.component';
 import { SlideSheetComponent } from './slide-sheet/slide-sheet.component';
+import { ChronoPickerComponent } from './chrono-picker/chrono-picker.component';
 
 const openCVConfig: OpenCVConfig = {
   openCVDirPath: 'assets/opencv',
@@ -49,6 +51,7 @@ const openCVConfig: OpenCVConfig = {
     TextfieldComponent,
     NumberSpinnerComponent,
     SlideSheetComponent,
+    ChronoPickerComponent,
   ],
   imports: [
     NgxOpenCVModule.forRoot(openCVConfig),
@@ -60,6 +63,7 @@ const openCVConfig: OpenCVConfig = {
       iconoirSettings,
       iconoirNavArrowLeft,
       iconoirDashboardDots,
+      iconoirTimer,
     }),
   ],
   providers: [],

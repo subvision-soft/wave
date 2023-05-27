@@ -2,16 +2,13 @@
      (mousemove)="onMouseMove($event)"
      (touchstart)="onMouseDown($event)" (touchend)="onMouseUp($event)" (touchmove)="onMouseMove($event)"
      (touchcancel)="onMouseUp($event)"
-
-     [style.--positionY.px]="positionY"
-     [style.overflow]="'hidden'"
-     #container
+     [style.--positionY.px]="positionY" #container
      class="number-spinner"
 >
   <div class="container"
-       [style.transform]="'translateY(calc('+value*-1+' * 100%)) translateY(100%)'"
+       [style.transform]="'translateY(calc('+_value*-1+' * 100%)) translateY(100%)'"
   >
-    <div [class]="value === number ? 'active value' : 'value'" *ngFor="let number of values;index as i">
+    <div [class]="_value === number ? 'active value' : 'value'" *ngFor="let number of values;index as i">
       {{number}}
     </div>
   </div>
