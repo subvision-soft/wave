@@ -18,7 +18,9 @@ class Cible {
   constructor(public impacts: Impact[] = [], public image: any = null) {}
 }
 
-class Impact {
+export class Impact {
+  distance: number = -1;
+
   constructor(
     public points: number = 0,
     public zone: Zone = Zone.UNDEFINED,
@@ -114,21 +116,9 @@ export class PlastronService {
       new this.cv.Point(-1, -1),
       1
     );
-
     this.cv.dilate(gray, gray, kernel, new this.cv.Point(-1, -1), 3);
     kernel.delete();
-
     this.cv.bitwise_not(gray, gray);
-
-    // this.cv.morphologyEx(
-    //   gray,
-    //   gray,
-    //   this.cv.MORPH_CLOSE,
-    //   kernel,
-    //   new this.cv.Point(-1, -1),
-    //   2
-    // );
-
     let contours = new this.cv.MatVector();
     let hierarchy = new this.cv.Mat();
     this.cv.findContours(
@@ -138,76 +128,17 @@ export class PlastronService {
       this.cv.RETR_CCOMP,
       this.cv.CHAIN_APPROX_SIMPLE
     );
-
     this.cv.drawContours(img, contours, -1, [255, 0, 255, 255], 1);
-
-    //
-    // this.cv.morphologyEx(
-    //   gray,
-    //   gray,
-    //   this.cv.MORPH_OPEN,
-    //   kernel,
-    //   new this.cv.Point(-1, -1),
-    //   10
-    // );
-    //
-    // this.cv.erode(gray, gray, kernel, new this.cv.Point(-1, -1), 3);
-    //
-    // this.cv.findContours(
-    //   gray,
-    //   contours,
-    //   hierarchy,
-    //   this.cv.RETR_EXTERNAL,
-    //   this.cv.CHAIN_APPROX_SIMPLE
-    // );
-
-    //
-    // let edged = new this.cv.Mat();
-    // this.cv.Canny(gray, edged, 100, 200);
-    //
-    // gray.delete();
-    // this.cv.dilate(edged, edged, kernel, new this.cv.Point(-1, -1), 4);
-    // this.cv.erode(edged, edged, kernel, new this.cv.Point(-1, -1), 4);
-    //
-    // kernel.delete();
-    // let contours = new this.cv.MatVector();
-    // let hierarchy = new this.cv.Mat();
-    // this.cv.findContours(
-    //   edged,
-    //   contours,
-    //   hierarchy,
-    //   this.cv.RETR_EXTERNAL,
-    //   this.cv.CHAIN_APPROX_SIMPLE
-    // );
-    // this.cv.drawContours(
-    //   edged,
-    //   contours,
-    //   -1,
-    //   [255, 255, 255, 255],
-    //   this.cv.FILLED
-    // );
-    // this.cv.findContours(
-    //   edged,
-    //   contours,
-    //   hierarchy,
-    //   this.cv.RETR_EXTERNAL,
-    //   this.cv.CHAIN_APPROX_SIMPLE
-    // );
-    // hierarchy.delete();
-    // edged.delete();
-
     let contoursArray = [];
     for (let i = 0; i < contours.size(); i++) {
       contoursArray.push(contours.get(i));
     }
-
     contoursArray.sort(
       (contour1, contour2) =>
         this.cv.contourArea(contour1) - this.cv.contourArea(contour2)
     );
 
     let screenCnt = null;
-    let contourToDraw = null;
     for (let contour of contoursArray) {
       let approxDistance = this.cv.arcLength(contour, true) * 0.1;
       let approx = new this.cv.Mat();
@@ -257,7 +188,6 @@ export class PlastronService {
 
         if (valid) {
           screenCnt = approx;
-          contourToDraw = contour;
           break;
         }
         approx.delete();
@@ -272,19 +202,6 @@ export class PlastronService {
       return null;
     }
 
-    // for (let i = 0; i < screenCnt.total(); i++) {
-    //   let p1 = new this.cv.Point(
-    //     screenCnt.data32S[i * 2],
-    //     screenCnt.data32S[i * 2 + 1]
-    //   );
-    //   let p2 = new this.cv.Point(
-    //     screenCnt.data32S[((i + 1) % screenCnt.total()) * 2],
-    //     screenCnt.data32S[((i + 1) % screenCnt.total()) * 2 + 1]
-    //   );
-    //   this.cv.line(mat, p1, p2, [0, 255, 0, 255], 2);
-    // }
-
-    // this.cv.drawContours(mat, polyLines, -1, [0, 0, 255, 255], 3);
     let topLeft = { x: screenCnt.data32S[0], y: screenCnt.data32S[1] };
     let topLeftIndex = 0;
     let minDistance = this.getDistance(topLeft, new this.cv.Point(0, 0));
@@ -419,26 +336,30 @@ export class PlastronService {
     return point;
   }
 
-  getPoint(center: PointCv, border: PointCv, impact: PointCv) {
+  getPoint(distance: number) {
+    let point = 570;
+    let i = 0;
+    if (distance > 45) {
+      return 0;
+    }
+    for (; i < 5 && distance > 0; i++) {
+      point -= 6;
+      distance -= 1;
+    }
+    for (; i < 48 && distance > 0; i++) {
+      point -= 3;
+      distance -= 1;
+    }
+    return point;
+  }
+
+  getRealDistance(center: PointCv, border: PointCv, impact: PointCv) {
     const length = this.getDistance(center, border);
     const distance = this.getDistance(center, impact);
     const percent = distance / length;
     const realLength = 25;
     let realDistance = Math.ceil(realLength * percent);
-    let point = 570;
-    let i = 0;
-    if (realDistance > 45) {
-      return 0;
-    }
-    for (; i < 5 && realDistance > 0; i++) {
-      point -= 6;
-      realDistance -= 1;
-    }
-    for (; i < 48 && realDistance > 0; i++) {
-      point -= 3;
-      realDistance -= 1;
-    }
-    return point;
+    return realDistance;
   }
 
   getImpactsCenters(mat: any): PointCv[] {
@@ -1124,15 +1045,16 @@ export class PlastronService {
       this.logger.debug('ellipse :', hashMapVisuels[closestZone]);
       this.logger.debug('mat :', mat);
       this.cv.circle(mat, pointOnEllipse, 2, [255, 0, 0, 255], -1);
+      const realDistance = this.getRealDistance(
+        hashMapVisuels[closestZone].center,
+        pointOnEllipse,
+        point
+      );
+      const points = this.getPoint(realDistance);
+
       this.cv.putText(
         mat,
-        String(
-          this.getPoint(
-            hashMapVisuels[closestZone].center,
-            pointOnEllipse,
-            point
-          )
-        ),
+        String(points),
         point,
         this.cv.FONT_HERSHEY_SIMPLEX,
         1,
@@ -1141,13 +1063,7 @@ export class PlastronService {
       );
       this.cv.putText(
         mat,
-        String(
-          this.getPoint(
-            hashMapVisuels[closestZone].center,
-            pointOnEllipse,
-            point
-          )
-        ),
+        String(points),
         point,
         this.cv.FONT_HERSHEY_SIMPLEX,
         1,
@@ -1155,19 +1071,16 @@ export class PlastronService {
         2
       );
       let impactDTO = new Impact();
-      impactDTO.zone = Zone[closestZone as keyof typeof Zone];
-      impactDTO.points = this.getPoint(
-        hashMapVisuels[closestZone].center,
-        pointOnEllipse,
-        point
-      );
-      impactDTO.angle = this.toDegrees(radAngle);
+      impactDTO.zone = closestZone as Zone;
+      impactDTO.points = points;
+      impactDTO.angle = this.toDegrees(radAngle) + 180;
+      impactDTO.distance = realDistance;
       result.impacts.push(impactDTO);
     }
 
-    for (let zone in hashMapVisuels) {
-      hashMapVisuels[zone];
-    }
+    // for (let zone in hashMapVisuels) {
+    //   hashMapVisuels[zone];
+    // }
 
     result.image = mat;
     this.logger.debug('end process');

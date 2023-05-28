@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PlastronService } from '../services/plastron.service';
+import { PlastronService, Zone } from '../services/plastron.service';
 import { Router } from '@angular/router';
 import { SegmentedButtonItem } from '../segmented-button/segmented-button.component';
 
@@ -11,7 +11,34 @@ import { SegmentedButtonItem } from '../segmented-button/segmented-button.compon
 export class ResultComponent implements OnInit {
   private frame: any = null;
   private canvas: any = null;
-  public impacts: any[] = [];
+  protected time: number = 0;
+  public impacts: any[] = [
+    {
+      points: 456,
+      angle: 100.6763797345331,
+      zone: Zone.CENTER,
+    },
+    {
+      points: 426,
+      angle: 103.43445377384366,
+      zone: Zone.BOTTOM_RIGHT,
+    },
+    {
+      points: 495,
+      angle: 155.98756431301382,
+      zone: Zone.BOTTOM_LEFT,
+    },
+    {
+      points: 474,
+      angle: 156.06791089729842,
+      zone: Zone.TOP_RIGHT,
+    },
+    {
+      points: 0,
+      angle: 63.07817692394753,
+      zone: Zone.TOP_LEFT,
+    },
+  ];
   public total: number = 0;
   public epreuve: string = 'precision';
 
@@ -56,7 +83,6 @@ export class ResultComponent implements OnInit {
     const cv = (window as any).cv;
     try {
       const cible = this.plastronService.process();
-      cv.imshow(this.canvas, cible.image);
       this.impacts = cible.impacts;
       this.total = cible.impacts
         .map((impact: any) => impact.points)

@@ -29,6 +29,8 @@ import { TextfieldComponent } from './textfield/textfield.component';
 import { NumberSpinnerComponent } from './number-spinner/number-spinner.component';
 import { SlideSheetComponent } from './slide-sheet/slide-sheet.component';
 import { ChronoPickerComponent } from './chrono-picker/chrono-picker.component';
+import { ImpactsListComponent } from './impacts-list/impacts-list.component';
+import { TargetPreviewComponent } from './target-preview/target-preview.component';
 
 const openCVConfig: OpenCVConfig = {
   openCVDirPath: 'assets/opencv',
@@ -52,6 +54,8 @@ const openCVConfig: OpenCVConfig = {
     NumberSpinnerComponent,
     SlideSheetComponent,
     ChronoPickerComponent,
+    ImpactsListComponent,
+    TargetPreviewComponent,
   ],
   imports: [
     NgxOpenCVModule.forRoot(openCVConfig),
@@ -69,4 +73,8 @@ const openCVConfig: OpenCVConfig = {
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+  constructor() {
+    window.screen.orientation.lock('portrait');
+  }
+}

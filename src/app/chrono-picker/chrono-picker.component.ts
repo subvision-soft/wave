@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-chrono-picker',
@@ -8,6 +8,7 @@ import { Component, Input } from '@angular/core';
 export class ChronoPickerComponent {
   _time: number = 0; // milliseconds
 
+  @Output() timeChange = new EventEmitter<number>();
   open: boolean = false;
 
   constructor() {}
@@ -27,16 +28,19 @@ export class ChronoPickerComponent {
   set minutes(minutes: number) {
     this._time =
       minutes * 60 * 1000 + this.seconds * 1000 + this.centiseconds * 10;
+    this.timeChange.emit(this._time);
   }
 
   set seconds(seconds: number) {
     this._time =
       this.minutes * 60 * 1000 + seconds * 1000 + this.centiseconds * 10;
+    this.timeChange.emit(this._time);
   }
 
   set centiseconds(centiseconds: number) {
     this._time =
       this.minutes * 60 * 1000 + this.seconds * 1000 + centiseconds * 10;
+    this.timeChange.emit(this._time);
   }
 
   @Input()

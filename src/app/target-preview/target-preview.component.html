@@ -1,0 +1,13 @@
+<div *ngFor="let impact of impacts" class="impact"
+
+     [style.--impact-size]="sizeToPercent(arrowSize)"
+     [style.--impact-color]="'#ff0000'"
+     [style.--impact-y]="getBottomAndLeft(impact).bottom"
+     [style.--impact-x]="getBottomAndLeft(impact).left"
+     [style.--impact-rotation]="impact.angle + 'deg'"
+     [style.--impact-distance]="impact.points > 0 ? getDistance(impact) : getDistanceFromMm(impact.distance)"
+
+
+>
+
+</div>
