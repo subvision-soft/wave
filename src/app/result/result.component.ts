@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PlastronService, Zone } from '../services/plastron.service';
+import { Impact, PlastronService, Zone } from '../services/plastron.service';
 import { Router } from '@angular/router';
 import { SegmentedButtonItem } from '../segmented-button/segmented-button.component';
 
@@ -12,6 +12,9 @@ export class ResultComponent implements OnInit {
   private frame: any = null;
   private canvas: any = null;
   protected time: number = 0;
+  protected selected: Impact | null = null;
+  protected imagePreview: boolean = false;
+
   public impacts: any[] = [
     {
       points: 456,
@@ -37,6 +40,7 @@ export class ResultComponent implements OnInit {
       points: 0,
       angle: 63.07817692394753,
       zone: Zone.TOP_LEFT,
+      distance: 55,
     },
   ];
   public total: number = 0;
@@ -83,6 +87,7 @@ export class ResultComponent implements OnInit {
     const cv = (window as any).cv;
     try {
       const cible = this.plastronService.process();
+      cv.imshow('canvas', cible.image);
       this.impacts = cible.impacts;
       this.total = cible.impacts
         .map((impact: any) => impact.points)
@@ -91,5 +96,9 @@ export class ResultComponent implements OnInit {
     } catch (error) {
       console.error(error);
     }
+  }
+
+  togglePreview() {
+    this.imagePreview = !this.imagePreview;
   }
 }

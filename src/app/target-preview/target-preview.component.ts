@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Impact, Zone } from '../services/plastron.service';
 
 @Component({
@@ -13,6 +13,8 @@ export class TargetPreviewComponent {
   private visuelSize = 810;
   private globalPadding = 180;
   protected arrowSize = this.caseSize * 6;
+  @Input() public selected: Impact | null = null;
+  @Output() public selectedChange = new EventEmitter<Impact | null>();
 
   sizeToPercent = (size: number) => {
     return (size / this.cibleSize) * 100 + '%';
@@ -84,5 +86,10 @@ export class TargetPreviewComponent {
       bottom: `calc(${center.y} - ${this.sizeToPercent(this.arrowSize / 2)})`,
       left: `calc(${center.x} - ${this.sizeToPercent(this.arrowSize / 2)})`,
     };
+  };
+  select = (impact: Impact) => {
+    console.log('select', impact);
+    this.selected = impact;
+    this.selectedChange.emit(impact);
   };
 }

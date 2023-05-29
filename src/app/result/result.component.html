@@ -2,12 +2,16 @@
 
   <div class="content">
     <div class="result-preview">
-      <app-target-preview [impacts]="impacts"></app-target-preview>
+      <app-icon-button class="toggle-preview" [icon]="imagePreview?'iconoirOnePointCircle':'iconoirMediaImage'"
+                       (click)="togglePreview()"></app-icon-button>
+      <app-target-preview *ngIf="!imagePreview" [(selected)]="selected" [impacts]="impacts"></app-target-preview>
+      <canvas id="canvas" height="1000" width="1000" [style.display]="imagePreview?'block' :'none'"></canvas>
+
     </div>
     <div class="chrono" *ngIf="superBiathlon || biathlon">
       <app-chrono-picker [(time)]="time"></app-chrono-picker>
     </div>
-    <app-impacts-list [impacts]="impacts"></app-impacts-list>
+    <app-impacts-list [(selected)]="selected" [impacts]="impacts"></app-impacts-list>
   </div>
 
 </div>

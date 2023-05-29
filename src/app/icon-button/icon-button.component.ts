@@ -7,4 +7,6 @@ import { Component, Input } from '@angular/core';
 })
 export class IconButtonComponent {
   @Input() icon: string = '';
+  @Input() disabled: boolean = false;
+  @Input() color: string = '';
 }

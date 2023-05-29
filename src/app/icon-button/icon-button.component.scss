@@ -1,6 +1,6 @@
-a {
+:host {
   display: flex;
-  padding: 5px;
+  padding: 8px;
   justify-content: center;
   gap: 10px;
   align-items: center;
@@ -14,6 +14,7 @@ a {
   backdrop-filter: blur(4px);
   box-shadow: 0px 0px 0px 0px var(--primary-background);
   transition: var(--primary-transition);
+
   &:before {
     content: "";
     position: absolute;
@@ -27,6 +28,7 @@ a {
     border-radius: 100px;
     opacity: 0.1;
   }
+
   &:after {
     content: "";
     position: absolute;
@@ -40,13 +42,16 @@ a {
     border-radius: 100px;
     opacity: 0.1;
   }
+
   &:active,
   &.active {
     color: rgba(255, 255, 255, 1);
     background: rgba(255, 255, 255, 0.2);
+
     &:before {
       opacity: 0.3;
     }
+
     &:after {
       opacity: 0.1;
     }

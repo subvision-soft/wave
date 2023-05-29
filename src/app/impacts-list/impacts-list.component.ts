@@ -9,6 +9,17 @@ import { Impact } from '../services/plastron.service';
 export class ImpactsListComponent {
   protected _impacts: Impact[] = [];
   @Output() public impactsChange = new EventEmitter<Impact[]>();
+  @Output() public selectedChange = new EventEmitter<Impact | null>();
+  protected _selected: Impact | null = null;
+
+  @Input()
+  set selected(impact: Impact | null) {
+    this._selected = impact;
+  }
+
+  get selected(): Impact | null {
+    return this._selected;
+  }
 
   @Input()
   set impacts(impacts: Impact[]) {
@@ -22,7 +33,8 @@ export class ImpactsListComponent {
 
   duplicate = (impact: Impact) => {
     const newImpact = new Impact(impact.points, impact.zone, impact.angle);
-    this._impacts.push(newImpact);
+    const index = this._impacts.indexOf(impact);
+    this._impacts.splice(index + 1, 0, newImpact);
     this.impactsChange.emit(this._impacts);
   };
 
@@ -30,6 +42,11 @@ export class ImpactsListComponent {
     const index = this._impacts.indexOf(impact);
     this._impacts.splice(index, 1);
     this.impactsChange.emit(this._impacts);
+  };
+
+  select = (impact: Impact) => {
+    this._selected = impact;
+    this.selectedChange.emit(impact);
   };
 
   groupByZone = (impacts: Impact[]) => {

@@ -4,17 +4,40 @@
   h1 {
     margin: 0;
     padding: 10px;
-    font-size: 20px;
+    font-size: 18px;
   }
 
-  .impact {
-    backdrop-filter: blur(10px);
-    background-color: rgba(255, 255, 255, 0.05);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    box-sizing: border-box;
-    padding: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  .impacts {
+    max-height: 300px;
+    overflow: auto;
+
+    .impact {
+      backdrop-filter: blur(10px);
+      background-color: rgba(255, 255, 255, 0.05);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      box-sizing: border-box;
+      padding: 5px;
+      display: flex;
+      align-items: stretch;
+      justify-content: space-between;
+      transition: var(--primary-transition);
+
+      &.selected {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+
+      span {
+        font-weight: 200;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .tools {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+    }
   }
 }

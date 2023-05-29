@@ -11,10 +11,17 @@
     position: absolute;
     height: var(--impact-size);
     width: var(--impact-size);
-    border-radius: 50%;
+    border-radius: 100px;
     background-color: var(--impact-color);
     bottom: var(--impact-y);
     left: var(--impact-x);
     transform: rotate(var(--impact-rotation)) translate(var(--impact-distance));
+    transition: var(--primary-transition);
+    cursor: pointer;
+
+    &.selected,
+    &:active {
+      box-shadow: 0 0 0 3px rgba(255, 89, 0, 0.5);
+    }
   }
 }

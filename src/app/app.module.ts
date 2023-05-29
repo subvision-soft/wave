@@ -5,10 +5,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TabBarComponent } from './tab-bar/tab-bar.component';
 import {
+  iconoirBinMinus,
   iconoirCamera,
+  iconoirCopy,
   iconoirDashboardDots,
   iconoirHomeSimpleDoor,
+  iconoirMediaImage,
   iconoirNavArrowLeft,
+  iconoirOnePointCircle,
   iconoirSettings,
   iconoirTimer,
 } from '@ng-icons/iconoir';
@@ -31,6 +35,7 @@ import { SlideSheetComponent } from './slide-sheet/slide-sheet.component';
 import { ChronoPickerComponent } from './chrono-picker/chrono-picker.component';
 import { ImpactsListComponent } from './impacts-list/impacts-list.component';
 import { TargetPreviewComponent } from './target-preview/target-preview.component';
+import { ButtonComponent } from './button/button.component';
 
 const openCVConfig: OpenCVConfig = {
   openCVDirPath: 'assets/opencv',
@@ -56,6 +61,7 @@ const openCVConfig: OpenCVConfig = {
     ChronoPickerComponent,
     ImpactsListComponent,
     TargetPreviewComponent,
+    ButtonComponent,
   ],
   imports: [
     NgxOpenCVModule.forRoot(openCVConfig),
@@ -68,6 +74,10 @@ const openCVConfig: OpenCVConfig = {
       iconoirNavArrowLeft,
       iconoirDashboardDots,
       iconoirTimer,
+      iconoirCopy,
+      iconoirBinMinus,
+      iconoirOnePointCircle,
+      iconoirMediaImage,
     }),
   ],
   providers: [],
