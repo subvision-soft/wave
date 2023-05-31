@@ -15,6 +15,7 @@
   </div>
 
 </div>
+<app-total-preview [epreuve]="epreuve" [time]="(time-(time%1000))/1000" [impacts]="impacts"></app-total-preview>
 <app-segmented-button [(selected)]="epreuve" [items]="itemsSegmented"></app-segmented-button>
 
 

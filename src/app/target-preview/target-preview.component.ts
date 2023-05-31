@@ -22,14 +22,12 @@ export class TargetPreviewComponent {
 
   pointToDistance = (points: number) => {
     let i;
-
     for (i = 0; i < 43 && points > 411; i++) {
       points = points - 3;
     }
     for (; i < 48 && points > 411; i++) {
       points = points - 6;
     }
-    console.log(i, points);
     return 48 - i;
   };
 

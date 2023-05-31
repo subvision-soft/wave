@@ -36,6 +36,7 @@ import { ChronoPickerComponent } from './chrono-picker/chrono-picker.component';
 import { ImpactsListComponent } from './impacts-list/impacts-list.component';
 import { TargetPreviewComponent } from './target-preview/target-preview.component';
 import { ButtonComponent } from './button/button.component';
+import { TotalPreviewComponent } from './total-preview/total-preview.component';
 
 const openCVConfig: OpenCVConfig = {
   openCVDirPath: 'assets/opencv',
@@ -62,6 +63,7 @@ const openCVConfig: OpenCVConfig = {
     ImpactsListComponent,
     TargetPreviewComponent,
     ButtonComponent,
+    TotalPreviewComponent,
   ],
   imports: [
     NgxOpenCVModule.forRoot(openCVConfig),
