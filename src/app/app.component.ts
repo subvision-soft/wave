@@ -13,6 +13,17 @@ export class AppComponent {
     { icon: 'iconoirDashboardDots', label: 'Paramètres', link: '/settings' },
   ];
 
+  constructor() {
+    this.showSplashScreen();
+  }
+
+  private async showSplashScreen() {
+    console.log('showSplashScreen');
+    const lottie = (window as any).lottie;
+    await lottie.splashscreen.hide();
+    await lottie.splashscreen.show('public/assets/subapp.json', false);
+  }
+
   tabSelected(tab: any) {
     this.title = tab.label;
   }

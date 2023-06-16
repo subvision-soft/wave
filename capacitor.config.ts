@@ -7,6 +7,14 @@ const config: CapacitorConfig = {
   server: {
     androidScheme: 'https',
   },
+  cordova: {
+    preferences: {
+      LottieFullscreen: 'true',
+      LottieHideAfterAnimationEnd: 'true',
+      LottieAnimationLocation: 'public/assets/subapp.json',
+      LottieFadeOutDuration: '1000',
+    },
+  },
 };
 
 export default config;
