@@ -37,6 +37,9 @@ import { ImpactsListComponent } from './impacts-list/impacts-list.component';
 import { TargetPreviewComponent } from './target-preview/target-preview.component';
 import { ButtonComponent } from './button/button.component';
 import { TotalPreviewComponent } from './total-preview/total-preview.component';
+import { ColorPreviewComponent } from './color-preview/color-preview.component';
+import { FormsModule } from '@angular/forms';
+import { ColorPickerModule } from 'ngx-color-picker';
 
 const openCVConfig: OpenCVConfig = {
   openCVDirPath: 'assets/opencv',
@@ -64,10 +67,12 @@ const openCVConfig: OpenCVConfig = {
     TargetPreviewComponent,
     ButtonComponent,
     TotalPreviewComponent,
+    ColorPreviewComponent,
   ],
   imports: [
     NgxOpenCVModule.forRoot(openCVConfig),
     BrowserModule,
+    ColorPickerModule,
     AppRoutingModule,
     NgIconsModule.withIcons({
       iconoirHomeSimpleDoor,
@@ -81,6 +86,7 @@ const openCVConfig: OpenCVConfig = {
       iconoirOnePointCircle,
       iconoirMediaImage,
     }),
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

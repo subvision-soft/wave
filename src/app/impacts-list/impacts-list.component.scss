@@ -1,33 +1,34 @@
 :host {
-  color: #ffffff;
-
-  h1 {
-    margin: 0;
-    padding: 10px;
-    font-size: 18px;
-  }
+  color: var(--primary-color);
 
   .impacts {
     max-height: 300px;
-    overflow: auto;
+    overflow-y: scroll;
+    gap: 10px;
+    display: flex;
+    padding: 10px;
+    box-sizing: border-box;
+    position: absolute;
+    left: 0;
+    width: 100%;
 
     .impact {
-      backdrop-filter: blur(10px);
-      background-color: rgba(255, 255, 255, 0.05);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
       box-sizing: border-box;
-      padding: 5px;
+      padding: 5px 10px;
       display: flex;
       align-items: stretch;
       justify-content: space-between;
       transition: var(--primary-transition);
+      width: 100px;
+      text-align: center;
+      background: var(--colorPrimaryBg);
 
       &.selected {
-        background-color: rgba(255, 255, 255, 0.1);
+        transform: scale(1.2);
       }
 
       span {
-        font-weight: 200;
         display: flex;
         align-items: center;
         gap: 10px;

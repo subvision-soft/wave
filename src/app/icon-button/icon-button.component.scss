@@ -4,7 +4,7 @@
   justify-content: center;
   gap: 10px;
   align-items: center;
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--colorText);
   font-weight: 300;
   text-decoration: none;
   border-radius: 100px;
@@ -12,48 +12,11 @@
   z-index: 1;
   cursor: pointer;
   backdrop-filter: blur(4px);
-  box-shadow: 0px 0px 0px 0px var(--primary-background);
   transition: var(--primary-transition);
-
-  &:before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    transition: var(--primary-transition);
-    border: solid 1px var(--primary-background);
-    box-sizing: border-box;
-    border-radius: 100px;
-    opacity: 0.1;
-  }
-
-  &:after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    transition: var(--primary-transition);
-    background-color: var(--primary-background);
-    box-sizing: border-box;
-    border-radius: 100px;
-    opacity: 0.1;
-  }
+  border: 1px solid var(--colorBorder);
 
   &:active,
   &.active {
-    color: rgba(255, 255, 255, 1);
-    background: rgba(255, 255, 255, 0.2);
-
-    &:before {
-      opacity: 0.3;
-    }
-
-    &:after {
-      opacity: 0.1;
-    }
+    color: var(--colorPrimaryTextActive);
   }
 }

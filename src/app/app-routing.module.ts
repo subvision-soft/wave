@@ -5,11 +5,16 @@ import { CameraComponent } from './camera/camera.component';
 import { SettingsComponent } from './settings/settings.component';
 import { ResultComponent } from './result/result.component';
 import { CameraPreviewComponent } from './camera-preview/camera-preview.component';
+import { ColorPreviewComponent } from './color-preview/color-preview.component';
 
 const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
+  },
+  {
+    path: 'color',
+    component: ColorPreviewComponent,
   },
   {
     path: 'camera',

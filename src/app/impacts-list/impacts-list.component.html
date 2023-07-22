@@ -1,12 +1,7 @@
-<h1>Impacts</h1>
 <div class="impacts">
   <div [class]="selected === impact ? 'impact selected' : 'impact'" *ngFor="let impact of impacts"
        (click)="select(impact)">
-    <span>{{impact.points}}</span>
-    <div class="tools">
-      <app-icon-button icon="iconoirCopy" (click)="duplicate(impact)"></app-icon-button>
-      <app-icon-button icon="iconoirBinMinus" (click)="remove(impact)"></app-icon-button>
-    </div>
+    {{impact.points}}
   </div>
 </div>
 

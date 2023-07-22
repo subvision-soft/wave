@@ -1,0 +1,12 @@
+<span class="color-picker">
+
+  <input [(ngModel)]="color">
+  <input [(colorPicker)]="color" [style.background]="color">
+</span>
+
+<div class="container" *ngFor="let color of colors | keyvalue:onCompare"
+>
+  <span>{{color.key}} : {{color.value}}</span>
+  <input class="preview" [(colorPicker)]="color.value" [style.background]="color.value">
+
+</div>

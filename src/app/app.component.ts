@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ThemeColorService } from './services/theme-color.service';
 
 @Component({
   selector: 'app-root',
@@ -12,9 +13,17 @@ export class AppComponent {
     { icon: 'iconoirCamera', label: 'Caméra', link: '/camera' },
     { icon: 'iconoirDashboardDots', label: 'Paramètres', link: '/settings' },
   ];
+  cssVariables: string = '';
 
-  constructor() {
+  constructor(private themeColorService: ThemeColorService) {
     this.showSplashScreen();
+    this.themeColorService.setCssVariables('#1677ff');
+    const head = document.getElementsByTagName('head')[0];
+    const style = document.createElement('style');
+    style.type = 'text/css';
+    style.appendChild(document.createTextNode(this.cssVariables));
+    head.appendChild(style);
+    console.log(this.cssVariables);
   }
 
   private async showSplashScreen() {
