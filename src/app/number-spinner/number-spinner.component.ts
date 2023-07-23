@@ -40,6 +40,7 @@ export class NumberSpinnerComponent {
       value = this._max;
     }
     this._value = value;
+    this.valueChange.emit(this._value);
     console.log('value', value);
   }
 

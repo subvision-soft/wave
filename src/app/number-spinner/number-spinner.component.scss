@@ -12,7 +12,6 @@
 
   .number-spinner {
     height: 100%;
-    border: 1px solid rgba(0, 0, 0, 0.05);
     flex: 1;
     overflow: hidden;
     mask-image: linear-gradient(
@@ -38,9 +37,30 @@
         align-items: center;
         opacity: 0.5;
         transition: var(--primary-transition);
+        transform: scale(0.8);
+
+        &:before {
+          content: "";
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: calc(100% - 5px);
+          height: calc(100% - 5px);
+          background: var(--colorBgLayout);
+          transform: translate(-50%, -50%);
+          z-index: -1;
+          border-radius: var(--borderRadius);
+          transition: 0.3s ease-in-out;
+        }
 
         &.active {
           opacity: 1;
+          transform: scale(1);
+          color: var(--colorPrimaryText);
+
+          &:before {
+            background: var(--colorPrimaryBg);
+          }
         }
       }
     }
@@ -48,7 +68,6 @@
 
   .title {
     flex: 1;
-
     padding: 20px 0;
     box-sizing: border-box;
     opacity: 0.5;

@@ -6,6 +6,6 @@
   <div *ngFor="let record of store" [class]="value === record[valueField] ? 'row active' : 'row'"
        (click)="select(record[valueField])">
     <span>{{record[displayField]}}</span>
-    <ng-icon class="icon" size="20" name="iconoirCheck"></ng-icon>
+    <ng-icon class="icon" size="25" name="iconoirCheck"></ng-icon>
   </div>
 </app-slide-sheet>

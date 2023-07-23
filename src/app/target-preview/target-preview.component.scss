@@ -19,6 +19,10 @@
     transition: var(--primary-transition);
     cursor: pointer;
 
+    &.multiple {
+      box-shadow: 0 0 0 3px rgba(0, 98, 225, 0.5);
+    }
+
     &.selected,
     &:active {
       box-shadow: 0 0 0 3px rgba(255, 89, 0, 0.5);

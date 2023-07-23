@@ -18,6 +18,8 @@ export class ThemeColorService {
     const color = Color(baseColor);
     const neutral1 = Color('#000000');
     const neutral2 = Color('#ffffff');
+    const seedBorderRadius = 10;
+
     const darkMode = false;
     const data = {
       colorPrimaryBg: darkMode
@@ -65,6 +67,13 @@ export class ThemeColorService {
 
       colorBgSpotlight: neutral1.alpha(0.85).rgb(),
       colorBgMask: neutral1.alpha(0.45).rgb(),
+      borderRadius: `${seedBorderRadius}px`,
+      borderRadiusSM: `${Math.ceil(seedBorderRadius * (2 / 3))}px`,
+      borderRadiusLG: `${Math.ceil(seedBorderRadius * (6 / 5))}px`,
+      borderRadiusXS: `${Math.ceil(seedBorderRadius / 5)}px`,
+
+      boxShadow: `0 0px 5px 0 rgba(0, 0, 0, 0.1)`,
+      boxShadowSecondary: `0 0px 5px 0 rgba(0, 0, 0, 0.2)`,
     };
 
     const rows = Object.keys(data)

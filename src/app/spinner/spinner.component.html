@@ -8,7 +8,7 @@
   <div class="container"
        [style.transform]="'translateX(calc('+_value*-1+' * 100%)) translateX(100%)'"
   >
-    <div [class]="_value === i ? 'active value' : 'value'"
+    <div [class]="_value === i ? 'active value' : 'value'" (click)="value = i;currentValue = i"
          *ngFor="let number of values;index as i">
       {{number}}
     </div>

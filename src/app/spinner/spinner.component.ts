@@ -31,6 +31,7 @@ export class SpinnerComponent {
   @Input()
   set value(value: number) {
     this._value = value;
+    this.valueChange.emit(this._value);
   }
 
   get value(): number {

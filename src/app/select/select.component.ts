@@ -9,7 +9,7 @@ export class SelectComponent {
   @Input() store: any[] = [];
   @Input() displayField: string = 'label';
   @Input() valueField: string = 'id';
-  @Input() value: any = undefined;
+  @Input() value: any | null = undefined;
   @Output() valueChange = new EventEmitter<any>();
 
   get displayedField(): string {

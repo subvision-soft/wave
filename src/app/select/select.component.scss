@@ -3,14 +3,13 @@
 
   & .input {
     border: 1px solid var(--colorBorder);
-    border-radius: 10px;
+    border-radius: var(--borderRadius);
     padding: 5px;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 5px;
     flex-direction: row;
-    width: fit-content;
 
     & .icon {
       display: flex;
@@ -30,9 +29,10 @@
     justify-content: space-between;
     gap: 5px;
     flex-direction: row;
-    padding: 5px;
+    padding: 10px;
     transition: var(--primary-transition);
-    border-radius: 10px;
+    border-radius: var(--borderRadius);
+    font-size: 20px;
 
     & .icon {
       visibility: hidden;

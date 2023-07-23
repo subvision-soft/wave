@@ -14,7 +14,10 @@ import { pluck } from 'rxjs';
 @Pipe({ name: 'pluck' })
 export class PluckPipe implements PipeTransform {
   transform(value: any[], key: string): any {
-    return value.map((value) => value[key]);
+    return value.map((value) => {
+      if (value.amount === 1) return value[key];
+      return value[key] + '×' + value.amount;
+    });
   }
 }
 
@@ -48,6 +51,29 @@ export class ResultComponent implements OnInit {
     },
   ];
 
+  multipleStore: any[] = [
+    {
+      label: '×1',
+      id: 1,
+    },
+    {
+      label: '×2',
+      id: 2,
+    },
+    {
+      label: '×3',
+      id: 3,
+    },
+    {
+      label: '×4',
+      id: 4,
+    },
+    {
+      label: '×5',
+      id: 5,
+    },
+  ];
+
   set selected(value: Impact | null) {
     this._selected = value;
     this._selectedIndex = this._impacts.findIndex((impact) => impact === value);
@@ -73,51 +99,60 @@ export class ResultComponent implements OnInit {
       points: 456,
       angle: 100.6763797345331,
       zone: Zone.CENTER,
+      amount: 1,
     },
     {
       points: 426,
       angle: 103.43445377384366,
       zone: Zone.BOTTOM_RIGHT,
+      amount: 1,
     },
     {
       points: 495,
       angle: 155.98756431301382,
       zone: Zone.BOTTOM_LEFT,
+      amount: 1,
     },
     {
       points: 474,
       angle: 156.06791089729842,
       zone: Zone.TOP_RIGHT,
+      amount: 1,
     },
     {
       points: 0,
       angle: 63.07817692394753,
       zone: Zone.TOP_LEFT,
       distance: 55,
+      amount: 1,
     },
     {
       points: 0,
       angle: 63.07817692394753,
       zone: Zone.TOP_RIGHT,
       distance: 55,
+      amount: 1,
     },
     {
       points: 450,
       angle: 63.07817692394753,
       zone: Zone.TOP_LEFT,
       distance: 55,
+      amount: 1,
     },
     {
       points: 568,
       angle: 63.07817692394753,
       zone: Zone.CENTER,
       distance: 55,
+      amount: 1,
     },
     {
       points: 411,
       angle: 63.07817692394753,
       zone: Zone.TOP_LEFT,
       distance: 55,
+      amount: 1,
     },
   ];
   public total: number = 0;

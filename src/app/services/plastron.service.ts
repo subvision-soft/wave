@@ -24,7 +24,8 @@ export class Impact {
   constructor(
     public points: number = 0,
     public zone: Zone = Zone.UNDEFINED,
-    public angle: number = -1
+    public angle: number = -1,
+    public amount: number = 1
   ) {}
 }
 

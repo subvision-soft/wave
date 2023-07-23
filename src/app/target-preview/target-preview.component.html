@@ -1,4 +1,5 @@
-<div *ngFor="let impact of impacts" [class]="selected === impact ? 'selected impact' : 'impact'"
+<div *ngFor="let impact of impacts"
+     [class]="selected === impact ? (impact.amount > 1 ? 'selected impact multiple':'selected impact') :  (impact.amount > 1 ? 'impact multiple':'impact')"
      (click)="select(impact)"
      [style.--impact-size]="sizeToPercent(arrowSize)"
      [style.--impact-color]="'#ff0000'"

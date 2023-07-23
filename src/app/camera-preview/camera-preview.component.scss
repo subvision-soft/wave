@@ -11,9 +11,9 @@
     position: relative;
     width: 100%;
     overflow: hidden;
-    border-radius: 10px;
+    border-radius: var(--borderRadius);
     border: 1px solid var(--colorBorder);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--boxShadow);
     display: flex;
     justify-content: center;
     align-items: center;

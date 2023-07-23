@@ -73,7 +73,7 @@ body {
       transition: var(--primary-transition);
       border: solid 1px var(--primary-background);
       box-sizing: border-box;
-      border-radius: 10px;
+      border-radius: var(--borderRadius);
       opacity: 0.1;
     }
 
@@ -87,7 +87,7 @@ body {
       transition: var(--primary-transition);
       background-color: var(--primary-background);
       box-sizing: border-box;
-      border-radius: 10px;
+      border-radius: var(--borderRadius);
       opacity: 0.1;
     }
   }

@@ -10,7 +10,7 @@
     width: 100%;
 
     .impact {
-      border-radius: 10px;
+      border-radius: var(--borderRadius);
       box-sizing: border-box;
       padding: 5px 10px;
       display: flex;
