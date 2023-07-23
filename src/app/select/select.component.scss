@@ -1,0 +1,55 @@
+:host {
+  color: var(--colorText);
+
+  & .input {
+    border: 1px solid var(--colorBorder);
+    border-radius: 10px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    flex-direction: row;
+    width: fit-content;
+
+    & .icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    &:active {
+      color: var(--colorPrimary);
+      transition: var(--primary-transition);
+    }
+  }
+
+  & .row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+    flex-direction: row;
+    padding: 5px;
+    transition: var(--primary-transition);
+    border-radius: 10px;
+
+    & .icon {
+      visibility: hidden;
+      opacity: 0;
+      transition: var(--primary-transition);
+      color: var(--colorPrimary);
+    }
+
+    &.active,
+    &:active {
+      color: var(--colorPrimary);
+      background: var(--colorPrimaryBg);
+
+      & .icon {
+        visibility: visible;
+        opacity: 1;
+      }
+    }
+  }
+}

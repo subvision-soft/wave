@@ -1,8 +1,8 @@
 :host {
-  color: black;
+  color: var(--colorText);
   position: relative;
-  height: 200px;
-  width: 200px;
+  height: 40px;
+  width: 100%;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -12,11 +12,12 @@
 
   .number-spinner {
     height: 100%;
-    border: 1px solid rgba(0, 0, 0, 0.05);
+    width: 100%;
+    border: 1px solid var(--colorBorder);
     flex: 1;
     overflow: hidden;
     mask-image: linear-gradient(
-      to bottom,
+      to right,
       transparent 0%,
       transparent 10%,
       black 20%,
@@ -26,21 +27,30 @@
     );
 
     .container {
-      width: 100%;
-      height: calc(100% / 3);
+      width: calc(100% / 3);
+      height: 100%;
       transition: 0.3s ease-in-out;
+      display: flex;
+      flex-direction: row;
+      justify-content: stretch;
+      align-items: stretch;
 
       .value {
         height: 100%;
-        width: 100%;
+        min-width: 100%;
+        flex: 1;
         display: flex;
         justify-content: center;
         align-items: center;
         opacity: 0.5;
-        transition: var(--primary-transition);
+        transition: 0.3s ease-in-out;
+        transform: scale(0.8);
 
         &.active {
           opacity: 1;
+          transform: scale(1.1);
+          color: var(--colorPrimaryText);
+          font-weight: 500;
         }
       }
     }

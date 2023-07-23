@@ -1,7 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  Pipe,
+  PipeTransform,
+} from '@angular/core';
 import { Impact, PlastronService, Zone } from '../services/plastron.service';
 import { Router } from '@angular/router';
 import { SegmentedButtonItem } from '../segmented-button/segmented-button.component';
+import { pluck } from 'rxjs';
+
+@Pipe({ name: 'pluck' })
+export class PluckPipe implements PipeTransform {
+  transform(value: any[], key: string): any {
+    return value.map((value) => value[key]);
+  }
+}
 
 @Component({
   selector: 'app-result',
@@ -12,10 +27,48 @@ export class ResultComponent implements OnInit {
   private frame: any = null;
   private canvas: any = null;
   protected time: number = 0;
-  protected selected: Impact | null = null;
+  protected _selected: Impact | null = null;
+  @Output() selectedChange = new EventEmitter<Impact | null>();
+  protected _selectedIndex = 0;
+  @Output() selectedIndexChange = new EventEmitter<number>();
   protected imagePreview: boolean = false;
 
-  public impacts: any[] = [
+  selectStore: any[] = [
+    {
+      label: 'Précision',
+      id: 'precision',
+    },
+    {
+      label: 'Biathlon',
+      id: 'biathlon',
+    },
+    {
+      label: 'Super-biathlon',
+      id: 'superBiathlon',
+    },
+  ];
+
+  set selected(value: Impact | null) {
+    this._selected = value;
+    this._selectedIndex = this._impacts.findIndex((impact) => impact === value);
+    this.selectedChange.emit(value);
+  }
+
+  set selectedIndex(value: number) {
+    this._selectedIndex = value;
+    this._selected = this._impacts[value];
+    this.selectedIndexChange.emit(value);
+  }
+
+  get selectedIndex(): number {
+    return this._selectedIndex;
+  }
+
+  get selected(): Impact | null {
+    return this._selected;
+  }
+
+  public _impacts: any[] = [
     {
       points: 456,
       angle: 100.6763797345331,
@@ -42,12 +95,45 @@ export class ResultComponent implements OnInit {
       zone: Zone.TOP_LEFT,
       distance: 55,
     },
+    {
+      points: 0,
+      angle: 63.07817692394753,
+      zone: Zone.TOP_RIGHT,
+      distance: 55,
+    },
+    {
+      points: 450,
+      angle: 63.07817692394753,
+      zone: Zone.TOP_LEFT,
+      distance: 55,
+    },
+    {
+      points: 568,
+      angle: 63.07817692394753,
+      zone: Zone.CENTER,
+      distance: 55,
+    },
+    {
+      points: 411,
+      angle: 63.07817692394753,
+      zone: Zone.TOP_LEFT,
+      distance: 55,
+    },
   ];
   public total: number = 0;
   public epreuve: string = 'precision';
 
   get precision(): boolean {
     return this.epreuve === 'precision';
+  }
+
+  get impacts(): any[] {
+    return [...this._impacts];
+  }
+
+  set impacts(value: any[]) {
+    console.log('set impacts', value);
+    this._impacts = [...value];
   }
 
   get biathlon(): boolean {
@@ -101,4 +187,6 @@ export class ResultComponent implements OnInit {
   togglePreview() {
     this.imagePreview = !this.imagePreview;
   }
+
+  protected readonly pluck = pluck;
 }

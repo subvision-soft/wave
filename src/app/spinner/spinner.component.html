@@ -1,0 +1,19 @@
+<div (mousedown)="onMouseDown($event)" (mouseleave)="onMouseUp($event)" (mouseup)="onMouseUp($event)"
+     (mousemove)="onMouseMove($event)"
+     (touchstart)="onMouseDown($event)" (touchend)="onMouseUp($event)" (touchmove)="onMouseMove($event)"
+     (touchcancel)="onMouseUp($event)"
+     [style.--positionX.px]="positionX" #container
+     class="number-spinner"
+>
+  <div class="container"
+       [style.transform]="'translateX(calc('+_value*-1+' * 100%)) translateX(100%)'"
+  >
+    <div [class]="_value === i ? 'active value' : 'value'"
+         *ngFor="let number of values;index as i">
+      {{number}}
+    </div>
+  </div>
+</div>
+
+
+<div class="title" *ngIf="title">{{title}}</div>

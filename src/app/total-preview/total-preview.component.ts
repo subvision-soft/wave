@@ -24,11 +24,9 @@ export class TotalPreviewComponent {
   }
 
   get total(): number {
-    console.log(this.time);
     if (this.precision) {
       return this.tirsValides.reduce((acc, impact) => acc + impact.points, 0);
     } else if (this.biathlon) {
-      console.log(this.tirsValides);
       const number =
         (this.tirsValides.reduce((acc, impact) => acc + impact.points, 0) -
           this.time * 2) *
@@ -60,7 +58,6 @@ export class TotalPreviewComponent {
             .slice(0, 2)
         );
       });
-      console.log(impacts);
       return impacts;
     } else if (this.biathlon) {
       //On garde les 3 moins bons impacts

@@ -7,10 +7,12 @@ import { TabBarComponent } from './tab-bar/tab-bar.component';
 import {
   iconoirBinMinus,
   iconoirCamera,
+  iconoirCheck,
   iconoirCopy,
   iconoirDashboardDots,
   iconoirHomeSimpleDoor,
   iconoirMediaImage,
+  iconoirNavArrowDown,
   iconoirNavArrowLeft,
   iconoirOnePointCircle,
   iconoirSettings,
@@ -26,7 +28,7 @@ import { IconButtonComponent } from './icon-button/icon-button.component';
 import { NgxOpenCVModule } from '../lib/ngx-opencv.module';
 import { OpenCVConfig } from '../lib/models';
 import { LoadingComponent } from './loading/loading.component';
-import { ResultComponent } from './result/result.component';
+import { PluckPipe, ResultComponent } from './result/result.component';
 import { CameraPreviewComponent } from './camera-preview/camera-preview.component';
 import { SegmentedButtonComponent } from './segmented-button/segmented-button.component';
 import { TextfieldComponent } from './textfield/textfield.component';
@@ -40,6 +42,8 @@ import { TotalPreviewComponent } from './total-preview/total-preview.component';
 import { ColorPreviewComponent } from './color-preview/color-preview.component';
 import { FormsModule } from '@angular/forms';
 import { ColorPickerModule } from 'ngx-color-picker';
+import { SpinnerComponent } from './spinner/spinner.component';
+import { SelectComponent } from './select/select.component';
 
 const openCVConfig: OpenCVConfig = {
   openCVDirPath: 'assets/opencv',
@@ -68,6 +72,9 @@ const openCVConfig: OpenCVConfig = {
     ButtonComponent,
     TotalPreviewComponent,
     ColorPreviewComponent,
+    SpinnerComponent,
+    PluckPipe,
+    SelectComponent,
   ],
   imports: [
     NgxOpenCVModule.forRoot(openCVConfig),
@@ -79,8 +86,10 @@ const openCVConfig: OpenCVConfig = {
       iconoirCamera,
       iconoirSettings,
       iconoirNavArrowLeft,
+      iconoirNavArrowDown,
       iconoirDashboardDots,
       iconoirTimer,
+      iconoirCheck,
       iconoirCopy,
       iconoirBinMinus,
       iconoirOnePointCircle,

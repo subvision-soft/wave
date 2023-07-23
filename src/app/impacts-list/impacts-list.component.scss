@@ -1,15 +1,12 @@
 :host {
-  color: var(--primary-color);
+  color: var(--colorText);
 
   .impacts {
-    max-height: 300px;
     overflow-y: scroll;
     gap: 10px;
     display: flex;
     padding: 10px;
     box-sizing: border-box;
-    position: absolute;
-    left: 0;
     width: 100%;
 
     .impact {
