@@ -1,32 +1,45 @@
-header {
+:host {
   display: flex;
   justify-content: center;
   align-items: stretch;
+  position: sticky;
+  top: 0;
   padding: 10px;
   box-sizing: border-box;
   width: 100%;
+  background: var(--colorBgContainer);
+  box-shadow: var(--boxShadow);
+  z-index: 1000;
 
-  .header-item {
+  & .header-item {
     flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
     color: var(--colorText);
+    z-index: 1;
 
-    .logo {
+    &:last-child {
+      z-index: 0;
+    }
+
+    &:first-child {
+      z-index: 0;
+    }
+
+    & .logo {
       height: 100%;
       aspect-ratio: 1;
       background-size: contain;
       background: url("../../assets/img/logo_s_white.svg") no-repeat center;
-      position: relative;
     }
   }
 
-  .header-item:first-child {
+  & .header-item:first-child {
     justify-content: flex-start;
   }
 
-  .header-item:last-child {
+  & .header-item:last-child {
     justify-content: flex-end;
   }
 }

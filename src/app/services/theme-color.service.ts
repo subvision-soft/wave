@@ -16,6 +16,7 @@ export class ThemeColorService {
 
   setCssVariables(baseColor: string) {
     const color = Color(baseColor);
+    const success = Color('#52c41a');
     const neutral1 = Color('#000000');
     const neutral2 = Color('#ffffff');
     const seedBorderRadius = 10;
@@ -48,6 +49,33 @@ export class ThemeColorService {
       colorPrimaryTextActive: darkMode
         ? color.darken(0.2).hex()
         : color.darken(0.2).hex(),
+
+      colorSuccessBg: darkMode
+        ? success.darken(0.95).hex()
+        : success.lighten(1.1).hex(),
+      colorSuccessBgHover: darkMode
+        ? success.darken(0.8).hex()
+        : success.lighten(0.7).hex(),
+      colorSuccessBorder: darkMode
+        ? success.darken(0.5).hex()
+        : success.lighten(0.5).hex(),
+      colorSuccessBorderHover: darkMode
+        ? success.darken(0.56).hex()
+        : success.lighten(0.44).hex(),
+      colorSuccessHover: !darkMode
+        ? success.lighten(0.1).hex()
+        : success.lighten(0.1).hex(),
+      colorSuccess: success.hex(),
+      colorSuccessActive: !darkMode
+        ? success.darken(0.2).hex()
+        : success.darken(0.2).hex(),
+      colorSuccessTextHover: !darkMode
+        ? success.lighten(0.1).hex()
+        : success.lighten(0.1).hex(),
+      colorSuccessText: success.hex(),
+      colorSuccessTextActive: darkMode
+        ? success.darken(0.2).hex()
+        : success.darken(0.2).hex(),
 
       colorText: neutral1.alpha(0.88).rgb(),
       colorTextSecondary: neutral1.alpha(0.65).rgb(),

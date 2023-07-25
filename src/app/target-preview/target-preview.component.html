@@ -8,4 +8,5 @@
      [style.--impact-rotation]="impact.angle + 'deg'"
      [style.--impact-distance]="impact.points > 0 ? getDistance(impact) : getDistanceFromMm(impact.distance)"
 >
+  <span>{{impact.amount > 1 ? impact.amount : ''}}</span>
 </div>

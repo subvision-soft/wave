@@ -15,6 +15,7 @@ import {
   iconoirNavArrowDown,
   iconoirNavArrowLeft,
   iconoirOnePointCircle,
+  iconoirPasteClipboard,
   iconoirSettings,
   iconoirTimer,
 } from '@ng-icons/iconoir';
@@ -94,6 +95,7 @@ const openCVConfig: OpenCVConfig = {
       iconoirBinMinus,
       iconoirOnePointCircle,
       iconoirMediaImage,
+      iconoirPasteClipboard,
     }),
     FormsModule,
   ],

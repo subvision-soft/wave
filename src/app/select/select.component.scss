@@ -20,6 +20,7 @@
     &:active {
       color: var(--colorPrimary);
       transition: var(--primary-transition);
+      border-color: var(--colorPrimary);
     }
   }
 
@@ -41,8 +42,11 @@
       color: var(--colorPrimary);
     }
 
-    &.active,
     &:active {
+      background: var(--colorBgLayout);
+    }
+
+    &.active {
       color: var(--colorPrimary);
       background: var(--colorPrimaryBg);
 

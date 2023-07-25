@@ -7,9 +7,24 @@ import { Impact } from '../services/plastron.service';
   styleUrls: ['./total-preview.component.scss'],
 })
 export class TotalPreviewComponent {
-  @Input() public impacts: Impact[] = [];
+  public _impacts: Impact[] = [];
   @Input() public time: number = 0;
   @Input() public epreuve: string = 'precision';
+
+  @Input()
+  public set impacts(impacts: Impact[]) {
+    this._impacts = [];
+    for (let i = 0; i < impacts.length; i++) {
+      for (let j = 0; j < impacts[i].amount; j++) {
+        this._impacts.push({ ...impacts[i] });
+      }
+    }
+    console.log(this._impacts);
+  }
+
+  public get impacts(): Impact[] {
+    return this._impacts;
+  }
 
   get precision(): boolean {
     return this.epreuve === 'precision';
@@ -25,7 +40,9 @@ export class TotalPreviewComponent {
 
   get total(): number {
     if (this.precision) {
-      return this.tirsValides.reduce((acc, impact) => acc + impact.points, 0);
+      const number1 = this.tirsValides;
+      console.log(number1);
+      return number1.reduce((acc, impact) => acc + impact.points, 0);
     } else if (this.biathlon) {
       const number =
         (this.tirsValides.reduce((acc, impact) => acc + impact.points, 0) -
@@ -39,9 +56,10 @@ export class TotalPreviewComponent {
   get tirsValides(): Impact[] {
     if (this.precision) {
       //On garde les 10 moins bons impacts
-      let impacts = this.impacts
+      let impacts = this._impacts
         .sort((a, b) => a.points - b.points)
-        .slice(0, 9);
+        .slice(0, 10);
+      console.log('10 mois bons', impacts);
       let zones: any = {};
       zones = impacts.reduce((acc, impact) => {
         const zone = zones[impact.zone] || [];
@@ -61,7 +79,7 @@ export class TotalPreviewComponent {
       return impacts;
     } else if (this.biathlon) {
       //On garde les 3 moins bons impacts
-      let impacts = this.impacts
+      let impacts = this._impacts
         .sort((a, b) => a.points - b.points)
         .slice(0, 3);
       let zones: any = {};

@@ -1,22 +1,24 @@
-<div class="top">
-  <app-select [store]="selectStore" [(value)]="epreuve"></app-select>
-  <app-chrono-picker *ngIf="superBiathlon || biathlon" [(time)]="time"></app-chrono-picker>
-</div>
-<div class="scrollable">
-  <div class="content">
-    <div class="result-preview">
-      <app-icon-button class="toggle-preview" [icon]="imagePreview?'iconoirOnePointCircle':'iconoirMediaImage'"
-                       (click)="togglePreview()"></app-icon-button>
-      <app-target-preview *ngIf="!imagePreview" [(selected)]="selected" [impacts]="impacts"></app-target-preview>
-      <canvas id="canvas" height="1000" width="1000" [style.display]="imagePreview?'block' :'none'"></canvas>
-    </div>
-    <app-spinner [(value)]="selectedIndex" [values]="impacts | pluck:'points'"></app-spinner>
-    <div class="tools">
-      <app-select class="multi-impacts" *ngIf="selected" [store]="multipleStore"
-                  [(value)]="selected.amount"></app-select>
-    </div>
-    <!--    <app-total-preview [epreuve]="epreuve" [time]="(time-(time%1000))/1000" [impacts]="impacts"></app-total-preview>-->
+<app-header>
+  <div class="top">
+    <app-select [store]="selectStore" [(value)]="epreuve"></app-select>
+    <app-chrono-picker *ngIf="superBiathlon || biathlon" [(time)]="time"></app-chrono-picker>
   </div>
+</app-header>
+
+
+<div class="content">
+  <div class="result-preview">
+    <app-icon-button class="toggle-preview" [icon]="imagePreview?'iconoirOnePointCircle':'iconoirMediaImage'"
+                     (click)="togglePreview()"></app-icon-button>
+    <app-target-preview *ngIf="!imagePreview" [(selected)]="selected" [impacts]="impacts"></app-target-preview>
+    <canvas id="canvas" height="1000" width="1000" [style.display]="imagePreview?'block' :'none'"></canvas>
+  </div>
+  <app-spinner [(value)]="selectedIndex" [values]="impacts | pluck:'points'"></app-spinner>
+  <div class="tools">
+    <app-select class="multi-impacts" *ngIf="selected" [store]="multipleStore"
+                [(value)]="selected.amount"></app-select>
+  </div>
+  <app-total-preview [epreuve]="epreuve" [time]="(time-(time%1000))/1000" [impacts]="impacts"></app-total-preview>
 </div>
 
 

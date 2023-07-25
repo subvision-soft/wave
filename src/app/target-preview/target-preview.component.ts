@@ -90,4 +90,5 @@ export class TargetPreviewComponent {
     this.selected = impact;
     this.selectedChange.emit(impact);
   };
+  protected readonly toString = toString;
 }

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { Location } from '@angular/common';
 
 @Component({
@@ -7,8 +7,8 @@ import { Location } from '@angular/common';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-  @Input() title: string = '';
   constructor(private location: Location) {}
+
   goBack() {
     this.location.back();
   }
