@@ -22,3 +22,10 @@ export interface OpenCVState {
   error: boolean;
   state: string;
 }
+
+export interface DbState {
+  ready: boolean;
+  loading: boolean;
+  error: boolean;
+  state: string;
+}

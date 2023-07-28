@@ -2,6 +2,8 @@
   <div class="top">
     <app-select [store]="selectStore" [(value)]="epreuve"></app-select>
     <app-chrono-picker *ngIf="superBiathlon || biathlon" [(time)]="time"></app-chrono-picker>
+    <app-button icon="iconoirSaveFloppyDisk">
+    </app-button>
   </div>
 </app-header>
 

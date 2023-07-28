@@ -50,6 +50,10 @@ export class ThemeColorService {
         ? color.darken(0.2).hex()
         : color.darken(0.2).hex(),
 
+      colorPrimaryAlpha1: color.alpha(0.1).rgb(),
+      colorPrimaryAlpha2: color.alpha(0.5).rgb(),
+      colorPrimaryAlpha3: color.alpha(0.8).rgb(),
+
       colorSuccessBg: darkMode
         ? success.darken(0.95).hex()
         : success.lighten(1.1).hex(),

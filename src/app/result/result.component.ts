@@ -46,7 +46,7 @@ export class ResultComponent implements OnInit {
       id: 'biathlon',
     },
     {
-      label: 'Super-biathlon',
+      label: 'Super‑biathlon',
       id: 'superBiathlon',
     },
   ];

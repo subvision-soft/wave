@@ -1,5 +1,6 @@
 :host {
   color: var(--colorText);
+  font-size: 16px;
 
   & .input {
     border: 1px solid var(--colorBorder);
@@ -33,7 +34,6 @@
     padding: 10px;
     transition: var(--primary-transition);
     border-radius: var(--borderRadius);
-    font-size: 20px;
 
     & .icon {
       visibility: hidden;

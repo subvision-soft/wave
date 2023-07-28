@@ -1,0 +1,32 @@
+:host {
+  padding: 5px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--borderRadius);
+  background-color: var(--colorPrimary);
+  color: var(--colorBgContainer);
+  transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+  box-shadow: 0 2px 0 var(--colorPrimaryAlpha1);
+  border: 1px solid transparent;
+  outline: 0px solid #91caff;
+  outline-offset: 1px;
+
+  &:has(.icon):not(:has(label)) {
+    height: 35px;
+    width: 35px;
+  }
+
+  &:active {
+    background-color: var(--colorPrimaryActive);
+  }
+
+  &:focus-visible {
+    outline: 4px solid #91caff !important;
+    outline-offset: 1px;
+    transition: outline-offset 0s, outline 0s;
+  }
+}
