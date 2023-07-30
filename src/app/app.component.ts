@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { ThemeColorService } from './services/theme-color.service';
-import { DbService } from './services/db.service';
 
 @Component({
   selector: 'app-root',
@@ -17,38 +16,9 @@ export class AppComponent {
   cssVariables: string = '';
   private initPlugin: boolean = false;
 
-  constructor(
-    private themeColorService: ThemeColorService,
-    private dbService: DbService
-  ) {
+  constructor(private themeColorService: ThemeColorService) {
     this.showSplashScreen();
     this.themeColorService.setCssVariables('#1677ff');
-    this.initializeApp();
-  }
-
-  initializeApp() {
-    this.dbService.initializePlugin().then(async () => {
-      console.log('>>>> initializePlugin');
-      await customElements.whenDefined('jeep-sqlite');
-      const jeepSqliteEl = document.querySelector('jeep-sqlite');
-      if (jeepSqliteEl != null) {
-        // this.dbService.init();
-        console.log(`>>>> isStoreOpen ${await jeepSqliteEl.isStoreOpen()}`);
-      } else {
-        console.log('>>>> jeepSqliteEl is null');
-      }
-    });
-    this.dbService.state.subscribe((state) => {
-      if (state.ready) {
-        this.loadSessions();
-      }
-    });
-  }
-
-  private loadSessions() {
-    this.dbService.db?.query('SELECT * FROM session').then((res) => {
-      console.log('res', res);
-    });
   }
 
   private async showSplashScreen() {

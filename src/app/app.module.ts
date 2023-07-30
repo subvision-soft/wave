@@ -46,8 +46,6 @@ import { FormsModule } from '@angular/forms';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { SelectComponent } from './select/select.component';
-import { SQLiteService } from './services/sqlite.service';
-import { DbService } from './services/db.service';
 
 const openCVConfig: OpenCVConfig = {
   openCVDirPath: 'assets/opencv',
@@ -103,7 +101,6 @@ const openCVConfig: OpenCVConfig = {
     }),
     FormsModule,
   ],
-  providers: [SQLiteService, DbService],
   bootstrap: [AppComponent],
 })
 export class AppModule {
