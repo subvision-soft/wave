@@ -7,7 +7,6 @@ import {
   PipeTransform,
 } from '@angular/core';
 import { Impact, PlastronService, Zone } from '../services/plastron.service';
-import { Router } from '@angular/router';
 import { SegmentedButtonItem } from '../segmented-button/segmented-button.component';
 import { pluck } from 'rxjs';
 
@@ -35,6 +34,7 @@ export class ResultComponent implements OnInit {
   protected _selectedIndex = 0;
   @Output() selectedIndexChange = new EventEmitter<number>();
   protected imagePreview: boolean = false;
+  protected saving: boolean = false;
 
   selectStore: any[] = [
     {
@@ -191,10 +191,7 @@ export class ResultComponent implements OnInit {
     }),
   ];
 
-  constructor(
-    private plastronService: PlastronService,
-    private router: Router
-  ) {
+  constructor(private plastronService: PlastronService) {
     this.frame = this.plastronService.getFrame();
     if (!this.frame) {
       console.error('No frame found');
@@ -217,6 +214,10 @@ export class ResultComponent implements OnInit {
     } catch (error) {
       console.error(error);
     }
+  }
+
+  save() {
+    this.saving = true;
   }
 
   togglePreview() {

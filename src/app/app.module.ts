@@ -7,6 +7,7 @@ import { TabBarComponent } from './tab-bar/tab-bar.component';
 import {
   iconoirBinMinus,
   iconoirCamera,
+  iconoirCancel,
   iconoirCheck,
   iconoirCopy,
   iconoirDashboardDots,
@@ -98,6 +99,7 @@ const openCVConfig: OpenCVConfig = {
       iconoirMediaImage,
       iconoirPasteClipboard,
       iconoirSaveFloppyDisk,
+      iconoirCancel,
     }),
     FormsModule,
   ],

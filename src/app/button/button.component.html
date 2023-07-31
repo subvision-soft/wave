@@ -1,2 +1,4 @@
-<ng-icon class="icon" size="20" *ngIf="icon" [name]="icon"></ng-icon>
-<label class="label" *ngIf="label">{{label}}</label>
+<button>
+  <ng-icon *ngIf="icon" [class]="['icon' ]" [name]="icon" size="20"></ng-icon>
+  <span *ngIf="label" [class]="['label']">{{label}}</span></button>
+

@@ -1,14 +1,15 @@
-<app-header>
+<app-header [showBack]="!saving" [showLogo]="!saving">
   <div class="top">
-    <app-select [store]="selectStore" [(value)]="epreuve"></app-select>
-    <app-chrono-picker *ngIf="superBiathlon || biathlon" [(time)]="time"></app-chrono-picker>
-    <app-button icon="iconoirSaveFloppyDisk">
-    </app-button>
+    <app-select *ngIf="!saving" [store]="selectStore" [(value)]="epreuve"></app-select>
+    <app-chrono-picker *ngIf="superBiathlon || biathlon && !saving" [(time)]="time"></app-chrono-picker>
+    <app-button color="error" *ngIf="saving" (click)="saving = false" label="Annuler" icon="iconoirCancel"/>
+    <app-button type="primary" (click)="save()" icon="iconoirSaveFloppyDisk"
+                [label]="saving?'Enregistrer' : ''"/>
   </div>
 </app-header>
 
 
-<div class="content">
+<div class="content" *ngIf="!saving">
   <div class="result-preview">
     <app-icon-button class="toggle-preview" [icon]="imagePreview?'iconoirOnePointCircle':'iconoirMediaImage'"
                      (click)="togglePreview()"></app-icon-button>
