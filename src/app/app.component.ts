@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostBinding } from '@angular/core';
 import { ThemeColorService } from './services/theme-color.service';
 
 @Component({
@@ -8,17 +8,18 @@ import { ThemeColorService } from './services/theme-color.service';
 })
 export class AppComponent {
   title = 'subapp';
+  @HostBinding('class.backgroundStep-1') backgroundStep1: boolean = true;
+  @HostBinding('class.backgroundStep-2') backgroundStep2: boolean = true;
   tabs = [
     { icon: 'iconoirHomeSimpleDoor', label: 'Accueil', link: '/home' },
     { icon: 'iconoirCamera', label: 'Caméra', link: '/camera' },
     { icon: 'iconoirDashboardDots', label: 'Paramètres', link: '/settings' },
   ];
   cssVariables: string = '';
-  private initPlugin: boolean = false;
 
   constructor(private themeColorService: ThemeColorService) {
     this.showSplashScreen();
-    this.themeColorService.setCssVariables('#1677ff');
+    this.themeColorService.setCssVariables('#1cd29b');
   }
 
   private async showSplashScreen() {
@@ -30,5 +31,7 @@ export class AppComponent {
 
   tabSelected(tab: any) {
     this.title = tab.label;
+    this.backgroundStep1 = tab.label === 'Accueil';
+    this.backgroundStep2 = tab.label === 'Paramètres';
   }
 }

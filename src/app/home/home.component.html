@@ -1,1 +1,6 @@
-<p>home works!</p>
+<div class="seance" *ngFor="let seance of seances">
+  <h1>{{seance.name}}</h1>
+  <p class="description">{{seance.description}}</p>
+  <div class="bottom"><p class="number">{{seance.numberOfPeople}}</p>
+    <p>{{seance.date.toLocaleDateString("fr")}}</p></div>
+</div>

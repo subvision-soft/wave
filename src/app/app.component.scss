@@ -3,14 +3,52 @@
   display: flex;
   flex-direction: column;
 
+  &:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100vh;
+    background: var(--colorPrimary);
+    z-index: -1;
+    transition: 1s cubic-bezier(0.645, 0.045, 0.355, 1);
+    clip-path: ellipse(0 0 at 20% -100vw);
+  }
+
   & .app-page {
     flex: 1;
     display: flex;
     align-items: stretch;
     box-sizing: border-box;
     width: 100%;
-    flex: 1;
-    border-radius: var(--borderRadius);
+    z-index: 1;
+  }
+
+  @keyframes wave {
+    0% {
+      background: radial-gradient(
+        circle at 20% -200vw,
+        var(--colorPrimary) 0%,
+        #fff 0%
+      );
+    }
+
+    100% {
+      background: radial-gradient(
+        circle at 20% -200vw,
+        var(--colorPrimary) calc(200vw + 200px),
+        #fff calc(200vw + 201px)
+      );
+    }
+  }
+
+  &.backgroundStep-1:after {
+    clip-path: ellipse(calc(100vw + 200vw) calc(100vw + 200vh) at 20% -100vw);
+  }
+
+  &.backgroundStep-2:after {
+    clip-path: ellipse(calc(100vw + 200px) calc(100vw + 200px) at 20% -100vw);
   }
 
   & app-header {
@@ -21,5 +59,6 @@
   & app-tab-bar {
     position: sticky;
     bottom: 0;
+    z-index: 2;
   }
 }
