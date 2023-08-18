@@ -19,7 +19,7 @@ export class ThemeColorService {
     const success = Color('#52c41a');
     const error = Color('#ff4d4f');
     const neutral1 = Color('#000000');
-    const neutral2 = Color('#ffffff');
+    const neutral2 = Color('#1cd29b');
     const seedBorderRadius = 10;
 
     const darkMode = false;

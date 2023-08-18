@@ -4,9 +4,11 @@
   justify-content: center;
   box-sizing: border-box;
   gap: 10px;
-  background-color: #ffffff;
-  border-radius: var(--borderRadius) var(--borderRadius) 0 0;
-  box-shadow: var(--boxShadow);
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    var(--colorBgContainer) 10px
+  );
 
   app-tab-bar-button {
     position: relative;

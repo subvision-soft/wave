@@ -3,19 +3,6 @@
   display: flex;
   flex-direction: column;
 
-  &:after {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 100vh;
-    background: var(--colorPrimary);
-    z-index: -1;
-    transition: 1s cubic-bezier(0.645, 0.045, 0.355, 1);
-    clip-path: ellipse(0 0 at 20% -100vw);
-  }
-
   & .app-page {
     flex: 1;
     display: flex;

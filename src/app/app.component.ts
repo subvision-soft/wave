@@ -11,15 +11,15 @@ export class AppComponent {
   @HostBinding('class.backgroundStep-1') backgroundStep1: boolean = true;
   @HostBinding('class.backgroundStep-2') backgroundStep2: boolean = true;
   tabs = [
-    { icon: 'iconoirHomeSimpleDoor', label: 'Accueil', link: '/home' },
-    { icon: 'iconoirCamera', label: 'Caméra', link: '/camera' },
-    { icon: 'iconoirDashboardDots', label: 'Paramètres', link: '/settings' },
+    { icon: 'jamHomeF', label: 'Accueil', link: '/home' },
+    { icon: 'jamCameraF', label: 'Caméra', link: '/camera' },
+    { icon: 'jamCogF', label: 'Paramètres', link: '/settings' },
   ];
   cssVariables: string = '';
 
   constructor(private themeColorService: ThemeColorService) {
     this.showSplashScreen();
-    this.themeColorService.setCssVariables('#1cd29b');
+    this.themeColorService.setCssVariables('#1677ff');
   }
 
   private async showSplashScreen() {

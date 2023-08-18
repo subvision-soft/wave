@@ -5,15 +5,13 @@
   height: 100%;
   width: 100%;
   box-sizing: border-box;
-  padding: var(--elements-padding);
+  padding: 20px;
 
   .camera-preview-container {
     position: relative;
     width: 100%;
     overflow: hidden;
     border-radius: var(--borderRadius);
-    border: 1px solid var(--colorBorder);
-    box-shadow: var(--boxShadow);
     display: flex;
     justify-content: center;
     align-items: center;
