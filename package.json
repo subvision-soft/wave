@@ -24,6 +24,7 @@
     "@capacitor/core": "latest",
     "@capacitor/filesystem": "^5.1.1",
     "@capacitor/ios": "^5.0.3",
+    "@material/ripple": "^14.0.0",
     "@ng-icons/bootstrap-icons": "^25.2.0",
     "@ng-icons/core": "^25.0.1",
     "@ng-icons/iconoir": "^25.0.1",

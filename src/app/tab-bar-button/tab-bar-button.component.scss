@@ -2,6 +2,7 @@
   flex: 1;
   display: flex;
   align-items: stretch;
+  background: var(--color-background-1);
 
   a {
     display: flex;
@@ -14,7 +15,7 @@
     text-decoration: none;
     flex: 1;
     transition: var(--primary-transition);
-    padding: 15px;
+    height: 100%;
 
     &.active {
       color: var(--color-dark1-1);

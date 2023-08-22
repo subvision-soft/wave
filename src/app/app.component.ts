@@ -1,10 +1,12 @@
 import { Component, HostBinding } from '@angular/core';
 import { ThemeColorService } from './services/theme-color.service';
+import { fadeAnimation } from './utils/animations';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  animations: [fadeAnimation],
 })
 export class AppComponent {
   title = 'subapp';

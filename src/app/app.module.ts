@@ -56,6 +56,7 @@ import { ColorPickerModule } from 'ngx-color-picker';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { SelectComponent } from './select/select.component';
 import { SessionsComponent } from './sessions/sessions.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 const openCVConfig: OpenCVConfig = {
   openCVDirPath: 'assets/opencv',
@@ -90,6 +91,7 @@ const openCVConfig: OpenCVConfig = {
     SessionsComponent,
   ],
   imports: [
+    BrowserAnimationsModule,
     NgxOpenCVModule.forRoot(openCVConfig),
     BrowserModule,
     ColorPickerModule,
