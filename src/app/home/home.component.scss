@@ -1,84 +1,122 @@
 :host {
-  padding: var(--gap);
-  box-sizing: border-box;
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-direction: column;
   align-items: stretch;
-  width: 100%;
-  gap: var(--gap);
-  height: fit-content;
+  gap: var(--padding);
+  color: var(--color-dark1-1);
 
-  --gap: 20px;
+  .logo {
+    padding: var(--padding-sm);
+    position: sticky;
+    top: 0;
+    background: var(--color-background-1);
+    transition: var(--primary-transition);
+    height: 30px;
+  }
 
-  .seance {
-    background: #fff;
-    border-radius: var(--borderRadius);
-    padding: 1vw;
-    box-sizing: border-box;
-    --amount: round(nearest, 100vw / 100px, 1);
-    width: calc(100% / 3 - (var(--gap) * (2 / 3)));
-    aspect-ratio: 1;
-    font-size: calc(1vw + 1vh + 1vmin);
-    cursor: pointer;
-    transition: all 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+  h1 {
+    font-size: var(--font-size-lg);
+    font-weight: bold;
+    text-align: left;
+  }
+
+  & > * {
+    padding: 0 var(--padding);
+  }
+
+  .actualites {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    gap: var(--padding);
+    overflow-x: auto;
+    padding: var(--padding);
+    margin: calc(-1 * var(--padding)) 0;
+
+    .actualite {
+      background: var(--color-background-2);
+      border-radius: var(--border-radius);
+      padding: var(--padding-sm);
+      box-shadow: var(--box-shadow-1);
+      height: 100px;
+      min-width: 150px;
+      max-width: 150px;
+      display: flex;
+      flex-direction: column;
+
+      h1 {
+        font-size: var(--font-size);
+        font-weight: 600;
+        text-align: left;
+        flex: 1;
+      }
+
+      p {
+        font-size: var(--font-size-sm);
+        font-weight: 400;
+        text-align: left;
+      }
+    }
+  }
+
+  .titre-sessions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    font-size: var(--font-size-lg);
+    font-weight: bold;
+    text-align: left;
+
+    a {
+      color: var(--color-dark1-1);
+      text-decoration: none;
+      font-size: var(--font-size-sm);
+      background: var(--color-primary-lighter-5);
+      border-radius: calc(var(--border-radius-sm) / 2);
+      padding: calc(var(--padding-sm) / 2) var(--padding-sm);
+    }
+  }
+
+  .sessions {
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    justify-content: space-between;
-    gap: 1vw;
+    gap: var(--padding-sm);
 
-    .bottom {
+    .session {
       display: flex;
       flex-direction: row;
       align-items: center;
-      justify-content: space-between;
-      font-size: 2vw;
+      padding-bottom: var(--padding-sm);
+      border-bottom: 1px solid var(--color-primary-lighter-5);
 
-      .number {
-        padding: 0.1vw 1vw;
-        border-radius: var(--borderRadius);
-        background: var(--colorPrimary);
-        color: #fff;
+      .infos {
+        flex: 1;
+
+        h1 {
+          font-size: var(--font-size);
+          font-weight: 600;
+          text-align: left;
+          flex: 1;
+        }
+
+        p {
+          font-size: var(--font-size-sm);
+          font-weight: 400;
+          text-align: left;
+        }
       }
-    }
 
-    h1 {
-      margin: 0;
-      padding: 0;
-      color: var(--colorPrimaryText);
-      text-align: center;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex: 1;
-      font-size: 4vw;
-    }
-
-    .description {
-      margin: 0;
-      padding: 0;
-      text-align: center;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 3vw;
-      color: var(--colorTextSecondary);
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      color: var(--colorText);
-    }
-
-    &:hover {
-      background: var(--colorPrimaryBgHover);
-      transform: scale(1.02);
-    }
-
-    &:active {
-      background: var(--colorPrimaryBg);
+      a {
+        height: 30px;
+        width: 30px;
+        background: var(--color-primary-lighter-5);
+        border-radius: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
     }
   }
 }

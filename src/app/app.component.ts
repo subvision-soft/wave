@@ -13,6 +13,7 @@ export class AppComponent {
   tabs = [
     { icon: 'jamHomeF', label: 'Accueil', link: '/home' },
     { icon: 'jamCameraF', label: 'Caméra', link: '/camera' },
+    { icon: 'jamFolderF', label: 'Sessions', link: '/sessions' },
     { icon: 'jamCogF', label: 'Paramètres', link: '/settings' },
   ];
   cssVariables: string = '';

@@ -1,51 +1,17 @@
 :host {
-  height: 100vh;
+  max-height: 100vh;
   display: flex;
   flex-direction: column;
 
-  & .app-page {
+  .app-page {
     flex: 1;
-    display: flex;
-    align-items: stretch;
-    box-sizing: border-box;
+    height: calc(100vh - 80px);
+    overflow-y: auto;
+    scroll-behavior: smooth;
+  }
+
+  app-tab-bar {
     width: 100%;
-    z-index: 1;
-  }
-
-  @keyframes wave {
-    0% {
-      background: radial-gradient(
-        circle at 20% -200vw,
-        var(--colorPrimary) 0%,
-        #fff 0%
-      );
-    }
-
-    100% {
-      background: radial-gradient(
-        circle at 20% -200vw,
-        var(--colorPrimary) calc(200vw + 200px),
-        #fff calc(200vw + 201px)
-      );
-    }
-  }
-
-  &.backgroundStep-1:after {
-    clip-path: ellipse(calc(100vw + 200vw) calc(100vw + 200vh) at 20% -100vw);
-  }
-
-  &.backgroundStep-2:after {
-    clip-path: ellipse(calc(100vw + 200px) calc(100vw + 200px) at 20% -100vw);
-  }
-
-  & app-header {
-    position: sticky;
-    top: 0;
-  }
-
-  & app-tab-bar {
-    position: sticky;
-    bottom: 0;
-    z-index: 2;
+    height: 80px;
   }
 }

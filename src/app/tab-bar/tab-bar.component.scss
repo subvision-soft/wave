@@ -4,11 +4,8 @@
   justify-content: center;
   box-sizing: border-box;
   gap: 10px;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    var(--colorBgContainer) 10px
-  );
+  background: var(--color-background-1);
+  height: 70px;
 
   app-tab-bar-button {
     position: relative;

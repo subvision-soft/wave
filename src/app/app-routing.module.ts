@@ -6,6 +6,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { ResultComponent } from './result/result.component';
 import { CameraPreviewComponent } from './camera-preview/camera-preview.component';
 import { ColorPreviewComponent } from './color-preview/color-preview.component';
+import { SessionsComponent } from './sessions/sessions.component';
 
 const routes: Routes = [
   {
@@ -38,6 +39,10 @@ const routes: Routes = [
   {
     path: 'settings',
     component: SettingsComponent,
+  },
+  {
+    path: 'sessions',
+    component: SessionsComponent,
   },
   {
     path: '',

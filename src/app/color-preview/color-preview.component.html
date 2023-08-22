@@ -1,27 +1,11 @@
-<app-button type="primary" color="primary" label="Primary Primary"></app-button>
-<app-button type="primary" color="error" label="Primary Error"></app-button>
-<app-button type="primary" color="success" label="Primary Success"></app-button>
-<app-button type="default" color="primary" label="Default Primary"></app-button>
-<app-button type="default" color="error" label="Default Error"></app-button>
-<app-button type="default" color="success" label="Default Success"></app-button>
-<app-button type="dashed" color="primary" label="Dashed Primary"></app-button>
-<app-button type="dashed" color="error" label="Dashed Error"></app-button>
-<app-button type="dashed" color="success" label="Dashed Success"></app-button>
-<app-button type="link" color="primary" label="Link Primary"></app-button>
-<app-button type="link" color="error" label="Link Error"></app-button>
-<app-button type="link" color="success" label="Link Success"></app-button>
-<app-button type="text" color="primary" label="Text Primary"></app-button>
-<app-button type="text" color="error" label="Text Error"></app-button>
-<app-button type="text" color="success" label="Text Success"></app-button>
-
 <span class="color-picker">
   <input [(ngModel)]="color">
   <input [(colorPicker)]="color" [style.background]="color">
 </span>
 
-<div class="container" *ngFor="let color of colors | keyvalue:onCompare"
+<div class="container" *ngFor="let color of colors"
 >
-  <span>{{color.key}} : {{color.value}}</span>
-  <input class="preview" [(colorPicker)]="color.value" [style.background]="color.value">
+  <span>{{color}}</span>
+  <span class="preview" [(colorPicker)]="color.value" [style.background]="'var('+ color+')'"></span>
 
 </div>

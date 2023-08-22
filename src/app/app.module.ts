@@ -5,7 +5,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TabBarComponent } from './tab-bar/tab-bar.component';
 import { bootstrapHouseFill } from '@ng-icons/bootstrap-icons';
-import { jamCameraF, jamCogF, jamHomeF } from '@ng-icons/jam-icons';
+import {
+  jamCameraF,
+  jamChevronRight,
+  jamCogF,
+  jamFolderF,
+  jamHomeF,
+} from '@ng-icons/jam-icons';
 import {
   iconoirBinMinus,
   iconoirCamera,
@@ -49,6 +55,7 @@ import { FormsModule } from '@angular/forms';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { SelectComponent } from './select/select.component';
+import { SessionsComponent } from './sessions/sessions.component';
 
 const openCVConfig: OpenCVConfig = {
   openCVDirPath: 'assets/opencv',
@@ -80,6 +87,7 @@ const openCVConfig: OpenCVConfig = {
     SpinnerComponent,
     PluckPipe,
     SelectComponent,
+    SessionsComponent,
   ],
   imports: [
     NgxOpenCVModule.forRoot(openCVConfig),
@@ -106,6 +114,8 @@ const openCVConfig: OpenCVConfig = {
       jamCameraF,
       jamCogF,
       jamHomeF,
+      jamFolderF,
+      jamChevronRight,
     }),
     FormsModule,
   ],

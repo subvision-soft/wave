@@ -1,6 +1,26 @@
-<div class="seance" *ngFor="let seance of seances">
-  <h1>{{seance.name}}</h1>
-  <p class="description">{{seance.description}}</p>
-  <div class="bottom"><p class="number">{{seance.numberOfPeople}}</p>
-    <p>{{seance.date.toLocaleDateString("fr")}}</p></div>
+<img class="logo" src="assets/img/logo_s_white.svg" [style.height]="logoSize+'px'" alt="logo"/>
+<h1 class="titre">Actualités</h1>
+<div class="actualites">
+  <div class="actualite" *ngFor="let actualite of actualites">
+    <h1>{{actualite.name}}</h1>
+    <p>{{actualite.date.toLocaleDateString("fr")}}</p>
+  </div>
 </div>
+<div class="titre-sessions">
+  <h1>Sessions</h1>
+  <a class="button" routerLink="/seances">Tout voir</a>
+</div>
+
+<div class="sessions">
+  <div class="session" *ngFor="let seance of seances">
+    <div class="infos">
+
+      <h1>{{seance.name}}</h1>
+      <p>{{seance.date.toLocaleDateString("fr")}}</p>
+    </div>
+    <a>
+      <ng-icon name="jamChevronRight" size="20"></ng-icon>
+    </a>
+  </div>
+</div>
+
