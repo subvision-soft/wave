@@ -150,20 +150,6 @@ ${rows}
 }
     `;
 
-    const style = document.getElementById('theme-colors');
-
-    if (style) {
-      style.innerHTML = variables;
-    } else {
-      const head = document.getElementsByTagName('head')[0];
-      const style = document.createElement('style');
-      style.type = 'text/css';
-      style.id = 'theme-colors';
-      style.appendChild(document.createTextNode(variables));
-      head.appendChild(style);
-    }
-    this.colors = data;
-    this.color = baseColor;
     return data;
   }
 }

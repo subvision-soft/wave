@@ -1,0 +1,21 @@
+:host {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-dark1-1);
+  border-radius: 100px;
+  background: var(--color-background-2);
+  box-shadow: var(--box-shadow-1);
+  padding: var(--padding-sm) var(--padding);
+  gap: var(--padding);
+
+  input {
+    border: none;
+    outline: none;
+    font-size: var(--font-size);
+    font-weight: 600;
+    background: transparent;
+    flex: 1;
+  }
+}

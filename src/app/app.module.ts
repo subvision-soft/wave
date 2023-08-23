@@ -11,6 +11,7 @@ import {
   jamCogF,
   jamFolderF,
   jamHomeF,
+  jamSearch,
 } from '@ng-icons/jam-icons';
 import {
   iconoirBinMinus,
@@ -57,6 +58,8 @@ import { SpinnerComponent } from './spinner/spinner.component';
 import { SelectComponent } from './select/select.component';
 import { SessionsComponent } from './sessions/sessions.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SettingPickerComponent } from './setting-picker/setting-picker.component';
+import { SearchComponent } from './search/search.component';
 
 const openCVConfig: OpenCVConfig = {
   openCVDirPath: 'assets/opencv',
@@ -89,6 +92,8 @@ const openCVConfig: OpenCVConfig = {
     PluckPipe,
     SelectComponent,
     SessionsComponent,
+    SettingPickerComponent,
+    SearchComponent,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -118,6 +123,7 @@ const openCVConfig: OpenCVConfig = {
       jamHomeF,
       jamFolderF,
       jamChevronRight,
+      jamSearch,
     }),
     FormsModule,
   ],
