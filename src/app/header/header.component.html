@@ -1,11 +1,11 @@
-<div class="header-item" *ngIf="showBack">
-  <app-icon-button icon="iconoirNavArrowLeft" (click)="goBack()"></app-icon-button>
+<div class="header-item" [style.visibility]="showBack ? 'visible' : 'hidden'">
+  <app-icon-button icon="jamChevronLeft" (click)="goBack()"></app-icon-button>
 </div>
 <div class="header-item">
   <ng-content></ng-content>
 </div>
-<div class="header-item" *ngIf="showLogo">
-  <div class="logo"></div>
+<div class="header-item" [style.visibility]="showMenu ? 'visible' : 'hidden'">
+  <app-icon-button icon="jamMoreVerticalF"></app-icon-button>
 </div>
 
 

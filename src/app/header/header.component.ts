@@ -9,7 +9,7 @@ import { Location } from '@angular/common';
 export class HeaderComponent {
   @Input() showBack: boolean = true;
 
-  @Input() showLogo: boolean = true;
+  @Input() showMenu: boolean = true;
 
   constructor(private location: Location) {}
 

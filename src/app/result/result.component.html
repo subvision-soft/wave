@@ -1,4 +1,4 @@
-<app-header [showBack]="!saving" [showLogo]="!saving">
+<app-header [showBack]="!saving" [showMenu]="!saving">
   <div class="top">
     <app-select *ngIf="!saving" [store]="selectStore" [(value)]="epreuve"></app-select>
     <app-chrono-picker *ngIf="superBiathlon || biathlon && !saving" [(time)]="time"></app-chrono-picker>

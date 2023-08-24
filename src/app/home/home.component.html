@@ -12,14 +12,8 @@
 </div>
 
 <div class="sessions">
-  <div class="session ripple" *ngFor="let seance of seances">
-    <div class="infos">
-      <h1>{{seance.name}}</h1>
-      <p>{{seance.date.toLocaleDateString("fr")}}</p>
-    </div>
-    <a>
-      <ng-icon name="jamChevronRight" size="20"></ng-icon>
-    </a>
-  </div>
+  <app-session [session]="seance" *ngFor="let seance of seances">
+
+  </app-session>
 </div>
 

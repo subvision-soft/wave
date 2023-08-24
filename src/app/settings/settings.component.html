@@ -1,9 +1,13 @@
-<app-search [(value)]="searchValue" placeholder="Rechercher des  paramètres"></app-search>
-<div class="parameters">
+<app-header [showBack]="false" [showMenu]="false"><h1>Paramètres</h1></app-header>
+<div class="content">
+
+  <app-search [(value)]="searchValue" placeholder="Rechercher des paramètres"></app-search>
+  <div class="parameters">
 
     <div class="group" *ngFor="let group of settings">
-        <h1>{{group.label}}</h1>
-        <app-setting-picker *ngFor="let parameter of group.parameters" [setting]="parameter"/>
+      <h1>{{group.label}}</h1>
+      <app-setting-picker *ngFor="let parameter of group.parameters" [setting]="parameter"/>
     </div>
+  </div>
 </div>
 

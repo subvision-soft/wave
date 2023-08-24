@@ -7,10 +7,13 @@ import { TabBarComponent } from './tab-bar/tab-bar.component';
 import { bootstrapHouseFill } from '@ng-icons/bootstrap-icons';
 import {
   jamCameraF,
+  jamChevronLeft,
   jamChevronRight,
   jamCogF,
   jamFolderF,
   jamHomeF,
+  jamMoreVerticalF,
+  jamPlus,
   jamSearch,
 } from '@ng-icons/jam-icons';
 import {
@@ -60,6 +63,8 @@ import { SessionsComponent } from './sessions/sessions.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SettingPickerComponent } from './setting-picker/setting-picker.component';
 import { SearchComponent } from './search/search.component';
+import { AddButtonComponent } from './add-button/add-button.component';
+import { SessionComponent } from './session/session.component';
 
 const openCVConfig: OpenCVConfig = {
   openCVDirPath: 'assets/opencv',
@@ -94,6 +99,8 @@ const openCVConfig: OpenCVConfig = {
     SessionsComponent,
     SettingPickerComponent,
     SearchComponent,
+    AddButtonComponent,
+    SessionComponent,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -123,7 +130,10 @@ const openCVConfig: OpenCVConfig = {
       jamHomeF,
       jamFolderF,
       jamChevronRight,
+      jamChevronLeft,
       jamSearch,
+      jamMoreVerticalF,
+      jamPlus,
     }),
     FormsModule,
   ],

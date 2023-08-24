@@ -1,0 +1,21 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  color: var(--color-dark1-1);
+  gap: var(--padding);
+
+  app-header h1 {
+    font-size: var(--font-size-lg);
+    font-weight: bold;
+    text-align: left;
+  }
+
+  .content {
+    padding: 0 var(--padding) var(--padding) var(--padding);
+    gap: var(--padding);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

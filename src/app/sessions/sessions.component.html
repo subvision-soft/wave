@@ -1,1 +1,11 @@
-<p>sessions works!</p>
+<app-header [showBack]="false" [showMenu]="true"><h1>Sessions</h1></app-header>
+<div class="content">
+  <app-search [(value)]="searchValue" placeholder="Rechercher une session"></app-search>
+  <app-add-button label="Ajouter une session"></app-add-button>
+  <div class="sessions">
+    <app-session [session]="session" *ngFor="let session of sessions">
+
+    </app-session>
+  </div>
+</div>
+

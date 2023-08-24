@@ -4,12 +4,13 @@
   align-items: stretch;
   position: sticky;
   top: 0;
-  padding: 10px;
   box-sizing: border-box;
   width: 100%;
-  background: var(--colorBgContainer);
+  background: var(--color-background-1);
   box-shadow: var(--boxShadow);
   z-index: 1000;
+  padding: var(--padding-sm) var(--padding) 0 var(--padding);
+  color: var(--color-dark1-1);
 
   & .header-item {
     flex: 1;
