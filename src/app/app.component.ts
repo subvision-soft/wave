@@ -10,6 +10,7 @@ import { fadeAnimation } from './utils/animations';
 })
 export class AppComponent {
   title = 'subapp';
+  private initPlugin: boolean = false;
   @HostBinding('class.backgroundStep-1') backgroundStep1: boolean = true;
   @HostBinding('class.backgroundStep-2') backgroundStep2: boolean = true;
   tabs = [

@@ -15,7 +15,6 @@ export class SettingPickerComponent {
   constructor(private parametersService: ParametersService) {}
 
   onChange(event: any) {
-    console.log(event);
     if (this.setting.type === ParameterType.Number) {
       if (
         (this.setting.min && event.target.valueAsNumber < this.setting.min) ||

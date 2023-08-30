@@ -4,6 +4,7 @@ import {
   ElementRef,
   HostListener,
   Inject,
+  OnDestroy,
   ViewChild,
 } from '@angular/core';
 import { NgxOpenCVService } from '../../lib/ngx-open-cv.service';
@@ -17,7 +18,7 @@ import { OpenCVState } from '../../lib/models';
   templateUrl: './camera-preview.component.html',
   styleUrls: ['./camera-preview.component.scss'],
 })
-export class CameraPreviewComponent implements AfterViewInit {
+export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
   private cvState: string = '';
   stream: MediaStream | undefined;
   @ViewChild('video', { static: true }) video: any;
@@ -25,6 +26,7 @@ export class CameraPreviewComponent implements AfterViewInit {
   private playing: boolean = true;
   parentHeight: number = 0;
   parentWidth: number = 0;
+  private camera: any = null;
 
   @HostListener('window:resize', ['$event'])
   onResize() {
@@ -38,6 +40,10 @@ export class CameraPreviewComponent implements AfterViewInit {
 
   ngAfterViewInit() {
     this.updateParentSize();
+  }
+
+  ngOnDestroy() {
+    this.playing = false;
   }
 
   height: number = 0;
@@ -161,7 +167,7 @@ export class CameraPreviewComponent implements AfterViewInit {
       setTimeout(() => {}, 1000);
     }
     // @ts-ignore
-    let cap = new cv.VideoCapture(video);
+    this.camera = new cv.VideoCapture(video);
     // @ts-ignore
     this.height = video.videoHeight;
     // @ts-ignore
@@ -204,7 +210,7 @@ export class CameraPreviewComponent implements AfterViewInit {
         try {
           console.log('try');
           // @ts-ignore
-          cap.read(frame);
+          scope.camera.read(frame);
           console.log('read');
           // cv.imshow('canvas', frame);
           try {
@@ -224,7 +230,7 @@ export class CameraPreviewComponent implements AfterViewInit {
       } else {
         video = document.getElementById('video');
         // @ts-ignore
-        cap = new cv.VideoCapture(video);
+        scope.camera = new cv.VideoCapture(video);
         // @ts-ignore
         scope.height = video.videoHeight;
         // @ts-ignore

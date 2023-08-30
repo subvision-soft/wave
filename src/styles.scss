@@ -17,6 +17,31 @@
   font-size: var(--font-size);
 }
 
+.soon:after {
+  content: "Dans une prochaine version";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  color: var(--color-primary);
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: 0.2rem;
+  backdrop-filter: blur(5px);
+  z-index: 1;
+}
+
+.soon {
+  overflow: hidden;
+  max-height: 100%;
+}
+
 .ripple {
   position: relative;
   overflow: hidden;

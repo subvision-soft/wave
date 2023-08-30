@@ -42,7 +42,6 @@ import { HeaderComponent } from './header/header.component';
 import { IconButtonComponent } from './icon-button/icon-button.component';
 import { NgxOpenCVModule } from '../lib/ngx-opencv.module';
 import { OpenCVConfig } from '../lib/models';
-import { LoadingComponent } from './loading/loading.component';
 import { PluckPipe, ResultComponent } from './result/result.component';
 import { CameraPreviewComponent } from './camera-preview/camera-preview.component';
 import { SegmentedButtonComponent } from './segmented-button/segmented-button.component';
@@ -80,7 +79,6 @@ const openCVConfig: OpenCVConfig = {
     CameraComponent,
     HeaderComponent,
     IconButtonComponent,
-    LoadingComponent,
     ResultComponent,
     CameraPreviewComponent,
     SegmentedButtonComponent,
