@@ -1,4 +1,4 @@
-import { Component, HostBinding } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-sessions',
@@ -15,8 +15,6 @@ export class SessionsComponent {
           .includes(this.searchValue.toLowerCase())
     );
   }
-
-  @HostBinding('class') class = 'soon';
 
   searchValue: string = '';
   _sessions: any[] = [

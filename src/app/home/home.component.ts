@@ -1,10 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  HostBinding,
-  HostListener,
-  ViewChild,
-} from '@angular/core';
+import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +9,6 @@ export class HomeComponent {
   open: boolean = false;
   @ViewChild('app-page', { static: true }) el: ElementRef | undefined;
   logoSize: number = 30;
-  @HostBinding('class') class = 'soon';
 
   actualites: any[] = [
     {

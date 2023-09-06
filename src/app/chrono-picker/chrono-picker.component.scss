@@ -1,24 +1,24 @@
 :host {
   a {
     display: flex;
-    padding: 5px;
     justify-content: center;
     align-items: center;
-    gap: 5px;
+    gap: var(--padding-sm);
     color: var(--colorText);
-    font-weight: 400;
+    height: 50px;
+    padding: 0 var(--padding);
+    font-weight: var(--font-weight-normal);
     text-decoration: none;
-    border-radius: var(--borderRadius);
-    z-index: 1;
-    backdrop-filter: blur(4px);
+    border-radius: 1000px;
     transition: var(--primary-transition);
     overflow: hidden;
     width: fit-content;
-    border: solid 1px var(--colorBorder);
+    background: var(--color-background-2);
+    box-shadow: var(--box-shadow);
 
     &:active,
     &.active {
-      color: var(--colorPrimaryTextActive);
+      color: var(--color-primary-darker);
     }
   }
 

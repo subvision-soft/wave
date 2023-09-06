@@ -1,7 +1,7 @@
 :host {
   color: var(--colorText);
   position: relative;
-  height: 40px;
+  height: 50px;
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -41,31 +41,35 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        opacity: 0.5;
         transition: 0.3s ease-in-out;
         transform: scale(0.8);
+        font-weight: var(--font-weight-normal);
+        padding: var(--padding) 0;
+        box-sizing: border-box;
 
         &:before {
           content: "";
           position: absolute;
           top: 50%;
           left: 50%;
-          width: calc(100% - 5px);
-          height: calc(100% - 5px);
-          background: var(--colorBgLayout);
+          width: 100%;
+          height: 100%;
+          background: var(--color-background-2);
           transform: translate(-50%, -50%);
           z-index: -1;
-          border-radius: var(--borderRadius);
+          border-radius: 1000px;
           transition: 0.3s ease-in-out;
+          box-shadow: var(--box-shadow-1);
         }
 
         &.active {
           opacity: 1;
           transform: scale(1);
-          color: var(--colorPrimaryText);
+          color: var(--color-primary-darker);
+          font-weight: var(--font-weight-semi-bold);
 
           &:before {
-            background: var(--colorPrimaryBg);
+            background: var(--color-primary-lighter-5);
           }
         }
       }

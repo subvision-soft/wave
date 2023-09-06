@@ -38,6 +38,10 @@ export class ResultComponent implements OnInit {
 
   selectStore: any[] = [
     {
+      label: 'Saisie libre',
+      id: 'saisieLibre',
+    },
+    {
       label: 'Précision',
       id: 'precision',
     },
@@ -156,7 +160,7 @@ export class ResultComponent implements OnInit {
     },
   ];
   public total: number = 0;
-  public epreuve: string = 'precision';
+  public epreuve: string = 'biathlon';
 
   get precision(): boolean {
     return this.epreuve === 'precision';

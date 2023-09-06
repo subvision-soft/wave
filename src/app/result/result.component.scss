@@ -3,11 +3,20 @@
   display: flex;
   flex-direction: column;
 
-  .top {
+  app-header h1 {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
+    text-align: left;
+  }
+
+  .epreuve {
     display: flex;
     flex-direction: row;
-    position: sticky;
-    gap: 10px;
+    gap: var(--padding);
+
+    app-select {
+      flex: 1;
+    }
   }
 
   .content {
@@ -15,7 +24,7 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: var(--padding);
     align-items: stretch;
     padding: 10px;
 
@@ -24,7 +33,8 @@
       aspect-ratio: 1;
       position: relative;
       overflow: hidden;
-      border-radius: var(--borderRadius);
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow-1);
       border: 1px solid var(--colorBorder);
       display: flex;
       justify-content: center;

@@ -1,6 +1,6 @@
 <a class="input" (click)="openChange(true)">
   <span>{{displayedField}}</span>
-  <ng-icon class="icon" size="10" name="iconoirNavArrowDown"></ng-icon>
+  <ng-icon class="icon" size="16" name="iconoirNavArrowDown"></ng-icon>
 </a>
 <app-slide-sheet [(open)]="open">
   <div *ngFor="let record of store" [class]="value === record[valueField] ? 'row active' : 'row'"

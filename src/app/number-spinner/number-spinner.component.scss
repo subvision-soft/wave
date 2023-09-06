@@ -35,9 +35,9 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        opacity: 0.5;
         transition: var(--primary-transition);
         transform: scale(0.8);
+        font-weight: var(--font-weight-normal);
 
         &:before {
           content: "";
@@ -46,20 +46,22 @@
           left: 50%;
           width: calc(100% - 5px);
           height: calc(100% - 5px);
-          background: var(--colorBgLayout);
+          background: var(--color-background-2);
           transform: translate(-50%, -50%);
           z-index: -1;
-          border-radius: var(--borderRadius);
+          border-radius: var(--border-radius);
           transition: 0.3s ease-in-out;
+          box-shadow: var(--box-shadow-1);
         }
 
         &.active {
           opacity: 1;
           transform: scale(1);
-          color: var(--colorPrimaryText);
+          color: var(--color-primary-darker);
+          font-weight: var(--font-weight-semi-bold);
 
           &:before {
-            background: var(--colorPrimaryBg);
+            background: var(--color-primary-lighter-5);
           }
         }
       }

@@ -38,6 +38,10 @@ export class TotalPreviewComponent {
     return this.epreuve === 'superBiathlon';
   }
 
+  get saisieLibre(): boolean {
+    return this.epreuve === 'saisieLibre';
+  }
+
   get total(): number {
     if (this.precision) {
       const number1 = this.tirsValides;
@@ -49,6 +53,11 @@ export class TotalPreviewComponent {
           this.time * 2) *
         3;
       return number > 0 ? number : 0;
+    } else if (this.superBiathlon) {
+    } else if (this.saisieLibre) {
+      const number1 = this.tirsValides;
+      console.log(number1);
+      return number1.reduce((acc, impact) => acc + impact.points, 0);
     }
     return 0;
   }
@@ -100,6 +109,8 @@ export class TotalPreviewComponent {
       });
       return impacts;
     } else if (this.superBiathlon) {
+    } else if (this.saisieLibre) {
+      return this.impacts;
     }
     return [];
   }

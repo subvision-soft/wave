@@ -1,16 +1,21 @@
 :host {
-  color: var(--colorText);
-  font-size: 16px;
-
   & .input {
-    border: 1px solid var(--colorBorder);
-    border-radius: var(--borderRadius);
-    padding: 5px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 5px;
+    justify-content: space-between;
     flex-direction: row;
+    color: var(--colorText);
+    font-size: var(--font-size);
+    font-weight: var(--font-weight-semi-bold);
+    border-radius: 1000px;
+    height: 50px;
+    background: var(--color-background-2);
+    box-shadow: var(--box-shadow-1);
+    padding: 0 var(--padding);
+
+    span {
+      flex: 1;
+    }
 
     & .icon {
       display: flex;
@@ -29,26 +34,29 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 5px;
+    gap: var(--padding-sm);
     flex-direction: row;
-    padding: 10px;
+    padding: var(--padding-sm);
     transition: var(--primary-transition);
-    border-radius: var(--borderRadius);
+    border-radius: var(--border-radius-sm);
+    font-size: var(--font-size);
+    font-weight: var(--font-weight-normal);
 
     & .icon {
       visibility: hidden;
       opacity: 0;
       transition: var(--primary-transition);
-      color: var(--colorPrimary);
     }
 
     &:active {
-      background: var(--colorBgLayout);
+      background: var(--color-primary-lighter-5);
+      color: var(--color-primary-darker);
     }
 
     &.active {
-      color: var(--colorPrimary);
-      background: var(--colorPrimaryBg);
+      color: var(--color-primary-darker);
+      background: var(--color-primary-lighter-5);
+      font-weight: var(--font-weight-semi-bold);
 
       & .icon {
         visibility: visible;
