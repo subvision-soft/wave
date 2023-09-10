@@ -1,14 +1,23 @@
-import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
+import { Directory, Filesystem } from '@capacitor/filesystem';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
   open: boolean = false;
   @ViewChild('app-page', { static: true }) el: ElementRef | undefined;
   logoSize: number = 30;
+
+  epubFiles: string[] = [];
 
   actualites: any[] = [
     {
@@ -122,6 +131,31 @@ export class HomeComponent {
         });
       }
     });
+  }
+
+  ngOnInit(): void {
+    this.readFiles('');
+  }
+
+  readFiles(uri: string) {
+    const scope = this;
+    Filesystem.readdir({
+      path: uri,
+      directory: Directory.ExternalStorage,
+    })
+      .then((result) => {
+        for (const file of result.files) {
+          console.log(JSON.stringify(file));
+          if (file.type === 'file') {
+            this.epubFiles.push(file.uri);
+          } else {
+            scope.readFiles(uri + '/' + file.name);
+          }
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   @HostListener('window:scroll', ['$event'])
