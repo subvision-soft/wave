@@ -8,10 +8,10 @@
 </div>
 <div class="titre-sessions">
   <h1>Sessions</h1>
-  <a class="button ripple" routerLink="/seances">Tout voir</a>
+  <a class="button ripple" routerLink="/sessions">Tout voir</a>
 </div>
 <div class="sessions">
-  <app-session [session]="seance" *ngFor="let seance of seances">
+  <app-session [file]="seance" *ngFor="let seance of seances">
   </app-session>
 </div>
 

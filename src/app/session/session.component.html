@@ -1,7 +1,9 @@
-<div class="infos">
-  <h1>{{session.name}}</h1>
-  <p>{{session.date.toLocaleDateString("fr")}}</p>
+<ng-icon *ngIf="file?.type === 'directory' && !goBack" name="jamFolder" size="20"></ng-icon>
+<ng-icon *ngIf="goBack" name="jamArrowLeft" size="20"></ng-icon>
+<div *ngIf="file" class="infos">
+  <h1>{{file.name}}</h1>
+  <!--  <p>{{session.date.toLocaleDateString("fr")}}</p>-->
 </div>
-<a>
+<a *ngIf="!goBack">
   <ng-icon name="jamChevronRight" size="20"></ng-icon>
 </a>

@@ -6,11 +6,14 @@ import { AppComponent } from './app.component';
 import { TabBarComponent } from './tab-bar/tab-bar.component';
 import { bootstrapHouseFill } from '@ng-icons/bootstrap-icons';
 import {
+  jamArrowLeft,
   jamCameraF,
   jamChevronLeft,
   jamChevronRight,
   jamCogF,
+  jamFolder,
   jamFolderF,
+  jamGhost,
   jamHomeF,
   jamMoreVerticalF,
   jamPlus,
@@ -127,6 +130,9 @@ const openCVConfig: OpenCVConfig = {
       jamCogF,
       jamHomeF,
       jamFolderF,
+      jamArrowLeft,
+      jamGhost,
+      jamFolder,
       jamChevronRight,
       jamChevronLeft,
       jamSearch,

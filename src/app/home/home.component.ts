@@ -5,7 +5,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { Directory, Filesystem } from '@capacitor/filesystem';
+import { FilesService } from '../services/files.service';
 
 @Component({
   selector: 'app-home',
@@ -113,7 +113,7 @@ export class HomeComponent implements OnInit {
     },
   ];
 
-  constructor() {
+  constructor(private filesService: FilesService) {
     const appPage = document.getElementById('app-page');
     appPage?.addEventListener('scroll', (event) => {
       // @ts-ignore
@@ -138,24 +138,9 @@ export class HomeComponent implements OnInit {
   }
 
   readFiles(uri: string) {
-    const scope = this;
-    Filesystem.readdir({
-      path: uri,
-      directory: Directory.ExternalStorage,
-    })
-      .then((result) => {
-        for (const file of result.files) {
-          console.log(JSON.stringify(file));
-          if (file.type === 'file') {
-            this.epubFiles.push(file.uri);
-          } else {
-            scope.readFiles(uri + '/' + file.name);
-          }
-        }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    this.filesService.loadFiles(uri).then((files) => {
+      console.log(files);
+    });
   }
 
   @HostListener('window:scroll', ['$event'])
