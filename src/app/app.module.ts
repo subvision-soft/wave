@@ -13,6 +13,7 @@ import {
   jamCogF,
   jamFolder,
   jamFolderF,
+  jamFolderOpen,
   jamGhost,
   jamHomeF,
   jamMoreVerticalF,
@@ -67,6 +68,8 @@ import { SettingPickerComponent } from './setting-picker/setting-picker.componen
 import { SearchComponent } from './search/search.component';
 import { AddButtonComponent } from './add-button/add-button.component';
 import { SessionComponent } from './session/session.component';
+import { MenuComponent } from './menu/menu.component';
+import { MenuActionComponent } from './menu-action/menu-action.component';
 
 const openCVConfig: OpenCVConfig = {
   openCVDirPath: 'assets/opencv',
@@ -102,6 +105,8 @@ const openCVConfig: OpenCVConfig = {
     SearchComponent,
     AddButtonComponent,
     SessionComponent,
+    MenuComponent,
+    MenuActionComponent,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -133,6 +138,7 @@ const openCVConfig: OpenCVConfig = {
       jamArrowLeft,
       jamGhost,
       jamFolder,
+      jamFolderOpen,
       jamChevronRight,
       jamChevronLeft,
       jamSearch,

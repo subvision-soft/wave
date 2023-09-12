@@ -1,1 +1,6 @@
-<p>menu works!</p>
+<div class="menu">
+  <app-menu-action (click)="close()" [border]="index + 1 != actions.length"
+                   *ngFor="let action of actions; let index = index"
+                   [action]="action"></app-menu-action>
+</div>
+<div (click)="close()" class="mask"></div>

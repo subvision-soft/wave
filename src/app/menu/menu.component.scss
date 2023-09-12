@@ -1,0 +1,52 @@
+:host {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 1000;
+
+  .menu {
+    position: fixed;
+    top: var(--padding-sm);
+    right: var(--padding);
+    background: var(--color-background-2);
+    z-index: 1000;
+    border-radius: calc(var(--border-radius-sm) / 2);
+    box-sizing: border-box;
+    transition: 0.1s ease-in-out;
+    box-shadow: var(--box-shadow-2);
+    transform: scale(0);
+    opacity: 0;
+    width: fit-content;
+    height: fit-content;
+  }
+
+  .mask {
+    opacity: 0;
+    pointer-events: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 999;
+    transition: 0.1s ease-in-out;
+    background: rgba(0, 0, 0, 0.1);
+  }
+
+  &.open {
+    pointer-events: auto;
+
+    .menu {
+      transform: scale(1);
+      opacity: 1;
+    }
+
+    .mask {
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+}

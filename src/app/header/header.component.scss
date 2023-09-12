@@ -12,7 +12,7 @@
   padding: var(--padding-sm) var(--padding) 0 var(--padding);
   color: var(--color-dark1-1);
 
-  & .header-item {
+  .header-item {
     flex: 1;
     display: flex;
     justify-content: center;
@@ -34,13 +34,13 @@
       background-size: contain;
       background: url("../../assets/img/logo_s_white.svg") no-repeat center;
     }
-  }
 
-  & .header-item:first-child {
-    justify-content: flex-start;
-  }
+    &:first-child {
+      justify-content: flex-start;
+    }
 
-  & .header-item:last-child {
-    justify-content: flex-end;
+    &.menu {
+      justify-content: flex-end;
+    }
   }
 }

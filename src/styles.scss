@@ -141,6 +141,8 @@
 
   --box-shadow-1: 0px 0px 20px 0px
     color-mix(in srgb, var(--color-dark1-1) 2%, transparent);
+  --box-shadow-2: 0px 0px 20px 0px
+    color-mix(in srgb, var(--color-dark1-1) 10%, transparent);
 
   --font-weight-bold: 700;
   --font-weight-semi-bold: 600;

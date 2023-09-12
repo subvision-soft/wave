@@ -12,8 +12,6 @@ import {
   styleUrls: ['./slide-sheet.component.scss'],
 })
 export class SlideSheetComponent {
-  @Input() title: string = '';
-  @Input() children: any = null;
   @Input() @HostBinding('class.open') open: boolean = false;
   @Output() openChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
