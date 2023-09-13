@@ -131,12 +131,24 @@ export class SessionsComponent {
       .sort((a, b) => {
         switch (this.sort) {
           case 'name':
+            if (this.sortDirection === 'desc') {
+              return b.name.localeCompare(a.name);
+            }
             return a.name.localeCompare(b.name);
           case 'date':
+            if (this.sortDirection === 'desc') {
+              return b.mtime - a.mtime;
+            }
             return a.mtime - b.mtime;
           case 'size':
+            if (this.sortDirection === 'desc') {
+              return b.size - a.size;
+            }
             return a.size - b.size;
           case 'type':
+            if (this.sortDirection === 'desc') {
+              return b.type.localeCompare(a.type);
+            }
             return a.type.localeCompare(b.type);
           default:
             return 0;

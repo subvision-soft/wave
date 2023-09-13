@@ -1,0 +1,17 @@
+<div class="message-box">
+  <div class="message-box-content">
+    <div class="message-title">
+      <span>{{title}}</span>
+    </div>
+    <div class="message-content">
+      <span>{{message}}</span>
+      <input type="text" *ngIf="PROMPT" [(ngModel)]="promptValue"/>
+    </div>
+  </div>
+
+  <div class="buttons">
+    <button class="cancel" *ngIf="OKCANCEL || PROMPT" (click)="close()">Annuler</button>
+    <button class="ok" *ngIf="OKCANCEL || PROMPT">Ok</button>
+  </div>
+</div>
+<div (click)="close()" class="mask"></div>
