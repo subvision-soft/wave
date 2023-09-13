@@ -1,6 +1,15 @@
 :host {
   box-sizing: border-box;
-  width: fit-content;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  ng-icon {
+    width: var(--padding-lg);
+    display: flex;
+    justify-content: center;
+  }
 
   .content {
     margin: 0 var(--padding-lg);
@@ -8,6 +17,11 @@
     display: flex;
     align-items: center;
     gap: 10px;
+    flex: 1;
+
+    &.icon-visible {
+      margin-left: 0;
+    }
 
     span {
       font-size: var(--font-size);

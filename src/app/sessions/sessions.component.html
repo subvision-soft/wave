@@ -1,16 +1,17 @@
-<app-header [showBack]="false" [showMenu]="true"><h1>Sessions</h1></app-header>
+<app-header [showBack]="false" [showMenu]="true" [actions]="menuActions"><h1>Sessions</h1></app-header>
 <div class="content">
   <app-search [(value)]="searchValue" placeholder="Rechercher une session"></app-search>
-  <app-add-button label="Ajouter une session"></app-add-button>
+  <app-add-button [@enterAnimation] *ngIf="!searchValue" label="Ajouter une session"></app-add-button>
   <div class="sessions">
     <app-session *ngIf="path.length > 0" [file]="returnFile" (click)="back()"
                  [goBack]="true"></app-session>
     <app-session [file]="session" (click)="open(session)" *ngFor="let session of sessions">
     </app-session>
-    <div *ngIf="sessions.length === 0" [@enterAnimation] class="empty">
-      <ng-icon name="jamGhost" size="30"></ng-icon>
-      <span>Le dossier est vide</span>
-    </div>
+    <app-empty-text *ngIf="sessions.length === 0" [@enterAnimation] [icon]="searchValue?'jamSearch':'jamGhost'"
+                    [text]="searchValue?'Pas de résultat':'Le dossier est vide'"></app-empty-text>
   </div>
 </div>
+
+<app-message-box [message]="'Entrer le nom du dossier'" [title]="'Créer un nouveau dossier'"
+                 [(open)]="openCreateFolderPrompt" type="prompt"></app-message-box>
 

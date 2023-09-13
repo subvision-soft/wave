@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Location } from '@angular/common';
 import { Action } from '../models/action';
 
@@ -12,63 +12,11 @@ export class HeaderComponent {
 
   @Input() showMenu: boolean = true;
 
+  @Output() menuClose: EventEmitter<void> = new EventEmitter<void>();
+
   menuSort: boolean = false;
 
-  sortActions: Action[] = [
-    {
-      label: 'Nom',
-      icon: '',
-      action: () => {
-        console.log('Trier par nom');
-      },
-    },
-    {
-      label: 'Type',
-      icon: '',
-      action: () => {
-        console.log('Trier par date');
-      },
-    },
-    {
-      label: 'Du plus grand au plus petit',
-      icon: '',
-      action: () => {
-        console.log('Trier par taille');
-      },
-    },
-    {
-      label: 'Du plus petit au plus grand',
-      icon: '',
-      action: () => {
-        console.log('Trier par taille');
-      },
-    },
-    {
-      label: 'Date de modification',
-      icon: '',
-      action: () => {
-        console.log('Trier par type');
-      },
-    },
-  ];
-
-  @Input() actions: Action[] = [
-    {
-      label: 'Créer un nouveau dossier',
-      icon: '',
-      action: () => {
-        console.log('Créer un nouveau dossier');
-      },
-    },
-    {
-      label: 'Trier par',
-      icon: '',
-      action: () => {
-        this.menuSort = true;
-        console.log('Trier par');
-      },
-    },
-  ];
+  @Input() actions: Action[] = [];
 
   openMenu: boolean = false;
 
@@ -80,5 +28,8 @@ export class HeaderComponent {
 
   toggleMenu() {
     this.openMenu = !this.openMenu;
+    if (!this.openMenu) {
+      this.menuClose.emit();
+    }
   }
 }

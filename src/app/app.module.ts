@@ -6,7 +6,9 @@ import { AppComponent } from './app.component';
 import { TabBarComponent } from './tab-bar/tab-bar.component';
 import { bootstrapHouseFill } from '@ng-icons/bootstrap-icons';
 import {
+  jamArrowDown,
   jamArrowLeft,
+  jamArrowUp,
   jamCameraF,
   jamChevronLeft,
   jamChevronRight,
@@ -70,6 +72,8 @@ import { AddButtonComponent } from './add-button/add-button.component';
 import { SessionComponent } from './session/session.component';
 import { MenuComponent } from './menu/menu.component';
 import { MenuActionComponent } from './menu-action/menu-action.component';
+import { MessageBoxComponent } from './message-box/message-box.component';
+import { EmptyTextComponent } from './empty-text/empty-text.component';
 
 const openCVConfig: OpenCVConfig = {
   openCVDirPath: 'assets/opencv',
@@ -107,6 +111,8 @@ const openCVConfig: OpenCVConfig = {
     SessionComponent,
     MenuComponent,
     MenuActionComponent,
+    MessageBoxComponent,
+    EmptyTextComponent,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -135,6 +141,8 @@ const openCVConfig: OpenCVConfig = {
       jamCogF,
       jamHomeF,
       jamFolderF,
+      jamArrowUp,
+      jamArrowDown,
       jamArrowLeft,
       jamGhost,
       jamFolder,

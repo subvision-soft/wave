@@ -19,17 +19,6 @@
     align-items: stretch;
   }
 
-  .empty {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    flex: 1;
-    padding: var(--padding-lg) 0;
-    font-weight: var(--font-weight-semi-bold);
-    color: var(--color-dark2-2);
-  }
-
   app-session {
     animation: fade 0.5s ease-in-out;
   }

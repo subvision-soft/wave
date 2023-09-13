@@ -2,7 +2,6 @@ import {
   Component,
   EventEmitter,
   HostBinding,
-  HostListener,
   Input,
   Output,
 } from '@angular/core';
@@ -14,16 +13,8 @@ import { Action } from '../models/action';
   styleUrls: ['./menu-action.component.scss'],
 })
 export class MenuActionComponent {
-  @Input() action: Action = {
-    label: '',
-    icon: '',
-    action: () => {},
-  };
+  @Input() action: Action = new Action();
   @Input() @HostBinding('class.border') border: boolean = true;
   @Output() click: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @HostBinding('class.ripple') ripple: boolean = true;
-
-  @HostListener('click') onClick() {
-    this.action.action();
-  }
+  // @HostBinding('class.ripple') ripple: boolean = true;
 }
