@@ -1,8 +1,13 @@
 import { Component } from '@angular/core';
 import { FilesService } from '../services/files.service';
-import { FileInfo } from '@capacitor/filesystem';
+import { Directory, FileInfo, Filesystem } from '@capacitor/filesystem';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Action } from '../models/action';
+
+interface Session {
+  active: boolean;
+  file: FileInfo;
+}
 
 @Component({
   selector: 'app-sessions',
@@ -108,7 +113,12 @@ export class SessionsComponent {
   constructor(private filesService: FilesService) {
     this.filesService.loadDirectory(this.path).then((files) => {
       console.log(files);
-      this._sessions = files;
+      this._sessions = files.map((file) => {
+        return {
+          active: false,
+          file: file,
+        };
+      });
     });
     this.initializeMenuActions();
   }
@@ -117,11 +127,21 @@ export class SessionsComponent {
 
   sortDirection: 'asc' | 'desc' = 'asc';
 
-  get sessions(): any[] {
+  timeoutLongPress: Date = new Date();
+
+  onLongPress(event: any, session: Session) {
+    session.active = true;
+    console.log('long press', event);
+    this.timeoutLongPress = new Date();
+  }
+
+  get sessions(): Session[] {
     return this._sessions
       .filter(
         (session) =>
-          session.name.toLowerCase().includes(this.searchValue.toLowerCase())
+          session.file.name
+            .toLowerCase()
+            .includes(this.searchValue.toLowerCase())
 
         // ||
         // session.description
@@ -129,31 +149,50 @@ export class SessionsComponent {
         //   .includes(this.searchValue.toLowerCase())
       )
       .sort((a, b) => {
+        const fileA = a.file;
+        const fileB = b.file;
         switch (this.sort) {
           case 'name':
+            const nameA = fileA.name;
+            const nameB = fileB.name;
             if (this.sortDirection === 'desc') {
-              return b.name.localeCompare(a.name);
+              return nameB.localeCompare(nameA);
             }
-            return a.name.localeCompare(b.name);
+            return nameA.localeCompare(nameB);
           case 'date':
+            const mtimeB = fileB.mtime;
+            const mtimeA = fileA.mtime;
             if (this.sortDirection === 'desc') {
-              return b.mtime - a.mtime;
+              return mtimeB - mtimeA;
             }
-            return a.mtime - b.mtime;
+            return mtimeA - mtimeB;
           case 'size':
+            const sizeA = fileA.size;
+            const sizeB = fileB.size;
             if (this.sortDirection === 'desc') {
-              return b.size - a.size;
+              return sizeB - sizeA;
             }
-            return a.size - b.size;
+            return sizeA - sizeB;
           case 'type':
+            const typeB = fileB.type;
+            const typeA = fileA.type;
             if (this.sortDirection === 'desc') {
-              return b.type.localeCompare(a.type);
+              return typeB.localeCompare(typeA);
             }
-            return a.type.localeCompare(b.type);
+            return typeA.localeCompare(typeB);
           default:
             return 0;
         }
       });
+  }
+
+  sessionClick(session: Session) {
+    if (new Date().getTime() - this.timeoutLongPress.getTime() < 500) return;
+    if (this.sessions.filter((session) => session.active).length > 0) {
+      session.active = !session.active;
+    } else {
+      this.open(session.file);
+    }
   }
 
   open(file: FileInfo) {
@@ -163,7 +202,12 @@ export class SessionsComponent {
         .loadDirectory(this.path)
         .then((files) => {
           console.log(files);
-          this._sessions = files;
+          this._sessions = files.map((file) => {
+            return {
+              active: false,
+              file: file,
+            };
+          });
         })
         .catch((error) => {
           this._path.pop();
@@ -172,13 +216,44 @@ export class SessionsComponent {
   }
 
   searchValue: string = '';
-  _sessions: FileInfo[] = [];
+  _sessions: Session[] = [];
+
+  messageBoxCallback(event: any) {
+    if (event.btn === 'ok') {
+      Filesystem.mkdir({
+        path: this.path + '/' + event.value,
+        directory: Directory.ExternalStorage,
+      })
+        .then(() => {
+          this._path.push(event.value);
+          this.filesService.loadDirectory(this.path).then((files) => {
+            console.log(files);
+            this._sessions = files.map((file) => {
+              return {
+                active: false,
+                file: file,
+              };
+            });
+          });
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+  }
 
   back() {
     this._path.pop();
     this.filesService.loadDirectory(this.path).then((files) => {
       console.log(files);
-      this._sessions = files;
+      this._sessions = files.map((file) => {
+        return {
+          active: false,
+          file: file,
+        };
+      });
     });
   }
+
+  protected readonly console = console;
 }

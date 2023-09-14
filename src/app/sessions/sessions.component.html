@@ -1,17 +1,24 @@
 <app-header [showBack]="false" [showMenu]="true" [actions]="menuActions"><h1>Sessions</h1></app-header>
 <div class="content">
-  <app-search [(value)]="searchValue" placeholder="Rechercher une session"></app-search>
-  <app-add-button [@enterAnimation] *ngIf="!searchValue" label="Ajouter une session"></app-add-button>
-  <div class="sessions">
-    <app-session *ngIf="path.length > 0" [file]="returnFile" (click)="back()"
-                 [goBack]="true"></app-session>
-    <app-session [file]="session" (click)="open(session)" *ngFor="let session of sessions">
-    </app-session>
-    <app-empty-text *ngIf="sessions.length === 0" [@enterAnimation] [icon]="searchValue?'jamSearch':'jamGhost'"
-                    [text]="searchValue?'Pas de résultat':'Le dossier est vide'"></app-empty-text>
-  </div>
+    <app-search [(value)]="searchValue" placeholder="Rechercher une session"></app-search>
+    <app-add-button [@enterAnimation] *ngIf="!searchValue" label="Ajouter une session"></app-add-button>
+    <div class="sessions">
+        <span *ngIf="path.length" [@enterAnimation]>{{path}}</span>
+        <app-session *ngIf="path.length > 0" [@enterAnimation] [file]="returnFile" (click)="back()"
+                     [goBack]="true"></app-session>
+        <app-empty-text *ngIf="sessions.length === 0" [@enterAnimation] [icon]="searchValue?'jamSearch':'jamGhost'"
+                        [text]="searchValue?'Pas de résultat':'Le dossier est vide'"></app-empty-text>
+
+        <app-session [selected]="session.active" long-press
+                     (onLongPressing)="onLongPress($event,session)"
+                     (click)="sessionClick(session)" [file]="session.file"
+                     *ngFor="let session of sessions">
+
+        </app-session>
+    </div>
 </div>
 
 <app-message-box [message]="'Entrer le nom du dossier'" [title]="'Créer un nouveau dossier'"
-                 [(open)]="openCreateFolderPrompt" type="prompt"></app-message-box>
+                 [(open)]="openCreateFolderPrompt" (callback)="messageBoxCallback($event)"
+                 type="prompt"></app-message-box>
 

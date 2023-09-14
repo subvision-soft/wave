@@ -12,15 +12,21 @@
   }
 
   .content {
-    padding: 0 var(--padding) var(--padding) var(--padding);
+    padding: 0 0 var(--padding) 0;
     gap: var(--padding);
     display: flex;
     flex-direction: column;
     align-items: stretch;
-  }
 
-  app-session {
-    animation: fade 0.5s ease-in-out;
+    app-session {
+      animation: fade 0.5s ease-in-out;
+    }
+
+    & > * {
+      &:not(.sessions) {
+        margin: 0 var(--padding);
+      }
+    }
   }
 }
 

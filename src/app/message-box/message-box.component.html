@@ -5,13 +5,13 @@
     </div>
     <div class="message-content">
       <span>{{message}}</span>
-      <input type="text" *ngIf="PROMPT" [(ngModel)]="promptValue"/>
+      <input #prompt type="text" *ngIf="PROMPT" [(ngModel)]="promptValue"/>
     </div>
   </div>
 
   <div class="buttons">
-    <button class="cancel" *ngIf="OKCANCEL || PROMPT" (click)="close()">Annuler</button>
-    <button class="ok" *ngIf="OKCANCEL || PROMPT">Ok</button>
+    <button class="cancel" *ngIf="OKCANCEL || PROMPT" (click)="click('cancel')">Annuler</button>
+    <button class="ok" (click)="click('ok')" *ngIf="OKCANCEL || PROMPT">Ok</button>
   </div>
 </div>
 <div (click)="close()" class="mask"></div>

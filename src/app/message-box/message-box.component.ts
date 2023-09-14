@@ -1,10 +1,13 @@
 import {
   Component,
+  ElementRef,
   EventEmitter,
   HostBinding,
   Input,
   Output,
+  ViewChild,
 } from '@angular/core';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 interface Callback {
   btn: 'ok' | 'cancel';
@@ -15,9 +18,45 @@ interface Callback {
   selector: 'app-message-box',
   templateUrl: './message-box.component.html',
   styleUrls: ['./message-box.component.scss'],
+  animations: [
+    trigger('openAnimation', [
+      transition(':enter', [
+        style({
+          opacity: 0,
+          transform: 'translate(0, calc(100% + var(--padding)))',
+        }),
+        animate('200ms', style({ opacity: 1, transform: 'translate(0)' })),
+      ]),
+      transition(':leave', [
+        style({ opacity: 1, transform: 'translate(0)' }),
+        animate(
+          '200ms',
+          style({
+            opacity: 0,
+            transform: 'translate(0, calc(100% + var(--padding)))',
+          })
+        ),
+      ]),
+    ]),
+  ],
 })
 export class MessageBoxComponent {
-  @Input() @HostBinding('class.open') open: boolean = false;
+  get open(): boolean {
+    return this._open;
+  }
+
+  @Input()
+  set open(value: boolean) {
+    this._open = value;
+    if (this._open) {
+      setTimeout(() => {
+        this.prompt?.nativeElement.focus();
+      }, 100);
+    }
+  }
+
+  @HostBinding('class.open') private _open: boolean = false;
+  @ViewChild('prompt') prompt: ElementRef<HTMLElement> | undefined;
   @Output() openChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Input() type: 'prompt' | 'okcancel' = 'okcancel';
   @Input() title: string = '';
@@ -52,7 +91,7 @@ export class MessageBoxComponent {
   constructor() {}
 
   close() {
-    this.open = false;
-    this.openChange.emit(this.open);
+    this._open = false;
+    this.openChange.emit(this._open);
   }
 }

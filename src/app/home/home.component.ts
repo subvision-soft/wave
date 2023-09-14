@@ -153,4 +153,6 @@ export class HomeComponent implements OnInit {
       console.log('End');
     }
   }
+
+  protected readonly console = console;
 }

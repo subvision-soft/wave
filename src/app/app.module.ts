@@ -10,6 +10,7 @@ import {
   jamArrowLeft,
   jamArrowUp,
   jamCameraF,
+  jamCheck,
   jamChevronLeft,
   jamChevronRight,
   jamCogF,
@@ -74,6 +75,8 @@ import { MenuComponent } from './menu/menu.component';
 import { MenuActionComponent } from './menu-action/menu-action.component';
 import { MessageBoxComponent } from './message-box/message-box.component';
 import { EmptyTextComponent } from './empty-text/empty-text.component';
+import { LongPressDirective } from './directives/long-press.directive';
+import { NgVar } from './directives/ng-var.directive';
 
 const openCVConfig: OpenCVConfig = {
   openCVDirPath: 'assets/opencv',
@@ -113,6 +116,8 @@ const openCVConfig: OpenCVConfig = {
     MenuActionComponent,
     MessageBoxComponent,
     EmptyTextComponent,
+    LongPressDirective,
+    NgVar,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -145,6 +150,7 @@ const openCVConfig: OpenCVConfig = {
       jamArrowDown,
       jamArrowLeft,
       jamGhost,
+      jamCheck,
       jamFolder,
       jamFolderOpen,
       jamChevronRight,

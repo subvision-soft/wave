@@ -1,21 +1,21 @@
 <img class="logo" src="assets/img/logo_s_white.svg" [style.height]="logoSize+'px'" alt="logo"/>
 <h1 class="titre">Actualités</h1>
 <div class="actualites">
-  <div class="actualite ripple" *ngFor="let actualite of actualites">
-    <h1>{{actualite.name}}</h1>
-    <p>{{actualite.date.toLocaleDateString("fr")}}</p>
-  </div>
+    <div class="actualite ripple" *ngFor="let actualite of actualites">
+        <h1>{{actualite.name}}</h1>
+        <p>{{actualite.date.toLocaleDateString("fr")}}</p>
+    </div>
 </div>
 <div class="titre-sessions">
-  <h1>Sessions</h1>
-  <a class="button ripple" routerLink="/sessions">Tout voir</a>
+    <h1>Sessions</h1>
+    <a class="button ripple" routerLink="/sessions">Tout voir</a>
 </div>
 <div class="sessions">
-  <app-session [file]="seance" *ngFor="let seance of seances">
-  </app-session>
+    <app-session [file]="seance" *ngFor="let seance of seances">
+    </app-session>
 </div>
 
 <div *ngFor="let file of epubFiles">
-  {{file}}
+    {{file}}
 </div>
 
