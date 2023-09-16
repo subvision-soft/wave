@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { TabBarComponent } from './tab-bar/tab-bar.component';
 import { bootstrapHouseFill } from '@ng-icons/bootstrap-icons';
 import {
   jamArrowDown,
@@ -41,42 +40,45 @@ import {
   iconoirTimer,
 } from '@ng-icons/iconoir';
 import { NgIconsModule } from '@ng-icons/core';
-import { TabBarButtonComponent } from './tab-bar-button/tab-bar-button.component';
-import { SettingsComponent } from './settings/settings.component';
-import { HomeComponent } from './home/home.component';
-import { CameraComponent } from './camera/camera.component';
-import { HeaderComponent } from './header/header.component';
-import { IconButtonComponent } from './icon-button/icon-button.component';
+
 import { NgxOpenCVModule } from '../lib/ngx-opencv.module';
 import { OpenCVConfig } from '../lib/models';
-import { PluckPipe, ResultComponent } from './result/result.component';
-import { CameraPreviewComponent } from './camera-preview/camera-preview.component';
-import { SegmentedButtonComponent } from './segmented-button/segmented-button.component';
-import { TextfieldComponent } from './textfield/textfield.component';
-import { NumberSpinnerComponent } from './number-spinner/number-spinner.component';
-import { SlideSheetComponent } from './slide-sheet/slide-sheet.component';
-import { ChronoPickerComponent } from './chrono-picker/chrono-picker.component';
-import { ImpactsListComponent } from './impacts-list/impacts-list.component';
-import { TargetPreviewComponent } from './target-preview/target-preview.component';
-import { ButtonComponent } from './button/button.component';
-import { TotalPreviewComponent } from './total-preview/total-preview.component';
-import { ColorPreviewComponent } from './color-preview/color-preview.component';
+
 import { FormsModule } from '@angular/forms';
 import { ColorPickerModule } from 'ngx-color-picker';
-import { SpinnerComponent } from './spinner/spinner.component';
-import { SelectComponent } from './select/select.component';
-import { SessionsComponent } from './sessions/sessions.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SettingPickerComponent } from './setting-picker/setting-picker.component';
-import { SearchComponent } from './search/search.component';
-import { AddButtonComponent } from './add-button/add-button.component';
-import { SessionComponent } from './session/session.component';
-import { MenuComponent } from './menu/menu.component';
-import { MenuActionComponent } from './menu-action/menu-action.component';
-import { MessageBoxComponent } from './message-box/message-box.component';
-import { EmptyTextComponent } from './empty-text/empty-text.component';
+
 import { LongPressDirective } from './directives/long-press.directive';
 import { NgVar } from './directives/ng-var.directive';
+import { HeaderComponent } from './components/header/header.component';
+import { IconButtonComponent } from './components/icon-button/icon-button.component';
+import { ChronoPickerComponent } from './components/chrono-picker/chrono-picker.component';
+import { ImpactsListComponent } from './components/impacts-list/impacts-list.component';
+import { ButtonComponent } from './components/button/button.component';
+import { AddButtonComponent } from './components/add-button/add-button.component';
+import { MenuComponent } from './components/menu/menu.component';
+import { MenuActionComponent } from './components/menu-action/menu-action.component';
+import { MessageBoxComponent } from './components/message-box/message-box.component';
+import { EmptyTextComponent } from './components/empty-text/empty-text.component';
+import { TabBarButtonComponent } from './components/tab-bar-button/tab-bar-button.component';
+import { SettingsComponent } from './pages/settings/settings.component';
+import { HomeComponent } from './pages/home/home.component';
+import { PluckPipe, ResultComponent } from './pages/result/result.component';
+import { CameraPreviewComponent } from './pages/camera-preview/camera-preview.component';
+import { SegmentedButtonComponent } from './components/segmented-button/segmented-button.component';
+import { TextfieldComponent } from './components/textfield/textfield.component';
+import { NumberSpinnerComponent } from './components/number-spinner/number-spinner.component';
+import { SlideSheetComponent } from './components/slide-sheet/slide-sheet.component';
+import { TargetPreviewComponent } from './components/target-preview/target-preview.component';
+import { TotalPreviewComponent } from './components/total-preview/total-preview.component';
+import { ColorPreviewComponent } from './pages/color-preview/color-preview.component';
+import { SpinnerComponent } from './components/spinner/spinner.component';
+import { SelectComponent } from './components/select/select.component';
+import { SessionsComponent } from './pages/sessions/sessions.component';
+import { SettingPickerComponent } from './components/setting-picker/setting-picker.component';
+import { SearchComponent } from './components/search/search.component';
+import { SessionComponent } from './components/session/session.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TabBarComponent } from './components/tab-bar/tab-bar.component';
 
 const openCVConfig: OpenCVConfig = {
   openCVDirPath: 'assets/opencv',
@@ -89,7 +91,6 @@ const openCVConfig: OpenCVConfig = {
     TabBarButtonComponent,
     SettingsComponent,
     HomeComponent,
-    CameraComponent,
     HeaderComponent,
     IconButtonComponent,
     ResultComponent,

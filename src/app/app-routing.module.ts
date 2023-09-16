@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { CameraComponent } from './camera/camera.component';
-import { SettingsComponent } from './settings/settings.component';
-import { ResultComponent } from './result/result.component';
-import { CameraPreviewComponent } from './camera-preview/camera-preview.component';
-import { ColorPreviewComponent } from './color-preview/color-preview.component';
-import { SessionsComponent } from './sessions/sessions.component';
+import { HomeComponent } from './pages/home/home.component';
+import { ColorPreviewComponent } from './pages/color-preview/color-preview.component';
+import { CameraPreviewComponent } from './pages/camera-preview/camera-preview.component';
+import { ResultComponent } from './pages/result/result.component';
+import { SettingsComponent } from './pages/settings/settings.component';
+import { SessionsComponent } from './pages/sessions/sessions.component';
 
 const routes: Routes = [
   {
@@ -19,7 +18,6 @@ const routes: Routes = [
   },
   {
     path: 'camera',
-    component: CameraComponent,
     children: [
       {
         path: '',
@@ -49,10 +47,6 @@ const routes: Routes = [
     redirectTo: '/home',
     pathMatch: 'full',
   },
-  // {
-  //   path: '**',
-  //   redirectTo: '/home',
-  // },
 ];
 
 @NgModule({
