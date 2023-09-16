@@ -19,9 +19,20 @@ import { OpenCVState } from '../../../lib/models';
   styleUrls: ['./camera-preview.component.scss'],
 })
 export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
+  get coordinatesPercent(): any {
+    return this._coordinatesPercent;
+  }
+
+  set coordinatesPercent(value: any) {
+    this.path?.nativeElement.setAttribute('d', this.getPath());
+    this._coordinatesPercent = value;
+  }
+
   private cvState: string = '';
   stream: MediaStream | undefined;
   @ViewChild('video', { static: true }) video: any;
+  @ViewChild('svg') svg: ElementRef | undefined;
+  @ViewChild('path') path: ElementRef | undefined;
   @ViewChild('cameraPreview') cameraPreview: ElementRef | undefined;
   private playing: boolean = true;
   parentHeight: number = 0;
@@ -50,7 +61,7 @@ export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
   width: number = 0;
   currentFps: number = 0;
   coordinates: any = null;
-  coordinatesPercent: any = null;
+  private _coordinatesPercent: any = null;
   private frame: any = null;
   loading: boolean = false;
 
@@ -77,18 +88,16 @@ export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
     });
   }
 
-  getPolygon() {
+  getPath() {
     let result = '';
-    if (!this.coordinatesPercent) {
+    if (!this._coordinatesPercent) {
       return;
     }
-    for (const coordinate of this.coordinatesPercent) {
-      result += `${coordinate.x}% ${coordinate.y}%,`;
+    for (const coordinate of this._coordinatesPercent) {
+      result += `${coordinate.x},${coordinate.y} `;
     }
-    return `polygon(${result.slice(0, -1)})`;
+    return `M ${result.slice(0, -1)} Z`;
   }
-
-  getFrameFromStream() {}
 
   constructor(
     private ngxOpenCv: NgxOpenCVService,
