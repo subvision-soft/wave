@@ -1,4 +1,3 @@
-<button>
-  <ng-icon *ngIf="icon" [class]="['icon' ]" [name]="icon" size="20"></ng-icon>
-  <span *ngIf="label" [class]="['label']">{{label}}</span></button>
+<ng-icon *ngIf="icon" [class]="['icon' ]" [name]="icon" size="20"></ng-icon>
+<span><ng-content></ng-content></span>
 

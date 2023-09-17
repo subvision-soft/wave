@@ -111,15 +111,7 @@ export class SessionsComponent {
   }
 
   constructor(private filesService: FilesService) {
-    this.filesService.loadDirectory(this.path).then((files) => {
-      console.log(files);
-      this._sessions = files.map((file) => {
-        return {
-          active: false,
-          file: file,
-        };
-      });
-    });
+    this.openPath();
     this.initializeMenuActions();
   }
 
@@ -213,6 +205,28 @@ export class SessionsComponent {
           this._path.pop();
         });
     }
+  }
+
+  openRoot() {
+    this._path = [];
+    this.openPath();
+  }
+
+  private openPath() {
+    this.filesService.loadDirectory(this.path).then((files) => {
+      console.log(files);
+      this._sessions = files.map((file) => {
+        return {
+          active: false,
+          file: file,
+        };
+      });
+    });
+  }
+
+  openAtIndexPath(index: number) {
+    this._path = this._path.slice(0, index + 1);
+    this.openPath();
   }
 
   searchValue: string = '';

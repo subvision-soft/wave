@@ -8,6 +8,7 @@ import { Component, HostBinding, HostListener, Input } from '@angular/core';
 export class ButtonComponent {
   @Input() icon: string = '';
   @Input() label: string = '';
+  @HostBinding('class.ripple') ripple: boolean = true;
   _type: 'primary' | 'default' | 'dashed' | 'text' | 'link' = 'default';
   _color: 'primary' | 'success' | 'error' = 'primary';
 

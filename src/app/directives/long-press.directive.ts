@@ -9,7 +9,7 @@ import {
 
 @Directive({ selector: '[long-press]' })
 export class LongPressDirective {
-  @Input() duration: number = 500;
+  @Input() duration: number = 300;
 
   @Output() onLongPress: EventEmitter<any> = new EventEmitter();
   @Output() onLongPressing: EventEmitter<any> = new EventEmitter();
@@ -35,7 +35,7 @@ export class LongPressDirective {
   @HostListener('touchstart')
   onMouseDown(event: any) {
     // don't do right/middle clicks
-    if (event && event.which !== 1) return;
+    if (event && event?.which !== 1) return;
     console.log('mousedown', event);
     this.mouseX = event?.clientX;
     this.mouseY = event?.clientY;

@@ -27,6 +27,23 @@
         margin: 0 var(--padding);
       }
     }
+
+    .sessions {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: var(--padding-sm);
+
+      .path {
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        gap: var(--padding-sm);
+
+        overflow-x: auto;
+        padding: 0 var(--padding);
+      }
+    }
   }
 }
 

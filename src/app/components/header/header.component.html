@@ -4,11 +4,12 @@
 <div class="header-item">
   <ng-content></ng-content>
 </div>
-<div class="header-item menu" [style.visibility]="showMenu ? 'visible' : 'hidden'">
+<div #menuButton class="header-item menu" [style.visibility]="showMenu ? 'visible' : 'hidden'">
   <app-icon-button (click)="toggleMenu()" icon="jamMoreVerticalF"></app-icon-button>
 </div>
 
-<app-menu [(open)]="openMenu" [actions]="actions"></app-menu>
+<app-menu [attachTo]="menuButtonRef" anchorLocation="topRight" [(open)]="openMenu"
+          [actions]="actions"></app-menu>
 
 
 

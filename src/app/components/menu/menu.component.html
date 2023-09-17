@@ -1,4 +1,4 @@
-<div class="menu">
+<div class="menu" [style]="menuStyle">
   <app-menu-action (click)="actionClick(action)" [border]="index + 1 != currentActions.length"
                    *ngFor="let action of currentActions; let index = index"
                    [action]="action"></app-menu-action>

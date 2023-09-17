@@ -1,5 +1,6 @@
 import {
   Component,
+  ElementRef,
   EventEmitter,
   HostBinding,
   Input,
@@ -13,6 +14,75 @@ import { Action } from '../../models/action';
   styleUrls: ['./menu.component.scss'],
 })
 export class MenuComponent {
+  get attachTo(): ElementRef | undefined {
+    return this._attachTo;
+  }
+
+  @Input()
+  set attachTo(value: ElementRef | undefined) {
+    this._attachTo = value;
+    var curleft = 0;
+    var curtop = 0;
+    let obj = value?.nativeElement;
+    if (obj.offsetParent) {
+      do {
+        curleft += obj.offsetLeft;
+        curtop += obj.offsetTop;
+      } while ((obj = obj.offsetParent));
+      this.x = curleft;
+      this.y = curtop;
+    }
+  }
+
+  private _attachTo: ElementRef | undefined;
+
+  x: number = 0;
+  y: number = 0;
+
+  @Input() anchorLocation:
+    | 'topRight'
+    | 'topLeft'
+    | 'bottomRight'
+    | 'bottomLeft' = 'topRight';
+
+  get menuStyle() {
+    console.log('menuStyle', this.attachTo?.nativeElement.offsetWidth);
+    switch (this.anchorLocation) {
+      case 'topRight':
+        return {
+          top: `${this.y}px`,
+          right: `${
+            window.innerWidth -
+            (this.attachTo?.nativeElement.offsetWidth + this.x)
+          }px`,
+        };
+      case 'topLeft':
+        return {
+          top: `${this.y}px`,
+          left: `${this.x}px`,
+        };
+      case 'bottomRight':
+        return {
+          bottom: `${
+            window.innerWidth -
+            (this.y + this.attachTo?.nativeElement.offsetHeight)
+          }px`,
+          right: `${
+            window.innerWidth -
+            (this.attachTo?.nativeElement.offsetWidth + this.x)
+          }px`,
+        };
+      case 'bottomLeft':
+        return {
+          bottom: `${
+            window.innerWidth -
+            (this.y + this.attachTo?.nativeElement.offsetHeight)
+          }px`,
+          left: `${this.x}px`,
+        };
+    }
+  }
+
   get originalActions(): Action[] {
     return this._originalActions;
   }
