@@ -12,7 +12,7 @@
     bottom: var(--padding);
     right: var(--padding);
     left: var(--padding);
-    background: var(--color-background-2);
+    background: var(--color-background-1);
     z-index: 1000;
     border-radius: calc(var(--border-radius-sm) / 2);
     box-sizing: border-box;
@@ -27,7 +27,7 @@
       align-items: stretch;
       justify-content: center;
       gap: var(--padding);
-      padding: var(--padding) var(--padding-lg);
+      padding: var(--padding);
 
       .message-title {
         font-weight: var(--font-weight-semi-bold);
@@ -51,6 +51,13 @@
           color: var(--color-dark1-1);
           transition: 0.1s ease-in-out;
           outline: none;
+        }
+
+        .component-content {
+          display: flex;
+          flex-direction: column;
+          align-items: stretch;
+          justify-content: center;
         }
       }
     }

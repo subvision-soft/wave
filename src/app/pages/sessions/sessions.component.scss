@@ -23,16 +23,19 @@
     }
 
     & > * {
-      &:not(.sessions) {
+      &:not(.sessions-content) {
         margin: 0 var(--padding);
       }
     }
 
-    .sessions {
+    .sessions-content {
       display: flex;
       flex-direction: column;
       align-items: stretch;
       gap: var(--padding-sm);
+
+      .sessions {
+      }
 
       .path {
         display: flex;

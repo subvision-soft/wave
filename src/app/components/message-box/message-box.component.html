@@ -4,7 +4,10 @@
       <span>{{title}}</span>
     </div>
     <div class="message-content">
-      <span>{{message}}</span>
+      <span *ngIf="message">{{message}}</span>
+      <div class="component-content" *ngIf="!message">
+        <ng-content></ng-content>
+      </div>
       <input #prompt type="text" *ngIf="PROMPT" [(ngModel)]="promptValue"/>
     </div>
   </div>

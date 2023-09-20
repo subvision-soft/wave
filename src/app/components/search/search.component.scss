@@ -18,5 +18,7 @@
     font-weight: var(--font-weight-semi-bold);
     background: transparent;
     flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }

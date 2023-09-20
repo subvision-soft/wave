@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { Impact } from '../../services/plastron.service';
+import { Impact } from '../../models/impact';
+import { Event } from '../../models/event';
 
 @Component({
   selector: 'app-total-preview',
@@ -27,19 +28,19 @@ export class TotalPreviewComponent {
   }
 
   get precision(): boolean {
-    return this.epreuve === 'precision';
+    return this.epreuve === Event.PRECISION;
   }
 
   get biathlon(): boolean {
-    return this.epreuve === 'biathlon';
+    return this.epreuve === Event.BIATHLON;
   }
 
   get superBiathlon(): boolean {
-    return this.epreuve === 'superBiathlon';
+    return this.epreuve === Event.SUPER_BIATHLON;
   }
 
   get saisieLibre(): boolean {
-    return this.epreuve === 'saisieLibre';
+    return this.epreuve === Event.SAISIE_LIBRE;
   }
 
   get total(): number {

@@ -32,6 +32,7 @@ export class SessionsComponent {
   }
 
   openCreateFolderPrompt: boolean = false;
+  openCreateSession: boolean = true;
 
   set sort(value: 'name' | 'date' | 'size' | 'type' | undefined) {
     if (this._sort === value) {

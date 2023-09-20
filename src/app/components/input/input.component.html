@@ -1,0 +1,20 @@
+<label class="label" *ngIf="label">{{label}}</label>
+<label [for]="input" class="input-content">
+  <input
+    #input
+    [(ngModel)]="value"
+    [name]="name"
+    [type]="type"
+    [placeholder]="placeholder"
+    [disabled]="disabled"
+    [required]="required"
+    [readonly]="readonly"
+    [min]="min"
+    [max]="max"
+    [step]="step"
+    [size]="size"
+    [autocomplete]="autocomplete"
+    [autofocus]="autofocus"
+  >
+  <span *ngIf="type=='checkbox'" class="toggle"></span>
+</label>

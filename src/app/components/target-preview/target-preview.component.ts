@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Impact, Zone } from '../../services/plastron.service';
+import { Zone } from '../../models/zone';
+import { Impact } from '../../models/impact';
 
 @Component({
   selector: 'app-target-preview',

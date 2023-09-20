@@ -79,6 +79,7 @@ import { SearchComponent } from './components/search/search.component';
 import { SessionComponent } from './components/session/session.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TabBarComponent } from './components/tab-bar/tab-bar.component';
+import { InputComponent } from './components/input/input.component';
 
 const openCVConfig: OpenCVConfig = {
   openCVDirPath: 'assets/opencv',
@@ -119,6 +120,8 @@ const openCVConfig: OpenCVConfig = {
     EmptyTextComponent,
     LongPressDirective,
     NgVar,
+    InputComponent,
+    InputComponent,
   ],
   imports: [
     BrowserAnimationsModule,

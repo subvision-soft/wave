@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Impact } from '../../services/plastron.service';
+import { Impact } from '../../models/impact';
 
 @Component({
   selector: 'app-impacts-list',
@@ -30,19 +30,6 @@ export class ImpactsListComponent {
   get impacts(): Impact[] {
     return this._impacts;
   }
-
-  duplicate = (impact: Impact) => {
-    const newImpact = new Impact(impact.points, impact.zone, impact.angle);
-    const index = this._impacts.indexOf(impact);
-    this._impacts.splice(index + 1, 0, newImpact);
-    this.impactsChange.emit(this._impacts);
-  };
-
-  remove = (impact: Impact) => {
-    const index = this._impacts.indexOf(impact);
-    this._impacts.splice(index, 1);
-    this.impactsChange.emit(this._impacts);
-  };
 
   select = (impact: Impact) => {
     this._selected = impact;

@@ -6,9 +6,12 @@ import {
   Pipe,
   PipeTransform,
 } from '@angular/core';
-import { Impact, PlastronService, Zone } from '../../services/plastron.service';
+import { PlastronService } from '../../services/plastron.service';
 import { pluck } from 'rxjs';
 import { SegmentedButtonItem } from '../../components/segmented-button/segmented-button.component';
+import { Impact } from '../../models/impact';
+import { Zone } from '../../models/zone';
+import { Event } from '../../models/event';
 
 @Pipe({ name: 'pluck' })
 export class PluckPipe implements PipeTransform {
@@ -39,19 +42,19 @@ export class ResultComponent implements OnInit {
   selectStore: any[] = [
     {
       label: 'Saisie libre',
-      id: 'saisieLibre',
+      id: Event.SAISIE_LIBRE,
     },
     {
       label: 'Précision',
-      id: 'precision',
+      id: Event.PRECISION,
     },
     {
       label: 'Biathlon',
-      id: 'biathlon',
+      id: Event.BIATHLON,
     },
     {
       label: 'Super‑biathlon',
-      id: 'superBiathlon',
+      id: Event.SUPER_BIATHLON,
     },
   ];
 

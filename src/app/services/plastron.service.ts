@@ -1,32 +1,14 @@
 import { Injectable } from '@angular/core';
 import { LogService } from './log.service';
+import { Zone } from '../models/zone';
+import { Impact } from '../models/impact';
 
 class PointCv {
   constructor(public x: number = -1, public y: number = -1) {}
 }
 
-export enum Zone {
-  TOP_LEFT = 'top-left',
-  TOP_RIGHT = 'top-right',
-  BOTTOM_LEFT = 'bottom-left',
-  BOTTOM_RIGHT = 'bottom-right',
-  CENTER = 'center',
-  UNDEFINED = 'undefined',
-}
-
 class Cible {
   constructor(public impacts: Impact[] = [], public image: any = null) {}
-}
-
-export class Impact {
-  distance: number = -1;
-
-  constructor(
-    public points: number = 0,
-    public zone: Zone = Zone.UNDEFINED,
-    public angle: number = -1,
-    public amount: number = 1
-  ) {}
 }
 
 @Injectable({
@@ -1071,17 +1053,15 @@ export class PlastronService {
         [255, 255, 255, 255],
         2
       );
-      let impactDTO = new Impact();
-      impactDTO.zone = closestZone as Zone;
-      impactDTO.points = points;
-      impactDTO.angle = this.toDegrees(radAngle) + 180;
-      impactDTO.distance = realDistance;
+      let impactDTO = {
+        zone: closestZone as Zone,
+        points: points,
+        angle: this.toDegrees(radAngle) + 180,
+        distance: realDistance,
+        amount: 0,
+      };
       result.impacts.push(impactDTO);
     }
-
-    // for (let zone in hashMapVisuels) {
-    //   hashMapVisuels[zone];
-    // }
 
     result.image = mat;
     this.logger.debug('end process');

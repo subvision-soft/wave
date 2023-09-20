@@ -119,8 +119,12 @@
   --color-dark2-2: color-mix(in srgb, #fff, #242e42 45%);
   --color-dark2-3: color-mix(in srgb, #fff, #242e42 25%);
   --color-dark2-4: color-mix(in srgb, #fff, #242e42 5%);
-  --color-background-1: color-mix(in srgb, var(--color-primary), #fff 95%);
-  --color-background-2: #fff;
+  --color-background-2: color-mix(
+    in srgb,
+    color-mix(in srgb, var(--color-primary), #fff 95%),
+    #000 2%
+  );
+  --color-background-1: #fff;
 
   --border-radius: 20px;
   --border-radius-sm: calc(var(--border-radius) / 2);

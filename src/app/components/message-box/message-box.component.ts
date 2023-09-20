@@ -80,6 +80,7 @@ export class MessageBoxComponent {
         btn,
         value: this.promptValue,
       });
+      this.promptValue = '';
     } else {
       this.callback.emit({
         btn,
