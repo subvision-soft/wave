@@ -28,7 +28,7 @@
     .container {
       width: calc(100% / 3);
       height: 100%;
-      transition: 0.3s ease-in-out;
+      transition: var(--transition);
       display: flex;
       flex-direction: row;
       justify-content: stretch;
@@ -41,7 +41,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        transition: 0.3s ease-in-out;
+        transition: var(--transition);
         transform: scale(0.8);
         font-weight: var(--font-weight-normal);
         padding: var(--padding) 0;
@@ -58,7 +58,7 @@
           transform: translate(-50%, -50%);
           z-index: -1;
           border-radius: 1000px;
-          transition: 0.3s ease-in-out;
+          transition: var(--transition);
           box-shadow: var(--box-shadow-1);
         }
 

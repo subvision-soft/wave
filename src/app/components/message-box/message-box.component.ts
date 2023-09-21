@@ -1,6 +1,5 @@
 import {
   Component,
-  ElementRef,
   EventEmitter,
   HostBinding,
   Input,
@@ -8,6 +7,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { InputComponent } from '../input/input.component';
 
 interface Callback {
   btn: 'ok' | 'cancel';
@@ -50,13 +50,16 @@ export class MessageBoxComponent {
     this._open = value;
     if (this._open) {
       setTimeout(() => {
-        this.prompt?.nativeElement.focus();
+        this.prompt?.focus();
       }, 100);
     }
   }
 
   @HostBinding('class.open') private _open: boolean = false;
-  @ViewChild('prompt') prompt: ElementRef<HTMLElement> | undefined;
+  @ViewChild('prompt', {
+    read: InputComponent,
+  })
+  prompt: InputComponent | undefined;
   @Output() openChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Input() type: 'prompt' | 'okcancel' = 'okcancel';
   @Input() title: string = '';

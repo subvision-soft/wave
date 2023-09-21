@@ -1,4 +1,11 @@
-import { Component, HostBinding, HostListener, Input } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostBinding,
+  HostListener,
+  Input,
+  ViewChild,
+} from '@angular/core';
 
 @Component({
   selector: 'app-input',
@@ -55,4 +62,10 @@ export class InputComponent {
   }
 
   @HostListener('click') onClick(): void {}
+
+  @ViewChild('input') input: ElementRef | undefined;
+
+  focus(): void {
+    this.input?.nativeElement.focus();
+  }
 }

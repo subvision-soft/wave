@@ -27,7 +27,7 @@
     .container {
       width: 100%;
       height: calc(100% / 3);
-      transition: 0.3s ease-in-out;
+      transition: var(--transition);
 
       .value {
         height: 100%;
@@ -35,7 +35,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        transition: var(--primary-transition);
+        transition: var(--transition);
         transform: scale(0.8);
         font-weight: var(--font-weight-normal);
 
@@ -50,7 +50,7 @@
           transform: translate(-50%, -50%);
           z-index: -1;
           border-radius: var(--border-radius);
-          transition: 0.3s ease-in-out;
+          transition: var(--transition);
           box-shadow: var(--box-shadow-1);
         }
 

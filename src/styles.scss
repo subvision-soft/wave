@@ -47,7 +47,7 @@
   overflow: hidden;
   transform: translate3d(0, 0, 0);
   cursor: pointer;
-  transition: var(--primary-transition);
+  transition: var(--transition);
 
   &:after {
     content: "";
@@ -136,7 +136,6 @@
 
   --padding-lg: calc(var(--padding) * 2);
 
-  --primary-transition: all 0.3s ease-in-out;
   --primary-font: "Darker Grotesque";
 
   --font-size: 20px;
@@ -151,6 +150,10 @@
   --font-weight-bold: 700;
   --font-weight-semi-bold: 600;
   --font-weight-normal: 400;
+
+  --transition: all 0.3s ease-in-out;
+  --transition-fast: all 0.1s ease-in-out;
+  --transition-slow: all 0.5s ease-in-out;
 }
 
 body {

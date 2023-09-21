@@ -25,7 +25,7 @@
 
     &:active {
       color: var(--colorPrimary);
-      transition: var(--primary-transition);
+      transition: var(--transition);
       border-color: var(--colorPrimary);
     }
   }
@@ -37,7 +37,7 @@
     gap: var(--padding-sm);
     flex-direction: row;
     padding: var(--padding-sm);
-    transition: var(--primary-transition);
+    transition: var(--transition);
     border-radius: var(--border-radius-sm);
     font-size: var(--font-size);
     font-weight: var(--font-weight-normal);
@@ -45,7 +45,7 @@
     & .icon {
       visibility: hidden;
       opacity: 0;
-      transition: var(--primary-transition);
+      transition: var(--transition);
     }
 
     &:active {
