@@ -1,9 +1,9 @@
 import {
   Component,
-  ElementRef,
+  ElementRef, EventEmitter,
   HostBinding,
   HostListener,
-  Input,
+  Input, Output,
   ViewChild,
 } from '@angular/core';
 
@@ -13,6 +13,16 @@ import {
   styleUrls: ['./input.component.scss'],
 })
 export class InputComponent {
+  get value(): string {
+    return this._value;
+  }
+  @Input()
+  set value(value: string) {
+    this._value = value;
+    this.valueChange.emit(value);
+  }
+
+  @Output( 'valueChange' ) valueChange = new EventEmitter<string>();
   @Input() type:
     | 'text'
     | 'password'
@@ -30,7 +40,7 @@ export class InputComponent {
     | 'checkbox'
     | 'color' = 'text';
   @Input() placeholder: string = '';
-  @Input() value: string = '';
+  private _value: string = '';
   @Input() label: string = '';
   @Input() required: boolean = false;
   @Input() disabled: boolean = false;

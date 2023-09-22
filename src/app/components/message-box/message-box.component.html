@@ -8,7 +8,7 @@
       <div class="component-content" *ngIf="!message">
         <ng-content></ng-content>
       </div>
-      <app-input #prompt *ngIf="PROMPT" [label]="message" [(ngModel)]="promptValue"/>
+      <app-input #prompt *ngIf="PROMPT" [label]="message" [(value)]="promptValue"/>
     </div>
   </div>
 
