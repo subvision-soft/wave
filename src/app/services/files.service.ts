@@ -37,8 +37,8 @@ export class FilesService {
     return files;
   }
 
-  writeFile(path: string, content: Blob) {
-    Filesystem.writeFile({
+  async writeFile(path: string, content: Blob) {
+    await Filesystem.writeFile({
       path: path,
       data: content,
       directory: Directory.ExternalStorage,

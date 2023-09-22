@@ -11,6 +11,10 @@
   gap: var(--padding);
   overflow: hidden;
 
+  ng-icon {
+    color: var(--color-dark2-1);
+  }
+
   input {
     border: none;
     outline: none;

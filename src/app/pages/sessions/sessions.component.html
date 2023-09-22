@@ -29,9 +29,12 @@
                  type="prompt"></app-message-box>
 <app-message-box [title]="'Ajouter une session'"
                  [(open)]="openCreateSession"
+                 (callback)="createSessionCallback($event)"
                  type="okcancel">
-  <app-input label="Titre"></app-input>
-  <app-input label="Description"></app-input>
-  <app-input label="Date" type="date"></app-input>
+  <app-input [(value)]="newSession.title" label="Titre"></app-input>
+  <app-input [(value)]="newSession.description" label="Description"></app-input>
+  <app-input [value]="(newSession.date | date:'yyyy-MM-dd' )  || ''" (valueChange)="newSession.date = parseDate($event)"
+             label="Date"
+             type="date"></app-input>
 </app-message-box>
 

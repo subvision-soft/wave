@@ -1,6 +1,7 @@
 import { Target } from '@angular/compiler';
+import { User } from './user';
 
-interface Session {
+export interface Session {
   date: Date;
   description: string;
   title: string;
