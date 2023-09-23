@@ -38,7 +38,7 @@ export class UsersComponent {
     { id: Category.MINIME, label: 'Minime' },
     { id: Category.CADET, label: 'Cadet' },
     { id: Category.JUNIOR, label: 'Junior' },
-    { id: Category.SENIOR, label: 'Senior' },
+    { id: Category.SENIOR, label: 'Sénior' },
     { id: Category.MASTER, label: 'Master' },
   ];
 

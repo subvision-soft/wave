@@ -48,17 +48,20 @@ export class FilesService {
     return files;
   }
 
-  async writeFile(path: string, content: Blob) {
+  async writeFile(path: string, content: string) {
+    console.log(content);
     await Filesystem.writeFile({
       path: path,
-      data: content,
+      data: btoa(content),
       directory: Directory.ExternalStorage,
       recursive: true,
     })
       .then((result) => {
         console.log(result);
       })
-      .catch((error) => {});
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   async openFileByFile(file: FileInfo) {
@@ -70,7 +73,7 @@ export class FilesService {
       path: url,
     });
     if (typeof result.data === 'string') {
-      return JSON.parse(result.data);
+      return JSON.parse(atob(result.data));
     }
     return JSON.parse(await result.data.text());
   }

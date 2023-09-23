@@ -331,14 +331,13 @@ export class SessionsComponent {
 
   async createSessionCallback(event: any) {
     if (event.btn === 'ok') {
+      console.log(JSON.stringify(this.newSession));
       await this.filesService.writeFile(
         this.path +
           '/' +
           this.newSession.title.replace(/[^a-zA-Z0-9]/g, '') +
           '.subapp',
-        new Blob([JSON.stringify(this.newSession)], {
-          type: 'application/json',
-        })
+        JSON.stringify(this.newSession)
       );
       this.openPath();
       this.openCreateSession = false;
