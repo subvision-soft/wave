@@ -9,7 +9,7 @@
   justify-content: center;
   box-sizing: border-box;
   background: var(--color-background-1);
-  height: 70px;
+  height: var(--navbar-height);
 
   app-tab-bar-button {
     position: relative;

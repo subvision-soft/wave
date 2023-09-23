@@ -14,6 +14,10 @@ import { Action } from '../../models/action';
   styleUrls: ['./menu.component.scss'],
 })
 export class MenuComponent {
+  get currentActions(): Action[] {
+    return this._currentActions.filter((action) => action.isDisplayed());
+  }
+
   get attachTo(): ElementRef | undefined {
     return this._attachTo;
   }
@@ -21,6 +25,9 @@ export class MenuComponent {
   @Input()
   set attachTo(value: ElementRef | undefined) {
     this._attachTo = value;
+    if (!value) {
+      return;
+    }
     var curleft = 0;
     var curtop = 0;
     let obj = value?.nativeElement;
@@ -112,14 +119,14 @@ export class MenuComponent {
   set open(value: boolean) {
     console.log('set open', value);
     this._open = value;
-    this.currentActions = value ? this._originalActions : this.currentActions;
+    this._currentActions = value ? this._originalActions : this._currentActions;
   }
 
   @HostBinding('class.open') private _open: boolean = false;
   @Output() openChange: EventEmitter<boolean> = new EventEmitter<boolean>();
   private _actions: Action[] = [];
 
-  currentActions: Action[] = [];
+  private _currentActions: Action[] = [];
 
   private _originalActions: Action[] = [];
 
@@ -132,7 +139,7 @@ export class MenuComponent {
 
   actionClick(action: Action) {
     if (action.actions) {
-      this.currentActions = action.actions;
+      this._currentActions = action.actions;
       return;
     }
     if (action.execute() === false) {

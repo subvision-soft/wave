@@ -1,11 +1,22 @@
 import { Injectable } from '@angular/core';
 import { Directory, FileInfo, Filesystem } from '@capacitor/filesystem';
+import { Session } from '../models/session';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FilesService {
   constructor() {}
+
+  private _session?: Session = undefined;
+
+  get session(): Session | undefined {
+    return this._session;
+  }
+
+  set session(session: Session | undefined) {
+    this._session = session;
+  }
 
   async loadFiles(path: string, files: FileInfo[] = []) {
     const result = await Filesystem.readdir({
@@ -50,9 +61,13 @@ export class FilesService {
       .catch((error) => {});
   }
 
-  async openFile(file: FileInfo) {
+  async openFileByFile(file: FileInfo) {
+    return await this.openFileByUrl(file.uri);
+  }
+
+  async openFileByUrl(url: string): Promise<Session> {
     const result = await Filesystem.readFile({
-      path: file.uri,
+      path: url,
     });
     if (typeof result.data === 'string') {
       return JSON.parse(result.data);

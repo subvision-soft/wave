@@ -18,14 +18,14 @@
     flex-direction: column;
     align-items: stretch;
 
-    app-session {
-      animation: fade 0.5s ease-in-out;
-    }
-
     & > * {
       &:not(.sessions-content) {
         margin: 0 var(--padding);
       }
+    }
+
+    app-session-item {
+      animation: fade 0.5s ease-in-out;
     }
 
     .sessions-content {

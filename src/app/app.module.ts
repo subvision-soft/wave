@@ -76,10 +76,13 @@ import { SelectComponent } from './components/select/select.component';
 import { SessionsComponent } from './pages/sessions/sessions.component';
 import { SettingPickerComponent } from './components/setting-picker/setting-picker.component';
 import { SearchComponent } from './components/search/search.component';
-import { SessionComponent } from './components/session/session.component';
+import { SessionItemComponent } from './components/session-item/session-item.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TabBarComponent } from './components/tab-bar/tab-bar.component';
 import { InputComponent } from './components/input/input.component';
+import { SessionComponent } from './pages/session/session.component';
+import { UsersComponent } from './pages/users/users.component';
+import { UserItemComponent } from './components/user-item/user-item.component';
 
 const openCVConfig: OpenCVConfig = {
   openCVDirPath: 'assets/opencv',
@@ -113,7 +116,7 @@ const openCVConfig: OpenCVConfig = {
     SettingPickerComponent,
     SearchComponent,
     AddButtonComponent,
-    SessionComponent,
+    SessionItemComponent,
     MenuComponent,
     MenuActionComponent,
     MessageBoxComponent,
@@ -122,6 +125,9 @@ const openCVConfig: OpenCVConfig = {
     NgVar,
     InputComponent,
     InputComponent,
+    SessionComponent,
+    UsersComponent,
+    UserItemComponent,
   ],
   imports: [
     BrowserAnimationsModule,

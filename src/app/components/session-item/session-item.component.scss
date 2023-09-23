@@ -47,3 +47,9 @@
     }
   }
 }
+
+:host(:last-child) {
+  .content {
+    border-bottom: none;
+  }
+}

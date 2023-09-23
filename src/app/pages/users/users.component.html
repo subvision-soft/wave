@@ -1,0 +1,41 @@
+<app-header [showBack]="false" [showMenu]="true" [actions]="menuActions">
+  <div class="header-content">
+    <h1>
+      Tireurs
+    </h1>
+    <p>
+      <span class="title">{{session.title}}</span>
+      <span class="date">({{session.date | date:'dd/MM/yyyy'}})</span>
+    </p>
+  </div>
+</app-header>
+<div class="content">
+  <app-search [(value)]="searchValue" placeholder="Rechercher un tireur"></app-search>
+  <app-add-button (click)="openCreateUser = true" [@enterAnimation] *ngIf="!searchValue"
+                  label="Ajouter un tireur"></app-add-button>
+
+  <div class="users">
+
+    <app-empty-text *ngIf="session.users.length === 0" [@enterAnimation] [icon]="searchValue?'jamSearch':'jamGhost'"
+                    [text]="searchValue?'Pas de résultat':'Aucun tireur d\'enregistré'"></app-empty-text>
+
+    <app-user-item [selected]="isUserSelected(user)" long-press
+                   (onLongPressing)="onLongPress($event,user)"
+                   (click)="userClick(user)" [user]="user"
+                   *ngFor="let user of session.users">
+    </app-user-item>
+  </div>
+</div>
+
+<!--<app-message-box [message]="'Entrer le nom du dossier'" [title]="'Créer un nouveau dossier'"-->
+<!--                 [(open)]="openCreateFolderPrompt" (callback)="messageBoxCallback($event)"-->
+<!--                 type="prompt"></app-message-box>-->
+<app-message-box [title]="'Ajouter un tireur'"
+                 [(open)]="openCreateUser"
+                 (callback)="createUserCallback($event)"
+                 type="okcancel">
+  <app-input [(value)]="newUser.name" label="Nom Prénom"></app-input>
+  <app-input type="number" [(value)]="newUser.id" label="Numéro"></app-input>
+  <app-select label="Catégorie" [compact]="true" [store]="storeCategories" [(value)]="newUser.category"></app-select>
+</app-message-box>
+

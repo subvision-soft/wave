@@ -4,6 +4,7 @@ import { Directory, FileInfo, Filesystem } from '@capacitor/filesystem';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Action } from '../../models/action';
 import { Session } from '../../models/session';
+import { Router } from '@angular/router';
 
 interface File {
   active: boolean;
@@ -34,6 +35,7 @@ export class SessionsComponent {
     title: '',
     targets: [],
     users: [],
+    teams: [],
   };
 
   get sortActions(): Action[] {
@@ -98,27 +100,42 @@ export class SessionsComponent {
       new Action('Créer un nouveau dossier', '', () => {
         this.openCreateFolderPrompt = true;
       }),
-      this.selecting
-        ? new Action('Supprimer', '', () => {
-            const sessionsToDelete = this._sessions.filter(
-              (session) => session.active
-            );
-            new Promise(async (resolve) => {
-              for (const session of sessionsToDelete) {
-                await Filesystem.deleteFile({
-                  path: this.path + '/' + session.file.name,
-                  directory: Directory.ExternalStorage,
-                });
-              }
-              resolve(true);
-            }).then(() => {
-              this.openPath();
-              this.initializeMenuActions();
-            });
-          })
-        : new Action('Créer une nouvelle session', '', () => {
-            this.openCreateSession = true;
-          }),
+      new Action(
+        'Supprimer',
+        '',
+        () => {
+          const sessionsToDelete = this._sessions.filter(
+            (session) => session.active
+          );
+          new Promise(async (resolve) => {
+            for (const session of sessionsToDelete) {
+              await Filesystem.deleteFile({
+                path: this.path + '/' + session.file.name,
+                directory: Directory.ExternalStorage,
+              });
+            }
+            resolve(true);
+          }).then(() => {
+            this.openPath();
+            this.initializeMenuActions();
+          });
+        },
+        undefined,
+        () => {
+          return this.selecting;
+        }
+      ),
+      new Action(
+        'Créer une nouvelle session',
+        '',
+        () => {
+          this.openCreateSession = true;
+        },
+        undefined,
+        () => {
+          return !this.selecting;
+        }
+      ),
       new Action('Trier par', '', () => {}, this.sortActions),
     ];
   }
@@ -152,9 +169,10 @@ export class SessionsComponent {
     };
   }
 
-  constructor(private filesService: FilesService) {
+  constructor(private filesService: FilesService, private router: Router) {
     this.openPath();
     this.initializeMenuActions();
+    this.filesService.session = undefined;
   }
 
   private _sort: 'name' | 'date' | 'size' | 'type' | undefined = 'name';
@@ -247,6 +265,14 @@ export class SessionsComponent {
         .catch((error) => {
           this._path.pop();
         });
+    } else {
+      this.router
+        .navigate(['/sessions/session', { file: file }], {
+          queryParams: {
+            url: file.uri,
+          },
+        })
+        .then((r) => console.log(r));
     }
   }
 
@@ -322,6 +348,7 @@ export class SessionsComponent {
         title: '',
         targets: [],
         users: [],
+        teams: [],
       };
     }
   }

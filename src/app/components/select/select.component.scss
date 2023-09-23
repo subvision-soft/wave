@@ -1,5 +1,22 @@
 :host {
-  & .input {
+  &.compact {
+    .input {
+      height: auto;
+      padding: calc(var(--padding-sm) / 3) var(--padding);
+      border-radius: var(--border-radius-sm);
+      font-weight: var(--font-weight-normal);
+      box-shadow: none;
+    }
+  }
+
+  .label {
+    color: var(--color-dark2-1);
+    font-weight: var(--font-weight-semi-bold);
+    font-size: var(--font-size);
+    margin-left: var(--padding);
+  }
+
+  .input {
     display: flex;
     align-items: center;
     justify-content: space-between;

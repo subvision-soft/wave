@@ -13,12 +13,12 @@
   color: var(--color-dark1-1);
 
   .header-item {
-    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
     color: var(--colorText);
     z-index: 1;
+    overflow: hidden;
 
     &:last-child {
       z-index: 0;
@@ -26,6 +26,10 @@
 
     &:first-child {
       z-index: 0;
+    }
+
+    &.content {
+      flex: 1;
     }
 
     & .logo {

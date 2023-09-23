@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  HostBinding,
+  Input,
+  Output,
+} from '@angular/core';
 
 @Component({
   selector: 'app-select',
@@ -10,7 +16,10 @@ export class SelectComponent {
   @Input() displayField: string = 'label';
   @Input() valueField: string = 'id';
   @Input() value: any | null = undefined;
+  @Input() label: string = '';
   @Output() valueChange = new EventEmitter<any>();
+
+  @Input() @HostBinding('class.compact') compact: boolean = false;
 
   get displayedField(): string {
     const record = this.store.find(

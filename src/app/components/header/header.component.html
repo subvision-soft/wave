@@ -1,7 +1,7 @@
-<div class="header-item " [style.visibility]="showBack ? 'visible' : 'hidden'">
+<div class="header-item back" [style.visibility]="showBack ? 'visible' : 'hidden'">
   <app-icon-button icon="jamChevronLeft" (click)="goBack()"></app-icon-button>
 </div>
-<div class="header-item">
+<div class="header-item content">
   <ng-content></ng-content>
 </div>
 <div #menuButton class="header-item menu" [style.visibility]="showMenu ? 'visible' : 'hidden'">

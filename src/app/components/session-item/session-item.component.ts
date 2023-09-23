@@ -4,11 +4,11 @@ import { FilesService } from '../../services/files.service';
 import { Session } from '../../models/session';
 
 @Component({
-  selector: 'app-session',
-  templateUrl: './session.component.html',
-  styleUrls: ['./session.component.scss'],
+  selector: 'app-session-item',
+  templateUrl: './session-item.component.html',
+  styleUrls: ['./session-item.component.scss'],
 })
-export class SessionComponent {
+export class SessionItemComponent {
   get file(): FileInfo | undefined {
     return this._file;
   }
@@ -18,7 +18,7 @@ export class SessionComponent {
   @Input()
   set file(value: FileInfo | undefined) {
     if (value?.type === 'file') {
-      this.filesService.openFile(value).then((result) => {
+      this.filesService.openFileByFile(value).then((result) => {
         this.session = result;
       });
     }
@@ -27,6 +27,11 @@ export class SessionComponent {
 
   constructor(private filesService: FilesService) {}
 
+  private _file: FileInfo | undefined;
+  @Input() goBack: boolean = false;
+  @HostBinding('class') class = 'ripple';
+
+  @HostBinding('class.selected') private _selected: boolean = false;
   get selected(): boolean {
     return this._selected;
   }
@@ -37,10 +42,5 @@ export class SessionComponent {
     this._selected = value;
   }
 
-  private _file: FileInfo | undefined;
-  @Input() goBack: boolean = false;
-  @HostBinding('class') class = 'ripple';
-
-  @HostBinding('class.selected') private _selected: boolean = false;
   protected readonly console = console;
 }

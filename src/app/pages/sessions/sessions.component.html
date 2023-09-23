@@ -10,16 +10,16 @@
                   *ngFor="let pathItem of _path; index as index">{{pathItem}}</app-button>
     </div>
     <div class="sessions">
-      <app-session *ngIf="path.length > 0" [@enterAnimation] [file]="returnFile" (click)="back()"
-                   [goBack]="true"></app-session>
+      <app-session-item *ngIf="path.length > 0" [@enterAnimation] [file]="returnFile" (click)="back()"
+                        [goBack]="true"></app-session-item>
       <app-empty-text *ngIf="sessions.length === 0" [@enterAnimation] [icon]="searchValue?'jamSearch':'jamGhost'"
                       [text]="searchValue?'Pas de résultat':'Le dossier est vide'"></app-empty-text>
 
-      <app-session [selected]="session.active" long-press
-                   (onLongPressing)="onLongPress($event,session)"
-                   (click)="sessionClick(session)" [file]="session.file"
-                   *ngFor="let session of sessions">
-      </app-session>
+      <app-session-item [selected]="session.active" long-press
+                        (onLongPressing)="onLongPress($event,session)"
+                        (click)="sessionClick(session)" [file]="session.file"
+                        *ngFor="let session of sessions">
+      </app-session-item>
     </div>
   </div>
 </div>

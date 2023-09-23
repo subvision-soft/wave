@@ -6,6 +6,8 @@ import { CameraPreviewComponent } from './pages/camera-preview/camera-preview.co
 import { ResultComponent } from './pages/result/result.component';
 import { SettingsComponent } from './pages/settings/settings.component';
 import { SessionsComponent } from './pages/sessions/sessions.component';
+import { SessionComponent } from './pages/session/session.component';
+import { UsersComponent } from './pages/users/users.component';
 
 const routes: Routes = [
   {
@@ -40,7 +42,20 @@ const routes: Routes = [
   },
   {
     path: 'sessions',
-    component: SessionsComponent,
+    children: [
+      {
+        path: '',
+        component: SessionsComponent,
+      },
+      {
+        path: 'session',
+        component: SessionComponent,
+      },
+      {
+        path: 'users',
+        component: UsersComponent,
+      },
+    ],
   },
   {
     path: '',
