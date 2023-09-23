@@ -5,6 +5,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { Action } from '../../models/action';
 import { Session } from '../../models/session';
 import { Router } from '@angular/router';
+import { ToastService, ToastTypes } from '../../services/toast.service';
 
 interface File {
   active: boolean;
@@ -107,18 +108,39 @@ export class SessionsComponent {
           const sessionsToDelete = this._sessions.filter(
             (session) => session.active
           );
-          new Promise(async (resolve) => {
+          new Promise(async (resolve, reject) => {
             for (const session of sessionsToDelete) {
-              await Filesystem.deleteFile({
-                path: this.path + '/' + session.file.name,
-                directory: Directory.ExternalStorage,
-              });
+              try {
+                await Filesystem.deleteFile({
+                  path: this.path + '/' + session.file.name,
+                  directory: Directory.ExternalStorage,
+                });
+              } catch (error) {
+                reject(error);
+              }
             }
             resolve(true);
-          }).then(() => {
-            this.openPath();
-            this.initializeMenuActions();
-          });
+          })
+            .then(() => {
+              this.openPath();
+              this.initializeMenuActions();
+              this.toastService.initiate({
+                title: 'Contenu supprimé',
+                content: 'Le contenu a été supprimé avec succès',
+                type: ToastTypes.SUCCESS,
+                show: true,
+                duration: 2000,
+              });
+            })
+            .catch(() => {
+              this.toastService.initiate({
+                title: 'Erreur',
+                content: 'Une erreur est survenue',
+                type: ToastTypes.ERROR,
+                show: true,
+                duration: 2000,
+              });
+            });
         },
         undefined,
         () => {
@@ -169,7 +191,11 @@ export class SessionsComponent {
     };
   }
 
-  constructor(private filesService: FilesService, private router: Router) {
+  constructor(
+    private filesService: FilesService,
+    private router: Router,
+    private toastService: ToastService
+  ) {
     this.openPath();
     this.initializeMenuActions();
     this.filesService.session = undefined;
@@ -308,9 +334,7 @@ export class SessionsComponent {
         directory: Directory.ExternalStorage,
       })
         .then(() => {
-          this._path.push(event.value);
           this.filesService.loadDirectory(this.path).then((files) => {
-            console.log(files);
             this._sessions = files.map((file) => {
               return {
                 active: false,
@@ -318,9 +342,22 @@ export class SessionsComponent {
               };
             });
           });
+          this.toastService.initiate({
+            title: 'Dossier créé',
+            content: 'Le dossier a été créé avec succès',
+            type: ToastTypes.SUCCESS,
+            show: true,
+            duration: 2000,
+          });
         })
-        .catch((error) => {
-          console.error(error);
+        .catch(() => {
+          this.toastService.initiate({
+            title: 'Erreur',
+            content: 'Une erreur est survenue',
+            type: ToastTypes.ERROR,
+            show: true,
+            duration: 2000,
+          });
         });
     }
   }
@@ -332,23 +369,42 @@ export class SessionsComponent {
   async createSessionCallback(event: any) {
     if (event.btn === 'ok') {
       console.log(JSON.stringify(this.newSession));
-      await this.filesService.writeFile(
-        this.path +
-          '/' +
-          this.newSession.title.replace(/[^a-zA-Z0-9]/g, '') +
-          '.subapp',
-        JSON.stringify(this.newSession)
-      );
-      this.openPath();
-      this.openCreateSession = false;
-      this.newSession = {
-        date: new Date(),
-        description: '',
-        title: '',
-        targets: [],
-        users: [],
-        teams: [],
-      };
+      this.filesService
+        .writeFile(
+          this.path +
+            '/' +
+            this.newSession.title.replace(/[^a-zA-Z0-9]/g, '') +
+            '.subapp',
+          JSON.stringify(this.newSession)
+        )
+        .then(() => {
+          this.toastService.initiate({
+            title: 'Session créée',
+            content: 'La session a été créée avec succès',
+            type: ToastTypes.SUCCESS,
+            show: true,
+            duration: 2000,
+          });
+          this.openPath();
+          this.openCreateSession = false;
+          this.newSession = {
+            date: new Date(),
+            description: '',
+            title: '',
+            targets: [],
+            users: [],
+            teams: [],
+          };
+        })
+        .catch(() => {
+          this.toastService.initiate({
+            title: 'Erreur',
+            content: 'Une erreur est survenue',
+            type: ToastTypes.ERROR,
+            show: true,
+            duration: 2000,
+          });
+        });
     }
   }
 

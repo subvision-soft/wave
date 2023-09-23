@@ -83,6 +83,7 @@ import { InputComponent } from './components/input/input.component';
 import { SessionComponent } from './pages/session/session.component';
 import { UsersComponent } from './pages/users/users.component';
 import { UserItemComponent } from './components/user-item/user-item.component';
+import { ToastComponent } from './components/toast/toast.component';
 
 const openCVConfig: OpenCVConfig = {
   openCVDirPath: 'assets/opencv',
@@ -128,6 +129,7 @@ const openCVConfig: OpenCVConfig = {
     SessionComponent,
     UsersComponent,
     UserItemComponent,
+    ToastComponent,
   ],
   imports: [
     BrowserAnimationsModule,

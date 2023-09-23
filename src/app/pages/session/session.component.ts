@@ -3,6 +3,7 @@ import { Action } from '../../models/action';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Session } from '../../models/session';
 import { FilesService } from '../../services/files.service';
+import { ToastService } from '../../services/toast.service';
 
 @Component({
   selector: 'app-session',
@@ -27,7 +28,8 @@ export class SessionComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private filesService: FilesService,
-    private router: Router
+    private router: Router,
+    private toastService: ToastService
   ) {}
 
   ngOnInit(): void {
