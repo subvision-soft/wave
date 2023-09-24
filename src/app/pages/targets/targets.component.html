@@ -1,0 +1,36 @@
+<app-header [showBack]="true" [showMenu]="true" [actions]="menuActions">
+  <div class="header-content">
+    <h1>
+      Cibles
+    </h1>
+    <p>
+      <span class="title">{{session.title}}</span>
+      <span class="date">({{session.date | date:'dd/MM/yyyy'}})</span>
+    </p>
+  </div>
+</app-header>
+<div class="content">
+  <app-search [(value)]="searchValue" placeholder="Rechercher une cible"></app-search>
+  <app-add-button (click)="openCreateTarget = true" *ngIf="!searchValue"
+                  label="Ajouter une cible"></app-add-button>
+
+  <app-segmented-button [items]="segmentedButtonItems" [(selected)]="selectedSegmentedButton"></app-segmented-button>
+  <div class="targets">
+
+    <app-empty-text *ngIf="targets.length === 0" [icon]="searchValue?'jamSearch':'jamGhost'"
+                    [text]="searchValue?'Pas de résultat':'Aucune cible enregistrée'"></app-empty-text>
+
+    <app-target-item [selected]="isTargetSelected(target)" long-press
+                     (onLongPressing)="onLongPress($event,target)"
+                     (click)="targetClick(target)" [target]="target"
+                     [user]="getUserById(target.user)"
+                     *ngFor="let target of targets">
+    </app-target-item>
+  </div>
+</div>
+
+<!--<app-message-box [message]="'Entrer le nom du dossier'" [title]="'Créer un nouveau dossier'"-->
+<!--                 [(open)]="openCreateFolderPrompt" (callback)="messageBoxCallback($event)"-->
+<!--                 type="prompt"></app-message-box>-->
+
+

@@ -1,0 +1,41 @@
+:host {
+  color: var(--colorText);
+
+  .impacts {
+    overflow-y: scroll;
+    gap: 10px;
+    display: flex;
+    padding: 10px;
+    box-sizing: border-box;
+    width: 100%;
+
+    .impact {
+      border-radius: var(--borderRadius);
+      box-sizing: border-box;
+      padding: 5px 10px;
+      display: flex;
+      align-items: stretch;
+      justify-content: space-between;
+      transition: var(--transition);
+      width: 100px;
+      text-align: center;
+      background: var(--colorPrimaryBg);
+
+      &.selected {
+        transform: scale(1.2);
+      }
+
+      span {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .tools {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+    }
+  }
+}

@@ -1,6 +1,6 @@
-<app-header [title]="title"></app-header>
-<div class="app-page">
-  <router-outlet></router-outlet>
+<div class="app-page" id="app-page" [@fadeAnimation]="outlet.isActivated ? outlet.activatedRoute : ''">
+  <app-toast></app-toast>
+  <router-outlet #outlet="outlet"></router-outlet>
 </div>
-
+<style type="text/css">{{cssVariables}}</style>
 <app-tab-bar (select)="tabSelected($event)" [tabs]="tabs"></app-tab-bar>

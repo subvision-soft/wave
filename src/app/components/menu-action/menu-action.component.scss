@@ -1,0 +1,36 @@
+:host {
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  ng-icon {
+    width: var(--padding-lg);
+    display: flex;
+    justify-content: center;
+  }
+
+  .content {
+    margin: 0 var(--padding-lg);
+    padding: var(--padding-sm) 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+
+    &.icon-visible {
+      margin-left: 0;
+    }
+
+    span {
+      font-size: var(--font-size);
+      font-weight: var(--font-weight-semi-bold);
+      color: var(--color-dark1-1);
+    }
+  }
+
+  &.border .content {
+    border-bottom: 1px solid var(--color-primary-lighter-5);
+  }
+}

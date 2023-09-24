@@ -1,0 +1,61 @@
+<app-header [actions]="menuActions" [showBack]="true" [showMenu]="true">
+  <div class="header-content">
+    <h1>
+      {{session.title}}
+    </h1>
+    <p>
+      {{session.date | date:'dd/MM/yyyy'}}
+    </p>
+  </div>
+
+</app-header>
+<div class="content">
+  <div [class]="['card','tireurs','ripple']" routerLink="/sessions/users">
+    <ng-container [ngPlural]="session.users.length">
+      <ng-template ngPluralCase="=0">
+        <ng-icon name="jamGhost"></ng-icon>
+        <span class="firstLetterUpperCase">aucun tireur enregistré</span>
+      </ng-template>
+      <ng-template ngPluralCase="=1">
+        <span class="number">{{session.users.length}}</span>
+        <span class="firstLetterUpperCase">tireur enregistré</span>
+      </ng-template>
+      <ng-template ngPluralCase="other">
+        <span class="number">{{session.users.length}}</span>
+        <span class="firstLetterUpperCase">tireurs enregistrés</span>
+      </ng-template>
+    </ng-container>
+  </div>
+  <div [class]="['card','cibles','ripple']" routerLink="/sessions/targets">
+    <ng-container [ngPlural]="targets.length">
+      <ng-template ngPluralCase="=0">
+        <ng-icon name="jamGhost"></ng-icon>
+        <span class="firstLetterUpperCase">aucune cible enregistrée</span>
+      </ng-template>
+      <ng-template ngPluralCase="=1">
+        <span class="number">{{targets.length}}</span>
+        <span class="firstLetterUpperCase">cible enregistrée</span>
+      </ng-template>
+      <ng-template ngPluralCase="other">
+        <span class="number">{{targets.length}}</span>
+        <span class="firstLetterUpperCase">cibles enregistrées</span>
+      </ng-template>
+    </ng-container>
+  </div>
+  <div [class]="['card','relais','ripple']">
+    <ng-container [ngPlural]="session.teams.length">
+      <ng-template ngPluralCase="=0">
+        <ng-icon name="jamGhost"></ng-icon>
+        <span class="firstLetterUpperCase">aucune équipe de relais</span>
+      </ng-template>
+      <ng-template ngPluralCase="=1">
+        <span class="number">{{session.teams.length}}</span>
+        <span class="firstLetterUpperCase">équipe de relais</span>
+      </ng-template>
+      <ng-template ngPluralCase="other">
+        <span class="number">{{session.teams.length}}</span>
+        <span class="firstLetterUpperCase">équipes de relais</span>
+      </ng-template>
+    </ng-container>
+  </div>
+</div>

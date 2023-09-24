@@ -1,10 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { CameraComponent } from './camera/camera.component';
-import { SettingsComponent } from './settings/settings.component';
-import { ResultComponent } from './result/result.component';
-import { CameraPreviewComponent } from './camera-preview/camera-preview.component';
+import { HomeComponent } from './pages/home/home.component';
+import { ColorPreviewComponent } from './pages/color-preview/color-preview.component';
+import { CameraPreviewComponent } from './pages/camera-preview/camera-preview.component';
+import { ResultComponent } from './pages/result/result.component';
+import { SettingsComponent } from './pages/settings/settings.component';
+import { SessionsComponent } from './pages/sessions/sessions.component';
+import { SessionComponent } from './pages/session/session.component';
+import { UsersComponent } from './pages/users/users.component';
+import { TargetsComponent } from './pages/targets/targets.component';
 
 const routes: Routes = [
   {
@@ -12,8 +16,11 @@ const routes: Routes = [
     component: HomeComponent,
   },
   {
+    path: 'color',
+    component: ColorPreviewComponent,
+  },
+  {
     path: 'camera',
-    component: CameraComponent,
     children: [
       {
         path: '',
@@ -35,14 +42,31 @@ const routes: Routes = [
     component: SettingsComponent,
   },
   {
+    path: 'sessions',
+    children: [
+      {
+        path: '',
+        component: SessionsComponent,
+      },
+      {
+        path: 'session',
+        component: SessionComponent,
+      },
+      {
+        path: 'users',
+        component: UsersComponent,
+      },
+      {
+        path: 'targets',
+        component: TargetsComponent,
+      },
+    ],
+  },
+  {
     path: '',
     redirectTo: '/home',
     pathMatch: 'full',
   },
-  // {
-  //   path: '**',
-  //   redirectTo: '/home',
-  // },
 ];
 
 @NgModule({

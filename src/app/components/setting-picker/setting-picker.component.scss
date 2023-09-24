@@ -1,0 +1,39 @@
+:host {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: space-between;
+  color: var(--color-dark1-1);
+
+  h1 {
+    font-size: var(--font-size);
+    font-weight: var(--font-weight-semi-bold);
+    text-align: left;
+    flex: 1;
+  }
+
+  input[type="color"] {
+    -webkit-appearance: none;
+    border: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+
+  input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+  }
+
+  input[type="color"]::-webkit-color-swatch {
+    border: none;
+  }
+
+  input {
+    width: 100px;
+    text-align: right;
+    border: none;
+    outline: 0;
+    background: transparent;
+  }
+}

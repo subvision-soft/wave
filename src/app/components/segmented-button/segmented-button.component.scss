@@ -1,0 +1,42 @@
+:host {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+  position: relative;
+
+  a {
+    flex: 1;
+    font-size: var(--font-size-sm);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: calc(var(--padding-sm) / 3) var(--padding-sm);
+    text-align: center;
+    font-weight: var(--font-weight-semi-bold);
+    color: var(--color-dark2-2);
+
+    &:active,
+    &.active {
+      color: var(--color-dark1-1);
+    }
+  }
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: calc(calc(100% / var(--items-count) * var(--active-item-index)));
+    width: calc(100% / var(--items-count));
+    height: 100%;
+    background: var(--color-background-2);
+    transition: var(--transition);
+    border-radius: calc(var(--padding-sm) / 2);
+    box-shadow: var(--box-shadow-3);
+  }
+}

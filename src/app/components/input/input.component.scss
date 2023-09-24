@@ -1,0 +1,101 @@
+:host {
+  flex-direction: column;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  --space-left-input: var(--padding);
+
+  .label {
+    color: var(--color-dark2-1);
+    font-weight: var(--font-weight-semi-bold);
+    font-size: var(--font-size);
+    margin-left: var(--space-left-input);
+  }
+
+  input,
+  &.checkbox {
+    outline: none;
+    border: none;
+    background: var(--color-background-2);
+    font-size: var(--font-size);
+    padding: calc(var(--padding-sm) / 3) var(--space-left-input);
+    border-radius: var(--border-radius-sm);
+  }
+
+  .input-content {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    input {
+      width: 100%;
+      box-sizing: border-box;
+    }
+  }
+
+  &.checkbox {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+
+    .label {
+      margin-left: 0;
+      flex: 1;
+    }
+
+    .input-content {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: stretch;
+      position: relative;
+      height: var(--font-size);
+      width: calc(var(--font-size) * 1.6);
+      border-radius: var(--border-radius-sm);
+      background: #fff;
+
+      input {
+        height: 100%;
+        width: 100%;
+        padding: 0;
+        position: relative;
+        -webkit-appearance: none;
+        transition: var(--transition);
+        background: var(--color-primary-lighter-4);
+
+        &:checked {
+          background: var(--color-primary);
+        }
+      }
+
+      input:after {
+        --toggle-button-padding: 2px;
+        --toggle-button-size: calc(
+          var(--font-size) - var(--toggle-button-padding) * 2
+        );
+        content: "";
+        display: block;
+        position: absolute;
+        top: var(--toggle-button-padding);
+        left: var(--toggle-button-padding);
+        border-radius: var(--border-radius-sm);
+        width: var(--toggle-button-size);
+        height: var(--toggle-button-size);
+        background: #fff;
+        transition: var(--transition);
+        border: 2px solid transparent;
+        box-sizing: border-box;
+      }
+
+      input:checked:after {
+        background: #fff;
+        left: calc(100% - var(--toggle-button-padding));
+        transform: translate(-100%, 0);
+      }
+
+      //.toggle {
+      //
+      //}
+    }
+  }
+}

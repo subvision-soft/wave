@@ -1,0 +1,9 @@
+<div class="content">
+  <div *ngIf="user" class="infos">
+    <h1>{{user.name}}</h1>
+    <p>{{user.id}}</p>
+  </div>
+  <a>
+    <ng-icon [name]="selected?'jamCheck':'jamChevronRight'" size="20"></ng-icon>
+  </a>
+</div>

@@ -1,0 +1,18 @@
+:host {
+  display: flex;
+  padding: var(--padding);
+  justify-content: center;
+  align-items: center;
+  gap: var(--padding);
+  align-self: stretch;
+  border-radius: calc(var(--padding-sm) / 2);
+  border: 1px dashed var(--color-primary-darker);
+  background: var(--color-primary-lighter-5);
+  color: var(--color-dark1-4);
+
+  h1 {
+    font-size: var(--font-size);
+    font-weight: var(--font-weight-semi-bold);
+    text-align: left;
+  }
+}

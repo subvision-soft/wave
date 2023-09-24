@@ -7,6 +7,8 @@
 subapp est une application mobile conçue pour faciliter le calcul des points pour le tir sur cible subaquatique à partir
 d'une photo de la cible. L'application utilise les technologies TypeScript ,Angular ainsi que Opencv compilé en wasm.
 
+[Projet figma en cours](https://www.figma.com/file/zgSt1eqy80DLdMJD3P1b6O/subapp?type=design&node-id=0%3A1&mode=design&t=2yJoNjEJBKzxWvpx-1)
+
 ## Fonctionnalités
 
 - Prendre en photo la cible

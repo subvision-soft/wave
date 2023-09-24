@@ -1,0 +1,28 @@
+:host {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: left;
+  color: var(--color-dark1-1);
+  border-radius: 100px;
+  background: var(--color-background-2);
+  box-shadow: var(--box-shadow-1);
+  padding: var(--padding-sm) var(--padding);
+  gap: var(--padding);
+  overflow: hidden;
+
+  ng-icon {
+    color: var(--color-dark2-1);
+  }
+
+  input {
+    border: none;
+    outline: none;
+    font-size: var(--font-size);
+    font-weight: var(--font-weight-semi-bold);
+    background: transparent;
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}

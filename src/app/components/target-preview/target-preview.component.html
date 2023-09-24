@@ -1,0 +1,12 @@
+<div *ngFor="let impact of impacts"
+     [class]="selected === impact ? (impact.amount > 1 ? 'selected impact multiple':'selected impact') :  (impact.amount > 1 ? 'impact multiple':'impact')"
+     (click)="select(impact)"
+     [style.--impact-size]="sizeToPercent(arrowSize)"
+     [style.--impact-color]="'#ff0000'"
+     [style.--impact-y]="getBottomAndLeft(impact).bottom"
+     [style.--impact-x]="getBottomAndLeft(impact).left"
+     [style.--impact-rotation]="impact.angle + 'deg'"
+     [style.--impact-distance]="impact.points > 0 ? getDistance(impact) : getDistanceFromMm(impact.distance)"
+>
+  <span>{{impact.amount > 1 ? impact.amount : ''}}</span>
+</div>

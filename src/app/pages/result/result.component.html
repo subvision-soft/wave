@@ -1,0 +1,27 @@
+<app-header [showBack]="!saving" [showMenu]="!saving">
+  <h1>Résultat</h1>
+</app-header>
+
+
+<div class="content">
+  <div class="epreuve">
+    <app-select *ngIf="!saving" [store]="selectStore" [(value)]="epreuve"></app-select>
+    <app-chrono-picker *ngIf="superBiathlon || biathlon && !saving" [(time)]="time"></app-chrono-picker>
+  </div>
+
+  <div class="result-preview">
+    <app-icon-button class="toggle-preview" [icon]="imagePreview?'iconoirOnePointCircle':'iconoirMediaImage'"
+                     (click)="togglePreview()"></app-icon-button>
+    <app-target-preview *ngIf="!imagePreview" [(selected)]="selected" [impacts]="impacts"></app-target-preview>
+    <canvas id="canvas" height="1000" width="1000" [style.display]="imagePreview?'block' :'none'"></canvas>
+  </div>
+  <app-spinner [(value)]="selectedIndex" [values]="impacts | pluck:'points'"></app-spinner>
+  <div class="tools">
+    <app-select class="multi-impacts" *ngIf="selected" [store]="multipleStore"
+                [(value)]="selected.amount"></app-select>
+  </div>
+  <app-total-preview [epreuve]="epreuve" [time]="(time-(time%1000))/1000" [impacts]="impacts"></app-total-preview>
+</div>
+
+
+<!--<canvas id="debug" width="4096" height="4096"></canvas>-->

@@ -1,0 +1,50 @@
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  position: sticky;
+  top: 0;
+  box-sizing: border-box;
+  width: 100%;
+  background: var(--color-background-1);
+  box-shadow: var(--boxShadow);
+  z-index: 1;
+  padding: var(--padding-sm) var(--padding) 0 var(--padding);
+  color: var(--color-dark1-1);
+
+  .header-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--colorText);
+    z-index: 1;
+    overflow: hidden;
+
+    &:last-child {
+      z-index: 0;
+    }
+
+    &:first-child {
+      z-index: 0;
+    }
+
+    &.content {
+      flex: 1;
+    }
+
+    & .logo {
+      height: 100%;
+      aspect-ratio: 1;
+      background-size: contain;
+      background: url("../../../assets/img/logo_s_white.svg") no-repeat center;
+    }
+
+    &:first-child {
+      justify-content: flex-start;
+    }
+
+    &.menu {
+      justify-content: flex-end;
+    }
+  }
+}
