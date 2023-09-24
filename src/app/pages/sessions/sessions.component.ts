@@ -34,7 +34,6 @@ export class SessionsComponent {
     date: new Date(),
     description: '',
     title: '',
-    targets: [],
     users: [],
     teams: [],
   };
@@ -388,7 +387,6 @@ export class SessionsComponent {
             date: new Date(),
             description: '',
             title: '',
-            targets: [],
             users: [],
             teams: [],
           };

@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  HostBinding,
+  Input,
+  Output,
+} from '@angular/core';
 
 @Component({
   selector: 'app-segmented-button',
@@ -9,6 +15,14 @@ export class SegmentedButtonComponent {
   public _selected: string = '';
   @Input() public items: SegmentedButtonItem[] = [];
   @Output() public selectedChange = new EventEmitter<string>();
+
+  @HostBinding('style.--active-item-index') get activeItemIndex() {
+    return this.items.findIndex((item) => item.key === this._selected);
+  }
+
+  @HostBinding('style.--items-count') get itemsCount() {
+    return this.items.length;
+  }
 
   @Input()
   set selected(selected: string) {

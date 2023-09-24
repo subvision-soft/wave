@@ -66,7 +66,6 @@ export class FilesService {
     content: string,
     directoryInPath: boolean = false
   ) {
-    debugger;
     await Filesystem.writeFile({
       path: path,
       data: btoa(content),

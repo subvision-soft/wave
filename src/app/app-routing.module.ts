@@ -8,6 +8,7 @@ import { SettingsComponent } from './pages/settings/settings.component';
 import { SessionsComponent } from './pages/sessions/sessions.component';
 import { SessionComponent } from './pages/session/session.component';
 import { UsersComponent } from './pages/users/users.component';
+import { TargetsComponent } from './pages/targets/targets.component';
 
 const routes: Routes = [
   {
@@ -54,6 +55,10 @@ const routes: Routes = [
       {
         path: 'users',
         component: UsersComponent,
+      },
+      {
+        path: 'targets',
+        component: TargetsComponent,
       },
     ],
   },

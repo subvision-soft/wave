@@ -49,17 +49,18 @@ export class UsersComponent {
     title: 'Rennes',
     description: 'Description 1',
     date: new Date(),
-    targets: [],
     users: [
       {
         id: '1',
         name: 'Tireur 1',
         category: Category.SENIOR,
+        targets: [],
       },
       {
         id: '2',
         name: 'Tireur 2',
         category: Category.SENIOR,
+        targets: [],
       },
     ],
     teams: [],
@@ -81,6 +82,7 @@ export class UsersComponent {
     id: '',
     name: '',
     category: Category.SENIOR,
+    targets: [],
   };
 
   createUserCallback(event: any) {

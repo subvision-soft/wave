@@ -49,7 +49,6 @@ export class HeaderComponent {
 
   get menuX(): number {
     console.log('menuX', this.menuButtonRef?.nativeElement.offsetLeft);
-    debugger;
     return this.menuButtonRef?.nativeElement.offsetLeft || 0;
   }
 

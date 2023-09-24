@@ -14,7 +14,6 @@ export class SessionComponent implements OnInit {
     date: new Date(),
     description: '',
     title: '',
-    targets: [],
     users: [],
     teams: [],
   };
@@ -23,6 +22,12 @@ export class SessionComponent implements OnInit {
     new Action('Supprimer', undefined, () => {}),
     new Action('Modifier', undefined, () => {}),
   ];
+
+  get targets() {
+    return this.session.users.flatMap((user) => {
+      return user.targets || [];
+    });
+  }
 
   constructor(
     private route: ActivatedRoute,

@@ -1,13 +1,16 @@
 import { Component, HostBinding, Input } from '@angular/core';
-import { User } from '../../models/user';
 import { Session } from '../../models/session';
+import { Target } from '../../models/target';
+import { User } from '../../models/user';
 
 @Component({
-  selector: 'app-user-item',
-  templateUrl: './user-item.component.html',
-  styleUrls: ['./user-item.component.scss'],
+  selector: 'app-target-item',
+  templateUrl: './target-item.component.html',
+  styleUrls: ['./target-item.component.scss'],
 })
-export class UserItemComponent {
+export class TargetItemComponent {
+  @Input() target: Target | undefined;
+
   @Input() user: User | undefined;
 
   @Input() session: Session | undefined;

@@ -85,6 +85,8 @@ import { SessionComponent } from './pages/session/session.component';
 import { UsersComponent } from './pages/users/users.component';
 import { UserItemComponent } from './components/user-item/user-item.component';
 import { ToastComponent } from './components/toast/toast.component';
+import { TargetsComponent } from './pages/targets/targets.component';
+import { TargetItemComponent } from './components/target-item/target-item.component';
 
 const openCVConfig: OpenCVConfig = {
   openCVDirPath: 'assets/opencv',
@@ -131,6 +133,8 @@ const openCVConfig: OpenCVConfig = {
     UsersComponent,
     UserItemComponent,
     ToastComponent,
+    TargetsComponent,
+    TargetItemComponent,
   ],
   imports: [
     BrowserAnimationsModule,

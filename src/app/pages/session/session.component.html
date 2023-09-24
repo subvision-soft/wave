@@ -26,19 +26,18 @@
       </ng-template>
     </ng-container>
   </div>
-  <div [class]="['card','cibles','ripple']">
-
-    <ng-container [ngPlural]="session.targets.length">
+  <div [class]="['card','cibles','ripple']" routerLink="/sessions/targets">
+    <ng-container [ngPlural]="targets.length">
       <ng-template ngPluralCase="=0">
         <ng-icon name="jamGhost"></ng-icon>
         <span class="firstLetterUpperCase">aucune cible enregistrée</span>
       </ng-template>
       <ng-template ngPluralCase="=1">
-        <span class="number">{{session.targets.length}}</span>
+        <span class="number">{{targets.length}}</span>
         <span class="firstLetterUpperCase">cible enregistrée</span>
       </ng-template>
       <ng-template ngPluralCase="other">
-        <span class="number">{{session.targets.length}}</span>
+        <span class="number">{{targets.length}}</span>
         <span class="firstLetterUpperCase">cibles enregistrées</span>
       </ng-template>
     </ng-container>
