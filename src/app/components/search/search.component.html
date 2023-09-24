@@ -1,3 +1,4 @@
 <ng-icon name="jamSearch" size="20"></ng-icon><input [(ngModel)]="value"
                                                      [placeholder]="placeholder">
+<ng-icon *ngIf="value" name="jamClose" size="20" (click)="value=''"></ng-icon>
 

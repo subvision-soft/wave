@@ -42,6 +42,14 @@
   max-height: 100%;
 }
 
+.firstLetterUpperCase {
+  &:first-letter {
+    text-transform: uppercase;
+  }
+
+  text-transform: lowercase;
+}
+
 .ripple {
   position: relative;
   overflow: hidden;
@@ -74,8 +82,11 @@
 }
 
 :root {
-  --color-primary: #54a2bb;
-  --color-secondary: #c2900b;
+  --color-primary: #add3df;
+  --color-secondary: #ebcc7d;
+  --color-indicator-1: #ff2e2e;
+  --color-indicator-2: #2a9928;
+  --color-indicator-3: #f4b63c;
 
   --color-primary-darker: color-mix(in srgb, var(--color-primary), #242e42 10%);
   --color-primary-lighter-1: color-mix(in srgb, var(--color-primary), #fff 20%);

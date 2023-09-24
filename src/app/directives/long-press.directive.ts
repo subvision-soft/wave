@@ -36,7 +36,6 @@ export class LongPressDirective {
   onMouseDown(event: any) {
     // don't do right/middle clicks
     if (event && event?.which !== 1) return;
-    console.log('mousedown', event);
     this.mouseX = event?.clientX;
     this.mouseY = event?.clientY;
 
@@ -55,7 +54,6 @@ export class LongPressDirective {
   @HostListener('mousemove', ['$event'])
   @HostListener('touchmove', ['$event'])
   onMouseMove(event: any) {
-    console.log('mousemove', event);
     if (this.pressing && !this.longPressing) {
       const xThres = event.clientX - this.mouseX > 10;
       const yThres = event.clientY - this.mouseY > 10;
@@ -86,7 +84,6 @@ export class LongPressDirective {
   @HostListener('touchend')
   @HostListener('touchcancel')
   onMouseUp() {
-    console.log('mouseup');
     this.endPress();
   }
 }

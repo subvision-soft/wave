@@ -198,7 +198,7 @@ export class SessionsComponent {
   ) {
     this.openPath();
     this.initializeMenuActions();
-    this.filesService.session = undefined;
+    this.filesService.clearSession();
   }
 
   private _sort: 'name' | 'date' | 'size' | 'type' | undefined = 'name';
@@ -209,7 +209,6 @@ export class SessionsComponent {
 
   onLongPress(event: any, session: File) {
     session.active = true;
-    console.log('long press', event);
     this.timeoutLongPress = new Date();
     this.initializeMenuActions();
   }
@@ -288,7 +287,7 @@ export class SessionsComponent {
             };
           });
         })
-        .catch((error) => {
+        .catch(() => {
           this._path.pop();
         });
     } else {
@@ -309,7 +308,6 @@ export class SessionsComponent {
 
   private openPath() {
     this.filesService.loadDirectory(this.path).then((files) => {
-      console.log(files);
       this._sessions = files.map((file) => {
         return {
           active: false,
@@ -368,7 +366,6 @@ export class SessionsComponent {
 
   async createSessionCallback(event: any) {
     if (event.btn === 'ok') {
-      console.log(JSON.stringify(this.newSession));
       this.filesService
         .writeFile(
           this.path +
@@ -411,7 +408,6 @@ export class SessionsComponent {
   back() {
     this._path.pop();
     this.filesService.loadDirectory(this.path).then((files) => {
-      console.log(files);
       this._sessions = files.map((file) => {
         return {
           active: false,

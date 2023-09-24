@@ -11,18 +11,18 @@
 </app-header>
 <div class="content">
   <app-search [(value)]="searchValue" placeholder="Rechercher un tireur"></app-search>
-  <app-add-button (click)="openCreateUser = true" [@enterAnimation] *ngIf="!searchValue"
+  <app-add-button (click)="openCreateUser = true" *ngIf="!searchValue"
                   label="Ajouter un tireur"></app-add-button>
 
   <div class="users">
 
-    <app-empty-text *ngIf="session.users.length === 0" [@enterAnimation] [icon]="searchValue?'jamSearch':'jamGhost'"
-                    [text]="searchValue?'Pas de résultat':'Aucun tireur d\'enregistré'"></app-empty-text>
+    <app-empty-text *ngIf="users.length === 0" [icon]="searchValue?'jamSearch':'jamGhost'"
+                    [text]="searchValue?'Pas de résultat':'Aucun tireur enregistré'"></app-empty-text>
 
     <app-user-item [selected]="isUserSelected(user)" long-press
                    (onLongPressing)="onLongPress($event,user)"
                    (click)="userClick(user)" [user]="user"
-                   *ngFor="let user of session.users">
+                   *ngFor="let user of users">
     </app-user-item>
   </div>
 </div>

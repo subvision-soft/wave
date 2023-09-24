@@ -12,10 +12,34 @@ import { FilesService } from '../../services/files.service';
 })
 export class UsersComponent {
   searchValue = '';
-  openCreateUser = true;
+  openCreateUser = false;
   menuActions = [
-    new Action('Supprimer', undefined, (self) => {}),
-    new Action('Modifier', undefined, (self) => {}),
+    new Action(
+      'Supprimer le tireur',
+      undefined,
+      () => {
+        this.session.users = this.session.users.filter(
+          (user) => !this.selectedUsers.includes(user)
+        );
+        this.filesService.session = this.session;
+        this.selectedUsers = [];
+      },
+      undefined,
+      () => this.selectedUsers.length > 0
+    ),
+    new Action(
+      'Modifier le tireur',
+      undefined,
+      (self) => {},
+      undefined,
+      () => {
+        console.log(this.selectedUsers);
+        return this.selectedUsers.length == 1;
+      }
+    ),
+    new Action('Ajouter un tireur', undefined, (self) => {
+      this.openCreateUser = true;
+    }),
   ];
   timeoutLongPress: Date = new Date();
 
@@ -26,7 +50,18 @@ export class UsersComponent {
     description: 'Description 1',
     date: new Date(),
     targets: [],
-    users: [],
+    users: [
+      {
+        id: '1',
+        name: 'Tireur 1',
+        category: Category.SENIOR,
+      },
+      {
+        id: '2',
+        name: 'Tireur 2',
+        category: Category.SENIOR,
+      },
+    ],
     teams: [],
   };
 
@@ -48,7 +83,12 @@ export class UsersComponent {
     category: Category.SENIOR,
   };
 
-  createUserCallback: (event: any) => void = () => {};
+  createUserCallback(event: any) {
+    if (event.btn === 'ok') {
+      this.session.users.push({ ...this.newUser });
+      this.filesService.session = this.session;
+    }
+  }
 
   get users(): User[] {
     return this.session.users.filter(
@@ -63,8 +103,9 @@ export class UsersComponent {
   }
 
   onLongPress(event: any, user: User) {
-    this.selectedUsers.push(user);
     this.timeoutLongPress = new Date();
+    if (this.isUserSelected(user)) return;
+    this.selectedUsers.push(user);
   }
 
   userClick(user: User) {

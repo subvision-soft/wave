@@ -174,7 +174,6 @@ export class ResultComponent implements OnInit {
   }
 
   set impacts(value: any[]) {
-    console.log('set impacts', value);
     this._impacts = [...value];
   }
 

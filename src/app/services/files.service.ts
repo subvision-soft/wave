@@ -10,12 +10,26 @@ export class FilesService {
 
   private _session?: Session = undefined;
 
+  public path: string = '';
+
   get session(): Session | undefined {
     return this._session;
   }
 
   set session(session: Session | undefined) {
     this._session = session;
+    if (session) {
+      this.updateSession();
+    }
+  }
+
+  clearSession() {
+    this._session = undefined;
+    this.path = '';
+  }
+
+  updateSession() {
+    this.writeFile(this.path, JSON.stringify(this.session), true);
   }
 
   async loadFiles(path: string, files: FileInfo[] = []) {
@@ -38,7 +52,6 @@ export class FilesService {
       path: path,
       directory: Directory.ExternalStorage,
     });
-    console.log(result.files);
     for (const file of result.files) {
       if (file.type === 'file' && !file.name.endsWith('.subapp')) {
         break;
@@ -48,20 +61,20 @@ export class FilesService {
     return files;
   }
 
-  async writeFile(path: string, content: string) {
-    console.log(content);
+  async writeFile(
+    path: string,
+    content: string,
+    directoryInPath: boolean = false
+  ) {
+    debugger;
     await Filesystem.writeFile({
       path: path,
       data: btoa(content),
-      directory: Directory.ExternalStorage,
       recursive: true,
+      directory: directoryInPath ? undefined : Directory.ExternalStorage,
     })
-      .then((result) => {
-        console.log(result);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+      .then(() => {})
+      .catch(() => {});
   }
 
   async openFileByFile(file: FileInfo) {

@@ -31,7 +31,13 @@
       p {
         font-size: var(--font-size-sm);
         font-weight: var(--font-weight-normal);
-        text-align: left;
+        background: var(--color-indicator-3);
+        width: fit-content;
+        padding: 0 var(--padding-sm);
+        border-radius: var(--padding);
+        min-width: 20px;
+        text-align: center;
+        color: var(--color-background-1);
       }
     }
 

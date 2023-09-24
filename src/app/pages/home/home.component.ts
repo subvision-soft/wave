@@ -145,7 +145,6 @@ export class HomeComponent implements OnInit {
 
   @HostListener('window:scroll', ['$event'])
   onScroll(event: any) {
-    console.log(event.target.offsetHeight);
     if (
       event.target.offsetHeight + event.target.scrollTop >=
       event.target.scrollHeight
