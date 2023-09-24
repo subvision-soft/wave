@@ -6,7 +6,12 @@
 
     <div class="group" *ngFor="let group of settings">
       <h1>{{group.label}}</h1>
-      <app-setting-picker *ngFor="let parameter of group.parameters" [setting]="parameter"/>
+      <app-input [horizontal]="true" *ngFor="let parameter of group.parameters; trackBy: trackParameter"
+                 [label]="parameter.label"
+                 [type]="parameter.type" [max]="parameter.max" [min]="parameter.min"
+                 [(value)]="parameter.value"
+                 (valueChange)="onChange(parameter, $event)"
+      ></app-input>
     </div>
   </div>
 </div>

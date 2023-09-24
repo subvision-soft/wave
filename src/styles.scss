@@ -87,55 +87,118 @@
   --color-indicator-1: #ff2e2e;
   --color-indicator-2: #2a9928;
   --color-indicator-3: #f4b63c;
+  
+  --theme-color-1: #fff;
+  --theme-color-2: #242e42;
 
-  --color-primary-darker: color-mix(in srgb, var(--color-primary), #242e42 10%);
-  --color-primary-lighter-1: color-mix(in srgb, var(--color-primary), #fff 20%);
-  --color-primary-lighter-3: color-mix(in srgb, var(--color-primary), #fff 40%);
-  --color-primary-lighter-4: color-mix(in srgb, var(--color-primary), #fff 60%);
-  --color-primary-lighter-5: color-mix(in srgb, var(--color-primary), #fff 80%);
+  --color-primary-darker: color-mix(
+    in srgb,
+    var(--color-primary),
+    var(--theme-color-2) 10%
+  );
+  --color-primary-lighter-1: color-mix(
+    in srgb,
+    var(--color-primary),
+    var(--theme-color-1) 20%
+  );
+  --color-primary-lighter-3: color-mix(
+    in srgb,
+    var(--color-primary),
+    var(--theme-color-1) 40%
+  );
+  --color-primary-lighter-4: color-mix(
+    in srgb,
+    var(--color-primary),
+    var(--theme-color-1) 60%
+  );
+  --color-primary-lighter-5: color-mix(
+    in srgb,
+    var(--color-primary),
+    var(--theme-color-1) 80%
+  );
 
   --color-secondary-darker: color-mix(
     in srgb,
     var(--color-secondary),
-    #242e42 10%
+    var(--theme-color-2) 10%
   );
   --color-secondary-lighter-2: color-mix(
     in srgb,
     var(--color-secondary),
-    #fff 20%
+    var(--theme-color-1) 20%
   );
   --color-secondary-lighter-3: color-mix(
     in srgb,
     var(--color-secondary),
-    #fff 40%
+    var(--theme-color-1) 40%
   );
   --color-secondary-lighter-4: color-mix(
     in srgb,
     var(--color-secondary),
-    #fff 60%
+    var(--theme-color-1) 60%
   );
   --color-secondary-lighter-5: color-mix(
     in srgb,
     var(--color-secondary),
-    #fff 80%
+    var(--theme-color-1) 80%
   );
 
-  --color-dark1-1: color-mix(in srgb, var(--color-primary), #242e42 95%);
-  --color-dark1-2: color-mix(in srgb, var(--color-primary), #242e42 85%);
-  --color-dark1-3: color-mix(in srgb, var(--color-primary), #242e42 65%);
-  --color-dark1-4: color-mix(in srgb, var(--color-primary), #242e42 45%);
-  --color-dark1-5: color-mix(in srgb, var(--color-primary), #242e42 25%);
-  --color-dark1-6: color-mix(in srgb, var(--color-primary), #242e42 5%);
-  --color-dark2-1: color-mix(in srgb, #fff, #242e42 65%);
-  --color-dark2-2: color-mix(in srgb, #fff, #242e42 45%);
-  --color-dark2-3: color-mix(in srgb, #fff, #242e42 25%);
-  --color-dark2-4: color-mix(in srgb, #fff, #242e42 5%);
+  --color-dark1-1: color-mix(
+    in srgb,
+    var(--color-primary),
+    var(--theme-color-2) 95%
+  );
+  --color-dark1-2: color-mix(
+    in srgb,
+    var(--color-primary),
+    var(--theme-color-2) 85%
+  );
+  --color-dark1-3: color-mix(
+    in srgb,
+    var(--color-primary),
+    var(--theme-color-2) 65%
+  );
+  --color-dark1-4: color-mix(
+    in srgb,
+    var(--color-primary),
+    var(--theme-color-2) 45%
+  );
+  --color-dark1-5: color-mix(
+    in srgb,
+    var(--color-primary),
+    var(--theme-color-2) 25%
+  );
+  --color-dark1-6: color-mix(
+    in srgb,
+    var(--color-primary),
+    var(--theme-color-2) 5%
+  );
+  --color-dark2-1: color-mix(
+    in srgb,
+    var(--theme-color-1),
+    var(--theme-color-2) 65%
+  );
+  --color-dark2-2: color-mix(
+    in srgb,
+    var(--theme-color-1),
+    var(--theme-color-2) 45%
+  );
+  --color-dark2-3: color-mix(
+    in srgb,
+    var(--theme-color-1),
+    var(--theme-color-2) 25%
+  );
+  --color-dark2-4: color-mix(
+    in srgb,
+    var(--theme-color-1),
+    var(--theme-color-2) 5%
+  );
   --color-background-2: color-mix(
     in srgb,
-    color-mix(in srgb, var(--color-primary), #fff 95%),
+    color-mix(in srgb, var(--color-primary), var(--theme-color-1) 95%),
     #000 2%
   );
-  --color-background-1: #fff;
+  --color-background-1: var(--theme-color-1);
 
   --border-radius: 20px;
   --border-radius-sm: calc(var(--border-radius) / 2);
@@ -153,12 +216,9 @@
   --font-size-sm: calc(var(--font-size) * 0.7);
   --font-size-lg: calc(var(--font-size) * 1.2);
 
-  --box-shadow-1: 0px 0px 20px 0px
-    color-mix(in srgb, var(--color-dark1-1) 2%, transparent);
-  --box-shadow-2: 0px 0px 20px 0px
-    color-mix(in srgb, var(--color-dark1-1) 10%, transparent);
-  --box-shadow-3: 0px 1px 2px 1px
-    color-mix(in srgb, var(--color-dark1-1) 10%, transparent);
+  --box-shadow-1: 0px 0px 20px 0px color-mix(in srgb, #000 2%, transparent);
+  --box-shadow-2: 0px 0px 20px 0px color-mix(in srgb, #000 10%, transparent);
+  --box-shadow-3: 0px 1px 2px 1px color-mix(in srgb, #000 10%, transparent);
 
   --font-weight-bold: 700;
   --font-weight-semi-bold: 600;

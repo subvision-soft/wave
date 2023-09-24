@@ -48,6 +48,20 @@ export class ParametersService {
       value: '/subapp/data',
       update: function (value: any) {},
     },
+    THEME_SOMBRE: {
+      value: 'false',
+      update: function (value: any) {
+        const style = document.documentElement.style;
+        style.setProperty(
+          '--theme-color-1',
+          value === 'true' ? '#242e42' : '#ffffff'
+        );
+        style.setProperty(
+          '--theme-color-2',
+          value === 'true' ? '#ffffff' : '#242e42'
+        );
+      },
+    },
   };
 
   constructor() {}

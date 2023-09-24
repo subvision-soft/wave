@@ -14,20 +14,43 @@ class ParameterGroup {
   styleUrls: ['./settings.component.scss'],
 })
 export class SettingsComponent {
+  get darkTheme(): string {
+    return this._darkTheme;
+  }
+
+  set darkTheme(value: string) {
+    this._darkTheme = value;
+
+    console.log(this.darkTheme === 'true' ? '#242e42' : '#ffffff');
+  }
+
   get settings(): ParameterGroup[] {
-    return this._settings.map((group) => {
-      return {
-        label: group.label,
-        parameters: group.parameters.filter((parameter) => {
-          return parameter.label
-            .toLowerCase()
-            .includes(this.searchValue.toLowerCase());
-        }),
-      };
-    });
+    return this._settings;
+    // return this._settings.map((group) => {
+    //   return {
+    //     label: group.label,
+    //     parameters: group.parameters.filter((parameter) => {
+    //       return parameter.label
+    //         .toLowerCase()
+    //         .includes(this.searchValue.toLowerCase());
+    //     }),
+    //   };
+    // });
+  }
+
+  trackParameter(index: number, parameter: Parameter): string {
+    return parameter.id;
   }
 
   searchValue: string = '';
+
+  private _darkTheme: string = 'true';
+
+  onChange(setting: Parameter, event: any) {
+    console.log(setting);
+    console.log(event);
+    this.parametersService.set(setting.id, setting.value);
+  }
 
   private _settings: ParameterGroup[] = [
     {
@@ -37,19 +60,19 @@ export class SettingsComponent {
           id: 'COULEUR_PRINCIPALE',
           label: 'Couleur principale',
           value: this.parametersService.get('COULEUR_PRINCIPALE').value,
-          type: ParameterType.Color,
+          type: 'color',
         },
         {
           id: 'COULEUR_SECONDAIRE',
           label: 'Couleur secondaire',
           value: this.parametersService.get('COULEUR_SECONDAIRE').value,
-          type: ParameterType.Color,
+          type: 'color',
         },
         {
           id: 'RAYON_BORDURES',
           label: 'Rayon des bordures',
           value: this.parametersService.get('RAYON_BORDURES').value,
-          type: ParameterType.Number,
+          type: 'number',
           min: 0,
           max: 40,
         },
@@ -59,7 +82,7 @@ export class SettingsComponent {
           value: this.parametersService.get('TAILLE_POLICE').value,
           min: 10,
           max: 40,
-          type: ParameterType.Number,
+          type: 'number',
         },
         {
           id: 'TAILLE_ESPACES',
@@ -67,11 +90,20 @@ export class SettingsComponent {
           value: this.parametersService.get('TAILLE_ESPACES').value,
           min: 10,
           max: 40,
-          type: ParameterType.Number,
+          type: 'number',
+        },
+        {
+          id: 'THEME_SOMBRE',
+          label: 'Thème sombre',
+          value: this.parametersService.get('THEME_SOMBRE').value,
+          type: 'checkbox',
         },
       ],
     },
   ];
 
   constructor(private parametersService: ParametersService) {}
+
+  protected readonly ParameterType = ParameterType;
+  protected readonly console = console;
 }
