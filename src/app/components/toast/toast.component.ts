@@ -44,13 +44,14 @@ export class ToastComponent implements OnInit {
 
   startDate = new Date();
   endDate = new Date();
+  progressWidth: string = '100%';
 
-  get progressWidth() {
-    return this.progressInterval
+  updateProgressWidth() {
+    this.progressWidth = this.progressInterval
       ? ((this.endDate.getTime() - Date.now()) /
           this.toastService.data.duration) *
           100 +
-          '%'
+        '%'
       : '0%';
   }
 
@@ -66,7 +67,9 @@ export class ToastComponent implements OnInit {
   ngOnInit() {}
 
   countDown() {
+    this.stopCountDown(false);
     this.progressInterval = setInterval(() => {
+      this.updateProgressWidth();
       if (this.endDate.getTime() < Date.now()) {
         this.stopCountDown();
       }
