@@ -80,6 +80,11 @@ export class ToastComponent implements OnInit {
     clearInterval(this.progressInterval);
     if (hide) {
       this.toastService.hide();
+      setTimeout(() => {
+        if (!this.progressInterval) {
+          this.progressWidth = '100%';
+        }
+      }, 500);
     }
   }
 }
