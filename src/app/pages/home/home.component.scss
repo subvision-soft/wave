@@ -11,8 +11,9 @@
     top: 0;
     background: var(--color-background-1);
     transition: var(--transition);
-    height: 30px;
     z-index: 1;
+    display: flex;
+    justify-content: center;
   }
 
   h1 {

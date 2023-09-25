@@ -24,22 +24,16 @@ export class SettingsComponent {
     console.log(this.darkTheme === 'true' ? '#242e42' : '#ffffff');
   }
 
-  get settings(): ParameterGroup[] {
-    return this._settings;
-    // return this._settings.map((group) => {
-    //   return {
-    //     label: group.label,
-    //     parameters: group.parameters.filter((parameter) => {
-    //       return parameter.label
-    //         .toLowerCase()
-    //         .includes(this.searchValue.toLowerCase());
-    //     }),
-    //   };
-    // });
+  groupIsVisible(group: ParameterGroup): boolean {
+    return group.parameters.some((parameter) => {
+      return parameter.label
+        .toLowerCase()
+        .includes(this.searchValue.toLowerCase());
+    });
   }
 
-  trackParameter(index: number, parameter: Parameter): string {
-    return parameter.id;
+  get settings(): ParameterGroup[] {
+    return this._settings;
   }
 
   searchValue: string = '';
@@ -47,8 +41,6 @@ export class SettingsComponent {
   private _darkTheme: string = 'true';
 
   onChange(setting: Parameter, event: any) {
-    console.log(setting);
-    console.log(event);
     this.parametersService.set(setting.id, setting.value);
   }
 
@@ -76,22 +68,22 @@ export class SettingsComponent {
           min: 0,
           max: 40,
         },
-        {
-          id: 'TAILLE_POLICE',
-          label: 'Taille de police',
-          value: this.parametersService.get('TAILLE_POLICE').value,
-          min: 10,
-          max: 40,
-          type: 'number',
-        },
-        {
-          id: 'TAILLE_ESPACES',
-          label: 'Taille des espacements',
-          value: this.parametersService.get('TAILLE_ESPACES').value,
-          min: 10,
-          max: 40,
-          type: 'number',
-        },
+        // {
+        //   id: 'TAILLE_POLICE',
+        //   label: 'Taille de police',
+        //   value: this.parametersService.get('TAILLE_POLICE').value,
+        //   min: 10,
+        //   max: 40,
+        //   type: 'number',
+        // },
+        // {
+        //   id: 'TAILLE_ESPACES',
+        //   label: 'Taille des espacements',
+        //   value: this.parametersService.get('TAILLE_ESPACES').value,
+        //   min: 10,
+        //   max: 40,
+        //   type: 'number',
+        // },
         {
           id: 'THEME_SOMBRE',
           label: 'Thème sombre',

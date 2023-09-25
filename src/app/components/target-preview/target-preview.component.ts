@@ -87,7 +87,6 @@ export class TargetPreviewComponent {
     };
   };
   select = (impact: Impact) => {
-    console.log('select', impact);
     this.selected = impact;
     this.selectedChange.emit(impact);
   };

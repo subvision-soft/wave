@@ -53,7 +53,6 @@ export class MenuComponent {
     | 'bottomLeft' = 'topRight';
 
   get menuStyle() {
-    console.log('menuStyle', this.attachTo?.nativeElement.offsetWidth);
     switch (this.anchorLocation) {
       case 'topRight':
         return {
@@ -95,7 +94,6 @@ export class MenuComponent {
   }
 
   set originalActions(value: Action[]) {
-    console.log('set originalActions', value);
     this._originalActions = value;
   }
 
@@ -105,10 +103,8 @@ export class MenuComponent {
 
   @Input()
   set actions(value: Action[]) {
-    console.log('set actions', value);
     this._actions = value;
     this.originalActions = value;
-    // this.currentActions = value;
   }
 
   get open(): boolean {
@@ -117,7 +113,6 @@ export class MenuComponent {
 
   @Input()
   set open(value: boolean) {
-    console.log('set open', value);
     this._open = value;
     this._currentActions = value ? this._originalActions : this._currentActions;
   }

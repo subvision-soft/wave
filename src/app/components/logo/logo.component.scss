@@ -1,0 +1,10 @@
+:host {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  .cls-1 {
+    fill: var(--color-dark1-1);
+  }
+}

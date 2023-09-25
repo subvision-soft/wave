@@ -44,8 +44,8 @@
 
       path {
         transition: var(--transition-fast);
-        fill: color-mix(in srgb, var(--color-secondary), transparent 90%);
-        stroke: var(--color-secondary);
+        fill: color-mix(in srgb, var(--color-indicator-2), transparent 70%);
+        stroke: var(--color-indicator-2);
         stroke-width: 1px;
       }
     }
@@ -65,7 +65,7 @@
       justify-content: center;
       align-items: center;
       padding: 0;
-      transition: var(--transition);
+      transition: var(--transition-fast);
       opacity: 0.5;
       cursor: pointer;
       pointer-events: none;

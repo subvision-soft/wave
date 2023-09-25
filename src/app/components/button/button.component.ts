@@ -74,13 +74,11 @@ export class ButtonComponent {
 
   @HostListener('focus')
   public onFocus(): void {
-    console.log('focus');
     this.focus = true;
   }
 
   @HostListener('focusout')
   public onBlur(): void {
-    console.log('blur');
     this.focus = false;
   }
 

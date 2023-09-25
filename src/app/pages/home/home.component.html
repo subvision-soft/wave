@@ -1,4 +1,6 @@
-<img class="logo" src="assets/img/logo_s_white.svg" [style.height]="logoSize+'px'" alt="logo"/>
+<span class="logo">
+<app-logo [size]="logoSize"/>
+</span>
 <h1 class="titre">Actualités</h1>
 <div class="actualites">
   <div class="actualite ripple" *ngFor="let actualite of actualites">

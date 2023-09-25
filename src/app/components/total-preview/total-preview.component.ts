@@ -20,7 +20,6 @@ export class TotalPreviewComponent {
         this._impacts.push({ ...impacts[i] });
       }
     }
-    console.log(this._impacts);
   }
 
   public get impacts(): Impact[] {
@@ -46,7 +45,6 @@ export class TotalPreviewComponent {
   get total(): number {
     if (this.precision) {
       const number1 = this.tirsValides;
-      console.log(number1);
       return number1.reduce((acc, impact) => acc + impact.points, 0);
     } else if (this.biathlon) {
       const number =
@@ -57,7 +55,6 @@ export class TotalPreviewComponent {
     } else if (this.superBiathlon) {
     } else if (this.saisieLibre) {
       const number1 = this.tirsValides;
-      console.log(number1);
       return number1.reduce((acc, impact) => acc + impact.points, 0);
     }
     return 0;
@@ -69,7 +66,6 @@ export class TotalPreviewComponent {
       let impacts = this._impacts
         .sort((a, b) => a.points - b.points)
         .slice(0, 10);
-      console.log('10 mois bons', impacts);
       let zones: any = {};
       zones = impacts.reduce((acc, impact) => {
         const zone = zones[impact.zone] || [];

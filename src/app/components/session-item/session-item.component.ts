@@ -38,7 +38,6 @@ export class SessionItemComponent {
 
   @Input()
   set selected(value: boolean) {
-    console.log('selected', value);
     this._selected = value;
   }
 

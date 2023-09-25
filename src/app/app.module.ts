@@ -87,7 +87,7 @@ import { UserItemComponent } from './components/user-item/user-item.component';
 import { ToastComponent } from './components/toast/toast.component';
 import { TargetsComponent } from './pages/targets/targets.component';
 import { TargetItemComponent } from './components/target-item/target-item.component';
-import { LogoComponent } from './logo/logo.component';
+import { LogoComponent } from './components/logo/logo.component';
 
 const openCVConfig: OpenCVConfig = {
   openCVDirPath: 'assets/opencv',

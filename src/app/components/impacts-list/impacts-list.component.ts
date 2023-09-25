@@ -23,7 +23,6 @@ export class ImpactsListComponent {
 
   @Input()
   set impacts(impacts: Impact[]) {
-    console.log('impacts', impacts);
     this._impacts = impacts;
   }
 

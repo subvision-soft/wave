@@ -27,7 +27,6 @@ export class InputComponent {
   }
 
   get checked(): boolean {
-    console.log(this.value);
     return this.value === 'true' || this.value === 'on';
   }
 
@@ -89,7 +88,6 @@ export class InputComponent {
   protected readonly console = console;
 
   onCheck() {
-    console.log(this.checked);
     this.value = this.checked ? 'false' : 'true';
   }
 }

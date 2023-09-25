@@ -163,10 +163,10 @@ export class ResultComponent implements OnInit {
     },
   ];
   public total: number = 0;
-  public epreuve: string = 'biathlon';
+  public epreuve: Event = Event.PRECISION;
 
   get precision(): boolean {
-    return this.epreuve === 'precision';
+    return this.epreuve === Event.PRECISION;
   }
 
   get impacts(): any[] {
@@ -174,15 +174,20 @@ export class ResultComponent implements OnInit {
   }
 
   set impacts(value: any[]) {
-    this._impacts = [...value];
+    this._impacts = [
+      ...value.map((impact) => ({
+        ...impact,
+        amount: impact.amount !== 0 ? impact.amount : 1,
+      })),
+    ];
   }
 
   get biathlon(): boolean {
-    return this.epreuve === 'biathlon';
+    return this.epreuve === Event.BIATHLON;
   }
 
   get superBiathlon(): boolean {
-    return this.epreuve === 'superBiathlon';
+    return this.epreuve === Event.SUPER_BIATHLON;
   }
 
   public itemsSegmented: SegmentedButtonItem[] = [
