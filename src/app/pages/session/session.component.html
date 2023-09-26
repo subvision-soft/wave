@@ -42,7 +42,7 @@
       </ng-template>
     </ng-container>
   </div>
-  <div [class]="['card','relais','ripple']">
+  <div [class]="['card','relais','ripple']" routerLink="/sessions/teams">
     <ng-container [ngPlural]="session.teams.length">
       <ng-template ngPluralCase="=0">
         <ng-icon name="jamGhost"></ng-icon>

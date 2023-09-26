@@ -117,7 +117,6 @@ export class ParametersService {
         }
       })
       .catch(() => {
-        debugger;
         this.parameters = this._parameters;
       });
   }

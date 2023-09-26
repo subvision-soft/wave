@@ -88,6 +88,8 @@ import { ToastComponent } from './components/toast/toast.component';
 import { TargetsComponent } from './pages/targets/targets.component';
 import { TargetItemComponent } from './components/target-item/target-item.component';
 import { LogoComponent } from './components/logo/logo.component';
+import { TeamsComponent } from './pages/teams/teams.component';
+import { TeamItemComponent } from './components/team-item/team-item.component';
 
 const openCVConfig: OpenCVConfig = {
   openCVDirPath: 'assets/opencv',
@@ -137,6 +139,8 @@ const openCVConfig: OpenCVConfig = {
     TargetsComponent,
     TargetItemComponent,
     LogoComponent,
+    TeamsComponent,
+    TeamItemComponent,
   ],
   imports: [
     BrowserAnimationsModule,
