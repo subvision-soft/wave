@@ -3,6 +3,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
+  transition: var(--transition);
 
   .cls-1 {
     fill: var(--color-dark1-1);

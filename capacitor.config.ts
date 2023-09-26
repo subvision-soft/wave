@@ -30,14 +30,6 @@ const config: CapacitorConfig = {
       electronLinuxLocation: 'Databases',
     },
   },
-  cordova: {
-    preferences: {
-      LottieFullscreen: 'true',
-      LottieHideAfterAnimationEnd: 'true',
-      LottieAnimationLocation: 'public/assets/subapp.json',
-      LottieFadeOutDuration: '1000',
-    },
-  },
 };
 
 export default config;

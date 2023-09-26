@@ -26,15 +26,7 @@ export class AppComponent {
     private themeColorService: ThemeColorService,
     private parametersService: ParametersService
   ) {
-    this.showSplashScreen();
     this.themeColorService.setCssVariables('#1677ff');
-  }
-
-  private async showSplashScreen() {
-    console.log('showSplashScreen');
-    const lottie = (window as any).lottie;
-    await lottie.splashscreen.hide();
-    await lottie.splashscreen.show('public/assets/subapp.json', false);
   }
 
   tabSelected(tab: any) {
