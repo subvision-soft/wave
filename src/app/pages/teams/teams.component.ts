@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
-import {Action} from "../../models/action";
-import {Team} from "../../models/team";
-import {Session} from "../../models/session";
-import {Category} from "../../models/category";
-import {FilesService} from "../../services/files.service";
+import { Action } from '../../models/action';
+import { Team } from '../../models/team';
+import { Session } from '../../models/session';
+import { Category } from '../../models/category';
+import { FilesService } from '../../services/files.service';
+import { UserLastnameFirstCharPipe } from '../../pipes/UserLastnameFirstCharPipe';
 
 @Component({
   selector: 'app-teams',
   templateUrl: './teams.component.html',
-  styleUrls: ['./teams.component.scss']
+  styleUrls: ['./teams.component.scss'],
 })
 export class TeamsComponent {
   searchValue = '';
@@ -51,34 +52,51 @@ export class TeamsComponent {
     date: new Date(),
     users: [
       {
-        id: '1',
-        name: 'Tireur 1',
+        id: '592',
+        firstname: 'Paul',
+        lastname: 'Coignac',
         category: Category.SENIOR,
         targets: [],
       },
       {
-        id: '2',
-        name: 'Tireur 2',
+        id: '1092',
+        firstname: 'Baptiste',
+        lastname: 'De Treverret',
+        category: Category.SENIOR,
+        targets: [],
+      },
+      {
+        id: '3',
+        firstname: 'Tireur',
+        lastname: '3',
         category: Category.SENIOR,
         targets: [],
       },
     ],
-    teams: [],
+    teams: [
+      {
+        name: 'Equipe 1',
+        users: ['592', '1092'],
+      },
+    ],
   };
 
-  constructor(private filesService: FilesService) {
+  constructor(
+    private filesService: FilesService,
+    private userLastnameFirstChar: UserLastnameFirstCharPipe
+  ) {
     this.session = this.filesService.session || this.session;
     this.storeUsers = this.session.users.map((user) => {
       return {
         id: user.id,
-        label: `(${user.id}) ${user.name}`,
+        label: `(${user.id}) ${
+          user.firstname
+        } ${userLastnameFirstChar.transform(user)}`,
       };
-    }
-    );
+    });
   }
 
-  storeUsers:any[] = [
-  ];
+  storeUsers: any[] = [];
 
   newTeam: Team = {
     name: '',
@@ -87,15 +105,16 @@ export class TeamsComponent {
 
   createTeamCallback(event: any) {
     if (event.btn === 'ok') {
+      console.log(this.newTeam);
       this.session.teams.push({ ...this.newTeam });
       this.filesService.session = this.session;
     }
   }
 
   get teams(): Team[] {
-    return this.session.teams.filter(
-      (team) =>
-        team.name.toLowerCase().includes(this.searchValue.toLowerCase()));
+    return this.session.teams.filter((team) =>
+      team.name.toLowerCase().includes(this.searchValue.toLowerCase())
+    );
   }
 
   isTeamSelected(team: Team): boolean {

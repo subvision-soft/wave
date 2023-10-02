@@ -90,6 +90,8 @@ import { TargetItemComponent } from './components/target-item/target-item.compon
 import { LogoComponent } from './components/logo/logo.component';
 import { TeamsComponent } from './pages/teams/teams.component';
 import { TeamItemComponent } from './components/team-item/team-item.component';
+import { UserLastnameFirstCharPipe } from './pipes/UserLastnameFirstCharPipe';
+import { TagComponent } from './components/tag/tag.component';
 
 const openCVConfig: OpenCVConfig = {
   openCVDirPath: 'assets/opencv',
@@ -141,6 +143,8 @@ const openCVConfig: OpenCVConfig = {
     LogoComponent,
     TeamsComponent,
     TeamItemComponent,
+    UserLastnameFirstCharPipe,
+    TagComponent,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -185,6 +189,7 @@ const openCVConfig: OpenCVConfig = {
     }),
     FormsModule,
   ],
+  providers: [UserLastnameFirstCharPipe],
   bootstrap: [AppComponent],
 })
 export class AppModule {

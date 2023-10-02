@@ -46,6 +46,11 @@
       display: flex;
       flex-direction: column;
 
+      app-empty-text {
+        margin: auto;
+        padding: 0;
+      }
+
       h1 {
         font-size: var(--font-size);
         font-weight: var(--font-weight-semi-bold);

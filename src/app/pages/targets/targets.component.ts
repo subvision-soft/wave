@@ -65,7 +65,8 @@ export class TargetsComponent {
     users: [
       {
         id: '1',
-        name: 'User 1',
+        firstname: 'User',
+        lastname: '1',
         category: Category.SENIOR,
         targets: [
           {

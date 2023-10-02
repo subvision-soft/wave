@@ -2,8 +2,8 @@
 
 <a class="input" (click)="openChange(true)">
   <span class="items">
-    <span class="placeholder" *ngIf="!value">{{placeholder}}</span>
-    <span class="item" *ngFor="let record of displayedField" >{{record}}</span>
+    <span class="placeholder" *ngIf="!value || value?.length === 0">{{placeholder}}</span>
+    <span class="item" *ngFor="let record of displayedField">{{record}}</span>
   </span>
   <ng-icon class="icon" size="16" name="iconoirNavArrowDown"></ng-icon>
 </a>

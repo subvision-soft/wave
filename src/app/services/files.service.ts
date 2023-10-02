@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Directory, FileInfo, Filesystem } from '@capacitor/filesystem';
 import { Session } from '../models/session';
+import { HistoryService } from './history.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FilesService {
-  constructor() {}
+  constructor(private historyService: HistoryService) {}
 
   private _session?: Session = undefined;
 
@@ -80,14 +81,21 @@ export class FilesService {
     return await this.openFileByUrl(file.uri);
   }
 
-  async openFileByUrl(url: string): Promise<Session> {
+  async openFileByUrl(url: string, saveInHistory?: boolean): Promise<Session> {
     const result = await Filesystem.readFile({
       path: url,
     });
+
+    let parse: Session;
     if (typeof result.data === 'string') {
-      return JSON.parse(atob(result.data));
+      parse = JSON.parse(atob(result.data));
+    } else {
+      parse = JSON.parse(await result.data.text());
     }
-    return JSON.parse(await result.data.text());
+    if (saveInHistory) {
+      this.historyService.addHistory(url);
+    }
+    return parse;
   }
 
   async deleteFile(file: FileInfo) {

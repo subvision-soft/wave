@@ -1,6 +1,10 @@
 <div class="content">
   <div *ngIf="team" class="infos">
     <h1>{{team.name}}</h1>
+    <div class="users">
+      <app-tag *ngFor="let user of users">({{user.id}}
+        ) {{user.firstname}} {{user | userLastnameFirstChar}}</app-tag>
+    </div>
   </div>
   <a>
     <ng-icon [name]="selected?'jamCheck':'jamChevronRight'" size="20"></ng-icon>

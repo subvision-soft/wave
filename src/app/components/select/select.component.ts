@@ -1,4 +1,10 @@
-import {Component, EventEmitter, HostBinding, Input, Output,} from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  HostBinding,
+  Input,
+  Output,
+} from '@angular/core';
 
 @Component({
   selector: 'app-select',
@@ -34,7 +40,7 @@ export class SelectComponent {
 
   select(value: any): void {
     if (this.multiple) {
-    if (Array.isArray(this.value)) {
+      if (Array.isArray(this.value)) {
         if (this.value.includes(value)) {
           this.value = this.value.filter((item) => item !== value);
         } else {
@@ -43,6 +49,8 @@ export class SelectComponent {
       } else {
         this.value = [value];
       }
+    } else {
+      this.value = value;
     }
     console.log(this.value);
     this.valueChange.emit(this.value);
@@ -51,7 +59,7 @@ export class SelectComponent {
     }
   }
 
-  isSelected(record:any) {
+  isSelected(record: any) {
     if (Array.isArray(this.value)) {
       return this.value.includes(record[this.valueField]);
     } else {

@@ -20,6 +20,7 @@
                     [text]="searchValue?'Pas de résultat':'Aucun équipe enregistrée'"></app-empty-text>
 
     <app-team-item [selected]="isTeamSelected(team)" long-press
+                   [session]="session"
                    (onLongPressing)="onLongPress($event,team)"
                    (click)="teamClick(team)" [team]="team"
                    *ngFor="let team of teams">
@@ -32,7 +33,9 @@
                  [(open)]="openCreateTeam"
                  (callback)="createTeamCallback($event)"
                  type="okcancel">
-  <app-input  [(value)]="newTeam.name" label="Nom"></app-input>
-<app-select [multiple]="true" placeholder="Aucun tireur sélectionné" [label]="'Tireurs'"  [store]="storeUsers" [compact]="true"></app-select>
+  <app-input [(value)]="newTeam.name" label="Nom"></app-input>
+  <app-select [multiple]="true" placeholder="Aucun tireur sélectionné" [label]="'Tireurs'" [store]="storeUsers"
+              [(value)]="newTeam.users"
+              [compact]="true"></app-select>
 </app-message-box>
 

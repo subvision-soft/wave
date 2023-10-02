@@ -16,6 +16,15 @@
     margin-left: var(--padding);
   }
 
+  &.multiple {
+    .item {
+      border-radius: var(--border-radius-sm);
+      background: var(--color-primary-lighter-5);
+      font-size: calc(var(--font-size) * 0.9);
+      padding: calc(var(--padding-sm) / 3) var(--padding);
+    }
+  }
+
   .input {
     display: flex;
     align-items: center;
@@ -35,12 +44,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: var(--padding-sm);
-      .item {
-        border-radius: var(--border-radius-sm);
-        background: var(--color-primary-lighter-5);
-        font-size: calc(var(--font-size)*0.9);
-        padding: calc(var(--padding-sm)/3) var(--padding);
-      }
+
     }
 
     & .icon {

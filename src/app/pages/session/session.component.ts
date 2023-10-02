@@ -37,7 +37,7 @@ export class SessionComponent implements OnInit {
   ngOnInit(): void {
     const url = this.route.snapshot.queryParams['url'];
     if (url) {
-      this.filesService.openFileByUrl(url).then((result) => {
+      this.filesService.openFileByUrl(url, true).then((result) => {
         this.filesService.session = result;
         this.filesService.path = url;
         this.session = result;

@@ -15,6 +15,12 @@ export class SessionItemComponent {
 
   session: Session | undefined;
 
+  private _url: string | undefined;
+
+  @Input() showPath: boolean = false;
+
+  @Input() showLogo: boolean = false;
+
   @Input()
   set file(value: FileInfo | undefined) {
     if (value?.type === 'file') {
@@ -23,6 +29,20 @@ export class SessionItemComponent {
       });
     }
     this._file = value;
+  }
+
+  @Input()
+  set url(value: string | undefined) {
+    if (value) {
+      this.filesService.openFileByUrl(value).then((result) => {
+        this.session = result;
+      });
+    }
+    this._url = value;
+  }
+
+  get url(): string | undefined {
+    return this._url;
   }
 
   constructor(private filesService: FilesService) {}

@@ -3,7 +3,8 @@ import { Target } from './target';
 
 export interface User {
   id: string;
-  name: string;
+  firstname: string;
+  lastname: string;
   category: Category;
   targets: Target[];
 }

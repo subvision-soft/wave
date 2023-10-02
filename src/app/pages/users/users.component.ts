@@ -52,13 +52,15 @@ export class UsersComponent {
     users: [
       {
         id: '1',
-        name: 'Tireur 1',
+        firstname: 'Tireur',
+        lastname: '1',
         category: Category.SENIOR,
         targets: [],
       },
       {
         id: '2',
-        name: 'Tireur 2',
+        firstname: 'Tireur',
+        lastname: '2',
         category: Category.SENIOR,
         targets: [],
       },
@@ -80,7 +82,8 @@ export class UsersComponent {
 
   newUser: User = {
     id: '',
-    name: '',
+    firstname: '',
+    lastname: '',
     category: Category.SENIOR,
     targets: [],
   };
@@ -95,7 +98,8 @@ export class UsersComponent {
   get users(): User[] {
     return this.session.users.filter(
       (user) =>
-        user.name.toLowerCase().includes(this.searchValue.toLowerCase()) ||
+        user.firstname.toLowerCase().includes(this.searchValue.toLowerCase()) ||
+        user.lastname.toLowerCase().includes(this.searchValue.toLowerCase()) ||
         user.id.toLowerCase().includes(this.searchValue.toLowerCase())
     );
   }

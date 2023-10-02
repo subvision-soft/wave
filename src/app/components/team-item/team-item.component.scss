@@ -39,6 +39,22 @@
         text-align: center;
         color: var(--color-background-1);
       }
+
+      .users {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: var(--padding-sm);
+
+        .user {
+          background: var(--color-primary-lighter-5);
+          font-size: var(--font-size-sm);
+          font-weight: var(--font-weight-semi-bold);
+          color: var(--color-dark1-1);
+          padding: calc(var(--padding-sm) / 3) var(--padding-sm);
+          border-radius: var(--padding);
+        }
+      }
     }
 
     a {

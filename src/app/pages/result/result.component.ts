@@ -12,6 +12,8 @@ import { SegmentedButtonItem } from '../../components/segmented-button/segmented
 import { Impact } from '../../models/impact';
 import { Zone } from '../../models/zone';
 import { Event } from '../../models/event';
+import { Router } from '@angular/router';
+import { ToastService, ToastTypes } from '../../services/toast.service';
 
 @Pipe({ name: 'pluck' })
 export class PluckPipe implements PipeTransform {
@@ -163,7 +165,7 @@ export class ResultComponent implements OnInit {
     },
   ];
   public total: number = 0;
-  public epreuve: Event = Event.PRECISION;
+  public epreuve: Event = Event.SAISIE_LIBRE;
 
   get precision(): boolean {
     return this.epreuve === Event.PRECISION;
@@ -202,11 +204,24 @@ export class ResultComponent implements OnInit {
     }),
   ];
 
-  constructor(private plastronService: PlastronService) {
+  constructor(
+    private plastronService: PlastronService,
+    private router: Router,
+    private toastService: ToastService
+  ) {
     this.frame = this.plastronService.getFrame();
     if (!this.frame) {
       console.error('No frame found');
-      // this.router.navigate(['camera']);
+      toastService.initiate({
+        title: 'Erreur',
+        content:
+          "Une erreur est survenue lors de l'analyse du plastron, vérifiez que la photo est bien cadrée et que le plastron est bien visible. Evitez les reflets et les ombres.",
+        type: ToastTypes.ERROR,
+        show: true,
+        duration: 3000,
+      });
+      this.router.navigate(['camera']);
+
       return;
     }
   }
@@ -223,6 +238,16 @@ export class ResultComponent implements OnInit {
         .reduce((a: number, b: number) => a + b, 0);
       cible.image.delete();
     } catch (error) {
+      this.toastService.initiate({
+        title: "Erreur lors de l'analyse de la cible",
+        content:
+          'Vérifiez que la photo est bien cadrée et que la cible est bien visible. Evitez les reflets et les ombres.',
+        type: ToastTypes.ERROR,
+        show: true,
+        duration: 4000,
+      });
+      this.router.navigate(['camera']);
+
       console.error(error);
     }
   }
