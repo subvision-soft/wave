@@ -76,6 +76,7 @@ export class TargetsComponent {
             time: 0,
             date: new Date(),
             user: '1',
+            image: '',
           },
         ],
       },

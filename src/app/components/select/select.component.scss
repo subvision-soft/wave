@@ -2,7 +2,7 @@
   &.compact {
     .input {
       height: auto;
-      padding: calc(var(--padding-sm) / 2);
+      padding: calc(var(--padding-sm) / 2) var(--padding);
       border-radius: var(--border-radius-sm);
       font-weight: var(--font-weight-normal);
       box-shadow: none;
@@ -44,7 +44,6 @@
       display: flex;
       flex-wrap: wrap;
       gap: var(--padding-sm);
-
     }
 
     & .icon {

@@ -8,4 +8,5 @@ export interface Target {
   time: number;
   date: Date;
   user: string;
+  image: string;
 }
