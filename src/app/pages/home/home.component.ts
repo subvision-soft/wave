@@ -26,10 +26,12 @@ export class HomeComponent implements OnInit {
   private _seances: string[] = [];
 
   constructor(
-    private filesService: FilesService,
     private historyService: HistoryService,
-    private router: Router
+    private router: Router,
+    private filesService: FilesService
   ) {
+    filesService.clearTarget();
+    filesService.clearSession();
     const appPage = document.getElementById('app-page');
     appPage?.addEventListener('scroll', (event) => {
       // @ts-ignore

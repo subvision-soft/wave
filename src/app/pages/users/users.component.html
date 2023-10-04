@@ -1,7 +1,7 @@
 <app-header [showBack]="true" [showMenu]="true" [actions]="menuActions">
   <div class="header-content">
     <h1>
-      Tireurs
+      {{target ? 'Sélectionnez un tireur' : 'Tireurs'}}
     </h1>
     <p>
       <span class="title">{{session.title}}</span>

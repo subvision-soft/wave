@@ -12,6 +12,7 @@ import { DOCUMENT } from '@angular/common';
 import { Router } from '@angular/router';
 import { PlastronService } from '../../services/plastron.service';
 import { OpenCVState } from '../../../lib/models';
+import { FilesService } from '../../services/files.service';
 
 @Component({
   selector: 'app-camera-preview',
@@ -103,8 +104,11 @@ export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
     private ngxOpenCv: NgxOpenCVService,
     @Inject(DOCUMENT) document: Document,
     private router: Router,
-    private plastronService: PlastronService
+    private plastronService: PlastronService,
+    private filesService: FilesService
   ) {
+    filesService.clearTarget();
+    filesService.clearSession();
     router.events.subscribe((val) => {
       let video = document.getElementById('video');
       if (video) {

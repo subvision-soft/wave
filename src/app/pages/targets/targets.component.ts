@@ -4,51 +4,81 @@ import { Session } from '../../models/session';
 import { Category } from '../../models/category';
 import { FilesService } from '../../services/files.service';
 import { Event } from '../../models/event';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-targets',
   templateUrl: './targets.component.html',
   styleUrls: ['./targets.component.scss'],
+  animations: [
+    trigger('enterAnimation', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('300ms', style({ opacity: 1 })),
+      ]),
+      transition(':leave', [
+        style({ opacity: 1 }),
+        animate('300ms', style({ opacity: 0 })),
+      ]),
+    ]),
+  ],
 })
 export class TargetsComponent {
   searchValue = '';
   openCreateTarget = false;
 
   get targets() {
-    return this.session.users.flatMap((user) => {
-      return user.targets || [];
-    });
+    return this.session.users
+      .flatMap((user) => {
+        return user.targets || [];
+      })
+      .filter((target) => {
+        if (!this.eventFilter) return true;
+        return target.event === this.eventFilter;
+      });
   }
 
   getUserById(userId: string) {
     return this.session.users.find((u) => u.id === userId);
   }
 
+  eventFilter?: Event = undefined;
+
   segmentedButtonItems = [
     {
-      label: 'Tous',
+      label: 'Tout',
       key: 'all',
-      onClick: () => {},
+      onClick: () => {
+        this.eventFilter = undefined;
+      },
     },
     {
       label: 'Précision',
       key: 'precision',
-      onClick: () => {},
+      onClick: () => {
+        this.eventFilter = Event.PRECISION;
+      },
     },
     {
       label: 'Biathlon',
       key: 'biathlon',
-      onClick: () => {},
+      onClick: () => {
+        this.eventFilter = Event.BIATHLON;
+      },
     },
     {
       label: 'Super biathlon',
       key: 'super-biathlon',
-      onClick: () => {},
+      onClick: () => {
+        this.eventFilter = Event.SUPER_BIATHLON;
+      },
     },
     {
       label: 'Saisie libre',
       key: 'saisie-libre',
-      onClick: () => {},
+      onClick: () => {
+        this.eventFilter = Event.SAISIE_LIBRE;
+      },
     },
   ];
   selectedSegmentedButton = 'all';

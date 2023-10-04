@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 import { ToastService, ToastTypes } from '../../services/toast.service';
 import { Target } from '../../models/target';
 import { Action } from '../../models/action';
+import { FilesService } from '../../services/files.service';
 
 @Pipe({ name: 'pluck' })
 export class PluckPipe implements PipeTransform {
@@ -34,7 +35,8 @@ export class PluckPipe implements PipeTransform {
 export class ResultComponent implements OnInit {
   menuActions: Action[] = [
     new Action('Enregistrer', undefined, () => {
-      this.saving = true;
+      this.filesService.target = this.target;
+      this.router.navigate(['/sessions']);
     }),
   ];
 
@@ -61,7 +63,7 @@ export class ResultComponent implements OnInit {
   protected _selectedIndex = 0;
   @Output() selectedIndexChange = new EventEmitter<number>();
   protected imagePreview: boolean = false;
-  protected saving: boolean = false;
+  protected saving: boolean = true;
 
   get time(): number {
     return this.target.time;
@@ -69,6 +71,12 @@ export class ResultComponent implements OnInit {
 
   set time(value: number) {
     this.target.time = value;
+  }
+
+  path: string = '/';
+
+  setPath(value: string[]) {
+    this.path = value.join('/');
   }
 
   selectStore: any[] = [
@@ -183,7 +191,8 @@ export class ResultComponent implements OnInit {
   constructor(
     private plastronService: PlastronService,
     private router: Router,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private filesService: FilesService
   ) {
     this.frame = this.plastronService.getFrame();
     if (!this.frame) {

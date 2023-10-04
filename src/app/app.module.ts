@@ -93,6 +93,7 @@ import { TeamItemComponent } from './components/team-item/team-item.component';
 import { UserLastnameFirstCharPipe } from './pipes/UserLastnameFirstCharPipe';
 import { TagComponent } from './components/tag/tag.component';
 import { FileExplorerComponent } from './components/file-explorer/file-explorer.component';
+import { SavingComponent } from './pages/saving/saving.component';
 
 const openCVConfig: OpenCVConfig = {
   openCVDirPath: 'assets/opencv',
@@ -148,6 +149,7 @@ const openCVConfig: OpenCVConfig = {
     TagComponent,
     FileExplorerComponent,
     FileExplorerComponent,
+    SavingComponent,
   ],
   imports: [
     BrowserAnimationsModule,

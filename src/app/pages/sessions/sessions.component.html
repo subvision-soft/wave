@@ -1,4 +1,6 @@
-<app-header [showBack]="false" [showMenu]="true" [actions]="menuActions"><h1>Sessions</h1></app-header>
+<app-header [showBack]="false" [showMenu]="true" [actions]="menuActions">
+  <h1>{{target ? 'Sélectionnez une session' : 'Sessions'}}</h1>
+</app-header>
 <div class="content">
   <app-search [(value)]="searchValue" placeholder="Rechercher une session"></app-search>
   <app-add-button (click)="openCreateSession = true" [@enterAnimation] *ngIf="!searchValue"

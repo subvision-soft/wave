@@ -83,11 +83,11 @@ export class ParametersService {
         const style = document.documentElement.style;
         style.setProperty(
           '--theme-color-1',
-          value === 'true' ? '#242e42' : '#ffffff'
+          value === 'true' ? 'var(--dark)' : '#ffffff'
         );
         style.setProperty(
           '--theme-color-2',
-          value === 'true' ? '#ffffff' : '#242e42'
+          value === 'true' ? '#ffffff' : 'var(--dark)'
         );
       },
     },

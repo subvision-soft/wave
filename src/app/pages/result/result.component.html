@@ -23,11 +23,5 @@
   <app-total-preview [epreuve]="epreuve" [time]="(time-(time%1000))/1000" [impacts]="impacts"></app-total-preview>
 </div>
 
-<app-message-box [type]="'okcancel'"
-                 [(open)]="saving" [title]="'Enregistrer les impacts'"
->
-  <app-file-explorer></app-file-explorer>
-</app-message-box>
-
 
 <!--<canvas id="debug" width="4096" height="4096"></canvas>-->

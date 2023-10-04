@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FilesService } from '../../services/files.service';
 import { FileInfo } from '@capacitor/filesystem';
 import { Router } from '@angular/router';
@@ -27,12 +27,15 @@ export class FileExplorerComponent {
     this.filesService.clearSession();
   }
 
+  @Output() pathChange = new EventEmitter<string[]>();
+
   get path(): string[] {
     return this._path;
   }
 
   set path(value: string[]) {
     this._path = value;
+    this.pathChange.emit(value);
   }
 
   private _path: string[] = [];

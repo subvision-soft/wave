@@ -4,8 +4,9 @@ import { Directory, FileInfo, Filesystem } from '@capacitor/filesystem';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Action } from '../../models/action';
 import { Session } from '../../models/session';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastService, ToastTypes } from '../../services/toast.service';
+import { Target } from '../../models/target';
 
 interface File {
   active: boolean;
@@ -112,7 +113,7 @@ export class SessionsComponent {
               try {
                 await Filesystem.deleteFile({
                   path: this.path + '/' + session.file.name,
-                  directory: Directory.ExternalStorage,
+                  directory: Directory.Data,
                 });
               } catch (error) {
                 reject(error);
@@ -190,14 +191,18 @@ export class SessionsComponent {
     };
   }
 
+  protected target: Target | undefined;
+
   constructor(
     private filesService: FilesService,
     private router: Router,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private route: ActivatedRoute
   ) {
     this.openPath();
     this.initializeMenuActions();
     this.filesService.clearSession();
+    this.target = this.filesService.target;
   }
 
   private _sort: 'name' | 'date' | 'size' | 'type' | undefined = 'name';
@@ -290,13 +295,24 @@ export class SessionsComponent {
           this._path.pop();
         });
     } else {
-      this.router
-        .navigate(['/sessions/session', { file: file }], {
-          queryParams: {
-            url: file.uri,
-          },
-        })
-        .then((r) => console.log(r));
+      if (this.target) {
+        this.filesService.openFileByUrl(file.uri, true).then((result) => {
+          this.filesService.session = result;
+          this.filesService.path = file.uri;
+          this.router.navigate(['/sessions/users']).then((r) => console.log(r));
+          return;
+        });
+      } else {
+        this.filesService.openFileByUrl(file.uri, true).then((result) => {
+          this.filesService.session = result;
+          this.filesService.path = file.uri;
+          this.router.navigate(['/sessions/session'], {
+            queryParams: {
+              url: file.uri,
+            },
+          });
+        });
+      }
     }
   }
 
@@ -328,7 +344,7 @@ export class SessionsComponent {
     if (event.btn === 'ok') {
       Filesystem.mkdir({
         path: this.path + '/' + event.value,
-        directory: Directory.ExternalStorage,
+        directory: Directory.Data,
       })
         .then(() => {
           this.filesService.loadDirectory(this.path).then((files) => {

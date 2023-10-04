@@ -86,14 +86,15 @@
 }
 
 :root {
-  --color-primary: #add3df;
+  --color-primary: #51b6d5;
   --color-secondary: #ebcc7d;
   --color-indicator-1: #ff2e2e;
   --color-indicator-2: #2a9928;
   --color-indicator-3: #f4b63c;
 
   --theme-color-1: #fff;
-  --theme-color-2: #242e42;
+  --theme-color-2: var(--dark);
+  --dark: #242e42;
 
   --color-primary-darker: color-mix(
     in srgb,

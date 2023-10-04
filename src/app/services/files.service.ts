@@ -2,14 +2,21 @@ import { Injectable } from '@angular/core';
 import { Directory, FileInfo, Filesystem } from '@capacitor/filesystem';
 import { Session } from '../models/session';
 import { HistoryService } from './history.service';
+import { Target } from '../models/target';
+import { ToastService, ToastTypes } from './toast.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FilesService {
-  constructor(private historyService: HistoryService) {}
+  constructor(
+    private historyService: HistoryService,
+    private toastService: ToastService
+  ) {}
 
   private _session?: Session = undefined;
+
+  private _target?: Target = undefined;
 
   public path: string = '';
 
@@ -29,14 +36,32 @@ export class FilesService {
     this.path = '';
   }
 
-  updateSession() {
-    this.writeFile(this.path, JSON.stringify(this.session), true);
+  get target(): Target | undefined {
+    return this._target;
+  }
+
+  set target(target: Target | undefined) {
+    this._target = target;
+  }
+
+  clearTarget() {
+    this._target = undefined;
+  }
+
+  async updateSession() {
+    await this.writeFile(this.path, JSON.stringify(this.session), true);
+    this.toastService.initiate({
+      title: 'Sauvegarde réussie',
+      type: ToastTypes.SUCCESS,
+      content: 'La session a été sauvegardée avec succès',
+      duration: 1500,
+    });
   }
 
   async loadFiles(path: string, files: FileInfo[] = []) {
     const result = await Filesystem.readdir({
       path: path,
-      directory: Directory.ExternalStorage,
+      directory: Directory.Data,
     });
     for (const file of result.files) {
       if (file.type === 'directory') {
@@ -51,7 +76,7 @@ export class FilesService {
   async loadDirectory(path: string, files: FileInfo[] = []) {
     const result = await Filesystem.readdir({
       path: path,
-      directory: Directory.ExternalStorage,
+      directory: Directory.Data,
     });
     for (const file of result.files) {
       if (file.type === 'file' && !file.name.endsWith('.subapp')) {
@@ -71,7 +96,7 @@ export class FilesService {
       path: path,
       data: btoa(content),
       recursive: true,
-      directory: directoryInPath ? undefined : Directory.ExternalStorage,
+      directory: directoryInPath ? undefined : Directory.Data,
     })
       .then(() => {})
       .catch(() => {});
@@ -101,7 +126,7 @@ export class FilesService {
   async deleteFile(file: FileInfo) {
     await Filesystem.deleteFile({
       path: file.uri,
-      directory: Directory.ExternalStorage,
+      directory: Directory.Data,
     });
   }
 }

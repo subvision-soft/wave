@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Parameter } from '../../models/parameter';
 import { ParameterType } from '../../models/parameter-type';
 import { ParametersService } from '../../services/parameters.service';
+import { FilesService } from '../../services/files.service';
 
 class ParameterGroup {
   label: string = '';
@@ -94,7 +95,13 @@ export class SettingsComponent {
     },
   ];
 
-  constructor(private parametersService: ParametersService) {}
+  constructor(
+    private parametersService: ParametersService,
+    private filesService: FilesService
+  ) {
+    filesService.clearTarget();
+    filesService.clearSession();
+  }
 
   protected readonly ParameterType = ParameterType;
   protected readonly console = console;

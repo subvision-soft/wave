@@ -4,6 +4,8 @@ import { User } from '../../models/user';
 import { Action } from '../../models/action';
 import { Category } from '../../models/category';
 import { FilesService } from '../../services/files.service';
+import { Target } from '../../models/target';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-users',
@@ -11,6 +13,14 @@ import { FilesService } from '../../services/files.service';
   styleUrls: ['./users.component.scss'],
 })
 export class UsersComponent {
+  set target(value: Target | undefined) {
+    this._target = value;
+  }
+
+  get target(): Target | undefined {
+    return this._target;
+  }
+
   searchValue = '';
   openCreateUser = false;
   menuActions = [
@@ -67,9 +77,11 @@ export class UsersComponent {
     ],
     teams: [],
   };
+  private _target: Target | undefined;
 
-  constructor(private filesService: FilesService) {
+  constructor(private filesService: FilesService, private router: Router) {
     this.session = this.filesService.session || this.session;
+    this._target = this.filesService.target;
   }
 
   storeCategories = [
@@ -124,6 +136,21 @@ export class UsersComponent {
       }
     } else {
       // Ouvrir page user
+      if (this.target) {
+        this.target = { ...this.target, user: user.id };
+        this.session.users = this.session.users.map((u) => {
+          if (u === user) {
+            if (this.target) {
+              u.targets.push(this.target);
+            }
+          }
+          return u;
+        });
+        this.filesService.session = this.session;
+        this.filesService.clearTarget();
+        this.filesService.clearSession();
+        this.router.navigate(['/camera']);
+      }
     }
   }
 

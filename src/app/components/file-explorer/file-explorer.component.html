@@ -1,8 +1,3 @@
-<div class="path">
-  <app-tag class="ripple" (click)="openRoot()">/</app-tag>
-  <app-tag class="ripple" [@enterAnimation] (click)="openAtIndexPath(index)"
-           *ngFor="let pathItem of path; index as index">{{pathItem}}</app-tag>
-</div>
 <div class="sessions">
   <app-session-item *ngIf="pathString.length > 0" [@enterAnimation] [file]="returnFile" (click)="back()"
                     [goBack]="true"></app-session-item>
