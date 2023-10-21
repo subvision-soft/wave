@@ -1,10 +1,10 @@
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://github.com/DayUx/subapp/blob/master/LICENCE)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://github.com/DayUx/calypso/blob/master/LICENCE)
 
 # WIP
 
-# Subapp - Application de calcul des points pour le tir sur cible subaquatique
+# Calypso - Application de calcul des points pour le tir sur cible subaquatique
 
-subapp est une application mobile conçue pour faciliter le calcul des points pour le tir sur cible subaquatique à partir
+calypso est une application mobile conçue pour faciliter le calcul des points pour le tir sur cible subaquatique à partir
 d'une photo de la cible. L'application utilise les technologies TypeScript ,Angular ainsi que Opencv compilé en wasm.
 
 [Projet figma en cours](https://www.figma.com/file/zgSt1eqy80DLdMJD3P1b6O/subapp?type=design&node-id=0%3A1&mode=design&t=2yJoNjEJBKzxWvpx-1)
