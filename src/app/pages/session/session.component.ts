@@ -38,8 +38,8 @@ export class SessionComponent implements OnInit {
     const url = this.route.snapshot.queryParams['url'];
     if (url) {
       this.filesService.openFileByUrl(url, true).then((result) => {
-        this.filesService.session = result;
         this.filesService.path = url;
+        this.filesService.session = result;
         this.session = result;
       });
     }

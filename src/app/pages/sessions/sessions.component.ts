@@ -4,7 +4,7 @@ import { Directory, FileInfo, Filesystem } from '@capacitor/filesystem';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Action } from '../../models/action';
 import { Session } from '../../models/session';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ToastService, ToastTypes } from '../../services/toast.service';
 import { Target } from '../../models/target';
 
@@ -113,7 +113,7 @@ export class SessionsComponent {
               try {
                 await Filesystem.deleteFile({
                   path: this.path + '/' + session.file.name,
-                  directory: Directory.Data,
+                  directory: Directory.ExternalStorage,
                 });
               } catch (error) {
                 reject(error);
@@ -196,8 +196,7 @@ export class SessionsComponent {
   constructor(
     private filesService: FilesService,
     private router: Router,
-    private toastService: ToastService,
-    private route: ActivatedRoute
+    private toastService: ToastService
   ) {
     this.openPath();
     this.initializeMenuActions();
@@ -344,7 +343,7 @@ export class SessionsComponent {
     if (event.btn === 'ok') {
       Filesystem.mkdir({
         path: this.path + '/' + event.value,
-        directory: Directory.Data,
+        directory: Directory.ExternalStorage,
       })
         .then(() => {
           this.filesService.loadDirectory(this.path).then((files) => {

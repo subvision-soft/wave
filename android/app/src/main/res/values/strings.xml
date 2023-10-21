@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">subapp</string>
-    <string name="title_activity_main">subapp</string>
-    <string name="package_name">fr.subapp.app</string>
-    <string name="custom_url_scheme">fr.subapp.app</string>
+  <string name="app_name">calypso</string>
+  <string name="title_activity_main">calypso</string>
+  <string name="package_name">fr.subapp.app</string>
+  <string name="custom_url_scheme">fr.subapp.app</string>
 </resources>
