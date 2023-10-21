@@ -1,6 +1,7 @@
 import { Component, HostBinding } from '@angular/core';
 import { ThemeColorService } from './services/theme-color.service';
 import { fadeAnimation } from './utils/animations';
+import { ParametersService } from './services/parameters.service';
 
 @Component({
   selector: 'app-root',
@@ -21,16 +22,11 @@ export class AppComponent {
   ];
   cssVariables: string = '';
 
-  constructor(private themeColorService: ThemeColorService) {
-    this.showSplashScreen();
+  constructor(
+    private themeColorService: ThemeColorService,
+    private parametersService: ParametersService
+  ) {
     this.themeColorService.setCssVariables('#1677ff');
-  }
-
-  private async showSplashScreen() {
-    console.log('showSplashScreen');
-    const lottie = (window as any).lottie;
-    await lottie.splashscreen.hide();
-    await lottie.splashscreen.show('public/assets/subapp.json', false);
   }
 
   tabSelected(tab: any) {

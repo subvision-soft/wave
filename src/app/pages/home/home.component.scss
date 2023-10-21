@@ -11,8 +11,9 @@
     top: 0;
     background: var(--color-background-1);
     transition: var(--transition);
-    height: 30px;
     z-index: 1;
+    display: flex;
+    justify-content: center;
   }
 
   h1 {
@@ -44,6 +45,11 @@
       max-width: 150px;
       display: flex;
       flex-direction: column;
+
+      app-empty-text {
+        margin: auto;
+        padding: 0;
+      }
 
       h1 {
         font-size: var(--font-size);

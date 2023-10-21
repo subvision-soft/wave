@@ -18,7 +18,6 @@ export class SlideSheetComponent {
   constructor() {}
 
   close() {
-    console.log('close');
     this.open = false;
     this.openChange.emit(this.open);
   }

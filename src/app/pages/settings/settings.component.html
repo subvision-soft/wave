@@ -3,11 +3,21 @@
 
   <app-search [(value)]="searchValue" placeholder="Rechercher des paramètres"></app-search>
   <div class="parameters">
+    <ng-container *ngFor="let group of settings">
+      <div class="group" *ngIf="groupIsVisible(group)">
+        <h1>{{group.label}}</h1>
+        <ng-container *ngFor="let parameter of group.parameters">
+          <app-input *ngIf="parameter.label.toLowerCase().includes(this.searchValue.toLowerCase())" [horizontal]="true"
+                     [label]="parameter.label"
+                     [type]="parameter.type" [max]="parameter.max" [min]="parameter.min"
+                     [(value)]="parameter.value"
+                     (valueChange)="onChange(parameter, $event)"
+          >
+          </app-input>
+        </ng-container>
+      </div>
+    </ng-container>
 
-    <div class="group" *ngFor="let group of settings">
-      <h1>{{group.label}}</h1>
-      <app-setting-picker *ngFor="let parameter of group.parameters" [setting]="parameter"/>
-    </div>
   </div>
 </div>
 

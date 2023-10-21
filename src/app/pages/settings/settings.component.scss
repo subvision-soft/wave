@@ -30,6 +30,11 @@
         border-bottom: 1px solid var(--color-primary-lighter-5);
         padding-bottom: var(--padding);
 
+        &:last-child {
+          border-bottom: none;
+          padding-bottom: 0;
+        }
+
         h1 {
           font-size: var(--font-size-lg);
           font-weight: var(--font-weight-bold);

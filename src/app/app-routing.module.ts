@@ -9,6 +9,8 @@ import { SessionsComponent } from './pages/sessions/sessions.component';
 import { SessionComponent } from './pages/session/session.component';
 import { UsersComponent } from './pages/users/users.component';
 import { TargetsComponent } from './pages/targets/targets.component';
+import { TeamsComponent } from './pages/teams/teams.component';
+import { SavingComponent } from './pages/saving/saving.component';
 
 const routes: Routes = [
   {
@@ -35,6 +37,10 @@ const routes: Routes = [
         path: 'result',
         component: ResultComponent,
       },
+      {
+        path: 'saving',
+        component: SavingComponent,
+      },
     ],
   },
   {
@@ -59,6 +65,10 @@ const routes: Routes = [
       {
         path: 'targets',
         component: TargetsComponent,
+      },
+      {
+        path: 'teams',
+        component: TeamsComponent,
       },
     ],
   },

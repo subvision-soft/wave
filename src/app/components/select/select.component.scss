@@ -2,7 +2,7 @@
   &.compact {
     .input {
       height: auto;
-      padding: calc(var(--padding-sm) / 3) var(--padding);
+      padding: calc(var(--padding-sm) / 2) var(--padding);
       border-radius: var(--border-radius-sm);
       font-weight: var(--font-weight-normal);
       box-shadow: none;
@@ -16,12 +16,21 @@
     margin-left: var(--padding);
   }
 
+  &.multiple {
+    .item {
+      border-radius: var(--border-radius-sm);
+      background: var(--color-primary-lighter-5);
+      font-size: calc(var(--font-size) * 0.9);
+      padding: calc(var(--padding-sm) / 3) var(--padding);
+    }
+  }
+
   .input {
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-direction: row;
-    color: var(--colorText);
+    color: var(--color-dark1-1);
     font-size: var(--font-size);
     font-weight: var(--font-weight-semi-bold);
     border-radius: 1000px;
@@ -30,8 +39,11 @@
     box-shadow: var(--box-shadow-1);
     padding: 0 var(--padding);
 
-    span {
+    .items {
       flex: 1;
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--padding-sm);
     }
 
     & .icon {
@@ -58,6 +70,7 @@
     border-radius: var(--border-radius-sm);
     font-size: var(--font-size);
     font-weight: var(--font-weight-normal);
+    color: var(--color-dark1-1);
 
     & .icon {
       visibility: hidden;

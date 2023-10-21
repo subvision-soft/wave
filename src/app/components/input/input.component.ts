@@ -1,9 +1,10 @@
 import {
   Component,
-  ElementRef, EventEmitter,
+  ElementRef,
+  EventEmitter,
   HostBinding,
-  HostListener,
-  Input, Output,
+  Input,
+  Output,
   ViewChild,
 } from '@angular/core';
 
@@ -16,13 +17,20 @@ export class InputComponent {
   get value(): string {
     return this._value;
   }
+
+  @Input() @HostBinding('class.horizontal') horizontal: boolean = false;
+
   @Input()
   set value(value: string) {
     this._value = value;
     this.valueChange.emit(value);
   }
 
-  @Output( 'valueChange' ) valueChange = new EventEmitter<string>();
+  get checked(): boolean {
+    return this.value === 'true' || this.value === 'on';
+  }
+
+  @Output('valueChange') valueChange = new EventEmitter<string>();
   @Input() type:
     | 'text'
     | 'password'
@@ -71,11 +79,15 @@ export class InputComponent {
     return this.type;
   }
 
-  @HostListener('click') onClick(): void {}
-
   @ViewChild('input') input: ElementRef | undefined;
 
   focus(): void {
     this.input?.nativeElement.focus();
+  }
+
+  protected readonly console = console;
+
+  onCheck() {
+    this.value = this.checked ? 'false' : 'true';
   }
 }

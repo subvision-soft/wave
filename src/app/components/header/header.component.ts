@@ -31,14 +31,11 @@ export class HeaderComponent {
     let curleft = 0;
     let curtop = 0;
     let obj = this.menuButtonRef?.nativeElement;
-    console.log('menuPosition', obj);
     if (obj && obj.offsetParent) {
       do {
         curleft += obj.offsetLeft;
         curtop += obj.offsetTop;
       } while ((obj = obj.offsetParent));
-
-      console.log('menuPosition', curleft, curtop);
       return { x: curleft, y: curtop };
     }
     return {
@@ -48,7 +45,6 @@ export class HeaderComponent {
   }
 
   get menuX(): number {
-    console.log('menuX', this.menuButtonRef?.nativeElement.offsetLeft);
     return this.menuButtonRef?.nativeElement.offsetLeft || 0;
   }
 

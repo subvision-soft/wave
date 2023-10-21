@@ -5,6 +5,40 @@
   justify-content: center;
   --space-left-input: var(--padding);
 
+  input[type="color"] {
+    -webkit-appearance: none;
+    border: none;
+    width: 20px !important;
+    height: 20px;
+    border-radius: 50%;
+    overflow: hidden;
+    padding: 0 !important;
+  }
+
+  input[type="color"]::-webkit-color-swatch-wrapper {
+    padding: 0;
+  }
+
+  input[type="color"]::-webkit-color-swatch {
+    border: none;
+  }
+
+  &.horizontal {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+
+    .label {
+      flex: 1;
+      margin-left: 0;
+    }
+
+    input {
+      padding: calc(var(--padding-sm) / 3) var(--padding-sm);
+      text-align: right;
+    }
+  }
+
   .label {
     color: var(--color-dark2-1);
     font-weight: var(--font-weight-semi-bold);
@@ -30,6 +64,7 @@
     input {
       width: 100%;
       box-sizing: border-box;
+      color: var(--color-dark1-1);
     }
   }
 
@@ -52,7 +87,6 @@
       height: var(--font-size);
       width: calc(var(--font-size) * 1.6);
       border-radius: var(--border-radius-sm);
-      background: #fff;
 
       input {
         height: 100%;
@@ -81,14 +115,14 @@
         border-radius: var(--border-radius-sm);
         width: var(--toggle-button-size);
         height: var(--toggle-button-size);
-        background: #fff;
+        background: var(--color-background-1);
         transition: var(--transition);
         border: 2px solid transparent;
         box-sizing: border-box;
       }
 
       input:checked:after {
-        background: #fff;
+        background: var(--color-background-1);
         left: calc(100% - var(--toggle-button-padding));
         transform: translate(-100%, 0);
       }

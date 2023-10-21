@@ -1,11 +1,14 @@
 <label class="label" *ngIf="label">{{label}}</label>
 
 <a class="input" (click)="openChange(true)">
-  <span>{{displayedField}}</span>
+  <span class="items">
+    <span class="placeholder" *ngIf="!value || value?.length === 0">{{placeholder}}</span>
+    <span class="item" *ngFor="let record of displayedField">{{record}}</span>
+  </span>
   <ng-icon class="icon" size="16" name="iconoirNavArrowDown"></ng-icon>
 </a>
 <app-slide-sheet [(open)]="open">
-  <div *ngFor="let record of store" [class]="value === record[valueField] ? 'row active' : 'row'"
+  <div *ngFor="let record of store" [class]="isSelected(record) ? 'row active' : 'row'"
        (click)="select(record[valueField])">
     <span>{{record[displayField]}}</span>
     <ng-icon class="icon" size="25" name="iconoirCheck"></ng-icon>

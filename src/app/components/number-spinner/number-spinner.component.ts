@@ -41,7 +41,6 @@ export class NumberSpinnerComponent {
     }
     this._value = value;
     this.valueChange.emit(this._value);
-    console.log('value', value);
   }
 
   get value(): number {

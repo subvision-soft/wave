@@ -1,18 +1,24 @@
-<img class="logo" src="assets/img/logo_s_white.svg" [style.height]="logoSize+'px'" alt="logo"/>
+<span class="logo">
+<app-logo [size]="logoSize"/>
+</span>
 <h1 class="titre">Actualités</h1>
 <div class="actualites">
   <div class="actualite ripple" *ngFor="let actualite of actualites">
     <h1>{{actualite.name}}</h1>
     <p>{{actualite.date.toLocaleDateString("fr")}}</p>
   </div>
+  <div *ngIf="actualites.length == 0" class="actualite ripple">
+    <app-empty-text [text]="'Aucune actualité'"></app-empty-text>
+  </div>
 </div>
 <div class="titre-sessions">
-  <h1>Sessions</h1>
-  <a class="button ripple" routerLink="/sessions">Tout voir</a>
+  <h1>Récemment ouverts</h1>
+  <app-tag *ngIf="seances.length != 0" class="button ripple" routerLink="/sessions">Tout voir</app-tag>
 </div>
 <div class="sessions">
-  <app-session-item [file]="seance" *ngFor="let seance of seances">
+  <app-session-item (click)="openSession(seance)" [url]="seance" *ngFor="let seance of seances" [showLogo]="true">
   </app-session-item>
+  <app-empty-text *ngIf="seances.length == 0" [text]="'Aucune session'"></app-empty-text>
 </div>
 
 <div *ngFor="let file of epubFiles">

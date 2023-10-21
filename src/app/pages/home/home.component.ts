@@ -6,6 +6,8 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FilesService } from '../../services/files.service';
+import { HistoryService } from '../../services/history.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -19,101 +21,17 @@ export class HomeComponent implements OnInit {
 
   epubFiles: string[] = [];
 
-  actualites: any[] = [
-    {
-      id: 1,
-      name: 'Open International de Caen',
-      date: new Date(),
-    },
-    {
-      id: 1,
-      name: 'Open International de Caen',
-      date: new Date(),
-    },
-    {
-      id: 1,
-      name: 'Open International de Caen',
-      date: new Date(),
-    },
-    {
-      id: 1,
-      name: 'Open International de Caen',
-      date: new Date(),
-    },
-    {
-      id: 1,
-      name: 'Open International de Caen',
-      date: new Date(),
-    },
-  ];
+  actualites: any[] = [];
 
-  seances: any[] = [
-    {
-      id: 1,
-      name: 'Rennes 2022',
-      description: 'Seance 1',
-      date: new Date(),
-      numberOfPeople: 28,
-    },
-    {
-      id: 2,
-      name: 'Seance 2',
-      description: 'Seance 2',
-      date: new Date(),
-      numberOfPeople: 10,
-    },
-    {
-      id: 1,
-      name: 'Seance 1',
-      description: 'Seance 1',
-      date: new Date(),
-      numberOfPeople: 10,
-    },
-    {
-      id: 2,
-      name: 'Seance 2',
-      description: 'Seance 2',
-      date: new Date(),
-      numberOfPeople: 10,
-    },
-    {
-      id: 1,
-      name: 'Seance 1',
-      description: 'Seance 1',
-      date: new Date(),
-      numberOfPeople: 10,
-    },
-    {
-      id: 2,
-      name: 'Seance 2',
-      description: 'Seance 2',
-      date: new Date(),
-      numberOfPeople: 10,
-    },
-    {
-      id: 1,
-      name: 'Seance 1',
-      description: 'Seance 1',
-      date: new Date(),
-      numberOfPeople: 10,
-    },
-    {
-      id: 2,
-      name: 'Seance 2',
-      description: 'Seance 2',
-      date: new Date(),
-      numberOfPeople: 10,
-    },
-    {
-      id: 1,
-      name: 'Seance 1',
-      description: 'Seance 1',
-      date: new Date(),
-      numberOfPeople: 10,
-    },
-  ];
+  private _seances: string[] = [];
 
-  constructor(private filesService: FilesService) {
+  constructor(
+    private historyService: HistoryService,
+    private router: Router,
+    private filesService: FilesService
+  ) {
+    filesService.clearTarget();
+    filesService.clearSession();
     const appPage = document.getElementById('app-page');
     appPage?.addEventListener('scroll', (event) => {
       // @ts-ignore
@@ -131,6 +49,17 @@ export class HomeComponent implements OnInit {
         });
       }
     });
+  }
+
+  get seances(): string[] {
+    console.log(this.historyService.history);
+    let map = this.historyService.history
+      ?.sort((a, b) => {
+        return new Date(b.date).getTime() - new Date(a.date).getTime();
+      })
+      .map((history) => history.url);
+    map = map?.slice(0, 6);
+    return map;
   }
 
   ngOnInit(): void {
@@ -151,6 +80,16 @@ export class HomeComponent implements OnInit {
     ) {
       console.log('End');
     }
+  }
+
+  openSession(url: string) {
+    this.router
+      .navigate(['/sessions/session', { url: url }], {
+        queryParams: {
+          url: url,
+        },
+      })
+      .then((r) => console.log(r));
   }
 
   protected readonly console = console;

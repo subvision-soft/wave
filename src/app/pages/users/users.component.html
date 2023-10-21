@@ -1,7 +1,7 @@
 <app-header [showBack]="true" [showMenu]="true" [actions]="menuActions">
   <div class="header-content">
     <h1>
-      Tireurs
+      {{target ? 'Sélectionnez un tireur' : 'Tireurs'}}
     </h1>
     <p>
       <span class="title">{{session.title}}</span>
@@ -34,7 +34,8 @@
                  [(open)]="openCreateUser"
                  (callback)="createUserCallback($event)"
                  type="okcancel">
-  <app-input [(value)]="newUser.name" label="Nom Prénom"></app-input>
+  <app-input [(value)]="newUser.firstname" label="Prénom"></app-input>
+  <app-input [(value)]="newUser.lastname" label="Nom"></app-input>
   <app-input type="number" [(value)]="newUser.id" label="Numéro"></app-input>
   <app-select label="Catégorie" [compact]="true" [store]="storeCategories" [(value)]="newUser.category"></app-select>
 </app-message-box>

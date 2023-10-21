@@ -1,6 +1,6 @@
 <h1>{{setting.label}}</h1>
 
-<input *ngIf="setting.type != ParameterType.Array " [max]="setting.max"
+<input [max]="setting.max"
        [min]="setting.min"
        [value]="setting.value"
        (change)="onChange($event)"

@@ -1,0 +1,41 @@
+<app-header [showBack]="true" [showMenu]="true" [actions]="menuActions">
+  <div class="header-content">
+    <h1>
+      Equipes
+    </h1>
+    <p>
+      <span class="title">{{session.title}}</span>
+      <span class="date">({{session.date | date:'dd/MM/yyyy'}})</span>
+    </p>
+  </div>
+</app-header>
+<div class="content">
+  <app-search [(value)]="searchValue" placeholder="Rechercher un équipe"></app-search>
+  <app-add-button (click)="openCreateTeam = true" *ngIf="!searchValue"
+                  label="Ajouter un équipe"></app-add-button>
+
+  <div class="teams">
+
+    <app-empty-text *ngIf="teams.length === 0" [icon]="searchValue?'jamSearch':'jamGhost'"
+                    [text]="searchValue?'Pas de résultat':'Aucun équipe enregistrée'"></app-empty-text>
+
+    <app-team-item [selected]="isTeamSelected(team)" long-press
+                   [session]="session"
+                   (onLongPressing)="onLongPress($event,team)"
+                   (click)="teamClick(team)" [team]="team"
+                   *ngFor="let team of teams">
+    </app-team-item>
+  </div>
+</div>
+
+
+<app-message-box [title]="'Ajouter un équipe'"
+                 [(open)]="openCreateTeam"
+                 (callback)="createTeamCallback($event)"
+                 type="okcancel">
+  <app-input [(value)]="newTeam.name" label="Nom"></app-input>
+  <app-select [multiple]="true" placeholder="Aucun tireur sélectionné" [label]="'Tireurs'" [store]="storeUsers"
+              [(value)]="newTeam.users"
+              [compact]="true"></app-select>
+</app-message-box>
+

@@ -1,8 +1,21 @@
-import { ParameterType } from './parameter-type';
-
 export class Parameter {
   id: string = '';
-  type: ParameterType = ParameterType.Text;
+  type:
+    | 'text'
+    | 'password'
+    | 'email'
+    | 'number'
+    | 'date'
+    | 'time'
+    | 'datetime-local'
+    | 'month'
+    | 'week'
+    | 'url'
+    | 'tel'
+    | 'search'
+    | 'radio'
+    | 'checkbox'
+    | 'color' = 'text';
   value: any = null;
   label: string = '';
   min?: number = 0;

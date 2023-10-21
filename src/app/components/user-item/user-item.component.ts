@@ -21,7 +21,6 @@ export class UserItemComponent {
 
   @Input()
   set selected(value: boolean) {
-    console.log('selected', value);
     this._selected = value;
   }
 }

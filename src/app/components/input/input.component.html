@@ -2,9 +2,13 @@
 <label class="input-content">
   <input
     #input
-    [(ngModel)]="value"
+
+    *ngIf="type!=='checkbox'"
+
+
     [name]="name"
     [type]="type"
+    [(ngModel)]="value"
     [placeholder]="placeholder"
     [disabled]="disabled"
     [required]="required"
@@ -12,9 +16,19 @@
     [min]="min"
     [max]="max"
     [step]="step"
-    [size]="size"
     [autocomplete]="autocomplete"
     [autofocus]="autofocus"
   >
-  <span *ngIf="type=='checkbox'" class="toggle"></span>
+  <input
+    *ngIf="type==='checkbox'"
+    [name]="name"
+    [type]="type"
+    [disabled]="disabled"
+    [required]="required"
+    [readonly]="readonly"
+    [checked]="checked"
+    (change)="onCheck()"
+  >
+
+  <span *ngIf="type==='checkbox'" class="toggle"></span>
 </label>

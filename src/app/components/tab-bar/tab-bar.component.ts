@@ -20,6 +20,7 @@ export class TabBarComponent {
   private title: string = '';
 
   protected readonly iconoirHome = iconoirHome;
+
   constructor(private router: Router) {
     router.events.subscribe((val) => {
       this.updateActive();
@@ -28,6 +29,7 @@ export class TabBarComponent {
 
   private updateActive() {
     const path = this.router.url;
+
     this.tabs.forEach((tab) => {
       tab.active = path.startsWith(tab.link);
       this.title = tab.label;

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Parameter } from '../../models/parameter';
 import { ParameterType } from '../../models/parameter-type';
 import { ParametersService } from '../../services/parameters.service';
+import { FilesService } from '../../services/files.service';
 
 class ParameterGroup {
   label: string = '';
@@ -14,20 +15,35 @@ class ParameterGroup {
   styleUrls: ['./settings.component.scss'],
 })
 export class SettingsComponent {
-  get settings(): ParameterGroup[] {
-    return this._settings.map((group) => {
-      return {
-        label: group.label,
-        parameters: group.parameters.filter((parameter) => {
-          return parameter.label
-            .toLowerCase()
-            .includes(this.searchValue.toLowerCase());
-        }),
-      };
+  get darkTheme(): string {
+    return this._darkTheme;
+  }
+
+  set darkTheme(value: string) {
+    this._darkTheme = value;
+
+    console.log(this.darkTheme === 'true' ? '#242e42' : '#ffffff');
+  }
+
+  groupIsVisible(group: ParameterGroup): boolean {
+    return group.parameters.some((parameter) => {
+      return parameter.label
+        .toLowerCase()
+        .includes(this.searchValue.toLowerCase());
     });
   }
 
+  get settings(): ParameterGroup[] {
+    return this._settings;
+  }
+
   searchValue: string = '';
+
+  private _darkTheme: string = 'true';
+
+  onChange(setting: Parameter, event: any) {
+    this.parametersService.set(setting.id, setting.value);
+  }
 
   private _settings: ParameterGroup[] = [
     {
@@ -37,41 +53,56 @@ export class SettingsComponent {
           id: 'COULEUR_PRINCIPALE',
           label: 'Couleur principale',
           value: this.parametersService.get('COULEUR_PRINCIPALE').value,
-          type: ParameterType.Color,
+          type: 'color',
         },
         {
           id: 'COULEUR_SECONDAIRE',
           label: 'Couleur secondaire',
           value: this.parametersService.get('COULEUR_SECONDAIRE').value,
-          type: ParameterType.Color,
+          type: 'color',
         },
         {
           id: 'RAYON_BORDURES',
           label: 'Rayon des bordures',
           value: this.parametersService.get('RAYON_BORDURES').value,
-          type: ParameterType.Number,
+          type: 'number',
           min: 0,
           max: 40,
         },
+        // {
+        //   id: 'TAILLE_POLICE',
+        //   label: 'Taille de police',
+        //   value: this.parametersService.get('TAILLE_POLICE').value,
+        //   min: 10,
+        //   max: 40,
+        //   type: 'number',
+        // },
+        // {
+        //   id: 'TAILLE_ESPACES',
+        //   label: 'Taille des espacements',
+        //   value: this.parametersService.get('TAILLE_ESPACES').value,
+        //   min: 10,
+        //   max: 40,
+        //   type: 'number',
+        // },
         {
-          id: 'TAILLE_POLICE',
-          label: 'Taille de police',
-          value: this.parametersService.get('TAILLE_POLICE').value,
-          min: 10,
-          max: 40,
-          type: ParameterType.Number,
-        },
-        {
-          id: 'TAILLE_ESPACES',
-          label: 'Taille des espacements',
-          value: this.parametersService.get('TAILLE_ESPACES').value,
-          min: 10,
-          max: 40,
-          type: ParameterType.Number,
+          id: 'THEME_SOMBRE',
+          label: 'Thème sombre',
+          value: this.parametersService.get('THEME_SOMBRE').value,
+          type: 'checkbox',
         },
       ],
     },
   ];
 
-  constructor(private parametersService: ParametersService) {}
+  constructor(
+    private parametersService: ParametersService,
+    private filesService: FilesService
+  ) {
+    filesService.clearTarget();
+    filesService.clearSession();
+  }
+
+  protected readonly ParameterType = ParameterType;
+  protected readonly console = console;
 }

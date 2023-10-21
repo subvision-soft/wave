@@ -98,4 +98,6 @@ export class MessageBoxComponent {
     this._open = false;
     this.openChange.emit(this._open);
   }
+
+  protected readonly console = console;
 }

@@ -87,6 +87,13 @@ import { UserItemComponent } from './components/user-item/user-item.component';
 import { ToastComponent } from './components/toast/toast.component';
 import { TargetsComponent } from './pages/targets/targets.component';
 import { TargetItemComponent } from './components/target-item/target-item.component';
+import { LogoComponent } from './components/logo/logo.component';
+import { TeamsComponent } from './pages/teams/teams.component';
+import { TeamItemComponent } from './components/team-item/team-item.component';
+import { UserLastnameFirstCharPipe } from './pipes/UserLastnameFirstCharPipe';
+import { TagComponent } from './components/tag/tag.component';
+import { FileExplorerComponent } from './components/file-explorer/file-explorer.component';
+import { SavingComponent } from './pages/saving/saving.component';
 
 const openCVConfig: OpenCVConfig = {
   openCVDirPath: 'assets/opencv',
@@ -135,6 +142,14 @@ const openCVConfig: OpenCVConfig = {
     ToastComponent,
     TargetsComponent,
     TargetItemComponent,
+    LogoComponent,
+    TeamsComponent,
+    TeamItemComponent,
+    UserLastnameFirstCharPipe,
+    TagComponent,
+    FileExplorerComponent,
+    FileExplorerComponent,
+    SavingComponent,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -179,6 +194,7 @@ const openCVConfig: OpenCVConfig = {
     }),
     FormsModule,
   ],
+  providers: [UserLastnameFirstCharPipe],
   bootstrap: [AppComponent],
 })
 export class AppModule {

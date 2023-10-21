@@ -1,14 +1,22 @@
 import { Injectable } from '@angular/core';
 import { Directory, FileInfo, Filesystem } from '@capacitor/filesystem';
 import { Session } from '../models/session';
+import { HistoryService } from './history.service';
+import { Target } from '../models/target';
+import { ToastService, ToastTypes } from './toast.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FilesService {
-  constructor() {}
+  constructor(
+    private historyService: HistoryService,
+    private toastService: ToastService
+  ) {}
 
   private _session?: Session = undefined;
+
+  private _target?: Target = undefined;
 
   public path: string = '';
 
@@ -28,8 +36,27 @@ export class FilesService {
     this.path = '';
   }
 
-  updateSession() {
-    this.writeFile(this.path, JSON.stringify(this.session), true);
+  get target(): Target | undefined {
+    return this._target;
+  }
+
+  set target(target: Target | undefined) {
+    this._target = target;
+  }
+
+  clearTarget() {
+    this._target = undefined;
+  }
+
+  async updateSession() {
+    await this.writeFile(this.path, JSON.stringify(this.session), true);
+    this.toastService.initiate({
+      title: 'Sauvegarde réussie',
+      type: ToastTypes.SUCCESS,
+      content: 'La session a été sauvegardée avec succès',
+      duration: 1500,
+      show: true,
+    });
   }
 
   async loadFiles(path: string, files: FileInfo[] = []) {
@@ -80,14 +107,21 @@ export class FilesService {
     return await this.openFileByUrl(file.uri);
   }
 
-  async openFileByUrl(url: string): Promise<Session> {
+  async openFileByUrl(url: string, saveInHistory?: boolean): Promise<Session> {
     const result = await Filesystem.readFile({
       path: url,
     });
+
+    let parse: Session;
     if (typeof result.data === 'string') {
-      return JSON.parse(atob(result.data));
+      parse = JSON.parse(atob(result.data));
+    } else {
+      parse = JSON.parse(await result.data.text());
     }
-    return JSON.parse(await result.data.text());
+    if (saveInHistory) {
+      this.historyService.addHistory(url);
+    }
+    return parse;
   }
 
   async deleteFile(file: FileInfo) {

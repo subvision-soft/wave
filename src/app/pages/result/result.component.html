@@ -1,4 +1,4 @@
-<app-header [showBack]="!saving" [showMenu]="!saving">
+<app-header [showBack]="true" [showMenu]="true" [actions]="menuActions">
   <h1>Résultat</h1>
 </app-header>
 
@@ -15,7 +15,7 @@
     <app-target-preview *ngIf="!imagePreview" [(selected)]="selected" [impacts]="impacts"></app-target-preview>
     <canvas id="canvas" height="1000" width="1000" [style.display]="imagePreview?'block' :'none'"></canvas>
   </div>
-  <app-spinner [(value)]="selectedIndex" [values]="impacts | pluck:'points'"></app-spinner>
+  <app-spinner *ngIf="impacts.length > 0" [(value)]="selectedIndex" [values]="impacts | pluck:'points'"></app-spinner>
   <div class="tools">
     <app-select class="multi-impacts" *ngIf="selected" [store]="multipleStore"
                 [(value)]="selected.amount"></app-select>
