@@ -1,13 +1,67 @@
-<svg id="Calque_1" data-name="Calque 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 162 162">
+<!-- Generator: Adobe Illustrator 25.0.0, SVG Export Plug-In  -->
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
+     width="333.5px"
+     height="90px" viewBox="0 0 333.5 90" style="overflow:visible;enable-background:new 0 0 333.5 90;"
+     xml:space="preserve">
+<style type="text/css">
+	.st0 {
+    fill: none;
+    stroke: #F5A569;
+    stroke-width: 18;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-miterlimit: 10;
+  }
+
+  .st1 {
+    fill: none;
+    stroke: #E6E781;
+    stroke-width: 18;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-miterlimit: 10;
+  }
+
+  .st2 {
+    fill: none;
+    stroke: #6FC0A6;
+    stroke-width: 18;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-miterlimit: 10;
+  }
+
+  .st3 {
+    fill: none;
+    stroke: #3B7DC0;
+    stroke-width: 18;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-miterlimit: 10;
+  }
+
+  .st4 {
+    fill: none;
+    stroke: #262B5E;
+    stroke-width: 18;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-miterlimit: 10;
+  }
+</style>
   <defs>
-    <style>.cls-1 {
-      fill: #2B374A;
-    }
-    </style>
-  </defs>
-  <circle class="cls-1" cx="81" cy="81" r="18"/>
-  <path class="cls-1"
-        d="M27,99A18,18,0,0,0,45,81,36,36,0,0,1,81,45h54a18,18,0,0,0,0-36H81A72.08,72.08,0,0,0,9,81,18,18,0,0,0,27,99Z"/>
-  <path class="cls-1"
-        d="M135,63a18,18,0,0,0-18,18,36,36,0,0,1-36,36H27a18,18,0,0,0,0,36H81a72.08,72.08,0,0,0,72-72A18,18,0,0,0,135,63Z"/>
+</defs>
+  <g>
+	<path class="st0" d="M9,9c33.7,0.9,11.3,71.1,45,72C87.7,80.1,65.3,9.9,99,9c0,0,0,0,0,0c33.7,0.9,11.3,71.1,45,72
+		c33.7-0.9,11.3-71.1,45-72c33.7,0.9,11.3,71.1,45,72c33.7-0.9,11.3-71.1,45-72h45.5"/>
+    <path class="st1" d="M9,9c33.7,0.9,11.3,71.1,45,72C87.7,80.1,65.3,9.9,99,9c0,0,0,0,0,0c33.7,0.9,11.3,71.1,45,72
+		c33.7-0.9,11.3-71.1,45-72c33.7,0.9,11.3,71.1,45,72c33.7-0.9,11.3-71.1,45-72"/>
+    <path class="st2" d="M9,9c33.7,0.9,11.3,71.1,45,72C87.7,80.1,65.3,9.9,99,9c0,0,0,0,0,0c33.7,0.9,11.3,71.1,45,72
+		c33.7-0.9,11.3-71.1,45-72c33.7,0.9,11.3,71.1,45,72"/>
+    <line class="st0" x1="288" y1="45" x2="324" y2="45"/>
+    <line class="st0" x1="288" y1="81" x2="324" y2="81"/>
+    <path class="st3" d="M9,9c33.7,0.9,11.3,71.1,45,72C87.7,80.1,65.3,9.9,99,9c0,0,0,0,0,0c33.7,0.9,11.3,71.1,45,72
+		c33.7-0.9,11.3-71.1,45-72"/>
+    <path class="st4" d="M9,9c33.7,0.9,11.3,71.1,45,72C87.7,80.1,65.3,9.9,99,9c0,0,0,0,0,0c33.7,0.9,11.3,71.1,45,72"/>
+</g>
 </svg>
