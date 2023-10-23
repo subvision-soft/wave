@@ -24,6 +24,10 @@ export class FilesService {
     return this._session;
   }
 
+  loadSession(session:Session) {
+    this._session = session;
+  }
+
   set session(session: Session | undefined) {
     this._session = session;
     if (session) {

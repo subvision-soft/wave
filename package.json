@@ -33,6 +33,7 @@
     "@ng-icons/jam-icons": "^25.2.0",
     "capacitor-blob-writer": "^1.1.14",
     "color": "^4.2.3",
+    "cordova-plugin-lottie-splashscreen": "github:timbru31/cordova-plugin-lottie-splashscreen",
     "cordova-plugin-screen-orientation": "^3.0.3",
     "cordova-plugin-zip": "^3.1.0",
     "es6-promise-plugin": "^4.2.2",

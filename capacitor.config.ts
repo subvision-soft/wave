@@ -9,6 +9,14 @@ const config: CapacitorConfig = {
     // url: 'http://192.168.1.40:4200',
     // cleartext: true,
   },
+  cordova: {
+    preferences: {
+      LottieFullscreen: 'true',
+      LottieHideAfterAnimationEnd: 'true',
+      LottieAnimationLocation: 'public/assets/wave.json',
+      LottieFadeOutDuration: '1000',
+    },
+  },
 };
 
 export default config;
