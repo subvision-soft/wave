@@ -27,17 +27,10 @@ export class AppComponent {
     private translate: TranslateService
   ) {
     this.themeColorService.setCssVariables('#1677ff');
-    translate.addLangs(['en', 'fr', 'es', 'it', 'ar-KW', 'ar-DZ']);
-    translate.setDefaultLang('en');
-    const browserLang = 'en';
-    translate.use(
-      browserLang.match(/en|fr|es|it|ar-KW|ar-DZ/) ? browserLang : 'en'
-    );
-  }
-
-  tabSelected(tab: any) {
-    this.title = tab.label;
-    this.backgroundStep1 = tab.label === 'Accueil';
-    this.backgroundStep2 = tab.label === 'Paramètres';
+    let langs = ['en', 'fr', 'es', 'it', 'ar-KW', 'ar-DZ'];
+    this.translate.addLangs(langs);
+    this.translate.setDefaultLang('en');
+    const browserLang = translate.getBrowserLang() || 'en';
+    this.translate.use(langs.includes(browserLang) ? browserLang : 'en');
   }
 }
