@@ -30,10 +30,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 19.x
-      - name: Setup HUB
-        shell: bash
-        run: sudo apt install hub
-
+      - name: Setup Hub
+        uses: Geertvdc/setup-hub@v1.0.0
       - name: install dependencies
         run: npm install
 
