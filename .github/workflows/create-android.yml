@@ -3,8 +3,7 @@ run-name: Creating Production Ready Android App 🚀
 on:
   push:
     branches:
-      - develop
-
+      - master
 jobs:
   build:
     name: Build APK
