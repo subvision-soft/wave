@@ -1,24 +1,24 @@
 <span class="logo">
 <app-logo [size]="logoSize"/>
 </span>
-<h1 class="titre">Actualités</h1>
+<h1 class="titre">{{'HOME.ACTUALITIES' | translate}}</h1>
 <div class="actualites">
   <div class="actualite ripple" *ngFor="let actualite of actualites">
     <h1>{{actualite.name}}</h1>
     <p>{{actualite.date.toLocaleDateString("fr")}}</p>
   </div>
   <div *ngIf="actualites.length == 0" class="actualite ripple">
-    <app-empty-text [text]="'Aucune actualité'"></app-empty-text>
+    <app-empty-text text="{{'HOME.NO_ACTUALITY'| translate}}"></app-empty-text>
   </div>
 </div>
 <div class="titre-sessions">
-  <h1>Récemment ouverts</h1>
-  <app-tag *ngIf="seances.length != 0" class="button ripple" routerLink="/sessions">Tout voir</app-tag>
+  <h1>{{'HOME.RECENTLY_OPENED' | translate}}</h1>
+  <app-tag *ngIf="seances.length != 0" class="button ripple" routerLink="/sessions">{{'HOME.SHOW_ALL' | translate}}</app-tag>
 </div>
 <div class="sessions">
   <app-session-item (click)="openSession(seance)" [url]="seance" *ngFor="let seance of seances" [showLogo]="true">
   </app-session-item>
-  <app-empty-text *ngIf="seances.length == 0" [text]="'Aucune session'"></app-empty-text>
+  <app-empty-text *ngIf="seances.length == 0" text="{{'HOME.NO_SESSION'|translate}}"></app-empty-text>
 </div>
 
 <div *ngFor="let file of epubFiles">

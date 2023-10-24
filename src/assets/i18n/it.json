@@ -1,0 +1,55 @@
+{
+  "HOME": {
+    "ACTUALITIES": "Notizie",
+    "RECENTLY_OPENED": "Recentemente aperto",
+    "SHOW_ALL": "Mostra tutto",
+    "NO_ACTUALITY": "Nessuna notizia",
+    "NO_SESSION": "Nessuna sessione"
+  },
+  "RESULT": {
+    "TITLE" : "Risultato"
+  },
+  "SETTINGS" : {
+    "TITLE" : "Impostazioni",
+    "APPEARANCE" : {
+      "TITLE" : "Aspetto",
+      "THEME_DARK" : "Tema scuro",
+      "FIRST_COLOR" : "Colore principale",
+      "SECOND_COLOR" : "Colore secondario",
+      "BORDER_RADIUS" : "Raggio dei bordi"
+    },
+    "OTHERS": {
+      "TITLE": "Altri"
+    },
+    "SEARCH" : "Cerca impostazioni"
+  },
+
+
+
+  "SESSIONS": {
+    "TITLE": "Sessioni",
+    "SELECT_SESSION": "Seleziona una sessione",
+    "ADD_SESSION" : "Aggiungi una sessione",
+    "NO_RESULT": "Nessun risultato",
+    "SEARCH" : "Cerca una sessione",
+    "EMPTY_FOLDER" : "La cartella è vuota",
+    "MESSAGES_BOX" : {
+      "NEW_FOLDER": {
+        "TITLE" : "Crea una nuova cartella",
+        "MESSAGE" : "Inserisci il nome della cartella"
+      },
+      "NEW_SESSION": {
+        "TITLE" : "Aggiungi una sessione",
+        "INPUTS" : {
+          "TITLE" : "Titolo",
+          "DESCRIPTION" : "Descrizione",
+          "DATE" : "Data"
+        }
+      }
+    }
+  }
+
+
+
+
+}
