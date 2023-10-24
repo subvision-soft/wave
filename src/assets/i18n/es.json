@@ -8,5 +8,46 @@
   },
   "RESULT": {
     "TITLE" : "Resultado"
+  },
+  "SETTINGS" : {
+    "TITLE" : "Configuración",
+    "APPEARANCE" : {
+      "TITLE" : "Apariencia",
+      "THEME_DARK" : "Tema oscuro",
+      "FIRST_COLOR" : "Color principal",
+      "SECOND_COLOR" : "Color secundario",
+      "BORDER_RADIUS" : "Radio de borde"
+    },
+    "OTHERS": {
+      "TITLE": "Otros"
+    },
+    "SEARCH" : "Buscar configuración"
+  },
+
+
+
+  "SESSIONS": {
+    "TITLE": "Sesiones",
+    "SELECT_SESSION": "Seleccione una sesión",
+    "ADD_SESSION" : "Añadir una sesión",
+    "NO_RESULT": "Sin resultado",
+    "SEARCH" : "Buscar una sesión",
+    "EMPTY_FOLDER" : "La carpeta está vacía",
+    "MESSAGES_BOX" : {
+      "NEW_FOLDER": {
+        "TITLE" : "Crear una nueva carpeta",
+        "MESSAGE" : "Introduzca el nombre de la carpeta"
+      },
+      "NEW_SESSION": {
+        "TITLE" : "Añadir una sesión",
+        "INPUTS" : {
+          "TITLE" : "Título",
+          "DESCRIPTION" : "Descripción",
+          "DATE" : "Fecha"
+        }
+      }
+    }
   }
+
 }
+

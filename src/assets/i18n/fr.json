@@ -8,5 +8,41 @@
   },
   "RESULT": {
     "TITLE" : "Résultat"
+  },
+  "SETTINGS" : {
+    "TITLE" : "Paramètres",
+    "APPEARANCE" : {
+      "TITLE" : "Apparence",
+      "THEME_DARK" : "Thème sombre",
+      "FIRST_COLOR" : "Couleur principale",
+      "SECOND_COLOR" : "Couleur secondaire",
+      "BORDER_RADIUS" : "Rayon des bordures"
+    },
+    "OTHERS": {
+      "TITLE": "Autres"
+    },
+    "SEARCH" : "Rechercher des paramètres"
+  },
+  "SESSIONS": {
+    "TITLE": "Sessions",
+    "SELECT_SESSION": "Sélectionnez une session",
+    "ADD_SESSION" : "Ajouter une session",
+    "NO_RESULT": "Pas de résultat",
+    "SEARCH" : "Rechercher une session",
+    "EMPTY_FOLDER" : "Le dossier est vide",
+    "MESSAGES_BOX" : {
+      "NEW_FOLDER": {
+        "TITLE" : "Créer un nouveau dossier",
+        "MESSAGE" : "Entrer le nom du dossier"
+      },
+      "NEW_SESSION": {
+        "TITLE" : "Ajouter une session",
+        "INPUTS" : {
+          "TITLE" : "Titre",
+          "DESCRIPTION" : "Description",
+          "DATE" : "Date"
+        }
+      }
+    }
   }
 }

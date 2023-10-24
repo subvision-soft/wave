@@ -27,13 +27,12 @@ export class AppComponent {
     private translate: TranslateService
   ) {
     this.themeColorService.setCssVariables('#1677ff');
-    translate.addLangs(['en', 'fr', 'es']);
+    translate.addLangs(['en', 'fr', 'es', 'it', 'ar-KW', 'ar-DZ']);
     translate.setDefaultLang('en');
-
-    // const browserLang = translate.getBrowserLang() || 'en';
-    // console.log(browserLang);
     const browserLang = 'en';
-    translate.use(browserLang.match(/en|fr|es/) ? browserLang : 'en');
+    translate.use(
+      browserLang.match(/en|fr|es|it|ar-KW|ar-DZ/) ? browserLang : 'en'
+    );
   }
 
   tabSelected(tab: any) {
