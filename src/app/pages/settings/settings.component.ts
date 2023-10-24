@@ -47,23 +47,23 @@ export class SettingsComponent {
 
   private _settings: ParameterGroup[] = [
     {
-      label: 'SETTINGS.APPEARANCE.TITLE',
+      label: 'Apparence',
       parameters: [
         {
           id: 'COULEUR_PRINCIPALE',
-          label: 'SETTINGS.APPEARANCE.FIRST_COLOR',
+          label: 'Couleur principale',
           value: this.parametersService.get('COULEUR_PRINCIPALE').value,
           type: 'color',
         },
         {
           id: 'COULEUR_SECONDAIRE',
-          label: 'SETTINGS.APPEARANCE.SECOND_COLOR',
+          label: 'Couleur secondaire',
           value: this.parametersService.get('COULEUR_SECONDAIRE').value,
           type: 'color',
         },
         {
           id: 'RAYON_BORDURES',
-          label: 'SETTINGS.APPEARANCE.BORDER_RADIUS',
+          label: 'Rayon des bordures',
           value: this.parametersService.get('RAYON_BORDURES').value,
           type: 'number',
           min: 0,
@@ -87,28 +87,9 @@ export class SettingsComponent {
         // },
         {
           id: 'THEME_SOMBRE',
-          label: 'SETTINGS.APPEARANCE.THEME_DARK',
+          label: 'Thème sombre',
           value: this.parametersService.get('THEME_SOMBRE').value,
           type: 'checkbox',
-        },
-      ],
-    },
-    {
-      label: 'SETTINGS.OTHERS.TITLE',
-      parameters: [
-        {
-          id: 'LANGUE',
-          label: 'Langue',
-          value: this.parametersService.get('LANGUE').value,
-          type: 'select',
-          store: [
-            { id: 'fr', label: 'Français' },
-            { id: 'en', label: 'English' },
-            { id: 'es', label: 'Español' },
-            { id: 'it', label: 'Italiano' },
-            { id: 'ar-KW', label: 'العربية (الكويت)' },
-            { id: 'ar-DZ', label: 'العربية (الجزائر)' },
-          ],
         },
       ],
     },
