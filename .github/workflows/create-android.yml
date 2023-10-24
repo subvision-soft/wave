@@ -81,7 +81,7 @@ jobs:
       - name: Build Release
         shell: bash
         run: |
-          gh release create ${{ steps.current-datetime.outputs.CURRENT_DATETIME }} \
+          hub release create ${{ steps.current-datetime.outputs.CURRENT_DATETIME }} \
           -m ${{ steps.current-datetime.outputs.CURRENT_DATETIME }} \
           -a ./android/app/build/outputs/bundle/release/app-release-signed.aab \
           -a ./android/app/build/outputs/apk/debug/app-debug.apk
