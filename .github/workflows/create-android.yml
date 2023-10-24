@@ -31,7 +31,8 @@ jobs:
         with:
           node-version: 20.x
       - name: Setup Hub
-        uses: Geertvdc/setup-hub@v1.0.0
+        shell: bash
+        run: sudo apt install hub
       - name: install dependencies
         run: npm install
 
