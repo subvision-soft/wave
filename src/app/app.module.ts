@@ -94,17 +94,10 @@ import { UserLastnameFirstCharPipe } from './pipes/UserLastnameFirstCharPipe';
 import { TagComponent } from './components/tag/tag.component';
 import { FileExplorerComponent } from './components/file-explorer/file-explorer.component';
 import { SavingComponent } from './pages/saving/saving.component';
-import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 const openCVConfig: OpenCVConfig = {
   openCVDirPath: 'assets/opencv',
 };
-// AoT requires an exported function for factories
-export function HttpLoaderFactory(httpClient: HttpClient) {
-  return new TranslateHttpLoader(httpClient);
-}
 
 @NgModule({
   declarations: [
@@ -164,14 +157,6 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     BrowserModule,
     ColorPickerModule,
     AppRoutingModule,
-    HttpClientModule,
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient],
-      },
-    }),
     NgIconsModule.withIcons({
       iconoirHomeSimpleDoor,
       iconoirCamera,

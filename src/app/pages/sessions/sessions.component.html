@@ -1,10 +1,10 @@
 <app-header [showBack]="false" [showMenu]="true" [actions]="menuActions">
-  <h1>{{(target ? 'SESSIONS.SELECT_SESSION' : 'SESSIONS.TITLE') | translate}}</h1>
+  <h1>{{target ? 'Sélectionnez une session' : 'Sessions'}}</h1>
 </app-header>
 <div class="content">
-  <app-search [(value)]="searchValue" placeholder="{{'SESSIONS.SEARCH'|translate}}"></app-search>
+  <app-search [(value)]="searchValue" placeholder="Rechercher une session"></app-search>
   <app-add-button (click)="openCreateSession = true" [@enterAnimation] *ngIf="!searchValue"
-                  label="{{'SESSIONS.ADD_SESSION'|translate}}"></app-add-button>
+                  label="Ajouter une session"></app-add-button>
   <div class="sessions-content">
     <div class="path">
       <app-tag class="ripple" (click)="openRoot()">/</app-tag>
@@ -15,7 +15,7 @@
       <app-session-item *ngIf="path.length > 0" [@enterAnimation] [file]="returnFile" (click)="back()"
                         [goBack]="true"></app-session-item>
       <app-empty-text *ngIf="sessions.length === 0" [@enterAnimation] [icon]="searchValue?'jamSearch':'jamGhost'"
-                      text="{{(searchValue?'SESSIONS.NO_RESULT':'SESSIONS.EMPTY_FOLDER') | translate}}"></app-empty-text>
+                      [text]="searchValue?'Pas de résultat':'Le dossier est vide'"></app-empty-text>
 
       <app-session-item [selected]="session.active" long-press
                         (onLongPressing)="onLongPress($event,session)"
@@ -26,17 +26,17 @@
   </div>
 </div>
 
-<app-message-box message="{{'SESSIONS.MESSAGES_BOX.NEW_FOLDER.MESSAGE' | translate}}" title="{{'SESSIONS.MESSAGES_BOX.NEW_FOLDER.TITLE' | translate}}"
+<app-message-box [message]="'Entrer le nom du dossier'" [title]="'Créer un nouveau dossier'"
                  [(open)]="openCreateFolderPrompt" (callback)="messageBoxCallback($event)"
                  type="prompt"></app-message-box>
-<app-message-box title="{{'SESSIONS.MESSAGES_BOX.NEW_SESSION.TITLE' | translate}}"
+<app-message-box [title]="'Ajouter une session'"
                  [(open)]="openCreateSession"
                  (callback)="createSessionCallback($event)"
                  type="okcancel">
-  <app-input [(value)]="newSession.title" label="{{'SESSIONS.MESSAGES_BOX.NEW_SESSION.INPUTS.TITLE' | translate}}"></app-input>
-  <app-input [(value)]="newSession.description" label="{{'SESSIONS.MESSAGES_BOX.NEW_SESSION.INPUTS.DESCRIPTION' | translate}}"></app-input>
+  <app-input [(value)]="newSession.title" label="Titre"></app-input>
+  <app-input [(value)]="newSession.description" label="Description"></app-input>
   <app-input [value]="(newSession.date | date:'yyyy-MM-dd' )  || ''" (valueChange)="newSession.date = parseDate($event)"
-             label="{{'SESSIONS.MESSAGES_BOX.NEW_SESSION.INPUTS.DATE' | translate}}"
+             label="Date"
              type="date"></app-input>
 </app-message-box>
 

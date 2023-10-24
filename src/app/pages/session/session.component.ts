@@ -39,7 +39,7 @@ export class SessionComponent implements OnInit {
     if (url) {
       this.filesService.openFileByUrl(url, true).then((result) => {
         this.filesService.path = url;
-        this.filesService.loadSession(result);
+        this.filesService.session = result;
         this.session = result;
       });
     }

@@ -296,14 +296,14 @@ export class SessionsComponent {
     } else {
       if (this.target) {
         this.filesService.openFileByUrl(file.uri, true).then((result) => {
-          this.filesService.loadSession(result);
+          this.filesService.session = result;
           this.filesService.path = file.uri;
           this.router.navigate(['/sessions/users']).then((r) => console.log(r));
           return;
         });
       } else {
         this.filesService.openFileByUrl(file.uri, true).then((result) => {
-          this.filesService.loadSession(result);
+          this.filesService.session = result;
           this.filesService.path = file.uri;
           this.router.navigate(['/sessions/session'], {
             queryParams: {

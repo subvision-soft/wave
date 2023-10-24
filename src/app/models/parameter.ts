@@ -15,7 +15,6 @@ export class Parameter {
     | 'search'
     | 'radio'
     | 'checkbox'
-    | 'select'
     | 'color' = 'text';
   value: any = null;
   label: string = '';
