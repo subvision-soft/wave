@@ -16,7 +16,7 @@ export class SelectComponent {
   @Input() displayField: string = 'label';
   @Input() valueField: string = 'id';
   @Input() value: any | any[] = '';
-  @Input() label: string = '';
+  @Input() label?: string;
   @Input() @HostBinding('class.multiple') multiple: boolean = false;
   @Input() placeholder: string = '';
   @Output() valueChange = new EventEmitter<any>();

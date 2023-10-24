@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import { ToastService, ToastTypes } from './toast.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root',
@@ -91,9 +92,16 @@ export class ParametersService {
         );
       },
     },
+    LANGUE: {
+      value: 'fr',
+      update: function (value: any) {},
+    },
   };
 
-  constructor(private toastService: ToastService) {
+  constructor(
+    private toastService: ToastService,
+    private translate: TranslateService
+  ) {
     Filesystem.readFile({
       path: 'parameters.json',
       directory: Directory.Data,
@@ -119,6 +127,9 @@ export class ParametersService {
       .catch(() => {
         this.parameters = this._parameters;
       });
+    this._parameters.LANGUE.update = (value: any) => {
+      this.translate.use(value);
+    };
   }
 
   get(key: string): any {

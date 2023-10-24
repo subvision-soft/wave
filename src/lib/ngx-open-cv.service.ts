@@ -103,6 +103,7 @@ export class NgxOpenCVService {
       wasmBinaryFile: 'opencv_js.wasm',
       usingWasm: true,
       onRuntimeInitialized: () => {
+        console.log('OpenCV.js is ready');
         this._ngZone.run(() => {
           console.log('openCV Ready');
           this.cvState.next(this.newState('ready'));
