@@ -1,6 +1,7 @@
 import { Component, HostBinding } from '@angular/core';
 import { ThemeColorService } from './services/theme-color.service';
 import { fadeAnimation } from './utils/animations';
+import { TranslateService } from '@ngx-translate/core';
 import { ParametersService } from './services/parameters.service';
 
 @Component({
@@ -10,7 +11,7 @@ import { ParametersService } from './services/parameters.service';
   animations: [fadeAnimation],
 })
 export class AppComponent {
-  title = 'subapp';
+  title = 'wave';
   private initPlugin: boolean = false;
   @HostBinding('class.backgroundStep-1') backgroundStep1: boolean = true;
   @HostBinding('class.backgroundStep-2') backgroundStep2: boolean = true;
@@ -24,14 +25,14 @@ export class AppComponent {
 
   constructor(
     private themeColorService: ThemeColorService,
+    private translate: TranslateService,
     private parametersService: ParametersService
   ) {
     this.themeColorService.setCssVariables('#1677ff');
-  }
-
-  tabSelected(tab: any) {
-    this.title = tab.label;
-    this.backgroundStep1 = tab.label === 'Accueil';
-    this.backgroundStep2 = tab.label === 'Paramètres';
+    let langs = ['en', 'fr', 'es', 'it', 'ar-KW', 'ar-DZ'];
+    this.translate.addLangs(langs);
+    this.translate.setDefaultLang('en');
+    const browserLang = translate.getBrowserLang() || 'en';
+    this.translate.use(langs.includes(browserLang) ? browserLang : 'en');
   }
 }

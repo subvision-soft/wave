@@ -108,11 +108,12 @@ export class UsersComponent {
   }
 
   get users(): User[] {
+    console.log(this.session.users);
     return this.session.users.filter(
       (user) =>
-        user.firstname.toLowerCase().includes(this.searchValue.toLowerCase()) ||
-        user.lastname.toLowerCase().includes(this.searchValue.toLowerCase()) ||
-        user.id.toLowerCase().includes(this.searchValue.toLowerCase())
+        user.firstname?.toLowerCase().includes(this.searchValue.toLowerCase()) ||
+        user.lastname?.toLowerCase().includes(this.searchValue.toLowerCase()) ||
+        user.id?.toLowerCase().includes(this.searchValue.toLowerCase())
     );
   }
 

@@ -17,7 +17,7 @@ import { Router } from '@angular/router';
 export class HomeComponent implements OnInit {
   open: boolean = false;
   @ViewChild('app-page', { static: true }) el: ElementRef | undefined;
-  logoSize: number = 30;
+  logoSize: number = 50;
 
   epubFiles: string[] = [];
 
