@@ -2,18 +2,20 @@ import { Injectable } from '@angular/core';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import { ToastService, ToastTypes } from './toast.service';
 import { TranslateService } from '@ngx-translate/core';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ParametersService {
+  public loaded: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
   get parameters(): any {
     return this._parameters;
   }
 
   set parameters(value: any) {
     this._parameters = value;
-
     const parameters = Object.keys(this._parameters).map((key) => {
       return {
         key: key,
@@ -102,6 +104,9 @@ export class ParametersService {
     private toastService: ToastService,
     private translate: TranslateService
   ) {
+    this._parameters.LANGUE.update = (value: any) => {
+      this.translate.use(value);
+    };
     Filesystem.readFile({
       path: 'parameters.json',
       directory: Directory.Data,
@@ -123,13 +128,11 @@ export class ParametersService {
             );
           }
         }
+        this.loaded.next(true);
       })
       .catch(() => {
         this.parameters = this._parameters;
       });
-    this._parameters.LANGUE.update = (value: any) => {
-      this.translate.use(value);
-    };
   }
 
   get(key: string): any {
