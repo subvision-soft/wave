@@ -1,6 +1,7 @@
 import { Component, HostBinding } from '@angular/core';
 import { ThemeColorService } from './services/theme-color.service';
 import { fadeAnimation } from './utils/animations';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -21,8 +22,18 @@ export class AppComponent {
   ];
   cssVariables: string = '';
 
-  constructor(private themeColorService: ThemeColorService) {
+  constructor(
+    private themeColorService: ThemeColorService,
+    private translate: TranslateService
+  ) {
     this.themeColorService.setCssVariables('#1677ff');
+    translate.addLangs(['en', 'fr', 'es']);
+    translate.setDefaultLang('en');
+
+    // const browserLang = translate.getBrowserLang() || 'en';
+    // console.log(browserLang);
+    const browserLang = 'en';
+    translate.use(browserLang.match(/en|fr|es/) ? browserLang : 'en');
   }
 
   tabSelected(tab: any) {

@@ -1,0 +1,12 @@
+{
+  "HOME": {
+    "ACTUALITIES": "Actualités",
+    "RECENTLY_OPENED": "Récemment ouverts",
+    "SHOW_ALL": "Tout voir",
+    "NO_ACTUALITY": "Aucune actualité",
+    "NO_SESSION": "Aucune session"
+  },
+  "RESULT": {
+    "TITLE" : "Résultat"
+  }
+}

@@ -93,6 +93,22 @@ export class SettingsComponent {
         },
       ],
     },
+    {
+      label: 'Autres',
+      parameters: [
+        {
+          id: 'LANGUE',
+          label: 'Langue',
+          value: this.parametersService.get('LANGUE').value,
+          type: 'select',
+          store: [
+            { id: 'fr', label: 'Français' },
+            { id: 'en', label: 'English' },
+            { id: 'es', label: 'Español' },
+          ],
+        },
+      ],
+    },
   ];
 
   constructor(
