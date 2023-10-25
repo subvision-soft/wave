@@ -97,6 +97,7 @@ import { SavingComponent } from './pages/saving/saving.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { LoadingComponent } from './components/loading/loading.component';
 
 const openCVConfig: OpenCVConfig = {
   openCVDirPath: 'assets/opencv',
@@ -157,6 +158,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     FileExplorerComponent,
     FileExplorerComponent,
     SavingComponent,
+    LoadingComponent,
   ],
   imports: [
     BrowserAnimationsModule,

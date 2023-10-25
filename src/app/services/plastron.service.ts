@@ -76,7 +76,6 @@ export class PlastronService {
     let gray = new this.cv.Mat();
     this.cv.cvtColor(img, gray, this.cv.COLOR_BGR2GRAY);
     let edged = new this.cv.Mat();
-
     this.cv.adaptiveThreshold(
       gray,
       gray,
