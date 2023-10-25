@@ -1,9 +1,6 @@
 name: Build Android
 run-name: Creating Production Ready Android App 🚀
-on:
-  push:
-    branches:
-      - master
+on: [push]
 jobs:
   build:
     name: Build APK
@@ -74,10 +71,12 @@ jobs:
       #     retention-days: 60
 
       - name: Set Tag
+        if: "contains(github.ref, 'master')"
         id: current-datetime
         run: echo "CURRENT_DATETIME=$(date +'%Y-%m-%d-%H_%M_%S%z')" >> "$GITHUB_OUTPUT"
 
       - name: Build Release
+        if: "contains(github.ref, 'master')"
         shell: bash
         run: |
           hub release create ${{ steps.current-datetime.outputs.CURRENT_DATETIME }} \
