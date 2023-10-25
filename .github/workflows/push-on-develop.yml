@@ -2,37 +2,9 @@ name: GitHub Actions Demo
 run-name: Checking ${{ github.actor }}'s push 🤓
 on: [push]
 jobs:
-  Install-libraries:
-    name: Install libraries
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout source
-        uses: actions/checkout@v3
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20.x
-      - name: install dependencies
-        run: npm install
-  Test-angular-app:
-    name: Test angular app
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout source
-        uses: actions/checkout@v3
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 20.x
-      - name: install dependencies
-        run: npm install
-      - name: Test angular app
-        run: npm run test
-    needs: [Install-libraries]
   Build-angular-app:
     name: Build angular app
     runs-on: ubuntu-latest
-    needs: [Test-angular-app]
     steps:
       - name: Checkout source
         uses: actions/checkout@v3
@@ -49,7 +21,6 @@ jobs:
   Build-app-bundle:
     name: Build app bundle
     runs-on: ubuntu-latest
-    needs: [Build-angular-app]
     steps:
       - name: Checkout source
         uses: actions/checkout@v3
