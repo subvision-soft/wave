@@ -46,35 +46,35 @@ export class TargetsComponent {
 
   segmentedButtonItems = [
     {
-      label: 'Tout',
+      label: 'TARGETS.SEGMENTED_BUTTON.ALL',
       key: 'all',
       onClick: () => {
         this.eventFilter = undefined;
       },
     },
     {
-      label: 'Précision',
+      label: 'TARGETS.SEGMENTED_BUTTON.PRECISION',
       key: 'precision',
       onClick: () => {
         this.eventFilter = Event.PRECISION;
       },
     },
     {
-      label: 'Biathlon',
+      label: 'TARGETS.SEGMENTED_BUTTON.BIATHLON',
       key: 'biathlon',
       onClick: () => {
         this.eventFilter = Event.BIATHLON;
       },
     },
     {
-      label: 'Super biathlon',
+      label: 'TARGETS.SEGMENTED_BUTTON.SUPER_BIATHLON',
       key: 'super-biathlon',
       onClick: () => {
         this.eventFilter = Event.SUPER_BIATHLON;
       },
     },
     {
-      label: 'Saisie libre',
+      label: 'TARGETS.SEGMENTED_BUTTON.FREE_INPUT',
       key: 'saisie-libre',
       onClick: () => {
         this.eventFilter = Event.SAISIE_LIBRE;

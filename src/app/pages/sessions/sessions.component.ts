@@ -7,6 +7,7 @@ import { Session } from '../../models/session';
 import { Router } from '@angular/router';
 import { ToastService, ToastTypes } from '../../services/toast.service';
 import { Target } from '../../models/target';
+import { TranslateService } from '@ngx-translate/core';
 
 interface File {
   active: boolean;
@@ -41,22 +42,38 @@ export class SessionsComponent {
 
   get sortActions(): Action[] {
     return [
-      new Action('Nom', this.getSortIcon('name'), (self) => {
-        const sort = 'name';
-        return this.sortAction(sort, self);
-      }),
-      new Action('Type', this.getSortIcon('type'), (self) => {
-        const sort = 'type';
-        return this.sortAction(sort, self);
-      }),
-      new Action('Taille', this.getSortIcon('size'), (self) => {
-        const sort = 'size';
-        return this.sortAction(sort, self);
-      }),
-      new Action('Date de modification', this.getSortIcon('date'), (self) => {
-        const sort = 'date';
-        return this.sortAction(sort, self);
-      }),
+      new Action(
+        'SESSIONS.MENU.ORDER_BY.NAME',
+        this.getSortIcon('name'),
+        (self) => {
+          const sort = 'name';
+          return this.sortAction(sort, self);
+        }
+      ),
+      new Action(
+        'SESSIONS.MENU.ORDER_BY.TYPE',
+        this.getSortIcon('type'),
+        (self) => {
+          const sort = 'type';
+          return this.sortAction(sort, self);
+        }
+      ),
+      new Action(
+        'SESSIONS.MENU.ORDER_BY.SIZE',
+        this.getSortIcon('size'),
+        (self) => {
+          const sort = 'size';
+          return this.sortAction(sort, self);
+        }
+      ),
+      new Action(
+        'SESSIONS.MENU.ORDER_BY.MODIFICATION_DATE',
+        this.getSortIcon('date'),
+        (self) => {
+          const sort = 'date';
+          return this.sortAction(sort, self);
+        }
+      ),
     ];
   }
 
@@ -98,11 +115,11 @@ export class SessionsComponent {
 
   get actions(): Action[] {
     return [
-      new Action('Créer un nouveau dossier', '', () => {
+      new Action('SESSIONS.MENU.NEW_FOLDER', '', () => {
         this.openCreateFolderPrompt = true;
       }),
       new Action(
-        'Supprimer',
+        'SESSIONS.MENU.DELETE.TITLE',
         '',
         () => {
           const sessionsToDelete = this._sessions.filter(
@@ -125,8 +142,8 @@ export class SessionsComponent {
               this.openPath();
               this.initializeMenuActions();
               this.toastService.initiate({
-                title: 'Contenu supprimé',
-                content: 'Le contenu a été supprimé avec succès',
+                title: 'SESSIONS.MENU.DELETE.TOAST.SUCCESS.TITLE',
+                content: 'SESSIONS.MENU.DELETE.TOAST.SUCCESS.MESSAGE',
                 type: ToastTypes.SUCCESS,
                 show: true,
                 duration: 2000,
@@ -134,8 +151,8 @@ export class SessionsComponent {
             })
             .catch(() => {
               this.toastService.initiate({
-                title: 'Erreur',
-                content: 'Une erreur est survenue',
+                title: 'SESSIONS.MENU.DELETE.TOAST.ERROR.TITLE',
+                content: 'SESSIONS.MENU.DELETE.TOAST.ERROR.MESSAGE',
                 type: ToastTypes.ERROR,
                 show: true,
                 duration: 2000,
@@ -148,7 +165,7 @@ export class SessionsComponent {
         }
       ),
       new Action(
-        'Créer une nouvelle session',
+        'SESSIONS.MENU.NEW_SESSION',
         '',
         () => {
           this.openCreateSession = true;
@@ -158,7 +175,12 @@ export class SessionsComponent {
           return !this.selecting;
         }
       ),
-      new Action('Trier par', '', () => {}, this.sortActions),
+      new Action(
+        'SESSIONS.MENU.ORDER_BY.TITLE',
+        '',
+        () => {},
+        this.sortActions
+      ),
     ];
   }
 
@@ -187,7 +209,7 @@ export class SessionsComponent {
       size: 0,
       type: 'directory',
       uri: '',
-      name: 'Dossier précédent',
+      name: this.translate.instant('SESSIONS.PREVIOUS_FOLDER'),
     };
   }
 
@@ -196,7 +218,8 @@ export class SessionsComponent {
   constructor(
     private filesService: FilesService,
     private router: Router,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private translate: TranslateService
   ) {
     this.openPath();
     this.initializeMenuActions();
@@ -355,8 +378,8 @@ export class SessionsComponent {
             });
           });
           this.toastService.initiate({
-            title: 'Dossier créé',
-            content: 'Le dossier a été créé avec succès',
+            title: 'SESSIONS.MESSAGES_BOX.NEW_FOLDER.TOAST.SUCCESS.TITLE',
+            content: 'SESSIONS.MESSAGES_BOX.NEW_FOLDER.TOAST.SUCCESS.MESSAGE',
             type: ToastTypes.SUCCESS,
             show: true,
             duration: 2000,
@@ -364,8 +387,8 @@ export class SessionsComponent {
         })
         .catch(() => {
           this.toastService.initiate({
-            title: 'Erreur',
-            content: 'Une erreur est survenue',
+            title: 'SESSIONS.MESSAGES_BOX.NEW_FOLDER.TOAST.ERROR.TITLE',
+            content: 'SESSIONS.MESSAGES_BOX.NEW_FOLDER.TOAST.ERROR.MESSAGE',
             type: ToastTypes.ERROR,
             show: true,
             duration: 2000,
@@ -390,8 +413,10 @@ export class SessionsComponent {
         )
         .then(() => {
           this.toastService.initiate({
-            title: 'Session créée',
-            content: 'La session a été créée avec succès',
+            title:
+              'SESSIONS.MESSAGES_BOX.NEW_SESSION.INPUTS.TOAST.SUCCESS.TITLE',
+            content:
+              'SESSIONS.MESSAGES_BOX.NEW_SESSION.INPUTS.TOAST.SUCCESS.MESSAGE',
             type: ToastTypes.SUCCESS,
             show: true,
             duration: 2000,
@@ -408,8 +433,9 @@ export class SessionsComponent {
         })
         .catch(() => {
           this.toastService.initiate({
-            title: 'Erreur',
-            content: 'Une erreur est survenue',
+            title: 'SESSIONS.MESSAGES_BOX.NEW_SESSION.INPUTS.TOAST.ERROR.TITLE',
+            content:
+              'SESSIONS.MESSAGES_BOX.NEW_SESSION.INPUTS.TOAST.ERROR.MESSAGE',
             type: ToastTypes.ERROR,
             show: true,
             duration: 2000,

@@ -1,10 +1,10 @@
 {
   "HOME": {
-    "ACTUALITIES": "Actualidades",
+    "ACTUALITIES": "Noticias",
     "RECENTLY_OPENED": "Recientemente abierto",
     "SHOW_ALL": "Mostrar todo",
-    "NO_ACTUALITY": "No actualidad",
-    "NO_SESSION": "No sesión"
+    "NO_ACTUALITY": "Sin noticias",
+    "NO_SESSION": "Sin sesión"
   },
   "RESULT": {
     "TITLE" : "Resultado"
@@ -16,38 +16,110 @@
       "THEME_DARK" : "Tema oscuro",
       "FIRST_COLOR" : "Color principal",
       "SECOND_COLOR" : "Color secundario",
-      "BORDER_RADIUS" : "Radio de borde"
+      "BORDER_RADIUS" : "Radio del borde"
     },
     "OTHERS": {
       "TITLE": "Otros"
     },
-    "SEARCH" : "Buscar configuración"
+    "SEARCH" : "Buscar configuraciones"
   },
-
-
-
   "SESSIONS": {
     "TITLE": "Sesiones",
-    "SELECT_SESSION": "Seleccione una sesión",
-    "ADD_SESSION" : "Añadir una sesión",
-    "NO_RESULT": "Sin resultado",
+    "SELECT_SESSION": "Seleccionar una sesión",
+    "ADD_SESSION" : "Agregar una sesión",
+    "NO_RESULT": "Sin resultados",
     "SEARCH" : "Buscar una sesión",
-    "EMPTY_FOLDER" : "La carpeta está vacía",
+    "EMPTY_FOLDER" : "Carpeta vacía",
+    "PREVIOUS_FOLDER" : "Carpeta anterior",
     "MESSAGES_BOX" : {
       "NEW_FOLDER": {
         "TITLE" : "Crear una nueva carpeta",
-        "MESSAGE" : "Introduzca el nombre de la carpeta"
+        "MESSAGE" : "Ingresar el nombre de la carpeta",
+        "TOAST" : {
+          "SUCCESS" : {
+            "TITLE" : "Carpeta creada",
+            "MESSAGE" : "La carpeta se ha creado con éxito"
+          },
+          "ERROR" : {
+            "TITLE" : "Error",
+            "MESSAGE" : "Se ha producido un error al crear la carpeta"
+          }
+        }
       },
       "NEW_SESSION": {
-        "TITLE" : "Añadir una sesión",
+        "TITLE" : "Agregar una sesión",
         "INPUTS" : {
           "TITLE" : "Título",
           "DESCRIPTION" : "Descripción",
-          "DATE" : "Fecha"
+          "DATE" : "Fecha",
+          "TOAST" : {
+            "SUCCESS" : {
+              "TITLE" : "Sesión creada",
+              "MESSAGE" : "La sesión se ha creado con éxito"
+            },
+            "ERROR" : {
+              "TITLE" : "Error",
+              "MESSAGE" : "Se ha producido un error al crear la sesión"
+            }
+          }
         }
       }
+    },
+
+    "MENU": {
+      "NEW_FOLDER": "Crear una nueva carpeta",
+      "DELETE" : {
+        "TITLE" : "Eliminar",
+        "TOAST" : {
+          "SUCCESS" : {
+            "TITLE" : "Contenido eliminado",
+            "MESSAGE" : "El contenido se ha eliminado con éxito"
+          },
+          "ERROR" : {
+            "TITLE" : "Error",
+            "MESSAGE" : "Se ha producido un error al eliminar el contenido"
+          }
+        }
+      },
+      "NEW_SESSION" : "Crear una nueva sesión",
+      "ORDER_BY" : {
+        "TITLE" : "Ordenar por",
+        "NAME" : "Nombre",
+        "TYPE" : "Tipo",
+        "SIZE" : "Tamaño",
+        "MODIFICATION_DATE" : "Fecha de modificación"
+      }
+    }
+  },
+  "SESSION" : {
+    "SHOOTERS" : {
+      "NONE" : "ningún tirador registrado",
+      "SINGULAR" : "tirador registrado",
+      "PLURAL" : "tiradores registrados"
+    },
+    "TARGETS" : {
+      "NONE" : "ningún blanco registrado",
+      "SINGULAR" : "blanco registrado",
+      "PLURAL" : "blancos registrados"
+    },
+    "TEAMS" : {
+      "NONE" : "ningún equipo de relevos",
+      "SINGULAR" : "equipo de relevos",
+      "PLURAL" : "equipos de relevos"
+    }
+  },
+  "TARGETS" : {
+    "TITLE" : "Blancos",
+    "ADD_TARGET" : "Agregar un blanco",
+    "NO_RESULT": "Sin resultados",
+    "NOTHING_SAVED": "Ningún blanco registrado",
+    "SEARCH" : "Buscar un blanco",
+    "SEGMENTED_BUTTON" : {
+      "ALL" : "Todo",
+      "PRECISION" : "Precisión",
+      "BIATHLON" : "Biatlón",
+      "SUPER_BIATHLON" : "Super biatlón",
+      "FREE_INPUT" : "Entrada libre"
     }
   }
-
 }
-
