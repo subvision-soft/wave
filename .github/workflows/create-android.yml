@@ -9,14 +9,14 @@ jobs:
         uses: actions/checkout@v3
         with:
           ref: develop
-      - name: Version
+      - name: Get next version
+        uses: reecetech/version-increment@2023.10.2
         id: version
-        uses: juliansangillo/tag-version@v1
         with:
-          production-branch: master
-          dev-branch: develop
+          scheme: calver
+          increment: patch
       - name : Print version
-        run: echo "Version is ${{ steps.version.outputs.revision }}"
+        run: echo "Version is ${{ steps.version.outputs.current-v-version }}"
 
       - name: Setup java
         uses: actions/setup-java@v3
@@ -77,7 +77,7 @@ jobs:
         if: "contains(github.ref, 'master')"
         shell: bash
         run: |
-          hub release create ${{ steps.version.outputs.revision }} \
+          hub release create ${{ steps.version.outputs.current-v-version }} \
           -m ${{ steps.version.outputs.revision }} \
           -a ./android/app/build/outputs/apk/debug/app-debug.apk
         env:
@@ -87,7 +87,7 @@ jobs:
         if: "contains(github.ref, 'develop')"
         shell: bash
         run: |
-          hub release create ${{ steps.version.outputs.revision }} \
+          hub release create ${{ steps.version.outputs.current-v-version }} \
           -m ${{ steps.version.outputs.revision }} \
           -a ./android/app/build/outputs/apk/debug/app-debug.apk \
           -p
