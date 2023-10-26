@@ -4,14 +4,9 @@ jobs:
   build:
     name: Build APK
     runs-on: ubuntu-latest
-    # TODO: add the default directory - COMMENT IF IT'S NOT IN SUBFOLDER
-    # defaults:
-    #   run:
-    #     working-directory: ./frontend
     steps:
       - name: Checkout source
         uses: actions/checkout@v3
-        # TODO: add your branch to checkout
         with:
           ref: develop
       - name: Version
