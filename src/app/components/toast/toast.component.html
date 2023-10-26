@@ -2,10 +2,10 @@
   <div class="flex" *ngIf="toastService.data">
     <div class="toast-content">
       <h5 class="toast-title">
-        {{ toastService.data.title }}
+        {{ toastService.data.title | translate }}
       </h5>
       <div class="toast-text">
-        {{ toastService.data.content }}
+        {{ toastService.data.content | translate }}
       </div>
     </div>
   </div>

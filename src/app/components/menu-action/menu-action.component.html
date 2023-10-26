@@ -1,5 +1,5 @@
 <ng-icon *ngIf="action.icon" [name]="action.icon"></ng-icon>
 
 <div [class]="['content',action.icon ? 'icon-visible' : '' ]">
-  <span>{{action.label}}</span>
+  <span>{{action.label | translate}}</span>
 </div>

@@ -1,23 +1,22 @@
 name: Build Android
-run-name: Creating Production Ready Android App 🚀
-on:
-  push:
-    branches:
-      - master
+on: [push]
 jobs:
   build:
     name: Build APK
     runs-on: ubuntu-latest
-    # TODO: add the default directory - COMMENT IF IT'S NOT IN SUBFOLDER
-    # defaults:
-    #   run:
-    #     working-directory: ./frontend
     steps:
       - name: Checkout source
         uses: actions/checkout@v3
-        # TODO: add your branch to checkout
         with:
           ref: develop
+      - name: Get next version
+        uses: reecetech/version-increment@2023.10.2
+        id: version
+        with:
+          scheme: calver
+          increment: patch
+      - name : Print version
+        run: echo "Version is ${{ steps.version.outputs.version }}"
 
       - name: Setup java
         uses: actions/setup-java@v3
@@ -73,15 +72,24 @@ jobs:
       #     path: ./android/app/build/outputs/bundle/release/app-release-signed.aab
       #     retention-days: 60
 
-      - name: Set Tag
-        id: current-datetime
-        run: echo "CURRENT_DATETIME=$(date +'%Y-%m-%d-%H_%M_%S%z')" >> "$GITHUB_OUTPUT"
 
       - name: Build Release
+        if: "contains(github.ref, 'master')"
         shell: bash
         run: |
-          hub release create ${{ steps.current-datetime.outputs.CURRENT_DATETIME }} \
-          -m ${{ steps.current-datetime.outputs.CURRENT_DATETIME }} \
+          hub release create ${{ steps.version.outputs.version }} \
+          -m ${{ steps.version.outputs.version }} \
           -a ./android/app/build/outputs/apk/debug/app-debug.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+
+      - name: Build pre-release
+        if: "contains(github.ref, 'develop')"
+        shell: bash
+        run: |
+          hub release create ${{ steps.version.outputs.version }} \
+          -m ${{ steps.version.outputs.version }} \
+          -a ./android/app/build/outputs/apk/debug/app-debug.apk \
+          -p
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}

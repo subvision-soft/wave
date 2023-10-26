@@ -1,7 +1,7 @@
 <app-header [showBack]="true" [showMenu]="false" [actions]="menuActions">
   <div class="header-content">
     <h1>
-      Cibles
+      {{'TARGETS.TITLE' | translate}}
     </h1>
     <p>
       <span class="title">{{session.title}}</span>
@@ -10,15 +10,15 @@
   </div>
 </app-header>
 <div class="content">
-  <app-search [(value)]="searchValue" placeholder="Rechercher une cible"></app-search>
+  <app-search [(value)]="searchValue" placeholder="{{'TARGETS.SEARCH' | translate}}"></app-search>
   <app-add-button [@enterAnimation] (click)="openCreateTarget = true" *ngIf="!searchValue"
-                  label="Ajouter une cible"></app-add-button>
+                  label="{{'TARGETS.ADD_TARGET' | translate}}"></app-add-button>
 
   <app-segmented-button [items]="segmentedButtonItems" [(selected)]="selectedSegmentedButton"></app-segmented-button>
   <div class="targets">
 
     <app-empty-text *ngIf="targets.length === 0" [icon]="searchValue?'jamSearch':'jamGhost'"
-                    [text]="searchValue?'Pas de résultat':'Aucune cible enregistrée'"></app-empty-text>
+                    text="{{(searchValue?'TARGETS.NO_RESULT':'TARGETS.NOTHING_SAVED') | translate}}"></app-empty-text>
 
     <app-target-item [selected]="isTargetSelected(target)" long-press
                      (onLongPressing)="onLongPress($event,target)"

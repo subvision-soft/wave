@@ -14,15 +14,15 @@
     <ng-container [ngPlural]="session.users.length">
       <ng-template ngPluralCase="=0">
         <ng-icon name="jamGhost"></ng-icon>
-        <span class="firstLetterUpperCase">aucun tireur enregistré</span>
+        <span class="firstLetterUpperCase">{{'SESSION.SHOOTERS.NONE' | translate}}</span>
       </ng-template>
       <ng-template ngPluralCase="=1">
         <span class="number">{{session.users.length}}</span>
-        <span class="firstLetterUpperCase">tireur enregistré</span>
+        <span class="firstLetterUpperCase">{{'SESSION.SHOOTERS.SINGULAR' | translate}}</span>
       </ng-template>
       <ng-template ngPluralCase="other">
         <span class="number">{{session.users.length}}</span>
-        <span class="firstLetterUpperCase">tireurs enregistrés</span>
+        <span class="firstLetterUpperCase">{{'SESSION.SHOOTERS.PLURAL' | translate}}</span>
       </ng-template>
     </ng-container>
   </div>
@@ -30,15 +30,15 @@
     <ng-container [ngPlural]="targets.length">
       <ng-template ngPluralCase="=0">
         <ng-icon name="jamGhost"></ng-icon>
-        <span class="firstLetterUpperCase">aucune cible enregistrée</span>
+        <span class="firstLetterUpperCase">{{'SESSION.TARGETS.NONE' | translate}}</span>
       </ng-template>
       <ng-template ngPluralCase="=1">
         <span class="number">{{targets.length}}</span>
-        <span class="firstLetterUpperCase">cible enregistrée</span>
+        <span class="firstLetterUpperCase">{{'SESSION.TARGETS.SINGULAR' | translate}}</span>
       </ng-template>
       <ng-template ngPluralCase="other">
         <span class="number">{{targets.length}}</span>
-        <span class="firstLetterUpperCase">cibles enregistrées</span>
+        <span class="firstLetterUpperCase">{{'SESSION.TARGETS.PLURAL' | translate}}</span>
       </ng-template>
     </ng-container>
   </div>
@@ -46,15 +46,15 @@
     <ng-container [ngPlural]="session.teams.length">
       <ng-template ngPluralCase="=0">
         <ng-icon name="jamGhost"></ng-icon>
-        <span class="firstLetterUpperCase">aucune équipe de relais</span>
+        <span class="firstLetterUpperCase">{{'SESSION.TEAMS.NONE' | translate}}</span>
       </ng-template>
       <ng-template ngPluralCase="=1">
         <span class="number">{{session.teams.length}}</span>
-        <span class="firstLetterUpperCase">équipe de relais</span>
+        <span class="firstLetterUpperCase">{{'SESSION.TEAMS.SINGULAR' | translate}}</span>
       </ng-template>
       <ng-template ngPluralCase="other">
         <span class="number">{{session.teams.length}}</span>
-        <span class="firstLetterUpperCase">équipes de relais</span>
+        <span class="firstLetterUpperCase">{{'SESSION.TEAMS.PLURAL' | translate}}</span>
       </ng-template>
     </ng-container>
   </div>

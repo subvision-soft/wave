@@ -1,48 +1,125 @@
 {
   "HOME": {
-    "ACTUALITIES": "الأخبار",
-    "RECENTLY_OPENED": "المفتوحة مؤخرا",
+    "ACTUALITIES": "أخبار",
+    "RECENTLY_OPENED": "مفتوحة مؤخرًا",
     "SHOW_ALL": "عرض الكل",
     "NO_ACTUALITY": "لا أخبار",
     "NO_SESSION": "لا جلسة"
   },
   "RESULT": {
-    "TITLE" : "نتيجة"
+    "TITLE" : "النتيجة"
   },
   "SETTINGS" : {
     "TITLE" : "الإعدادات",
     "APPEARANCE" : {
-      "TITLE" : "مظهر",
-      "THEME_DARK" : "مظهر الظلام",
-      "FIRST_COLOR" : "اللون الأساسي",
+      "TITLE" : "المظهر",
+      "THEME_DARK" : "سمة داكنة",
+      "FIRST_COLOR" : "اللون الرئيسي",
       "SECOND_COLOR" : "اللون الثانوي",
-      "BORDER_RADIUS" : "نصف القطر الحدود"
+      "BORDER_RADIUS" : "نصف قطر الحدود"
     },
     "OTHERS": {
-      "TITLE": "آخر"
+      "TITLE": "أخرى"
     },
-    "SEARCH" : "البحث عن إعدادات"
+    "SEARCH" : "البحث في الإعدادات"
   },
   "SESSIONS": {
-    "TITLE": "جلسات",
-    "SELECT_SESSION": "حدد جلسة",
+    "TITLE": "الجلسات",
+    "SELECT_SESSION": "اختر جلسة",
     "ADD_SESSION" : "إضافة جلسة",
-    "NO_RESULT": "لا نتيجة",
+    "NO_RESULT": "لا توجد نتائج",
     "SEARCH" : "البحث عن جلسة",
     "EMPTY_FOLDER" : "المجلد فارغ",
+    "PREVIOUS_FOLDER" : "المجلد السابق",
     "MESSAGES_BOX" : {
       "NEW_FOLDER": {
         "TITLE" : "إنشاء مجلد جديد",
-        "MESSAGE" : "أدخل اسم المجلد"
+        "MESSAGE" : "أدخل اسم المجلد",
+        "TOAST" : {
+          "SUCCESS" : {
+            "TITLE" : "تم إنشاء المجلد",
+            "MESSAGE" : "تم إنشاء المجلد بنجاح"
+          },
+          "ERROR" : {
+            "TITLE" : "خطأ",
+            "MESSAGE" : "حدث خطأ أثناء إنشاء المجلد"
+          }
+        }
       },
       "NEW_SESSION": {
         "TITLE" : "إضافة جلسة",
         "INPUTS" : {
-          "TITLE" : "عنوان",
-          "DESCRIPTION" : "وصف",
-          "DATE" : "تاريخ"
+          "TITLE" : "العنوان",
+          "DESCRIPTION" : "الوصف",
+          "DATE" : "التاريخ",
+          "TOAST" : {
+            "SUCCESS" : {
+              "TITLE" : "تم إنشاء الجلسة",
+              "MESSAGE" : "تم إنشاء الجلسة بنجاح"
+            },
+            "ERROR" : {
+              "TITLE" : "خطأ",
+              "MESSAGE" : "حدث خطأ أثناء إنشاء الجلسة"
+            }
+          }
         }
       }
+    },
+
+    "MENU": {
+      "NEW_FOLDER": "إنشاء مجلد جديد",
+      "DELETE" : {
+        "TITLE" : "حذف",
+        "TOAST" : {
+          "SUCCESS" : {
+            "TITLE" : "تم حذف المحتوى",
+            "MESSAGE" : "تم حذف المحتوى بنجاح"
+          },
+          "ERROR" : {
+            "TITLE" : "خطأ",
+            "MESSAGE" : "حدث خطأ أثناء حذف المحتوى"
+          }
+        }
+      },
+      "NEW_SESSION" : "إنشاء جلسة جديدة",
+      "ORDER_BY" : {
+        "TITLE" : "ترتيب حسب",
+        "NAME" : "الاسم",
+        "TYPE" : "النوع",
+        "SIZE" : "الحجم",
+        "MODIFICATION_DATE" : "تاريخ التعديل"
+      }
+    }
+  },
+  "SESSION" : {
+    "SHOOTERS" : {
+      "NONE" : "لا يوجد مسجلين للرماة",
+      "SINGULAR" : "رامٍ مسجل",
+      "PLURAL" : "رماة مسجلين"
+    },
+    "TARGETS" : {
+      "NONE" : "لا توجد أهداف مسجلة",
+      "SINGULAR" : "هدف مسجل",
+      "PLURAL" : "أهداف مسجلة"
+    },
+    "TEAMS" : {
+      "NONE" : "لا توجد فرق للتتابع",
+      "SINGULAR" : "فريق تتابع",
+      "PLURAL" : "فرق تتابع"
+    }
+  },
+  "TARGETS" : {
+    "TITLE" : "الأهداف",
+    "ADD_TARGET" : "إضافة هدف",
+    "NO_RESULT": "لا توجد نتائج",
+    "NOTHING_SAVED": "لم يتم حفظ أي هدف",
+    "SEARCH" : "البحث عن هدف",
+    "SEGMENTED_BUTTON" : {
+      "ALL" : "الكل",
+      "PRECISION" : "دقة",
+      "BIATHLON" : "البياثلون",
+      "SUPER_BIATHLON" : "البياثلون السوبر",
+      "FREE_INPUT" : "إدخال حر"
     }
   }
 }

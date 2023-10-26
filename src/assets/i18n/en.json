@@ -7,45 +7,97 @@
     "NO_SESSION": "No session"
   },
   "RESULT": {
-    "TITLE" : "Result"
+    "TITLE": "Result"
   },
-
-  "SETTINGS" : {
-    "TITLE" : "Settings",
-    "APPEARANCE" : {
-      "TITLE" : "Appearance",
-      "THEME_DARK" : "Dark theme",
-      "FIRST_COLOR" : "Main color",
-      "SECOND_COLOR" : "Secondary color",
-      "BORDER_RADIUS" : "Border radius"
+  "SETTINGS": {
+    "TITLE": "Settings",
+    "APPEARANCE": {
+      "TITLE": "Appearance",
+      "THEME_DARK": "Dark theme",
+      "FIRST_COLOR": "Main color",
+      "SECOND_COLOR": "Secondary color",
+      "BORDER_RADIUS": "Border radius"
     },
     "OTHERS": {
       "TITLE": "Others"
     },
-    "SEARCH" : "Search settings"
+    "SEARCH": "Search settings"
   },
-
   "SESSIONS": {
     "TITLE": "Sessions",
     "SELECT_SESSION": "Select a session",
-    "ADD_SESSION" : "Add a session",
+    "ADD_SESSION": "Add a session",
     "NO_RESULT": "No result",
-    "SEARCH" : "Search a session",
-    "EMPTY_FOLDER" : "The folder is empty",
-    "MESSAGES_BOX" : {
+    "SEARCH": "Search a session",
+    "EMPTY_FOLDER": "The folder is empty",
+    "MESSAGES_BOX": {
       "NEW_FOLDER": {
-        "TITLE" : "Create a new folder",
-        "MESSAGE" : "Enter the name of the folder"
+        "TITLE": "Create a new folder",
+        "MESSAGE": "Enter the name of the folder"
       },
       "NEW_SESSION": {
-        "TITLE" : "Add a session",
-        "INPUTS" : {
-          "TITLE" : "Title",
-          "DESCRIPTION" : "Description",
-          "DATE" : "Date"
+        "TITLE": "Add a session",
+        "INPUTS": {
+          "TITLE": "Title",
+          "DESCRIPTION": "Description",
+          "DATE": "Date"
         }
       }
+    },
+    "MENU": {
+      "NEW_FOLDER": "Create a New Folder",
+      "DELETE": {
+        "TITLE": "Delete",
+        "TOAST": {
+          "SUCCESS": {
+            "TITLE": "Content Deleted",
+            "MESSAGE": "The content has been deleted successfully"
+          },
+          "ERROR": {
+            "TITLE": "Error",
+            "MESSAGE": "An error occurred while deleting the content"
+          }
+        }
+      },
+      "NEW_SESSION": "Create a New Session",
+      "ORDER_BY": {
+        "TITLE": "Sort by",
+        "NAME": "Name",
+        "TYPE": "Type",
+        "SIZE": "Size",
+        "MODIFICATION_DATE": "Modification Date"
+      }
+    }
+  },
+  "SESSION": {
+    "SHOOTERS": {
+      "NONE": "no registered shooter",
+      "SINGULAR": "registered shooter",
+      "PLURAL": "registered shooters"
+    },
+    "TARGETS": {
+      "NONE": "no registered target",
+      "SINGULAR": "registered target",
+      "PLURAL": "registered targets"
+    },
+    "TEAMS": {
+      "NONE": "no relay team",
+      "SINGULAR": "relay team",
+      "PLURAL": "relay teams"
+    }
+  },
+  "TARGETS": {
+    "TITLE": "Targets",
+    "ADD_TARGET": "Add a Target",
+    "NO_RESULT": "No Result",
+    "NOTHING_SAVED": "No target saved",
+    "SEARCH": "Search for a target",
+    "SEGMENTED_BUTTON": {
+      "ALL": "All",
+      "PRECISION": "Precision",
+      "BIATHLON": "Biathlon",
+      "SUPER_BIATHLON": "Super Biathlon",
+      "FREE_INPUT": "Free Input"
     }
   }
-
 }
