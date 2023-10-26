@@ -77,17 +77,24 @@ jobs:
       #     path: ./android/app/build/outputs/bundle/release/app-release-signed.aab
       #     retention-days: 60
 
-      - name: Set Tag
-        if: "contains(github.ref, 'master')"
-        id: current-datetime
-        run: echo "CURRENT_DATETIME=$(date +'%Y-%m-%d-%H_%M_%S%z')" >> "$GITHUB_OUTPUT"
 
       - name: Build Release
         if: "contains(github.ref, 'master')"
         shell: bash
         run: |
-          hub release create ${{ steps.current-datetime.outputs.CURRENT_DATETIME }} \
-          -m ${{ steps.current-datetime.outputs.CURRENT_DATETIME }} \
+          hub release create ${{ steps.version.outputs.revision }} \
+          -m ${{ steps.version.outputs.revision }} \
           -a ./android/app/build/outputs/apk/debug/app-debug.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+
+      - name: Build pre-release
+        if: "contains(github.ref, 'develop')"
+        shell: bash
+        run: |
+          hub release create ${{ steps.version.outputs.revision }} \
+          -m ${{ steps.version.outputs.revision }} \
+          -a ./android/app/build/outputs/apk/debug/app-debug.apk \
+          -p
         env:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
