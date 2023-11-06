@@ -231,7 +231,6 @@ export class ResultComponent implements OnInit {
           const cv = (window as any).cv;
           try {
             const cible = this.plastronService.process();
-
             const canvas = document.getElementById('canvas');
             cv.imshow(canvas, cible.image);
             // @ts-ignore
