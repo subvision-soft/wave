@@ -13,8 +13,8 @@ export class NgxOpenCVService {
   cvState = new BehaviorSubject<OpenCVState>({
     ready: false,
     error: false,
-    loading: true,
-    state: 'loading',
+    loading: false,
+    state: '',
   });
   configModule: OpenCvConfigModule;
 
@@ -26,6 +26,9 @@ export class NgxOpenCVService {
       options = {};
     }
     this.configModule = this.generateConfigModule(options);
+    if (this.cvState.value.loading) {
+      return;
+    }
     this.loadOpenCv();
   }
 
@@ -33,15 +36,23 @@ export class NgxOpenCVService {
    * load the OpenCV script
    */
   loadOpenCv() {
+    console.log('loading OpenCV.js');
     this.cvState.next(this.newState('loading'));
     // create global module variable
     // @ts-ignore
     window['Module'] = this.configModule;
 
+    //check if script already exists
+    const scriptElement = document.getElementById('opencv-module');
+    if (scriptElement) {
+      return;
+    }
+
     // create script element and set attributes
     const script = <HTMLScriptElement>document.createElement('script');
     script.setAttribute('async', '');
     script.setAttribute('type', 'text/javascript');
+    script.setAttribute('id', 'opencv-module');
 
     // listen for errors
     script.addEventListener(
@@ -107,6 +118,12 @@ export class NgxOpenCVService {
         this._ngZone.run(() => {
           console.log('openCV Ready');
           this.cvState.next(this.newState('ready'));
+
+          // @ts-ignore
+          window['cv'].then((cv) => {
+            console.log(cv);
+          });
+
           if (options.runOnOpenCVInit) {
             options.runOnOpenCVInit();
           }

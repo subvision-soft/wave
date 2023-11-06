@@ -107,8 +107,8 @@ export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
     private plastronService: PlastronService,
     private filesService: FilesService
   ) {
-    filesService.clearTarget();
-    filesService.clearSession();
+    this.filesService.clearTarget();
+    this.filesService.clearSession();
     router.events.subscribe((val) => {
       let video = document.getElementById('video');
       if (video) {
@@ -171,8 +171,8 @@ export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
   startWebcam() {
     console.log('startWebcam');
     // @ts-ignore
-    const cv = window['cv'];
-    this.plastronService.setCv(cv);
+    const cv = this.plastronService.cv;
+
     let video = document.getElementById('video');
 
     while (video == null) {
@@ -205,7 +205,6 @@ export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
     let currentTimestamp = new Date().getTime();
 
     function processVideo() {
-      console.log('processVideo');
       if (new Date().getTime() - currentTimestamp > 1000) {
         scope.currentFps = currentFps;
         currentFps = 0;
@@ -221,11 +220,8 @@ export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
       }
       if (scope.height > 0 && scope.width > 0) {
         try {
-          console.log('try');
           // @ts-ignore
           scope.camera.read(frame);
-          console.log('read');
-          // cv.imshow('canvas', frame);
           try {
             scope.coordinates =
               scope.plastronService.getPlastronCoordinates(frame);

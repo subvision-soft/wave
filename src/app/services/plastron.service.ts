@@ -15,7 +15,15 @@ class Cible {
   providedIn: 'root',
 })
 export class PlastronService {
-  private cv: any;
+  get cv(): any {
+    if (this._cv === undefined) {
+      // @ts-ignore
+      return window['cv'];
+    }
+    return this._cv;
+  }
+
+  private _cv: any;
 
   private frame: any = null;
 
@@ -42,10 +50,6 @@ export class PlastronService {
     rect[1] = pts2[pts2.length - 1];
 
     return rect;
-  }
-
-  setCv(cv: any) {
-    this.cv = cv;
   }
 
   getPlastronCoordinates(mat: any) {

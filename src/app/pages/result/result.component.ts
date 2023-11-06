@@ -7,11 +7,11 @@ import {
   PipeTransform,
 } from '@angular/core';
 import { PlastronService } from '../../services/plastron.service';
-import { pluck } from 'rxjs';
+import { map, pluck } from 'rxjs';
 import { SegmentedButtonItem } from '../../components/segmented-button/segmented-button.component';
 import { Impact } from '../../models/impact';
 import { Event } from '../../models/event';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastService, ToastTypes } from '../../services/toast.service';
 import { Target } from '../../models/target';
 import { Action } from '../../models/action';
@@ -64,6 +64,9 @@ export class ResultComponent implements OnInit {
   @Output() selectedIndexChange = new EventEmitter<number>();
   protected imagePreview: boolean = false;
   protected saving: boolean = true;
+  protected editable = true;
+
+  protected base64image: string = '';
 
   get time(): number {
     return this.target.time;
@@ -192,64 +195,78 @@ export class ResultComponent implements OnInit {
     private plastronService: PlastronService,
     private router: Router,
     private toastService: ToastService,
-    private filesService: FilesService
-  ) {
-    this.frame = this.plastronService.getFrame();
-    if (!this.frame) {
-      console.error('No frame found');
-      toastService.initiate({
-        title: 'Erreur',
-        content:
-          "Une erreur est survenue lors de l'analyse du plastron, vérifiez que la photo est bien cadrée et que le plastron est bien visible. Evitez les reflets et les ombres.",
-        type: ToastTypes.ERROR,
-        show: true,
-        duration: 3000,
-      });
-      // this.router.navigate(['camera']);
-
-      return;
-    }
-  }
+    private filesService: FilesService,
+    public activatedRoute: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
+    console.log('ResultComponent.ngOnInit');
     this.canvas = document.getElementById('canvas');
-    const cv = (window as any).cv;
-    try {
-      const cible = this.plastronService.process();
+    this.activatedRoute.paramMap
+      .pipe(map(() => window.history.state))
+      .subscribe((res) => {
+        if (!!res.target) {
+          this.target = res.target;
 
-      const canvas = document.getElementById('canvas');
-      cv.imshow(canvas, cible.image);
-      // @ts-ignore
-      const base64 = canvas.toDataURL('image/jpeg', 1.0);
-      this.target = {
-        image: base64,
-        impacts: cible.impacts,
-        total: cible.impacts
-          .map((impact: any) => impact.points)
-          .reduce((a: number, b: number) => a + b, 0),
-        date: new Date(),
-        time: 0,
-        event: Event.SAISIE_LIBRE,
-        user: '',
-      };
-      this.impacts = cible.impacts;
-      this.total = cible.impacts
-        .map((impact: any) => impact.points)
-        .reduce((a: number, b: number) => a + b, 0);
-      cible.image.delete();
-    } catch (error) {
-      this.toastService.initiate({
-        title: "Erreur lors de l'analyse de la cible",
-        content:
-          'Vérifiez que la photo est bien cadrée et que la cible est bien visible. Evitez les reflets et les ombres.',
-        type: ToastTypes.ERROR,
-        show: true,
-        duration: 4000,
+          this.editable = false;
+          const img = new Image();
+          img.onload = () => {
+            this.canvas.getContext('2d').drawImage(img, 0, 0, 1000, 1000);
+          };
+          img.src = this.target.image;
+        } else {
+          this.frame = this.plastronService.getFrame();
+          if (!this.frame) {
+            console.error('No frame found');
+            this.toastService.initiate({
+              title: 'Erreur',
+              content:
+                "Une erreur est survenue lors de l'analyse du plastron, vérifiez que la photo est bien cadrée et que le plastron est bien visible. Evitez les reflets et les ombres.",
+              type: ToastTypes.ERROR,
+              show: true,
+              duration: 3000,
+            });
+            return;
+          }
+          const cv = (window as any).cv;
+          try {
+            const cible = this.plastronService.process();
+
+            const canvas = document.getElementById('canvas');
+            cv.imshow(canvas, cible.image);
+            // @ts-ignore
+            const base64 = canvas.toDataURL('image/jpeg', 1.0);
+            this.target = {
+              image: base64,
+              impacts: cible.impacts,
+              total: cible.impacts
+                .map((impact: any) => impact.points)
+                .reduce((a: number, b: number) => a + b, 0),
+              date: new Date(),
+              time: 0,
+              event: Event.SAISIE_LIBRE,
+              user: '',
+            };
+            this.impacts = cible.impacts;
+            this.total = cible.impacts
+              .map((impact: any) => impact.points)
+              .reduce((a: number, b: number) => a + b, 0);
+            cible.image.delete();
+          } catch (error) {
+            this.toastService.initiate({
+              title: "Erreur lors de l'analyse de la cible",
+              content:
+                'Vérifiez que la photo est bien cadrée et que la cible est bien visible. Evitez les reflets et les ombres.',
+              type: ToastTypes.ERROR,
+              show: true,
+              duration: 4000,
+            });
+            // this.router.navigate(['camera']);
+
+            console.error(error);
+          }
+        }
       });
-      // this.router.navigate(['camera']);
-
-      console.error(error);
-    }
   }
 
   save() {

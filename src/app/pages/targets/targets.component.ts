@@ -5,6 +5,7 @@ import { Category } from '../../models/category';
 import { FilesService } from '../../services/files.service';
 import { Event } from '../../models/event';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-targets',
@@ -114,7 +115,7 @@ export class TargetsComponent {
     teams: [],
   };
 
-  constructor(private filesService: FilesService) {
+  constructor(private filesService: FilesService, private router: Router) {
     this.session = this.filesService.session || this.session;
   }
 
@@ -146,6 +147,9 @@ export class TargetsComponent {
       }
     } else {
       // Ouvrir page target
+      this.router.navigate(['/camera/result'], {
+        state: { target },
+      });
     }
   }
 

@@ -1,4 +1,4 @@
-<app-header [showBack]="true" [showMenu]="true" [actions]="menuActions">
+<app-header [showBack]="true" [showMenu]="editable" [actions]="menuActions">
   <h1>{{'RESULT.TITLE' | translate}}</h1>
 </app-header>
 
@@ -17,7 +17,7 @@
   </div>
   <app-spinner *ngIf="impacts.length > 0" [(value)]="selectedIndex" [values]="impacts | pluck:'points'"></app-spinner>
   <div class="tools">
-    <app-select class="multi-impacts" *ngIf="selected" [store]="multipleStore"
+    <app-select class="multi-impacts" *ngIf="selected && editable" [store]="multipleStore"
                 [(value)]="selected.amount"></app-select>
   </div>
   <app-total-preview [epreuve]="epreuve" [time]="(time-(time%1000))/1000" [impacts]="impacts"></app-total-preview>
