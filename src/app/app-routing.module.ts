@@ -11,6 +11,7 @@ import { UsersComponent } from './pages/users/users.component';
 import { TargetsComponent } from './pages/targets/targets.component';
 import { TeamsComponent } from './pages/teams/teams.component';
 import { SavingComponent } from './pages/saving/saving.component';
+import { UserComponent } from './pages/user/user.component';
 
 const routes: Routes = [
   {
@@ -61,6 +62,10 @@ const routes: Routes = [
       {
         path: 'users',
         component: UsersComponent,
+      },
+      {
+        path: 'user',
+        component: UserComponent,
       },
       {
         path: 'targets',

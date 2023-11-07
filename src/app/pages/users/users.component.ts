@@ -111,7 +111,9 @@ export class UsersComponent {
     console.log(this.session.users);
     return this.session.users.filter(
       (user) =>
-        user.firstname?.toLowerCase().includes(this.searchValue.toLowerCase()) ||
+        user.firstname
+          ?.toLowerCase()
+          .includes(this.searchValue.toLowerCase()) ||
         user.lastname?.toLowerCase().includes(this.searchValue.toLowerCase()) ||
         user.id?.toLowerCase().includes(this.searchValue.toLowerCase())
     );
@@ -151,6 +153,10 @@ export class UsersComponent {
         this.filesService.clearTarget();
         this.filesService.clearSession();
         this.router.navigate(['/camera']);
+      } else {
+        this.router.navigate(['/sessions/user'], {
+          state: { user },
+        });
       }
     }
   }

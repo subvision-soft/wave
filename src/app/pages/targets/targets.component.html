@@ -15,18 +15,8 @@
                   label="{{'TARGETS.ADD_TARGET' | translate}}"></app-add-button>
 
   <app-segmented-button [items]="segmentedButtonItems" [(selected)]="selectedSegmentedButton"></app-segmented-button>
-  <div class="targets">
-
-    <app-empty-text *ngIf="targets.length === 0" [icon]="searchValue?'jamSearch':'jamGhost'"
-                    text="{{(searchValue?'TARGETS.NO_RESULT':'TARGETS.NOTHING_SAVED') | translate}}"></app-empty-text>
-
-    <app-target-item [selected]="isTargetSelected(target)" long-press
-                     (onLongPressing)="onLongPress($event,target)"
-                     (click)="targetClick(target)" [target]="target"
-                     [user]="getUserById(target.user)"
-                     *ngFor="let target of targets">
-    </app-target-item>
-  </div>
+  <app-list-targets [users]="session.users" [targets]="targets"
+                    [(selectedTargets)]="selectedTargets"></app-list-targets>
 </div>
 
 <!--<app-message-box [message]="'Entrer le nom du dossier'" [title]="'Créer un nouveau dossier'"-->

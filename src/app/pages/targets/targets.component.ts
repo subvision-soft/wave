@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { Target } from '../../models/target';
 import { Session } from '../../models/session';
 import { Category } from '../../models/category';
 import { FilesService } from '../../services/files.service';
@@ -37,10 +36,6 @@ export class TargetsComponent {
         if (!this.eventFilter) return true;
         return target.event === this.eventFilter;
       });
-  }
-
-  getUserById(userId: string) {
-    return this.session.users.find((u) => u.id === userId);
   }
 
   eventFilter?: Event = undefined;
@@ -85,7 +80,6 @@ export class TargetsComponent {
   selectedSegmentedButton = 'all';
 
   menuActions = [];
-  timeoutLongPress: Date = new Date();
 
   selectedTargets: any[] = [];
 
@@ -126,32 +120,6 @@ export class TargetsComponent {
     { id: Category.SENIOR, label: 'Sénior' },
     { id: Category.MASTER, label: 'Master' },
   ];
-
-  isTargetSelected(target: Target): boolean {
-    return this.selectedTargets.includes(target);
-  }
-
-  onLongPress(event: any, target: Target) {
-    this.timeoutLongPress = new Date();
-    if (this.isTargetSelected(target)) return;
-    this.selectedTargets.push(target);
-  }
-
-  targetClick(target: Target) {
-    if (new Date().getTime() - this.timeoutLongPress.getTime() < 500) return;
-    if (this.selectedTargets.length > 0) {
-      if (this.isTargetSelected(target)) {
-        this.selectedTargets = this.selectedTargets.filter((u) => u !== target);
-      } else {
-        this.selectedTargets.push(target);
-      }
-    } else {
-      // Ouvrir page target
-      this.router.navigate(['/camera/result'], {
-        state: { target },
-      });
-    }
-  }
 
   parseDate(dateString: string): Date {
     return new Date(dateString);
