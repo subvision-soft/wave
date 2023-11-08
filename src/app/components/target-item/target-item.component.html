@@ -1,12 +1,12 @@
 <div class="content">
   <div *ngIf="user" class="infos">
-    <h1>{{user.firstname}} {{user.lastname}}</h1>
-    <p>{{user.id}}</p>
+    <app-tag color="secondary">{{user.id}}</app-tag>
+    <span>{{user.firstname}} {{user.lastname}}</span>
   </div>
   <div *ngIf="target" class="epreuve">
-    <h1>{{target.event}}</h1>
-    <p>{{target.total}}</p>
+    <app-tag>{{target.event}}</app-tag>
   </div>
+  <p>{{target?.total}}</p>
   <a>
     <ng-icon [name]="selected?'jamCheck':'jamChevronRight'" size="20"></ng-icon>
   </a>

@@ -229,9 +229,9 @@
   --font-weight-semi-bold: 600;
   --font-weight-normal: 400;
 
-  --transition: all 0.3s ease-in-out;
-  --transition-fast: all 0.1s ease-in-out;
-  --transition-slow: all 0.5s ease-in-out;
+  --transition: 0.3s ease-in-out;
+  --transition-fast: 0.1s ease-in-out;
+  --transition-slow: 0.5s ease-in-out;
 
   --navbar-height: 70px;
 }

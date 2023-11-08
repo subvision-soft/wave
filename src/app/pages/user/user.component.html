@@ -1,0 +1,16 @@
+<ng-container *ngIf="user">
+  <app-header [showBack]="true" [showMenu]="false">
+    <div class="header-content">
+      <h1>
+        {{user.firstname}} {{user.lastname}}
+      </h1>
+      <app-tag>{{user.id}}</app-tag>
+    </div>
+  </app-header>
+  <div class="content">
+    <app-add-button
+      label="Ajouter une cible"></app-add-button>
+    <app-list-targets [targets]="user.targets"></app-list-targets>
+  </div>
+</ng-container>
+

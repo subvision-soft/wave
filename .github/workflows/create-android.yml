@@ -1,5 +1,13 @@
 name: Build Android
-on: [push]
+on:
+  push:
+    branches:
+      - develop
+      - master
+  pull_request:
+    branches:
+      - develop
+      - master
 jobs:
   build:
     name: Build APK
@@ -15,7 +23,7 @@ jobs:
         with:
           scheme: calver
           increment: patch
-      - name : Print version
+      - name: Print version
         run: echo "Version is ${{ steps.version.outputs.version }}"
 
       - name: Setup java
@@ -37,30 +45,30 @@ jobs:
       - name: Build angular app
         run: npm run build
 
-#      - name: Add android folder if not present
-#        run: if [ ! -d "./android" ]; then npx cap add android; fi
+      #      - name: Add android folder if not present
+      #        run: if [ ! -d "./android" ]; then npx cap add android; fi
 
       - name: Capacitor sync
         run: npx cap sync
 
-#      - name: Capacitor copy
-#        run: npx cap copy
+      #      - name: Capacitor copy
+      #        run: npx cap copy
 
 
       # TODO: Check for folder structure in README for generating splash screen
-#      - name: Generate icons and splash screen to android folder
-#        run:  if [ -d "./resources" ]; then npm install @capacitor/assets --save-dev && npx capacitor-assets generate --android; fi
+      #      - name: Generate icons and splash screen to android folder
+      #        run:  if [ -d "./resources" ]; then npm install @capacitor/assets --save-dev && npx capacitor-assets generate --android; fi
 
       - name: Build app bundle
         run: cd android && ./gradlew bundle && ./gradlew assembleDebug
 
-#      - name: Extract Android signing key from env
-#        run: |
-#          echo "${{ secrets.RELEASE_KEYSTORE }}" > android/release.jks.base64
-#          base64 -d android/release.jks.base64 > android/release.decrypted.jks
-#
-#      - name: Sign dev build
-#        run: jarsigner -keystore android/release.decrypted.jks -storepass "${{ secrets.RELEASE_KEYSTORE_PASSWORD }}" -signedjar ./android/app/build/outputs/bundle/release/app-release-signed.aab ./android/app/build/outputs/bundle/release/app-release.aab release
+      #      - name: Extract Android signing key from env
+      #        run: |
+      #          echo "${{ secrets.RELEASE_KEYSTORE }}" > android/release.jks.base64
+      #          base64 -d android/release.jks.base64 > android/release.decrypted.jks
+      #
+      #      - name: Sign dev build
+      #        run: jarsigner -keystore android/release.decrypted.jks -storepass "${{ secrets.RELEASE_KEYSTORE_PASSWORD }}" -signedjar ./android/app/build/outputs/bundle/release/app-release-signed.aab ./android/app/build/outputs/bundle/release/app-release.aab release
 
       - name: Check folder content of android output
         run: ls ./android/app/build/outputs/bundle/release
@@ -74,7 +82,7 @@ jobs:
 
 
       - name: Build Release
-        if: "contains(github.ref, 'master')"
+        if: "contains(github.ref, 'master') && github.event_name != 'pull_request'"
         shell: bash
         run: |
           hub release create ${{ steps.version.outputs.version }} \
@@ -84,7 +92,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
 
       - name: Build pre-release
-        if: "contains(github.ref, 'develop')"
+        if: "contains(github.ref, 'develop') && github.event_name != 'pull_request'"
         shell: bash
         run: |
           hub release create ${{ steps.version.outputs.version }} \

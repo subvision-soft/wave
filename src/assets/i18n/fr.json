@@ -7,119 +7,118 @@
     "NO_SESSION": "Aucune session"
   },
   "RESULT": {
-    "TITLE" : "Résultat"
+    "TITLE": "Résultat"
   },
-  "SETTINGS" : {
-    "TITLE" : "Paramètres",
-    "APPEARANCE" : {
-      "TITLE" : "Apparence",
-      "THEME_DARK" : "Thème sombre",
-      "FIRST_COLOR" : "Couleur principale",
-      "SECOND_COLOR" : "Couleur secondaire",
-      "BORDER_RADIUS" : "Rayon des bordures"
+  "SETTINGS": {
+    "TITLE": "Paramètres",
+    "APPEARANCE": {
+      "TITLE": "Apparence",
+      "THEME_DARK": "Thème sombre",
+      "FIRST_COLOR": "Couleur principale",
+      "SECOND_COLOR": "Couleur secondaire",
+      "BORDER_RADIUS": "Rayon des bordures"
     },
     "OTHERS": {
       "TITLE": "Autres"
     },
-    "SEARCH" : "Rechercher des paramètres"
+    "SEARCH": "Rechercher des paramètres"
   },
   "SESSIONS": {
     "TITLE": "Sessions",
     "SELECT_SESSION": "Sélectionnez une session",
-    "ADD_SESSION" : "Ajouter une session",
+    "ADD_SESSION": "Ajouter une session",
     "NO_RESULT": "Pas de résultat",
-    "SEARCH" : "Rechercher une session",
-    "EMPTY_FOLDER" : "Le dossier est vide",
-    "PREVIOUS_FOLDER" : "Dossier précédent",
-    "MESSAGES_BOX" : {
+    "SEARCH": "Rechercher une session",
+    "EMPTY_FOLDER": "Le dossier est vide",
+    "PREVIOUS_FOLDER": "Dossier précédent",
+    "MESSAGES_BOX": {
       "NEW_FOLDER": {
-        "TITLE" : "Créer un nouveau dossier",
-        "MESSAGE" : "Entrer le nom du dossier",
-        "TOAST" : {
-          "SUCCESS" : {
-            "TITLE" : "Dossier créé",
-            "MESSAGE" : "Le dossier a été créé avec succès"
+        "TITLE": "Créer un nouveau dossier",
+        "MESSAGE": "Entrer le nom du dossier",
+        "TOAST": {
+          "SUCCESS": {
+            "TITLE": "Dossier créé",
+            "MESSAGE": "Le dossier a été créé avec succès"
           },
-          "ERROR" : {
-            "TITLE" : "Erreur",
-            "MESSAGE" : "Une erreur est survenue lors de la création du dossier"
+          "ERROR": {
+            "TITLE": "Erreur",
+            "MESSAGE": "Une erreur est survenue lors de la création du dossier"
           }
         }
       },
       "NEW_SESSION": {
-        "TITLE" : "Ajouter une session",
-        "INPUTS" : {
-          "TITLE" : "Titre",
-          "DESCRIPTION" : "Description",
-          "DATE" : "Date",
-          "TOAST" : {
-            "SUCCESS" : {
-              "TITLE" : "Session créée",
-              "MESSAGE" : "La session a été créée avec succès"
+        "TITLE": "Ajouter une session",
+        "INPUTS": {
+          "TITLE": "Titre",
+          "DESCRIPTION": "Description",
+          "DATE": "Date",
+          "TOAST": {
+            "SUCCESS": {
+              "TITLE": "Session créée",
+              "MESSAGE": "La session a été créée avec succès"
             },
-            "ERROR" : {
-              "TITLE" : "Erreur",
-              "MESSAGE" : "Une erreur est survenue lors de la création de la session"
+            "ERROR": {
+              "TITLE": "Erreur",
+              "MESSAGE": "Une erreur est survenue lors de la création de la session"
             }
           }
         }
       }
     },
-
     "MENU": {
       "NEW_FOLDER": "Créer un nouveau dossier",
-      "DELETE" : {
-        "TITLE" : "Supprimer",
-        "TOAST" : {
-          "SUCCESS" : {
-            "TITLE" : "Contenu supprimé",
-            "MESSAGE" : "Le contenu a été supprimé avec succès"
+      "DELETE": {
+        "TITLE": "Supprimer",
+        "TOAST": {
+          "SUCCESS": {
+            "TITLE": "Contenu supprimé",
+            "MESSAGE": "Le contenu a été supprimé avec succès"
           },
-          "ERROR" : {
-            "TITLE" : "Erreur",
-            "MESSAGE" : "Une erreur est survenue lors de la suppression du contenu"
+          "ERROR": {
+            "TITLE": "Erreur",
+            "MESSAGE": "Une erreur est survenue lors de la suppression du contenu"
           }
         }
       },
-      "NEW_SESSION" : "Créer une nouvelle session",
-      "ORDER_BY" : {
-        "TITLE" : "Trier par",
-        "NAME" : "Nom",
-        "TYPE" : "Type",
-        "SIZE" : "Taille",
-        "MODIFICATION_DATE" : "Date de modification"
+      "NEW_SESSION": "Créer une nouvelle session",
+      "ORDER_BY": {
+        "TITLE": "Trier par",
+        "NAME": "Nom",
+        "TYPE": "Type",
+        "SIZE": "Taille",
+        "MODIFICATION_DATE": "Date de modification"
       }
     }
   },
-  "SESSION" : {
-    "SHOOTERS" : {
-      "NONE" : "aucun tireur enregistré",
-      "SINGULAR" : "tireur enregistré",
-      "PLURAL" : "tireurs enregistrés"
+  "SESSION": {
+    "SHOOTERS": {
+      "NONE": "aucun tireur enregistré",
+      "SINGULAR": "tireur enregistré",
+      "PLURAL": "tireurs enregistrés"
     },
-    "TARGETS" : {
-      "NONE" : "aucune cible enregistrée",
-      "SINGULAR" : "cible enregistrée",
-      "PLURAL" : "cibles enregistrées"
+    "TARGETS": {
+      "NONE": "aucune cible enregistrée",
+      "SINGULAR": "cible enregistrée",
+      "PLURAL": "cibles enregistrées"
     },
-    "TEAMS" : {
-      "NONE" : "aucune équipe de relais",
-      "SINGULAR" : "équipe de relais",
-      "PLURAL" : "équipes de relais"
+    "TEAMS": {
+      "NONE": "aucune équipe de relais",
+      "SINGULAR": "équipe de relais",
+      "PLURAL": "équipes de relais"
     }
   },
-  "TARGETS" : {
-    "TITLE" : "Cibles",
-    "ADD_TARGET" : "Ajouter une cible",
+  "TARGETS": {
+    "TITLE": "Cibles",
+    "ADD_TARGET": "Ajouter une cible",
     "NO_RESULT": "Pas de résultat",
     "NOTHING_SAVED": "Aucune cible enregistrée",
-    "SEARCH" : "Rechercher une cible",
-    "SEGMENTED_BUTTON" : {
-      "ALL" : "Tout",
-      "PRECISION" : "Précision",
-      "BIATHLON" : "Biathlon",
-      "SUPER_BIATHLON" : "Super biathlon",
-      "FREE_INPUT" : "Saisie libre"
+    "SEARCH": "Rechercher une cible",
+    "SEGMENTED_BUTTON": {
+      "ALL": "Tout",
+      "PRECISION": "Précision",
+      "BIATHLON": "Biathlon",
+      "SUPER_BIATHLON": "Super biathlon",
+      "FREE_INPUT": "Saisie libre"
     }
   }
 }

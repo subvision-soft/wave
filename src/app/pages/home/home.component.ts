@@ -23,8 +23,6 @@ export class HomeComponent implements OnInit {
 
   actualites: any[] = [];
 
-  private _seances: string[] = [];
-
   constructor(
     private historyService: HistoryService,
     private router: Router,
@@ -37,7 +35,7 @@ export class HomeComponent implements OnInit {
       // @ts-ignore
       let scrollTop = event.target.scrollTop / 30;
       scrollTop = scrollTop > 1 ? 1 : scrollTop;
-      this.logoSize = 20 + 10 * (1 - scrollTop);
+      this.logoSize = 30 + 20 * (1 - scrollTop);
     });
 
     appPage?.addEventListener('scrollend', (event) => {

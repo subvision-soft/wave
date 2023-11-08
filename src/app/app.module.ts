@@ -98,10 +98,13 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { LoadingComponent } from './components/loading/loading.component';
+import { UserComponent } from './pages/user/user.component';
+import { ListTargetsComponent } from './components/list-targets/list-targets.component';
 
 const openCVConfig: OpenCVConfig = {
   openCVDirPath: 'assets/opencv',
 };
+
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
@@ -146,6 +149,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     InputComponent,
     SessionComponent,
     UsersComponent,
+    UserComponent,
     UserItemComponent,
     ToastComponent,
     TargetsComponent,
@@ -159,6 +163,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     FileExplorerComponent,
     SavingComponent,
     LoadingComponent,
+    ListTargetsComponent,
   ],
   imports: [
     BrowserAnimationsModule,
