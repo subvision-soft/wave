@@ -32,7 +32,7 @@
     width: 100vw;
     height: 100vh;
     z-index: 999;
-    transition: var(--transition-fast);
+    transition: opacity var(--transition-fast);
     background: rgba(0, 0, 0, 0.1);
   }
 

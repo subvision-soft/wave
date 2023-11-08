@@ -1,4 +1,17 @@
 :host {
+  overflow: hidden;
+  display: flex;
+
+  &.compact {
+    a {
+      height: auto;
+      padding: calc(var(--padding-sm) / 2) var(--padding);
+      border-radius: var(--border-radius-sm);
+      font-weight: var(--font-weight-normal);
+      box-shadow: none;
+    }
+  }
+
   a {
     display: flex;
     justify-content: center;
@@ -15,6 +28,13 @@
     width: fit-content;
     background: var(--color-background-2);
     box-shadow: var(--box-shadow-1);
+    font-size: var(--font-size);
+
+    span {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      flex: 1;
+    }
 
     &:active,
     &.active {

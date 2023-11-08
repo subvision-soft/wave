@@ -99,7 +99,7 @@
     width: 100vw;
     height: 100vh;
     z-index: 999;
-    transition: var(--transition-slow);
+    transition: opacity var(--transition-slow);
     background: rgba(0, 0, 0, 0.1);
   }
 
