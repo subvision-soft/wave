@@ -1,4 +1,10 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  HostBinding,
+  Input,
+  Output,
+} from '@angular/core';
 
 @Component({
   selector: 'app-chrono-picker',
@@ -7,6 +13,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class ChronoPickerComponent {
   _time: number = 0; // milliseconds
+  @Input() @HostBinding('class.compact') compact: boolean = false;
 
   @Output() timeChange = new EventEmitter<number>();
   open: boolean = false;

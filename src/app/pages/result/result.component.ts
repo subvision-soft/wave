@@ -150,7 +150,7 @@ export class ResultComponent implements OnInit {
     total: 0,
     date: new Date(),
     time: 0,
-    event: Event.SAISIE_LIBRE,
+    event: Event.SUPER_BIATHLON,
     user: '',
   };
 
