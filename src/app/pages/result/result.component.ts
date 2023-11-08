@@ -66,8 +66,6 @@ export class ResultComponent implements OnInit {
   protected saving: boolean = true;
   protected editable = true;
 
-  protected base64image: string = '';
-
   get time(): number {
     return this.target.time;
   }
