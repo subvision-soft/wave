@@ -325,7 +325,7 @@ export class PlastronService {
   getPoint(distance: number) {
     let point = 570;
     let i = 0;
-    if (distance > 45) {
+    if (distance > 48) {
       return 0;
     }
     for (; i < 5 && distance > 0; i++) {
@@ -896,8 +896,10 @@ export class PlastronService {
 
   process() {
     this.logger.debug('start process');
+    console.log('process', this.frame);
     let mat = this.getPlastronMat(this.frame);
     this.impactColor = this.getAverageColor(mat);
+    console.log('impactColor', this.impactColor);
     let hashMapVisuels = this.getHashMapVisuels(mat);
     let impactPoints = this.getImpactsCenters(mat);
     let result = new Cible();
