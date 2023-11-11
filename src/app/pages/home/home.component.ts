@@ -8,6 +8,7 @@ import {
 import { FilesService } from '../../services/files.service';
 import { HistoryService } from '../../services/history.service';
 import { Router } from '@angular/router';
+import { RSSParserService } from '../../services/rss-parser.service';
 
 @Component({
   selector: 'app-home',
@@ -23,11 +24,26 @@ export class HomeComponent implements OnInit {
 
   actualites: any[] = [];
 
+  private readonly _url =
+    'https://createfeed.fivefilters.org/extract.php?url=https%3A%2F%2Ftirsub.ffessm.fr%2F&item=.commissionpage-news-slider-slide&item_title=.commissionpage-news-slider-slide-caption-title&item_date=.post-date&item_date_format=d%2Fm%2FY+H%3Ai&item_image=.commissionpage-news-slider-slide-image%3Eimg&max=5&order=document&guid=0';
+
+  toLocalDate(date: string) {
+    return new Date(date).toLocaleDateString('fr');
+  }
+
+  getMediaSource(feedItem: any) {
+    return feedItem['media:content'][0]['$']['url'];
+  }
+
   constructor(
     private historyService: HistoryService,
     private router: Router,
-    private filesService: FilesService
+    private filesService: FilesService,
+    private rssParserService: RSSParserService
   ) {
+    this.rssParserService.parseURL(this._url).subscribe((data) => {
+      this.actualites = data;
+    });
     filesService.clearTarget();
     filesService.clearSession();
     const appPage = document.getElementById('app-page');
@@ -91,4 +107,8 @@ export class HomeComponent implements OnInit {
   }
 
   protected readonly console = console;
+
+  openActualite(actualite: any) {
+    window.open(actualite.link[0], '_blank');
+  }
 }
