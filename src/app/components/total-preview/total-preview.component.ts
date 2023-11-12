@@ -53,6 +53,16 @@ export class TotalPreviewComponent {
         3;
       return number > 0 ? number : 0;
     } else if (this.superBiathlon) {
+      const contrats = this.tirsValides.filter(
+        (impact) => impact.points >= 471
+      ).length;
+      const capitalPoints = 5000;
+      const tempsReference = 90;
+      if (contrats > 3) {
+        const time1 = this.time - (contrats - 3) * 3;
+        const number = capitalPoints + 3 * (tempsReference - time1);
+        return number > 0 ? number : 0;
+      }
     } else if (this.saisieLibre) {
       const number1 = this.tirsValides;
       return number1.reduce((acc, impact) => acc + impact.points, 0);
@@ -106,6 +116,7 @@ export class TotalPreviewComponent {
       });
       return impacts;
     } else if (this.superBiathlon) {
+      return this.impacts;
     } else if (this.saisieLibre) {
       return this.impacts;
     }
