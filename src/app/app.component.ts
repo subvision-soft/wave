@@ -28,10 +28,10 @@ export class AppComponent {
     private parametersService: ParametersService
   ) {
     this.themeColorService.setCssVariables('#1677ff');
-    let langs = ['en', 'fr', 'es', 'it', 'ar-KW', 'ar-DZ'];
+    let langs = ['en', 'fr', 'es', 'it'];
     this.translate.addLangs(langs);
-    this.translate.setDefaultLang('en');
-    const browserLang = translate.getBrowserLang() || 'en';
-    this.translate.use(langs.includes(browserLang) ? browserLang : 'en');
+    this.translate.setDefaultLang('fr');
+    const browserLang = translate.getBrowserLang() || 'fr';
+    this.translate.use(langs.includes(browserLang) ? browserLang : 'fr');
   }
 }

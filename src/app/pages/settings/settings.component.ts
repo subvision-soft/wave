@@ -93,8 +93,6 @@ export class SettingsComponent {
               { id: 'en', label: 'English' },
               { id: 'es', label: 'Español' },
               { id: 'it', label: 'Italiano' },
-              { id: 'ar-KW', label: 'العربية (الكويت)' },
-              { id: 'ar-DZ', label: 'العربية (الجزائر)' },
             ],
           },
         ],
