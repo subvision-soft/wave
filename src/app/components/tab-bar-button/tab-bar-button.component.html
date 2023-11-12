@@ -1,6 +1,9 @@
 <a
   style="--button-color:#fff;"
-  class="{{active ? 'active' : ''}} ripple"
-  routerLink={{link}}>
+  class="ripple"
+  [routerLink]="[link]"
+  routerLinkActive="active"
+  [routerLinkActiveOptions]="{exact: false}"
+>
   <ng-icon name={{icon}} size="24"></ng-icon>
 </a>

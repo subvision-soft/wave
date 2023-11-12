@@ -24,17 +24,23 @@ export class RSSParserService {
         responseType: 'text',
       };
       this.http
-        .get<any>('https://proxy.cors.sh/' + url, requestOptions)
-        .subscribe((data) => {
-          return this.parseString(data, (err, parsed) => {
-            if (err) {
-              subscriber.error(err);
-            } else {
-              subscriber.next(parsed);
-            }
+        .get<any>('https://corsproxy.io/?' + url, requestOptions)
+        .subscribe(
+          (data) => {
+            return this.parseString(data, (err, parsed) => {
+              if (err) {
+                subscriber.error(err);
+              } else {
+                subscriber.next(parsed);
+              }
+              subscriber.complete();
+            });
+          },
+          (error) => {
+            subscriber.error(error);
             subscriber.complete();
-          });
-        });
+          }
+        );
     });
   }
 }

@@ -25,11 +25,10 @@ export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
   }
 
   set coordinatesPercent(value: any) {
-    this.path?.nativeElement.setAttribute('d', this.getPath());
     this._coordinatesPercent = value;
+    this.path?.nativeElement.setAttribute('d', this.getPath());
   }
 
-  private cvState: string = '';
   stream: MediaStream | undefined;
   @ViewChild('video', { static: true }) video: any;
   @ViewChild('svg') svg: ElementRef | undefined;
@@ -107,19 +106,9 @@ export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
     private plastronService: PlastronService,
     private filesService: FilesService
   ) {
+    console.log('constructor');
     this.filesService.clearTarget();
     this.filesService.clearSession();
-    router.events.subscribe((val) => {
-      let video = document.getElementById('video');
-      if (video) {
-        // @ts-ignore
-        video.pause();
-        // @ts-ignore
-        video.srcObject = null;
-      }
-      this.playing = false;
-    });
-
     const scope = this;
     console.log(navigator.mediaDevices);
     navigator.mediaDevices
@@ -151,8 +140,6 @@ export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
   initOpencv() {
     // subscribe to status of OpenCV module
     this.ngxOpenCv.cvState.subscribe((cvState: OpenCVState) => {
-      // do something with the state string
-      this.cvState = cvState.state;
       if (cvState.error) {
         // handle errors
         console.log('error');

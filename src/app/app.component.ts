@@ -12,7 +12,6 @@ import { ParametersService } from './services/parameters.service';
 })
 export class AppComponent {
   title = 'wave';
-  private initPlugin: boolean = false;
   @HostBinding('class.backgroundStep-1') backgroundStep1: boolean = true;
   @HostBinding('class.backgroundStep-2') backgroundStep2: boolean = true;
   tabs = [

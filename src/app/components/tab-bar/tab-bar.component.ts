@@ -17,7 +17,6 @@ class Tab {
 export class TabBarComponent {
   @Input() tabs: Tab[] = [];
   @Output() select = new EventEmitter<Tab>();
-  private title: string = '';
 
   protected readonly iconoirHome = iconoirHome;
 
@@ -32,7 +31,6 @@ export class TabBarComponent {
 
     this.tabs.forEach((tab) => {
       tab.active = path.startsWith(tab.link);
-      this.title = tab.label;
       if (tab.active) {
         this.select.emit(tab);
       }

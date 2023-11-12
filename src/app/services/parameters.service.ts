@@ -118,7 +118,6 @@ export class ParametersService {
         } else {
           parameters = JSON.parse(await result.data.text());
         }
-        console.log(parameters);
         for (const p of parameters) {
           this._parameters[p.key].value = p.value;
           if (this._parameters[p.key].update) {
