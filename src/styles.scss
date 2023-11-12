@@ -252,3 +252,56 @@ body {
     box-sizing: border-box;
   }
 }
+
+/*  Ripple */
+
+.ink {
+  display: block;
+  position: absolute;
+  background: var(--color-dark1-1);
+  border-radius: 100%;
+  transform: scale(0);
+  opacity: 0.3;
+  filter: blur(10px);
+}
+
+.animate {
+  -webkit-animation: ripple 0.65s linear;
+  -moz-animation: ripple 0.65s linear;
+  -ms-animation: ripple 0.65s linear;
+  -o-animation: ripple 0.65s linear;
+  animation: ripple 0.65s linear;
+}
+
+.ripple-container {
+  position: relative;
+  overflow: hidden;
+}
+
+@-webkit-keyframes ripple {
+  100% {
+    opacity: 0;
+    -webkit-transform: scale(2.5);
+  }
+}
+
+@-moz-keyframes ripple {
+  100% {
+    opacity: 0;
+    -moz-transform: scale(2.5);
+  }
+}
+
+@-o-keyframes ripple {
+  100% {
+    opacity: 0;
+    -o-transform: scale(2.5);
+  }
+}
+
+@keyframes ripple {
+  100% {
+    opacity: 0;
+    transform: scale(2.5);
+  }
+}
