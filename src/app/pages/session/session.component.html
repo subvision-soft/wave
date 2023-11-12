@@ -1,61 +1,61 @@
 <app-header [actions]="menuActions" [showBack]="true" [showMenu]="true">
-  <div class="header-content">
-    <h1>
-      {{session.title}}
-    </h1>
-    <p>
-      {{session.date | date:'dd/MM/yyyy'}}
-    </p>
-  </div>
+    <div class="header-content">
+        <h1>
+            {{session.title}}
+        </h1>
+        <p>
+            {{session.date | date:'dd/MM/yyyy'}}
+        </p>
+    </div>
 
 </app-header>
 <div class="content">
-  <div [class]="['card','tireurs','ripple']" routerLink="/sessions/users">
-    <ng-container [ngPlural]="session.users.length">
-      <ng-template ngPluralCase="=0">
-        <ng-icon name="jamGhost"></ng-icon>
-        <span class="firstLetterUpperCase">{{'SESSION.SHOOTERS.NONE' | translate}}</span>
-      </ng-template>
-      <ng-template ngPluralCase="=1">
-        <span class="number">{{session.users.length}}</span>
-        <span class="firstLetterUpperCase">{{'SESSION.SHOOTERS.SINGULAR' | translate}}</span>
-      </ng-template>
-      <ng-template ngPluralCase="other">
-        <span class="number">{{session.users.length}}</span>
-        <span class="firstLetterUpperCase">{{'SESSION.SHOOTERS.PLURAL' | translate}}</span>
-      </ng-template>
-    </ng-container>
-  </div>
-  <div [class]="['card','cibles','ripple']" routerLink="/sessions/targets">
-    <ng-container [ngPlural]="targets.length">
-      <ng-template ngPluralCase="=0">
-        <ng-icon name="jamGhost"></ng-icon>
-        <span class="firstLetterUpperCase">{{'SESSION.TARGETS.NONE' | translate}}</span>
-      </ng-template>
-      <ng-template ngPluralCase="=1">
-        <span class="number">{{targets.length}}</span>
-        <span class="firstLetterUpperCase">{{'SESSION.TARGETS.SINGULAR' | translate}}</span>
-      </ng-template>
-      <ng-template ngPluralCase="other">
-        <span class="number">{{targets.length}}</span>
-        <span class="firstLetterUpperCase">{{'SESSION.TARGETS.PLURAL' | translate}}</span>
-      </ng-template>
-    </ng-container>
-  </div>
-  <div [class]="['card','relais','ripple']" routerLink="/sessions/teams">
-    <ng-container [ngPlural]="session.teams.length">
-      <ng-template ngPluralCase="=0">
-        <ng-icon name="jamGhost"></ng-icon>
-        <span class="firstLetterUpperCase">{{'SESSION.TEAMS.NONE' | translate}}</span>
-      </ng-template>
-      <ng-template ngPluralCase="=1">
-        <span class="number">{{session.teams.length}}</span>
-        <span class="firstLetterUpperCase">{{'SESSION.TEAMS.SINGULAR' | translate}}</span>
-      </ng-template>
-      <ng-template ngPluralCase="other">
-        <span class="number">{{session.teams.length}}</span>
-        <span class="firstLetterUpperCase">{{'SESSION.TEAMS.PLURAL' | translate}}</span>
-      </ng-template>
-    </ng-container>
-  </div>
+    <div [class]="['card','tireurs']" ripple routerLink="/sessions/users">
+        <ng-container [ngPlural]="session.users.length">
+            <ng-template ngPluralCase="=0">
+                <ng-icon name="jamGhost"></ng-icon>
+                <span class="firstLetterUpperCase">{{'SESSION.SHOOTERS.NONE' | translate}}</span>
+            </ng-template>
+            <ng-template ngPluralCase="=1">
+                <span class="number">{{session.users.length}}</span>
+                <span class="firstLetterUpperCase">{{'SESSION.SHOOTERS.SINGULAR' | translate}}</span>
+            </ng-template>
+            <ng-template ngPluralCase="other">
+                <span class="number">{{session.users.length}}</span>
+                <span class="firstLetterUpperCase">{{'SESSION.SHOOTERS.PLURAL' | translate}}</span>
+            </ng-template>
+        </ng-container>
+    </div>
+    <div [class]="['card','cibles']" ripple routerLink="/sessions/targets">
+        <ng-container [ngPlural]="targets.length">
+            <ng-template ngPluralCase="=0">
+                <ng-icon name="jamGhost"></ng-icon>
+                <span class="firstLetterUpperCase">{{'SESSION.TARGETS.NONE' | translate}}</span>
+            </ng-template>
+            <ng-template ngPluralCase="=1">
+                <span class="number">{{targets.length}}</span>
+                <span class="firstLetterUpperCase">{{'SESSION.TARGETS.SINGULAR' | translate}}</span>
+            </ng-template>
+            <ng-template ngPluralCase="other">
+                <span class="number">{{targets.length}}</span>
+                <span class="firstLetterUpperCase">{{'SESSION.TARGETS.PLURAL' | translate}}</span>
+            </ng-template>
+        </ng-container>
+    </div>
+    <div [class]="['card','relais']" ripple routerLink="/sessions/teams">
+        <ng-container [ngPlural]="session.teams.length">
+            <ng-template ngPluralCase="=0">
+                <ng-icon name="jamGhost"></ng-icon>
+                <span class="firstLetterUpperCase">{{'SESSION.TEAMS.NONE' | translate}}</span>
+            </ng-template>
+            <ng-template ngPluralCase="=1">
+                <span class="number">{{session.teams.length}}</span>
+                <span class="firstLetterUpperCase">{{'SESSION.TEAMS.SINGULAR' | translate}}</span>
+            </ng-template>
+            <ng-template ngPluralCase="other">
+                <span class="number">{{session.teams.length}}</span>
+                <span class="firstLetterUpperCase">{{'SESSION.TEAMS.PLURAL' | translate}}</span>
+            </ng-template>
+        </ng-container>
+    </div>
 </div>

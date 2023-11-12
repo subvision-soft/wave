@@ -101,6 +101,7 @@ import { LoadingComponent } from './components/loading/loading.component';
 import { UserComponent } from './pages/user/user.component';
 import { ListTargetsComponent } from './components/list-targets/list-targets.component';
 import { RSSParserService } from './services/rss-parser.service';
+import { RippleDirective } from './directives/ripple.directive';
 
 const openCVConfig: OpenCVConfig = {
   openCVDirPath: 'assets/opencv',
@@ -173,6 +174,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     ColorPickerModule,
     AppRoutingModule,
     HttpClientModule,
+    RippleDirective,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

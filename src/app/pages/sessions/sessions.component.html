@@ -1,42 +1,46 @@
 <app-header [showBack]="false" [showMenu]="true" [actions]="menuActions">
-  <h1>{{(target ? 'SESSIONS.SELECT_SESSION' : 'SESSIONS.TITLE') | translate}}</h1>
+    <h1>{{(target ? 'SESSIONS.SELECT_SESSION' : 'SESSIONS.TITLE') | translate}}</h1>
 </app-header>
 <div class="content">
-  <app-search [(value)]="searchValue" placeholder="{{'SESSIONS.SEARCH'|translate}}"></app-search>
-  <app-add-button (click)="openCreateSession = true" [@enterAnimation] *ngIf="!searchValue"
-                  label="{{'SESSIONS.ADD_SESSION'|translate}}"></app-add-button>
-  <div class="sessions-content">
-    <div class="path">
-      <app-tag class="ripple" (click)="openRoot()">/</app-tag>
-      <app-tag class="ripple" [@enterAnimation] (click)="openAtIndexPath(index)"
-               *ngFor="let pathItem of _path; index as index">{{pathItem}}</app-tag>
-    </div>
-    <div class="sessions">
-      <app-session-item *ngIf="path.length > 0" [@enterAnimation] [file]="returnFile" (click)="back()"
-                        [goBack]="true"></app-session-item>
-      <app-empty-text *ngIf="sessions.length === 0" [@enterAnimation] [icon]="searchValue?'jamSearch':'jamGhost'"
-                      text="{{(searchValue?'SESSIONS.NO_RESULT':'SESSIONS.EMPTY_FOLDER') | translate}}"></app-empty-text>
+    <app-search [(value)]="searchValue" placeholder="{{'SESSIONS.SEARCH'|translate}}"></app-search>
+    <app-add-button (click)="openCreateSession = true" [@enterAnimation] *ngIf="!searchValue"
+                    label="{{'SESSIONS.ADD_SESSION'|translate}}"></app-add-button>
+    <div class="sessions-content">
+        <div class="path">
+            <app-tag ripple (click)="openRoot()">/</app-tag>
+            <app-tag ripple [@enterAnimation] (click)="openAtIndexPath(index)"
+                     *ngFor="let pathItem of _path; index as index">{{pathItem}}</app-tag>
+        </div>
+        <div class="sessions">
+            <app-session-item *ngIf="path.length > 0" [@enterAnimation] [file]="returnFile" (click)="back()"
+                              [goBack]="true"></app-session-item>
+            <app-empty-text *ngIf="sessions.length === 0" [@enterAnimation] [icon]="searchValue?'jamSearch':'jamGhost'"
+                            text="{{(searchValue?'SESSIONS.NO_RESULT':'SESSIONS.EMPTY_FOLDER') | translate}}"></app-empty-text>
 
-      <app-session-item [selected]="session.active" long-press
-                        (onLongPressing)="onLongPress($event,session)"
-                        (click)="sessionClick(session)" [file]="session.file"
-                        *ngFor="let session of sessions">
-      </app-session-item>
+            <app-session-item [selected]="session.active" long-press
+                              (onLongPressing)="onLongPress($event,session)"
+                              (click)="sessionClick(session)" [file]="session.file"
+                              *ngFor="let session of sessions">
+            </app-session-item>
+        </div>
     </div>
-  </div>
 </div>
 
-<app-message-box message="{{'SESSIONS.MESSAGES_BOX.NEW_FOLDER.MESSAGE' | translate}}" title="{{'SESSIONS.MESSAGES_BOX.NEW_FOLDER.TITLE' | translate}}"
+<app-message-box message="{{'SESSIONS.MESSAGES_BOX.NEW_FOLDER.MESSAGE' | translate}}"
+                 title="{{'SESSIONS.MESSAGES_BOX.NEW_FOLDER.TITLE' | translate}}"
                  [(open)]="openCreateFolderPrompt" (callback)="messageBoxCallback($event)"
                  type="prompt"></app-message-box>
 <app-message-box title="{{'SESSIONS.MESSAGES_BOX.NEW_SESSION.TITLE' | translate}}"
                  [(open)]="openCreateSession"
                  (callback)="createSessionCallback($event)"
                  type="okcancel">
-  <app-input [(value)]="newSession.title" label="{{'SESSIONS.MESSAGES_BOX.NEW_SESSION.INPUTS.TITLE' | translate}}"></app-input>
-  <app-input [(value)]="newSession.description" label="{{'SESSIONS.MESSAGES_BOX.NEW_SESSION.INPUTS.DESCRIPTION' | translate}}"></app-input>
-  <app-input [value]="(newSession.date | date:'yyyy-MM-dd' )  || ''" (valueChange)="newSession.date = parseDate($event)"
-             label="{{'SESSIONS.MESSAGES_BOX.NEW_SESSION.INPUTS.DATE' | translate}}"
-             type="date"></app-input>
+    <app-input [(value)]="newSession.title"
+               label="{{'SESSIONS.MESSAGES_BOX.NEW_SESSION.INPUTS.TITLE' | translate}}"></app-input>
+    <app-input [(value)]="newSession.description"
+               label="{{'SESSIONS.MESSAGES_BOX.NEW_SESSION.INPUTS.DESCRIPTION' | translate}}"></app-input>
+    <app-input [value]="(newSession.date | date:'yyyy-MM-dd' )  || ''"
+               (valueChange)="newSession.date = parseDate($event)"
+               label="{{'SESSIONS.MESSAGES_BOX.NEW_SESSION.INPUTS.DATE' | translate}}"
+               type="date"></app-input>
 </app-message-box>
 

@@ -1,14 +1,15 @@
 import { Component, HostBinding, HostListener, Input } from '@angular/core';
+import { RippleDirective } from '../../directives/ripple.directive';
 
 @Component({
   selector: 'app-button',
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss'],
+  hostDirectives: [RippleDirective],
 })
 export class ButtonComponent {
   @Input() icon: string = '';
   @Input() label: string = '';
-  @HostBinding('class.ripple') ripple: boolean = true;
   _type: 'primary' | 'default' | 'dashed' | 'text' | 'link' = 'default';
   _color: 'primary' | 'success' | 'error' = 'primary';
 
