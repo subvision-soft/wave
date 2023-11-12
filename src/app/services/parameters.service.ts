@@ -29,8 +29,8 @@ export class ParametersService {
       directory: Directory.Data,
     }).then(() => {
       this.toastService.initiate({
-        title: 'Paramètres sauvegardés',
-        content: 'Les paramètres ont été sauvegardés avec succès.',
+        title: 'SETTINGS.TOASTS.SAVED_SUCCESS.TITLE',
+        content: 'SETTINGS.TOASTS.SAVED_SUCCESS.MESSAGE',
         show: true,
         type: ToastTypes.SUCCESS,
         duration: 2000,

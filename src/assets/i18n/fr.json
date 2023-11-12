@@ -21,7 +21,13 @@
     "OTHERS": {
       "TITLE": "Autres"
     },
-    "SEARCH": "Rechercher des paramètres"
+    "SEARCH": "Rechercher des paramètres",
+    "TOASTS": {
+      "SAVED_SUCCESS": {
+        "TITLE": "Paramètres sauvegardés",
+        "MESSAGE": "Les paramètres ont été sauvegardés avec succès"
+      }
+    }
   },
   "SESSIONS": {
     "TITLE": "Sessions",
