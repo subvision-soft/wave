@@ -2,11 +2,13 @@ import { Component, HostBinding, Input } from '@angular/core';
 import { Session } from '../../models/session';
 import { Target } from '../../models/target';
 import { User } from '../../models/user';
+import { RippleDirective } from '../../directives/ripple.directive';
 
 @Component({
   selector: 'app-target-item',
   templateUrl: './target-item.component.html',
   styleUrls: ['./target-item.component.scss'],
+  hostDirectives: [RippleDirective],
 })
 export class TargetItemComponent {
   @Input() target: Target | undefined;
@@ -14,8 +16,6 @@ export class TargetItemComponent {
   @Input() user: User | undefined;
 
   @Input() session: Session | undefined;
-
-  @HostBinding('class') class = 'ripple';
 
   @HostBinding('class.selected') private _selected: boolean = false;
   get selected(): boolean {

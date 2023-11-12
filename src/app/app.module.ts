@@ -146,7 +146,6 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     MessageBoxComponent,
     EmptyTextComponent,
     LongPressDirective,
-    RippleDirective,
     NgVar,
     InputComponent,
     InputComponent,
@@ -175,6 +174,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     ColorPickerModule,
     AppRoutingModule,
     HttpClientModule,
+    RippleDirective,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
