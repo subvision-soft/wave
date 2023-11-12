@@ -12,7 +12,6 @@ import { ParametersService } from './services/parameters.service';
 })
 export class AppComponent {
   title = 'wave';
-  private initPlugin: boolean = false;
   @HostBinding('class.backgroundStep-1') backgroundStep1: boolean = true;
   @HostBinding('class.backgroundStep-2') backgroundStep2: boolean = true;
   tabs = [
@@ -29,10 +28,10 @@ export class AppComponent {
     private parametersService: ParametersService
   ) {
     this.themeColorService.setCssVariables('#1677ff');
-    let langs = ['en', 'fr', 'es', 'it', 'ar-KW', 'ar-DZ'];
+    let langs = ['en', 'fr', 'es', 'it'];
     this.translate.addLangs(langs);
-    this.translate.setDefaultLang('en');
-    const browserLang = translate.getBrowserLang() || 'en';
-    this.translate.use(langs.includes(browserLang) ? browserLang : 'en');
+    this.translate.setDefaultLang('fr');
+    const browserLang = translate.getBrowserLang() || 'fr';
+    this.translate.use(langs.includes(browserLang) ? browserLang : 'fr');
   }
 }

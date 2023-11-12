@@ -21,7 +21,13 @@
     "OTHERS": {
       "TITLE": "Others"
     },
-    "SEARCH": "Search settings"
+    "SEARCH": "Search settings",
+    "TOASTS": {
+      "SAVED_SUCCESS": {
+        "TITLE": "Settings saved",
+        "MESSAGE": "The settings have been saved successfully"
+      }
+    }
   },
   "SESSIONS": {
     "TITLE": "Sessions",
