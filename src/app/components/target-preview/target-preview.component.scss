@@ -20,15 +20,21 @@
     cursor: pointer;
 
     span {
-      font-size: 10px;
-      font-weight: var(--font-weight-bold);
+      font-size: 9px;
+      font-weight: 1000;
       display: flex;
       justify-content: center;
       align-items: center;
-      color: #fff;
+      color: var(--impact-color);
       width: 100%;
       height: 100%;
       transform: rotate(calc(360deg - var(--impact-rotation)));
+    }
+
+    &.multiple {
+      background-color: #fff;
+      border: 2px solid var(--impact-color);
+      box-sizing: border-box;
     }
 
     &.selected,

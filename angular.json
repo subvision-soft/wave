@@ -66,8 +66,8 @@
           "options": {
             "browserTarget": "web-ui:build",
             "headers": {
-              "Cross-Origin-Opener-Policy": "same-origin",
-              "Cross-Origin-Embedder-Policy": "require-corp"
+              "Cross-Origin-Opener-Policy": "unsafe-none",
+              "Cross-Origin-Embedder-Policy": "credentialless"
             }
           },
           "configurations": {

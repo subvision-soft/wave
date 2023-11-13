@@ -12,7 +12,7 @@ export class LogService {
     for (let i = 0; i < args.length; i++) {
       msg += ' ' + JSON.stringify(args[i]);
     }
-    console.log(msg);
+    console.debug(msg);
   }
 
   info(...args: any[]) {
@@ -20,6 +20,6 @@ export class LogService {
     for (let i = 0; i < args.length; i++) {
       msg += ' ' + JSON.stringify(args[i]);
     }
-    console.log(msg);
+    console.info(msg);
   }
 }

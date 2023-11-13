@@ -7,119 +7,124 @@
     "NO_SESSION": "Nessuna sessione"
   },
   "RESULT": {
-    "TITLE" : "Risultato"
+    "TITLE": "Risultato"
   },
-  "SETTINGS" : {
-    "TITLE" : "Impostazioni",
-    "APPEARANCE" : {
-      "TITLE" : "Aspetto",
-      "THEME_DARK" : "Tema scuro",
-      "FIRST_COLOR" : "Colore principale",
-      "SECOND_COLOR" : "Colore secondario",
-      "BORDER_RADIUS" : "Raggio dei bordi"
+  "SETTINGS": {
+    "TITLE": "Impostazioni",
+    "APPEARANCE": {
+      "TITLE": "Aspetto",
+      "THEME_DARK": "Tema scuro",
+      "FIRST_COLOR": "Colore principale",
+      "SECOND_COLOR": "Colore secondario",
+      "BORDER_RADIUS": "Raggio dei bordi"
     },
     "OTHERS": {
       "TITLE": "Altri"
     },
-    "SEARCH" : "Cerca impostazioni"
+    "SEARCH": "Cerca impostazioni",
+    "TOASTS": {
+      "SAVED_SUCCESS": {
+        "TITLE": "Impostazioni salvate",
+        "MESSAGE": "Le impostazioni sono state salvate con successo"
+      }
+    }
   },
   "SESSIONS": {
     "TITLE": "Sessioni",
     "SELECT_SESSION": "Seleziona una sessione",
-    "ADD_SESSION" : "Aggiungi una sessione",
+    "ADD_SESSION": "Aggiungi una sessione",
     "NO_RESULT": "Nessun risultato",
-    "SEARCH" : "Cerca una sessione",
-    "EMPTY_FOLDER" : "Cartella vuota",
-    "PREVIOUS_FOLDER" : "Cartella precedente",
-    "MESSAGES_BOX" : {
+    "SEARCH": "Cerca una sessione",
+    "EMPTY_FOLDER": "Cartella vuota",
+    "PREVIOUS_FOLDER": "Cartella precedente",
+    "MESSAGES_BOX": {
       "NEW_FOLDER": {
-        "TITLE" : "Crea una nuova cartella",
-        "MESSAGE" : "Inserisci il nome della cartella",
-        "TOAST" : {
-          "SUCCESS" : {
-            "TITLE" : "Cartella creata",
-            "MESSAGE" : "La cartella è stata creata con successo"
+        "TITLE": "Crea una nuova cartella",
+        "MESSAGE": "Inserisci il nome della cartella",
+        "TOAST": {
+          "SUCCESS": {
+            "TITLE": "Cartella creata",
+            "MESSAGE": "La cartella è stata creata con successo"
           },
-          "ERROR" : {
-            "TITLE" : "Errore",
-            "MESSAGE" : "Si è verificato un errore durante la creazione della cartella"
+          "ERROR": {
+            "TITLE": "Errore",
+            "MESSAGE": "Si è verificato un errore durante la creazione della cartella"
           }
         }
       },
       "NEW_SESSION": {
-        "TITLE" : "Aggiungi una sessione",
-        "INPUTS" : {
-          "TITLE" : "Titolo",
-          "DESCRIPTION" : "Descrizione",
-          "DATE" : "Data",
-          "TOAST" : {
-            "SUCCESS" : {
-              "TITLE" : "Sessione creata",
-              "MESSAGE" : "La sessione è stata creata con successo"
+        "TITLE": "Aggiungi una sessione",
+        "INPUTS": {
+          "TITLE": "Titolo",
+          "DESCRIPTION": "Descrizione",
+          "DATE": "Data",
+          "TOAST": {
+            "SUCCESS": {
+              "TITLE": "Sessione creata",
+              "MESSAGE": "La sessione è stata creata con successo"
             },
-            "ERROR" : {
-              "TITLE" : "Errore",
-              "MESSAGE" : "Si è verificato un errore durante la creazione della sessione"
+            "ERROR": {
+              "TITLE": "Errore",
+              "MESSAGE": "Si è verificato un errore durante la creazione della sessione"
             }
           }
         }
       }
     },
-
     "MENU": {
       "NEW_FOLDER": "Crea una nuova cartella",
-      "DELETE" : {
-        "TITLE" : "Elimina",
-        "TOAST" : {
-          "SUCCESS" : {
-            "TITLE" : "Contenuto eliminato",
-            "MESSAGE" : "Il contenuto è stato eliminato con successo"
+      "DELETE": {
+        "TITLE": "Elimina",
+        "TOAST": {
+          "SUCCESS": {
+            "TITLE": "Contenuto eliminato",
+            "MESSAGE": "Il contenuto è stato eliminato con successo"
           },
-          "ERROR" : {
-            "TITLE" : "Errore",
-            "MESSAGE" : "Si è verificato un errore durante l'eliminazione del contenuto"
+          "ERROR": {
+            "TITLE": "Errore",
+            "MESSAGE": "Si è verificato un errore durante l'eliminazione del contenuto"
           }
         }
       },
-      "NEW_SESSION" : "Crea una nuova sessione",
-      "ORDER_BY" : {
-        "TITLE" : "Ordina per",
-        "NAME" : "Nome",
-        "TYPE" : "Tipo",
-        "SIZE" : "Dimensione",
-        "MODIFICATION_DATE" : "Data di modifica"
+      "NEW_SESSION": "Crea una nuova sessione",
+      "ORDER_BY": {
+        "TITLE": "Ordina per",
+        "NAME": "Nome",
+        "TYPE": "Tipo",
+        "SIZE": "Dimensione",
+        "MODIFICATION_DATE": "Data di modifica"
       }
     }
   },
-  "SESSION" : {
-    "SHOOTERS" : {
-      "NONE" : "nessun tiratore registrato",
-      "SINGULAR" : "tiratore registrato",
-      "PLURAL" : "tiratori registrati"
+  "SESSION": {
+    "SHOOTERS": {
+      "NONE": "nessun tiratore registrato",
+      "SINGULAR": "tiratore registrato",
+      "PLURAL": "tiratori registrati"
     },
-    "TARGETS" : {
-      "NONE" : "nessun bersaglio registrato",
-      "SINGULAR" : "bersaglio registrato",
-      "PLURAL" : "bersagli registrati"
+    "TARGETS": {
+      "NONE": "nessun bersaglio registrato",
+      "SINGULAR": "bersaglio registrato",
+      "PLURAL": "bersagli registrati"
     },
-    "TEAMS" : {
-      "NONE" : "nessuna squadra di staffetta",
-      "SINGULAR" : "squadra di staffetta",
-      "PLURAL" : "squadre di staffetta"
+    "TEAMS": {
+      "NONE": "nessuna squadra di staffetta",
+      "SINGULAR": "squadra di staffetta",
+      "PLURAL": "squadre di staffetta"
     }
   },
-  "TARGETS" : {
-    "TITLE" : "Bersagli",
-    "ADD_TARGET" : "Aggiungi un bersaglio",
+  "TARGETS": {
+    "TITLE": "Bersagli",
+    "ADD_TARGET": "Aggiungi un bersaglio",
     "NO_RESULT": "Nessun risultato",
     "NOTHING_SAVED": "Nessun bersaglio registrato",
-    "SEARCH" : "Cerca un bersaglio",
-    "SEGMENTED_BUTTON" : {
-      "ALL" : "Tutto",
-      "PRECISION" : "Precisione",
-      "BIATHLON" : "Biathlon",
-      "SUPER_BIATHLON" : "Super biathlon",
-      "FREE_INPUT" : "Inserimento libero"
+    "SEARCH": "Cerca un bersaglio",
+    "SEGMENTED_BUTTON": {
+      "ALL": "Tutto",
+      "PRECISION": "Precisione",
+      "BIATHLON": "Biathlon",
+      "SUPER_BIATHLON": "Super biathlon",
+      "FREE_INPUT": "Inserimento libero"
     }
   }
 }

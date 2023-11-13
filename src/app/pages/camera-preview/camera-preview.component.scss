@@ -6,6 +6,23 @@
   width: 100%;
   box-sizing: border-box;
 
+  .flash-overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    opacity: 0;
+    transition: cubic-bezier(0, 1.29, 0.83, 0.89) 0.4s;
+    z-index: 4;
+    pointer-events: none;
+    backdrop-filter: blur(50px) brightness(2);
+
+    &.active {
+      opacity: 0.9;
+      pointer-events: visible;
+    }
+  }
+
   .camera-preview-container {
     position: relative;
     width: 100%;

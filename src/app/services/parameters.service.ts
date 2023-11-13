@@ -27,17 +27,15 @@ export class ParametersService {
       path: 'parameters.json',
       data: btoa(JSON.stringify(parameters)),
       directory: Directory.Data,
-    })
-      .then(() => {
-        this.toastService.initiate({
-          title: 'Paramètres sauvegardés',
-          content: 'Les paramètres ont été sauvegardés avec succès.',
-          show: true,
-          type: ToastTypes.SUCCESS,
-          duration: 2000,
-        });
-      })
-      .catch((err) => {});
+    }).then(() => {
+      this.toastService.initiate({
+        title: 'SETTINGS.TOASTS.SAVED_SUCCESS.TITLE',
+        content: 'SETTINGS.TOASTS.SAVED_SUCCESS.MESSAGE',
+        show: true,
+        type: ToastTypes.SUCCESS,
+        duration: 2000,
+      });
+    });
   }
 
   private _parameters: any = {
@@ -112,13 +110,12 @@ export class ParametersService {
       directory: Directory.Data,
     })
       .then(async (result) => {
-        let parameters = [];
+        let parameters: any[];
         if (typeof result.data === 'string') {
           parameters = JSON.parse(atob(result.data));
         } else {
           parameters = JSON.parse(await result.data.text());
         }
-        console.log(parameters);
         for (const p of parameters) {
           this._parameters[p.key].value = p.value;
           if (this._parameters[p.key].update) {

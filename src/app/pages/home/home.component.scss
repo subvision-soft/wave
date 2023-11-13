@@ -45,6 +45,11 @@
       max-width: 150px;
       display: flex;
       flex-direction: column;
+      overflow: hidden;
+      gap: var(--padding-sm);
+      background-size: cover;
+      background-position: center;
+      position: relative;
 
       app-empty-text {
         margin: auto;
@@ -52,16 +57,36 @@
       }
 
       h1 {
-        font-size: var(--font-size);
+        font-size: var(--font-size-sm);
         font-weight: var(--font-weight-semi-bold);
         text-align: left;
         flex: 1;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: #fff;
+        z-index: 1;
       }
 
       p {
         font-size: var(--font-size-sm);
         font-weight: var(--font-weight-normal);
         text-align: left;
+        color: #fff;
+        z-index: 1;
+      }
+
+      &.gradient:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          180deg,
+          rgba(0, 0, 0, 0.8) 0%,
+          rgba(0, 0, 0, 0.3) 100%
+        );
       }
     }
   }

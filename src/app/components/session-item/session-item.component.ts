@@ -2,11 +2,13 @@ import { Component, HostBinding, Input } from '@angular/core';
 import { FileInfo } from '@capacitor/filesystem';
 import { FilesService } from '../../services/files.service';
 import { Session } from '../../models/session';
+import { RippleDirective } from '../../directives/ripple.directive';
 
 @Component({
   selector: 'app-session-item',
   templateUrl: './session-item.component.html',
   styleUrls: ['./session-item.component.scss'],
+  hostDirectives: [RippleDirective],
 })
 export class SessionItemComponent {
   get file(): FileInfo | undefined {
@@ -49,8 +51,6 @@ export class SessionItemComponent {
 
   private _file: FileInfo | undefined;
   @Input() goBack: boolean = false;
-  @HostBinding('class') class = 'ripple';
-
   @HostBinding('class.selected') private _selected: boolean = false;
   get selected(): boolean {
     return this._selected;
