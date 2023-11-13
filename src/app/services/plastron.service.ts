@@ -322,10 +322,12 @@ export class PlastronService {
     return point;
   }
 
+  private readonly maximumImpactDistance = 48;
+
   getPoint(distance: number) {
     let point = 570;
     let i = 0;
-    if (distance > 48) {
+    if (distance > this.maximumImpactDistance) {
       return 0;
     }
     for (; i < 5 && distance > 0; i++) {
@@ -344,8 +346,12 @@ export class PlastronService {
     const distance = this.getDistance(center, impact);
     const percent = distance / length;
     const realLength = 25;
-    let realDistance = Math.ceil(realLength * percent);
-    return realDistance;
+    const milimeterDistance = realLength * percent;
+    const round = Math.round(milimeterDistance);
+    return round === this.maximumImpactDistance &&
+      milimeterDistance > this.maximumImpactDistance
+      ? round + 1
+      : round;
   }
 
   getImpactsCenters(mat: any): PointCv[] {
