@@ -8,7 +8,7 @@ describe('CameraPreviewComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [CameraPreviewComponent]
+      declarations: [CameraPreviewComponent],
     });
     fixture = TestBed.createComponent(CameraPreviewComponent);
     component = fixture.componentInstance;

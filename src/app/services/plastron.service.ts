@@ -7,7 +7,7 @@ class PointCv {
   constructor(public x: number = -1, public y: number = -1) {}
 }
 
-class Cible {
+export class Cible {
   constructor(public impacts: Impact[] = [], public image: any = null) {}
 }
 
@@ -894,7 +894,7 @@ export class PlastronService {
     return radians * (180 / Math.PI);
   };
 
-  process() {
+  process(): Cible {
     this.logger.debug('start process');
     console.log('process', this.frame);
     let mat = this.getPlastronMat(this.frame);

@@ -224,6 +224,7 @@ export class ResultComponent implements OnInit {
               show: true,
               duration: 3000,
             });
+            this.router.navigate(['/camera']);
             return;
           }
           const cv = (window as any).cv;
@@ -231,6 +232,7 @@ export class ResultComponent implements OnInit {
             const cible = this.plastronService.process();
             const canvas = document.getElementById('canvas');
             cv.imshow(canvas, cible.image);
+            
             // @ts-ignore
             const base64 = canvas.toDataURL('image/jpeg', 1.0);
             this.target = {
@@ -258,8 +260,7 @@ export class ResultComponent implements OnInit {
               show: true,
               duration: 4000,
             });
-            // this.router.navigate(['camera']);
-
+            this.router.navigate(['/camera']);
             console.error(error);
           }
         }

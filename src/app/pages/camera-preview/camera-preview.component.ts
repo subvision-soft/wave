@@ -20,6 +20,8 @@ import { FilesService } from '../../services/files.service';
   styleUrls: ['./camera-preview.component.scss'],
 })
 export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
+  flash: boolean = false;
+
   get coordinatesPercent(): any {
     return this._coordinatesPercent;
   }
@@ -30,7 +32,50 @@ export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
   }
 
   stream: MediaStream | undefined;
-  @ViewChild('video', { static: true }) video: any;
+  _video: ElementRef | undefined;
+
+  get video(): ElementRef | undefined {
+    return this._video;
+  }
+
+  @ViewChild('video', { static: true }) set video(el: ElementRef | undefined) {
+    console.log('video', el);
+    if (el) {
+      this._video = el;
+      const scope = this;
+      navigator.mediaDevices
+        .getUserMedia({
+          video: {
+            width: { ideal: 4096 },
+            height: { ideal: 2160 },
+            facingMode: 'environment',
+          },
+
+          audio: false,
+        })
+        .then(function (stream: MediaStream) {
+          let video = el.nativeElement;
+          console.log('video', stream);
+          if (video) {
+            // @ts-ignore
+            video.srcObject = stream;
+            // @ts-ignore
+            const play = video.play();
+            play
+              .then((test: any) => {
+                scope.initOpencv();
+              })
+              .catch((err: any) => {
+                console.log(err);
+              });
+          }
+        })
+        .catch(function (err) {
+          console.log('An error occurred! ' + err);
+        });
+    }
+  }
+
   @ViewChild('svg') svg: ElementRef | undefined;
   @ViewChild('path') path: ElementRef | undefined;
   @ViewChild('cameraPreview') cameraPreview: ElementRef | undefined;
@@ -66,14 +111,14 @@ export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
   loading: boolean = false;
 
   capture() {
-    this.loading = true;
     const scope = this;
     this.playing = false;
     this.plastronService.setFrame(this.frame);
+    this.flash = true;
     setTimeout(() => {
       scope.router.navigate(['camera/result']);
-      this.loading = false;
-    }, 1000);
+      this.flash = false;
+    }, 500);
   }
 
   coordinatesToPercent(coordinates: any) {
@@ -109,32 +154,6 @@ export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
     console.log('constructor');
     this.filesService.clearTarget();
     this.filesService.clearSession();
-    const scope = this;
-    console.log(navigator.mediaDevices);
-    navigator.mediaDevices
-      .getUserMedia({
-        video: {
-          width: { ideal: 4096 },
-          height: { ideal: 2160 },
-          facingMode: 'environment',
-        },
-
-        audio: false,
-      })
-      .then(function (stream: MediaStream) {
-        let video = document.getElementById('video');
-        if (video) {
-          // @ts-ignore
-          video.srcObject = stream;
-          // @ts-ignore
-          video.play().then((test) => {
-            scope.initOpencv();
-          });
-        }
-      })
-      .catch(function (err) {
-        console.log('An error occurred! ' + err);
-      });
   }
 
   initOpencv() {
@@ -157,25 +176,13 @@ export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
 
   startWebcam() {
     console.log('startWebcam');
-    // @ts-ignore
     const cv = this.plastronService.cv;
 
-    let video = document.getElementById('video');
-
-    while (video == null) {
-      video = document.getElementById('video');
-      setTimeout(() => {}, 1000);
-    }
-    // @ts-ignore
+    let video = this.video?.nativeElement;
     this.camera = new cv.VideoCapture(video);
-    // @ts-ignore
     this.height = video.videoHeight;
-    // @ts-ignore
     video.height = this.height;
-
-    // @ts-ignore
     this.width = video.videoWidth;
-    // @ts-ignore
     video.width = this.width;
 
     let frame: any = null;
@@ -184,7 +191,6 @@ export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
     } else {
       frame = new cv.Mat(this.height, this.width, cv.CV_8UC4);
     }
-    // @ts-ignore
     const fps = 24;
     const scope = this;
 
@@ -200,14 +206,11 @@ export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
         currentFps += 1;
       }
 
-      // @ts-ignore
       if (!scope.playing) {
-        // frame.delete();
         return;
       }
       if (scope.height > 0 && scope.width > 0) {
         try {
-          // @ts-ignore
           scope.camera.read(frame);
           try {
             scope.coordinates =
@@ -225,18 +228,12 @@ export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
         } catch (err) {}
       } else {
         video = document.getElementById('video');
-        // @ts-ignore
         scope.camera = new cv.VideoCapture(video);
-        // @ts-ignore
         scope.height = video.videoHeight;
-        // @ts-ignore
         video.height = scope.height;
-        // @ts-ignore
         scope.width = video.videoWidth;
-        // @ts-ignore
         video.width = scope.width;
         frame.delete();
-        // @ts-ignore
         frame = new cv.Mat(scope.height, scope.width, cv.CV_8UC4);
       }
 
