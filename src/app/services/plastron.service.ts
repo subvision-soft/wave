@@ -612,7 +612,7 @@ export class PlastronService {
     let ellipse = this.cv.fitEllipse(mat3);
     mat3.delete();
     // Nettoyage des contours
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 8; i++) {
       let empty = new this.cv.Mat.zeros(mat.size(), mat.type());
       let center = new this.cv.Point(ellipse.center.x, ellipse.center.y);
       let axes = new this.cv.Size(
