@@ -348,10 +348,7 @@ export class PlastronService {
     const realLength = 25;
     const milimeterDistance = realLength * percent;
     const round = Math.round(milimeterDistance);
-    return round === this.maximumImpactDistance &&
-      milimeterDistance > this.maximumImpactDistance
-      ? round + 1
-      : round;
+    return round;
   }
 
   getImpactsCenters(mat: any): PointCv[] {
