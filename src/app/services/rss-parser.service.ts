@@ -12,7 +12,7 @@ export class RSSParserService {
 
   parseString(xml: string, callback: ParserCallback) {
     let parseString = xml2js.parseString;
-    parseString(xml, (err, result: any) => {
+    parseString(xml, (err: Error | null, result: any) => {
       callback(err, result.rss.channel[0].item);
     });
   }
@@ -27,7 +27,7 @@ export class RSSParserService {
         .get<any>('https://corsproxy.io/?' + url, requestOptions)
         .subscribe(
           (data) => {
-            return this.parseString(data, (err, parsed) => {
+            return this.parseString(data, (err: Error | null, parsed: any) => {
               if (err) {
                 subscriber.error(err);
               } else {
