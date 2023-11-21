@@ -224,6 +224,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
 })
 export class AppModule {
   constructor() {
+    // @ts-ignore
     window.screen.orientation.lock('portrait');
   }
 }
