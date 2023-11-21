@@ -12,6 +12,7 @@ import { TargetsComponent } from './pages/targets/targets.component';
 import { TeamsComponent } from './pages/teams/teams.component';
 import { SavingComponent } from './pages/saving/saving.component';
 import { UserComponent } from './pages/user/user.component';
+import { CvComponent } from './pages/playground/cv/cv.component';
 
 const routes: Routes = [
   {
@@ -41,6 +42,20 @@ const routes: Routes = [
       {
         path: 'saving',
         component: SavingComponent,
+      },
+    ],
+  },
+  {
+    path: 'playground',
+    children: [
+      {
+        path: '',
+        redirectTo: 'cv',
+        pathMatch: 'full',
+      },
+      {
+        path: 'cv',
+        component: CvComponent,
       },
     ],
   },
