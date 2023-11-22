@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { LogService } from './log.service';
 import { Zone } from '../models/zone';
 import { Impact } from '../models/impact';
+import { OpencvImshowService } from './opencv-imshow.service';
 
 class PointCv {
   constructor(public x: number = -1, public y: number = -1) {}
@@ -31,7 +32,10 @@ export class PlastronService {
 
   private impactColor = null;
 
-  constructor(private logger: LogService) {}
+  constructor(
+    private logger: LogService,
+    private opencvImshowService: OpencvImshowService
+  ) {}
 
   private getDistance(p1: PointCv, p2: PointCv) {
     return Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
@@ -64,57 +68,40 @@ export class PlastronService {
       img,
       new this.cv.Size(this.detectionSize, this.detectionSize)
     );
-
-    let kernel = new this.cv.Mat.ones(5, 5, this.cv.CV_8UC1);
+    this.opencvImshowService.showImage(img, 'img', 'img');
+    let kernelSize = this.detectionSize / 90;
+    let kernel = new this.cv.Mat.ones(kernelSize, kernelSize, this.cv.CV_8UC1);
     this.cv.morphologyEx(
       img,
       img,
       this.cv.MORPH_CLOSE,
       kernel,
       new this.cv.Point(-1, -1),
-      3
+      2
     );
-    const maxValue = 255; // Maximum pixel value for the thresholded image
-    const blockSize = 11; // Size of the neighborhood for thresholding
-    const C = 2; // Constant subtracted from the mean
     let gray = new this.cv.Mat();
+    this.opencvImshowService.showImage(img, 'morph', 'morph');
     this.cv.cvtColor(img, gray, this.cv.COLOR_BGR2GRAY);
+    this.opencvImshowService.showImage(gray, 'gray', 'gray');
     let edged = new this.cv.Mat();
-    this.cv.adaptiveThreshold(
-      gray,
-      gray,
-      maxValue,
-      this.cv.ADAPTIVE_THRESH_GAUSSIAN_C,
-      this.cv.THRESH_BINARY,
-      blockSize,
-      C
-    );
     this.cv.Canny(gray, edged, 100, 200);
-    kernel.delete();
-    kernel = new this.cv.Mat.ones(3, 3, this.cv.CV_8UC1);
-    this.cv.bitwise_not(gray, gray);
 
-    this.cv.morphologyEx(
-      gray,
-      gray,
-      this.cv.MORPH_OPEN,
-      kernel,
-      new this.cv.Point(-1, -1),
-      1
-    );
-    this.cv.dilate(gray, gray, kernel, new this.cv.Point(-1, -1), 3);
-    kernel.delete();
-    this.cv.bitwise_not(gray, gray);
+    this.opencvImshowService.showImage(edged, 'edged', 'edged');
+    this.cv.dilate(edged, edged, kernel, new this.cv.Point(-1, -1), 2);
+    //invert dilate
+    this.cv.bitwise_not(edged, edged);
+    this.opencvImshowService.showImage(edged, 'dilated', 'dilated');
     let contours = new this.cv.MatVector();
     let hierarchy = new this.cv.Mat();
     this.cv.findContours(
-      gray,
+      edged,
       contours,
       hierarchy,
       this.cv.RETR_CCOMP,
       this.cv.CHAIN_APPROX_SIMPLE
     );
     this.cv.drawContours(img, contours, -1, [255, 0, 255, 255], 1);
+    this.opencvImshowService.showImage(img, 'contours', 'contours');
     let contoursArray = [];
     for (let i = 0; i < contours.size(); i++) {
       contoursArray.push(contours.get(i));
