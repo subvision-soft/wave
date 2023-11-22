@@ -1,8 +1,9 @@
-import { Component, HostBinding } from '@angular/core';
+import { Component, HostBinding, isDevMode } from '@angular/core';
 import { ThemeColorService } from './services/theme-color.service';
 import { fadeAnimation } from './utils/animations';
 import { TranslateService } from '@ngx-translate/core';
 import { ParametersService } from './services/parameters.service';
+import { jamJoystick } from '@ng-icons/jam-icons';
 
 @Component({
   selector: 'app-root',
@@ -27,6 +28,16 @@ export class AppComponent {
     private translate: TranslateService,
     private parametersService: ParametersService
   ) {
+    if (isDevMode()) {
+      this.tabs = [
+        {
+          icon: 'jamJoystick',
+          label: 'Playground',
+          link: '/playground',
+        },
+        ...this.tabs,
+      ];
+    }
     this.themeColorService.setCssVariables('#1677ff');
     let langs = ['en', 'fr', 'es', 'it'];
     this.translate.addLangs(langs);
