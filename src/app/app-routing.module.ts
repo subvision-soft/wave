@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
-import { ColorPreviewComponent } from './pages/color-preview/color-preview.component';
 import { CameraPreviewComponent } from './pages/camera-preview/camera-preview.component';
 import { ResultComponent } from './pages/result/result.component';
 import { SettingsComponent } from './pages/settings/settings.component';
@@ -18,10 +17,6 @@ const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
-  },
-  {
-    path: 'color',
-    component: ColorPreviewComponent,
   },
   {
     path: 'camera',

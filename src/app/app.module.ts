@@ -72,7 +72,6 @@ import { NumberSpinnerComponent } from './components/number-spinner/number-spinn
 import { SlideSheetComponent } from './components/slide-sheet/slide-sheet.component';
 import { TargetPreviewComponent } from './components/target-preview/target-preview.component';
 import { TotalPreviewComponent } from './components/total-preview/total-preview.component';
-import { ColorPreviewComponent } from './pages/color-preview/color-preview.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { SelectComponent } from './components/select/select.component';
 import { SessionsComponent } from './pages/sessions/sessions.component';
@@ -133,7 +132,6 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     TargetPreviewComponent,
     ButtonComponent,
     TotalPreviewComponent,
-    ColorPreviewComponent,
     SpinnerComponent,
     PluckPipe,
     SelectComponent,
