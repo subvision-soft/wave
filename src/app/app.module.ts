@@ -102,6 +102,7 @@ import { UserComponent } from './pages/user/user.component';
 import { ListTargetsComponent } from './components/list-targets/list-targets.component';
 import { RSSParserService } from './services/rss-parser.service';
 import { RippleDirective } from './directives/ripple.directive';
+import { OpencvImshowComponent } from './components/opencv-imshow/opencv-imshow.component';
 
 const openCVConfig: OpenCVConfig = {
   openCVDirPath: 'assets/opencv',
@@ -218,6 +219,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
       jamClose,
     }),
     FormsModule,
+    OpencvImshowComponent,
   ],
   providers: [UserLastnameFirstCharPipe, RSSParserService],
   bootstrap: [AppComponent],
