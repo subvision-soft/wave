@@ -72,7 +72,6 @@ import { NumberSpinnerComponent } from './components/number-spinner/number-spinn
 import { SlideSheetComponent } from './components/slide-sheet/slide-sheet.component';
 import { TargetPreviewComponent } from './components/target-preview/target-preview.component';
 import { TotalPreviewComponent } from './components/total-preview/total-preview.component';
-import { ColorPreviewComponent } from './pages/color-preview/color-preview.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { SelectComponent } from './components/select/select.component';
 import { SessionsComponent } from './pages/sessions/sessions.component';
@@ -103,6 +102,7 @@ import { UserComponent } from './pages/user/user.component';
 import { ListTargetsComponent } from './components/list-targets/list-targets.component';
 import { RSSParserService } from './services/rss-parser.service';
 import { RippleDirective } from './directives/ripple.directive';
+import { OpencvImshowComponent } from './components/opencv-imshow/opencv-imshow.component';
 
 const openCVConfig: OpenCVConfig = {
   openCVDirPath: 'assets/opencv',
@@ -133,7 +133,6 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     TargetPreviewComponent,
     ButtonComponent,
     TotalPreviewComponent,
-    ColorPreviewComponent,
     SpinnerComponent,
     PluckPipe,
     SelectComponent,
@@ -220,6 +219,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
       jamClose,
     }),
     FormsModule,
+    OpencvImshowComponent,
   ],
   providers: [UserLastnameFirstCharPipe, RSSParserService],
   bootstrap: [AppComponent],
