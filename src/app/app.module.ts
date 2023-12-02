@@ -174,9 +174,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     NgxOpenCVModule.forRoot(openCVConfig),
     BrowserModule,
     ColorPickerModule,
-    
     AppRoutingModule,
-    FormsModule,
     HttpClientModule,
     RippleDirective,
     TranslateModule.forRoot({

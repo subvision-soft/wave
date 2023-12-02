@@ -48,15 +48,16 @@ export class OpencvImshowComponent implements OnDestroy {
   }
 
   addCanvas(data: OpencvImshowData) {
+    const image = data.image;
     if (this.ids.has(data.id)) {
       console.log('already exists');
-      this.cv.imshow(data.id, data.image);
+      this.cv.imshow(data.id, image);
       return;
     }
     this.ids.add(data.id);
     const canvas = document.createElement('canvas');
-    canvas.width = 4000;
-    canvas.height = 4000;
+    canvas.width = 300;
+    canvas.height = 300;
     canvas.id = data.id;
     const div = document.createElement('div');
     const label = document.createElement('label');
@@ -65,6 +66,10 @@ export class OpencvImshowComponent implements OnDestroy {
     div.appendChild(canvas);
     div.classList.add('opencv-imshow');
     this.container.nativeElement.appendChild(div);
-    this.cv.imshow(canvas.id, data.image);
+    const clone = image.clone();
+
+    this.cv.resize(clone, clone, new this.cv.Size(300, 300));
+    this.cv.imshow(canvas.id, clone);
+    clone.delete();
   }
 }

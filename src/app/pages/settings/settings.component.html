@@ -1,24 +1,27 @@
 <app-header [showBack]="false" [showMenu]="false"><h1>{{'SETTINGS.TITLE'|translate}}</h1></app-header>
 <div class="content">
-
   <app-search [(value)]="searchValue" placeholder="{{'SETTINGS.SEARCH' | translate}}"></app-search>
   <div class="parameters">
     <ng-container *ngFor="let group of settings">
       <div class="group" *ngIf="groupIsVisible(group)">
         <h1>{{group.label|translate}}</h1>
         <ng-container *ngFor="let parameter of group.parameters">
-          <app-input *ngIf="parameter.type != 'select' && parameter.label.toLowerCase().includes(this.searchValue.toLowerCase())" [horizontal]="true"
-                     label="{{parameter.label | translate}}"
-                     [type]="parameter.type" [max]="parameter.max" [min]="parameter.min"
-                     [(value)]="parameter.value"
-                     (valueChange)="onChange(parameter, $event)"
+          <app-input
+            *ngIf="parameter.type != 'select' && parameter.label.toLowerCase().includes(this.searchValue.toLowerCase())"
+            [horizontal]="true"
+            label="{{parameter.label | translate}}"
+            [type]="parameter.type" [max]="parameter.max" [min]="parameter.min"
+            [(value)]="parameter.value"
+            (valueChange)="onChange(parameter, $event)"
           >
           </app-input>
-          <app-select *ngIf="parameter.type === 'select' && parameter.label.toLowerCase().includes(this.searchValue.toLowerCase())" [compact]="true"
-                      [label]=""
-                      [store]="parameter.store"
-                      [(value)]="parameter.value"
-                      (valueChange)="onChange(parameter, $event)"
+          <app-select
+            *ngIf="parameter.type === 'select' && parameter.label.toLowerCase().includes(this.searchValue.toLowerCase())"
+            [compact]="true"
+            [label]=""
+            [store]="parameter.store"
+            [(value)]="parameter.value"
+            (valueChange)="onChange(parameter, $event)"
           >
           </app-select>
         </ng-container>
