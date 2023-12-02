@@ -1,6 +1,6 @@
 <app-header [showBack]="true" [showMenu]="editable" [actions]="menuActions">
   <div class="header">
-    <h1>{{'RESULT.TITLE' | translate}}</h1>
+    <h1>{{ 'RESULT.TITLE' | translate }}</h1>
     <app-tag>
       <app-total-preview [epreuve]="epreuve" [time]="(time-(time%1000))/1000" [impacts]="impacts"></app-total-preview>
     </app-tag>
@@ -8,18 +8,27 @@
 </app-header>
 
 <div class="content">
-  <div class="epreuve">
+  <div class="epreuve" *ngIf="editable || showChrono">
     <app-select *ngIf="editable" [compact]="true" [store]="selectStore" [(value)]="epreuve"></app-select>
-    <app-chrono-picker [compact]="true" *ngIf="(superBiathlon || biathlon) && !saving"
+    <app-chrono-picker [compact]="true" *ngIf="showChrono"
                        [(time)]="time"></app-chrono-picker>
   </div>
 
-  <div class="result-preview">
-    <app-icon-button class="toggle-preview" [icon]="imagePreview?'iconoirOnePointCircle':'iconoirMediaImage'"
-                     (click)="togglePreview()"></app-icon-button>
-    <app-target-preview *ngIf="!imagePreview" [(selected)]="selected" [impacts]="impacts"></app-target-preview>
-    <canvas id="canvas" height="1000" width="1000" [style.display]="imagePreview?'block' :'none'"></canvas>
-  </div>
+
+  <app-swiper>
+    <app-swiper-item>
+      <div class="result-preview">
+
+        <app-target-preview *ngIf="!imagePreview" [(selected)]="selected" [impacts]="impacts"></app-target-preview>
+      </div>
+    </app-swiper-item>
+    <app-swiper-item>
+      <div class="result-preview">
+        <canvas id="canvas" height="1000" width="1000"></canvas>
+
+      </div>
+    </app-swiper-item>
+  </app-swiper>
   <app-spinner *ngIf="impacts.length > 0" [(value)]="selectedIndex" [values]="impacts | pluck:'points'"></app-spinner>
   <div class="tools">
     <app-select [compact]="true" class="multi-impacts" *ngIf="selected && editable" [store]="multipleStore"
