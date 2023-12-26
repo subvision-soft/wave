@@ -497,13 +497,15 @@ export class PlastronService {
 
     let minMat = new this.cv.Mat(value.rows, value.cols, value.type(), min);
     let highMat = new this.cv.Mat(value.rows, value.cols, value.type(), high);
+    this.opencvImshowService.showImage(value, 'value', 'value');
     this.cv.inRange(value, minMat, highMat, value_mask);
     minMat.delete();
     highMat.delete();
+    this.opencvImshowService.showImage(value_mask, 'value_mask', 'value_mask');
     this.cv.bitwise_and(value_mask, circle, value_mask);
-
     let close = new this.cv.Mat();
     this.cv.morphologyEx(value_mask, close, this.cv.MORPH_CLOSE, kernel);
+    this.opencvImshowService.showImage(close, 'close1', 'close1');
     value_mask.delete();
     this.cv.morphologyEx(
       close,
@@ -513,6 +515,7 @@ export class PlastronService {
       new this.cv.Point(-1, -1),
       1
     );
+    this.opencvImshowService.showImage(close, 'close2', 'close2');
 
     let open = new this.cv.Mat();
     let kernelSize2 = 30; // Size of the kernel matrix
@@ -553,7 +556,9 @@ export class PlastronService {
       -1
     );
     biggestContourVector.delete();
-    this.cv.morphologyEx(close, open, this.cv.MORPH_OPEN, kernel2);
+    open = close.clone();
+
+    this.opencvImshowService.showImage(open, 'close', 'close');
     let newContours = new this.cv.MatVector();
     const mat2 = new this.cv.Mat();
     this.cv.findContours(
@@ -582,7 +587,7 @@ export class PlastronService {
     let ellipse = this.cv.fitEllipse(mat3);
     mat3.delete();
     // Nettoyage des contours
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < 10; i++) {
       let empty = new this.cv.Mat.zeros(mat.size(), mat.type());
       let center = new this.cv.Point(ellipse.center.x, ellipse.center.y);
       let axes = new this.cv.Size(
@@ -595,7 +600,7 @@ export class PlastronService {
       let color = new this.cv.Scalar(255, 255, 255);
       let thickness = this.cv.FILLED;
       let lineType = this.cv.LINE_8;
-
+      console.log('ellipse', ellipse);
       this.cv.ellipse(
         empty,
         center,
@@ -609,11 +614,11 @@ export class PlastronService {
       );
       this.cv.circle(mat, ellipse.center, 2, [255, 0, 0, 255], -1);
       this.cv.cvtColor(empty, empty, this.cv.COLOR_BGR2GRAY);
+
       let xor = new this.cv.Mat();
       this.cv.bitwise_xor(empty, open, xor);
-      this.cv.morphologyEx(xor, xor, this.cv.MORPH_OPEN, kernel);
-      this.cv.bitwise_not(xor, xor);
-      this.cv.bitwise_and(open, xor, xor);
+      this.opencvImshowService.showImage(xor, 'open' + i, 'open' + i);
+      this.cv.bitwise_or(open, xor, xor);
 
       let xorContours = new this.cv.MatVector();
       const mat1 = new this.cv.Mat();
