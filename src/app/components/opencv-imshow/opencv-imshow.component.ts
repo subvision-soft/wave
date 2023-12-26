@@ -48,10 +48,13 @@ export class OpencvImshowComponent implements OnDestroy {
   }
 
   addCanvas(data: OpencvImshowData) {
-    const image = data.image;
+    let image = data.image?.clone();
+
     if (this.ids.has(data.id)) {
       console.log('already exists');
+      this.cv.resize(image, image, new this.cv.Size(300, 300));
       this.cv.imshow(data.id, image);
+      image.delete();
       return;
     }
     this.ids.add(data.id);

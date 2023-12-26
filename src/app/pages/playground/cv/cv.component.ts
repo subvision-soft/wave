@@ -212,6 +212,8 @@ export class CvComponent {
             scope.frame = null;
           } else {
             scope.frame = frame;
+            scope.plastronService.setFrame(frame);
+            scope.plastronService.process();
           }
         } catch (err) {}
       } else {
