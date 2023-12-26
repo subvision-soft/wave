@@ -85,27 +85,23 @@ export class SwiperComponent {
   nextMove: number = 0;
 
   private onMove(detail: GestureDetail) {
-    const { type, currentX, deltaX, velocityX } = detail;
+    const { deltaX, velocityX } = detail;
+    this.nextMove = 0;
 
-    if (deltaX > 0) {
-      if (this._index === 0) {
-        return;
-      }
-      if (deltaX > this.containerWidth / 3) {
-        this.nextMove = -1;
-      }
+    const velocityLimit = 1.5;
+    const lengthLimit = this.containerWidth / 4;
+    if (deltaX > 0 && this._index !== 0) {
+      this.nextMove =
+        deltaX > lengthLimit || velocityX > velocityLimit ? -1 : 0;
+    } else if (deltaX < 0 && this._index !== this.childNumber - 1) {
+      this.nextMove =
+        -deltaX > lengthLimit || velocityX < -velocityLimit ? 1 : 0;
     }
-    if (deltaX < 0) {
-      if (this._index === this.childNumber - 1) {
-        return;
-      }
-      if (-deltaX > this.containerWidth / 3) {
-        this.nextMove = 1;
-      }
-    }
+
     this.tempIndex = this._index + this.nextMove;
     this.currentX = deltaX;
-    if (this.container) {
+
+    if (this.container && this.nextMove !== 0) {
       this.container.nativeElement.style.transform = `translateX(${
         this.x + deltaX
       }px)`;
