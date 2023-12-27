@@ -22,7 +22,7 @@ export class SwiperComponent {
 
   private _childNumber: number = 0;
 
-  private tempIndex = 0;
+  protected tempIndex = 0;
 
   get index(): number {
     return this._index;
@@ -114,6 +114,15 @@ export class SwiperComponent {
     this.tempIndex = this.index;
 
     this.nextMove = 0;
+    this.x = this._index * -this.containerWidth;
+    if (this.container) {
+      this.container.nativeElement.style.transform = `translateX(${this.x}px)`;
+    }
+  }
+
+  onClicked(index: number) {
+    this.index = index;
+    this.tempIndex = index;
     this.x = this._index * -this.containerWidth;
     if (this.container) {
       this.container.nativeElement.style.transform = `translateX(${this.x}px)`;

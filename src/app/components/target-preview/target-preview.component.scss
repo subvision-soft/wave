@@ -20,19 +20,19 @@
     cursor: pointer;
 
     span {
-      font-size: 9px;
+      font-size: 12px;
       font-weight: 1000;
       display: flex;
       justify-content: center;
       align-items: center;
-      color: var(--impact-color);
+      color: #fff;
       width: 100%;
       height: 100%;
       transform: rotate(calc(360deg - var(--impact-rotation)));
     }
 
     &.multiple {
-      background-color: #fff;
+      //background-color: #fff;
       border: 2px solid var(--impact-color);
       box-sizing: border-box;
     }

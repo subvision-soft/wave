@@ -63,7 +63,7 @@ export class ResultComponent implements OnInit {
   protected _selectedIndex = 0;
   @Output() selectedIndexChange = new EventEmitter<number>();
   protected imagePreview: boolean = false;
-  protected saving: boolean = true;
+  protected saving: boolean = false;
   protected editable = true;
 
   get time(): number {
@@ -278,6 +278,7 @@ export class ResultComponent implements OnInit {
   protected readonly pluck = pluck;
 
   get showChrono() {
+    console.log(this.superBiathlon || this.biathlon);
     return (this.superBiathlon || this.biathlon) && !this.saving;
   }
 }

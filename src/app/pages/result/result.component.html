@@ -17,14 +17,17 @@
   <app-swiper>
     <app-swiper-item>
       <div class="result-preview">
-
-        <app-target-preview *ngIf="!imagePreview" [(selected)]="selected" [impacts]="impacts"></app-target-preview>
+        <app-results-preview [(selected)]="selected" [impacts]="impacts"></app-results-preview>
+      </div>
+    </app-swiper-item>
+    <app-swiper-item>
+      <div class="result-preview">
+        <app-target-preview [(selected)]="selected" [impacts]="impacts"></app-target-preview>
       </div>
     </app-swiper-item>
     <app-swiper-item>
       <div class="result-preview">
         <canvas id="canvas" height="1000" width="1000"></canvas>
-
       </div>
     </app-swiper-item>
   </app-swiper>

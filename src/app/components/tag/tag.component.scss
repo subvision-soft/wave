@@ -6,6 +6,7 @@
   padding: calc(var(--padding-sm) / 3) var(--padding-sm);
   border-radius: calc(var(--padding-sm) / 2);
   box-sizing: border-box;
+  transition: var(--transition);
 
   &.secondary {
     background: var(--color-secondary-lighter-5);
