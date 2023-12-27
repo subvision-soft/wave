@@ -2,6 +2,6 @@
   <ng-content></ng-content>
 </div>
 <div class="swiper-dots">
-  <div *ngFor="let _ of indexArray; let currentIndex=index" class="swiper-dot"
+  <div *ngFor="let _ of indexArray; let currentIndex=index" (click)="onClicked(currentIndex)" class="swiper-dot"
        [class.active]="isActive(currentIndex)"></div>
 </div>

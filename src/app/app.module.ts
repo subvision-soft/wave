@@ -105,6 +105,7 @@ import { RippleDirective } from './directives/ripple.directive';
 import { OpencvImshowComponent } from './components/opencv-imshow/opencv-imshow.component';
 import { SwiperComponent } from './components/swiper/swiper.component';
 import { SwiperItemComponent } from './components/swiper-item/swiper-item.component';
+import { ResultsPreviewComponent } from './components/results-preview/results-preview.component';
 
 const openCVConfig: OpenCVConfig = {
   openCVDirPath: 'assets/opencv',
@@ -168,6 +169,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     SavingComponent,
     LoadingComponent,
     ListTargetsComponent,
+    ResultsPreviewComponent,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -227,6 +229,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
   ],
   providers: [UserLastnameFirstCharPipe, RSSParserService],
   bootstrap: [AppComponent],
+  exports: [TagComponent],
 })
 export class AppModule {
   constructor() {
