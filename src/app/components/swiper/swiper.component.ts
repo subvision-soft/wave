@@ -130,7 +130,6 @@ export class SwiperComponent {
   }
 
   isActive(index: number) {
-    console.log(index, this.tempIndex);
     return index === this.tempIndex;
   }
 }
