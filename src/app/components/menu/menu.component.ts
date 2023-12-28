@@ -1,6 +1,5 @@
 import {
   Component,
-  ElementRef,
   EventEmitter,
   HostBinding,
   Input,
@@ -18,30 +17,29 @@ export class MenuComponent {
     return this._currentActions.filter((action) => action.isDisplayed());
   }
 
-  get attachTo(): ElementRef | undefined {
+  get attachTo(): HTMLElement | undefined {
     return this._attachTo;
   }
 
   @Input()
-  set attachTo(value: ElementRef | undefined) {
+  set attachTo(value: HTMLElement | undefined) {
     this._attachTo = value;
     if (!value) {
       return;
     }
     var curleft = 0;
     var curtop = 0;
-    let obj = value?.nativeElement;
-    if (obj.offsetParent) {
+    if (value.offsetParent) {
       do {
-        curleft += obj.offsetLeft;
-        curtop += obj.offsetTop;
-      } while ((obj = obj.offsetParent));
+        curleft += value.offsetLeft;
+        curtop += value.offsetTop;
+      } while ((value = value.offsetParent as HTMLElement));
       this.x = curleft;
       this.y = curtop;
     }
   }
 
-  private _attachTo: ElementRef | undefined;
+  private _attachTo: HTMLElement | undefined;
 
   x: number = 0;
   y: number = 0;
@@ -58,8 +56,7 @@ export class MenuComponent {
         return {
           top: `${this.y}px`,
           right: `${
-            window.innerWidth -
-            (this.attachTo?.nativeElement.offsetWidth + this.x)
+            window.innerWidth - ((this.attachTo?.offsetWidth ?? 0) + this.x)
           }px`,
         };
       case 'topLeft':
@@ -70,19 +67,16 @@ export class MenuComponent {
       case 'bottomRight':
         return {
           bottom: `${
-            window.innerWidth -
-            (this.y + this.attachTo?.nativeElement.offsetHeight)
+            window.innerWidth - (this.y + (this.attachTo?.offsetWidth ?? 0))
           }px`,
           right: `${
-            window.innerWidth -
-            (this.attachTo?.nativeElement.offsetWidth + this.x)
+            window.innerWidth - ((this.attachTo?.offsetWidth ?? 0) + this.x)
           }px`,
         };
       case 'bottomLeft':
         return {
           bottom: `${
-            window.innerWidth -
-            (this.y + this.attachTo?.nativeElement.offsetHeight)
+            window.innerWidth - (this.y + (this.attachTo?.offsetHeight ?? 0))
           }px`,
           left: `${this.x}px`,
         };

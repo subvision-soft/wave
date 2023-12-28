@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { LogService } from './log.service';
 import { Zone } from '../models/zone';
 import { Impact } from '../models/impact';
+import { OpencvImshowService } from './opencv-imshow.service';
 
 class PointCv {
   constructor(public x: number = -1, public y: number = -1) {}
@@ -31,7 +32,10 @@ export class PlastronService {
 
   private impactColor = null;
 
-  constructor(private logger: LogService) {}
+  constructor(
+    private logger: LogService,
+    private opencvImshowService: OpencvImshowService
+  ) {}
 
   private getDistance(p1: PointCv, p2: PointCv) {
     return Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
@@ -53,9 +57,6 @@ export class PlastronService {
   }
 
   getPlastronCoordinates(mat: any) {
-    this.logger.debug('getPlastronCoordinates');
-    this.logger.debug('img', mat);
-
     // @ts-ignore
     let img = mat.clone();
     this.logger.debug('after clone');
@@ -64,57 +65,30 @@ export class PlastronService {
       img,
       new this.cv.Size(this.detectionSize, this.detectionSize)
     );
+    this.cv.bitwise_not(img, img);
+    img = this.detectEdges(img, 5);
 
-    let kernel = new this.cv.Mat.ones(5, 5, this.cv.CV_8UC1);
-    this.cv.morphologyEx(
-      img,
-      img,
-      this.cv.MORPH_CLOSE,
-      kernel,
-      new this.cv.Point(-1, -1),
-      3
-    );
-    const maxValue = 255; // Maximum pixel value for the thresholded image
-    const blockSize = 11; // Size of the neighborhood for thresholding
-    const C = 2; // Constant subtracted from the mean
-    let gray = new this.cv.Mat();
-    this.cv.cvtColor(img, gray, this.cv.COLOR_BGR2GRAY);
+    this.opencvImshowService.showImage(img, 'img', 'img');
+    let kernelSize = this.detectionSize / 90;
+    let kernel = new this.cv.Mat.ones(kernelSize, kernelSize, this.cv.CV_8UC1);
+
     let edged = new this.cv.Mat();
-    this.cv.adaptiveThreshold(
-      gray,
-      gray,
-      maxValue,
-      this.cv.ADAPTIVE_THRESH_GAUSSIAN_C,
-      this.cv.THRESH_BINARY,
-      blockSize,
-      C
-    );
-    this.cv.Canny(gray, edged, 100, 200);
-    kernel.delete();
-    kernel = new this.cv.Mat.ones(3, 3, this.cv.CV_8UC1);
-    this.cv.bitwise_not(gray, gray);
 
-    this.cv.morphologyEx(
-      gray,
-      gray,
-      this.cv.MORPH_OPEN,
-      kernel,
-      new this.cv.Point(-1, -1),
-      1
-    );
-    this.cv.dilate(gray, gray, kernel, new this.cv.Point(-1, -1), 3);
-    kernel.delete();
-    this.cv.bitwise_not(gray, gray);
+    this.cv.dilate(img, edged, kernel, new this.cv.Point(-1, -1), 2);
+    //invert dilate
+    this.cv.bitwise_not(edged, edged);
+    this.opencvImshowService.showImage(edged, 'dilated', 'dilated');
     let contours = new this.cv.MatVector();
     let hierarchy = new this.cv.Mat();
     this.cv.findContours(
-      gray,
+      edged,
       contours,
       hierarchy,
       this.cv.RETR_CCOMP,
       this.cv.CHAIN_APPROX_SIMPLE
     );
     this.cv.drawContours(img, contours, -1, [255, 0, 255, 255], 1);
+    this.opencvImshowService.showImage(img, 'contours', 'contours');
     let contoursArray = [];
     for (let i = 0; i < contours.size(); i++) {
       contoursArray.push(contours.get(i));
@@ -180,7 +154,7 @@ export class PlastronService {
       }
     }
     img.delete();
-    gray.delete();
+    // gray.delete();
     contours.delete();
     hierarchy.delete();
 
@@ -347,8 +321,7 @@ export class PlastronService {
     const percent = distance / length;
     const realLength = 25;
     const milimeterDistance = realLength * percent;
-    const round = Math.round(milimeterDistance);
-    return round;
+    return Math.round(milimeterDistance);
   }
 
   getImpactsCenters(mat: any): PointCv[] {
@@ -463,9 +436,6 @@ export class PlastronService {
 
   getOuterCircle(mat: any) {
     this.logger.debug('start getOuterCircle');
-    let show = false;
-
-    // mat = this.autoBrightnessAndContrast(mat, 2);
 
     let circle = new this.cv.Mat(
       mat.cols,
@@ -527,13 +497,15 @@ export class PlastronService {
 
     let minMat = new this.cv.Mat(value.rows, value.cols, value.type(), min);
     let highMat = new this.cv.Mat(value.rows, value.cols, value.type(), high);
+    this.opencvImshowService.showImage(value, 'value', 'value');
     this.cv.inRange(value, minMat, highMat, value_mask);
     minMat.delete();
     highMat.delete();
+    this.opencvImshowService.showImage(value_mask, 'value_mask', 'value_mask');
     this.cv.bitwise_and(value_mask, circle, value_mask);
-
     let close = new this.cv.Mat();
     this.cv.morphologyEx(value_mask, close, this.cv.MORPH_CLOSE, kernel);
+    this.opencvImshowService.showImage(close, 'close1', 'close1');
     value_mask.delete();
     this.cv.morphologyEx(
       close,
@@ -543,6 +515,7 @@ export class PlastronService {
       new this.cv.Point(-1, -1),
       1
     );
+    this.opencvImshowService.showImage(close, 'close2', 'close2');
 
     let open = new this.cv.Mat();
     let kernelSize2 = 30; // Size of the kernel matrix
@@ -583,7 +556,9 @@ export class PlastronService {
       -1
     );
     biggestContourVector.delete();
-    this.cv.morphologyEx(close, open, this.cv.MORPH_OPEN, kernel2);
+    open = close.clone();
+
+    this.opencvImshowService.showImage(open, 'close', 'close');
     let newContours = new this.cv.MatVector();
     const mat2 = new this.cv.Mat();
     this.cv.findContours(
@@ -612,7 +587,7 @@ export class PlastronService {
     let ellipse = this.cv.fitEllipse(mat3);
     mat3.delete();
     // Nettoyage des contours
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < 10; i++) {
       let empty = new this.cv.Mat.zeros(mat.size(), mat.type());
       let center = new this.cv.Point(ellipse.center.x, ellipse.center.y);
       let axes = new this.cv.Size(
@@ -625,7 +600,7 @@ export class PlastronService {
       let color = new this.cv.Scalar(255, 255, 255);
       let thickness = this.cv.FILLED;
       let lineType = this.cv.LINE_8;
-
+      console.log('ellipse', ellipse);
       this.cv.ellipse(
         empty,
         center,
@@ -639,11 +614,11 @@ export class PlastronService {
       );
       this.cv.circle(mat, ellipse.center, 2, [255, 0, 0, 255], -1);
       this.cv.cvtColor(empty, empty, this.cv.COLOR_BGR2GRAY);
+
       let xor = new this.cv.Mat();
       this.cv.bitwise_xor(empty, open, xor);
-      this.cv.morphologyEx(xor, xor, this.cv.MORPH_OPEN, kernel);
-      this.cv.bitwise_not(xor, xor);
-      this.cv.bitwise_and(open, xor, xor);
+      this.opencvImshowService.showImage(xor, 'open' + i, 'open' + i);
+      this.cv.bitwise_or(open, xor, xor);
 
       let xorContours = new this.cv.MatVector();
       const mat1 = new this.cv.Mat();
@@ -1155,5 +1130,34 @@ export class PlastronService {
   getFrame() {
     this.logger.debug('getFrame', this.frame);
     return this.frame;
+  }
+
+  detectEdges(img: any, blurRadius = 0, thr1 = 100, thr2 = 200) {
+    this.logger.debug('start detectEdges');
+    let enhancedIm = this.preprocess(img, blurRadius);
+    this.opencvImshowService.showImage(enhancedIm, 'enhancedIm', 'enhancedIm');
+    const edges = new this.cv.Mat();
+    this.cv.Canny(enhancedIm, edges, thr1, thr2);
+
+    this.logger.debug('end detectEdges');
+
+    this.opencvImshowService.showImage(edges, 'edges', 'edges');
+    return edges;
+  }
+
+  preprocess(im: any, blurRadius: number) {
+    this.logger.debug('start preprocess');
+    let saturation = new this.cv.Mat();
+    this.cv.cvtColor(im, saturation, this.cv.COLOR_BGR2HSV);
+    let hsvChannels = new this.cv.MatVector();
+    this.cv.split(saturation, hsvChannels);
+
+    saturation = hsvChannels.get(2);
+    hsvChannels.delete();
+    if (blurRadius !== 0) {
+      this.cv.medianBlur(saturation, saturation, blurRadius);
+    }
+    this.logger.debug('end preprocess');
+    return saturation;
   }
 }

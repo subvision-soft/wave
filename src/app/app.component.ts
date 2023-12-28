@@ -1,5 +1,4 @@
-import { Component, HostBinding } from '@angular/core';
-import { ThemeColorService } from './services/theme-color.service';
+import { Component, HostBinding, isDevMode } from '@angular/core';
 import { fadeAnimation } from './utils/animations';
 import { TranslateService } from '@ngx-translate/core';
 import { ParametersService } from './services/parameters.service';
@@ -23,11 +22,19 @@ export class AppComponent {
   cssVariables: string = '';
 
   constructor(
-    private themeColorService: ThemeColorService,
     private translate: TranslateService,
     private parametersService: ParametersService
   ) {
-    this.themeColorService.setCssVariables('#1677ff');
+    if (isDevMode()) {
+      this.tabs = [
+        {
+          icon: 'jamJoystick',
+          label: 'Playground',
+          link: '/playground',
+        },
+        ...this.tabs,
+      ];
+    }
     let langs = ['en', 'fr', 'es', 'it'];
     this.translate.addLangs(langs);
     this.translate.setDefaultLang('fr');

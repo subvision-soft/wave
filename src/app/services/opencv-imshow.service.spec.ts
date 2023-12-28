@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ThemeColorService } from './theme-color.service';
+import { OpencvImshowService } from './opencv-imshow.service';
 
-describe('ThemeColorService', () => {
-  let service: ThemeColorService;
+describe('OpencvImshowService', () => {
+  let service: OpencvImshowService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(ThemeColorService);
+    service = TestBed.inject(OpencvImshowService);
   });
 
   it('should be created', () => {

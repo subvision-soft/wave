@@ -63,7 +63,7 @@ export class ResultComponent implements OnInit {
   protected _selectedIndex = 0;
   @Output() selectedIndexChange = new EventEmitter<number>();
   protected imagePreview: boolean = false;
-  protected saving: boolean = true;
+  protected saving: boolean = false;
   protected editable = true;
 
   get time(): number {
@@ -232,7 +232,7 @@ export class ResultComponent implements OnInit {
             const cible = this.plastronService.process();
             const canvas = document.getElementById('canvas');
             cv.imshow(canvas, cible.image);
-            
+
             // @ts-ignore
             const base64 = canvas.toDataURL('image/jpeg', 1.0);
             this.target = {
@@ -276,4 +276,9 @@ export class ResultComponent implements OnInit {
   }
 
   protected readonly pluck = pluck;
+
+  get showChrono() {
+    console.log(this.superBiathlon || this.biathlon);
+    return (this.superBiathlon || this.biathlon) && !this.saving;
+  }
 }
