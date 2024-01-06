@@ -59,7 +59,11 @@ jobs:
       #      - name: Generate icons and splash screen to android folder
       #        run:  if [ -d "./resources" ]; then npm install @capacitor/assets --save-dev && npx capacitor-assets generate --android; fi
 
+      - name: Build app bundle for release
+        if: "contains(github.ref, 'master') && github.event_name != 'pull_request'"
+        run: cd android && ./gradlew bundle -PversionName=${{steps.version.outputs.version}} -PversionCode=${{ steps.version.outputs.major-version }}${{ steps.version.outputs.minor-version }}${{ steps.version.outputs.patch-version }} && ./gradlew assembleDebug -PversionName=${{steps.version.outputs.version}} -PversionCode=${{ steps.version.outputs.major-version }}${{ steps.version.outputs.minor-version }}${{ steps.version.outputs.patch-version }}
       - name: Build app bundle
+        if: "!contains(github.ref, 'master')"
         run: cd android && ./gradlew bundle && ./gradlew assembleDebug
 
       - name: Extract Android signing key from env
