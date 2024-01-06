@@ -24,7 +24,7 @@ export class FilesService {
     return this._session;
   }
 
-  loadSession(session:Session) {
+  loadSession(session: Session) {
     this._session = session;
   }
 
@@ -66,7 +66,7 @@ export class FilesService {
   async loadFiles(path: string, files: FileInfo[] = []) {
     const result = await Filesystem.readdir({
       path: path,
-      directory: Directory.ExternalStorage,
+      directory: Directory.Documents,
     });
     for (const file of result.files) {
       if (file.type === 'directory') {
@@ -81,7 +81,7 @@ export class FilesService {
   async loadDirectory(path: string, files: FileInfo[] = []) {
     const result = await Filesystem.readdir({
       path: path,
-      directory: Directory.ExternalStorage,
+      directory: Directory.Documents,
     });
     for (const file of result.files) {
       if (file.type === 'file' && !file.name.endsWith('.subapp')) {
@@ -101,7 +101,7 @@ export class FilesService {
       path: path,
       data: btoa(content),
       recursive: true,
-      directory: directoryInPath ? undefined : Directory.ExternalStorage,
+      directory: directoryInPath ? undefined : Directory.Documents,
     })
       .then(() => {})
       .catch(() => {});
@@ -131,7 +131,7 @@ export class FilesService {
   async deleteFile(file: FileInfo) {
     await Filesystem.deleteFile({
       path: file.uri,
-      directory: Directory.ExternalStorage,
+      directory: Directory.Documents,
     });
   }
 }

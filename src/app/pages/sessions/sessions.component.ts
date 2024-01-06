@@ -130,7 +130,7 @@ export class SessionsComponent {
               try {
                 await Filesystem.deleteFile({
                   path: this.path + '/' + session.file.name,
-                  directory: Directory.ExternalStorage,
+                  directory: Directory.Documents,
                 });
               } catch (error) {
                 reject(error);
@@ -366,7 +366,7 @@ export class SessionsComponent {
     if (event.btn === 'ok') {
       Filesystem.mkdir({
         path: this.path + '/' + event.value,
-        directory: Directory.ExternalStorage,
+        directory: Directory.Documents,
       })
         .then(() => {
           this.filesService.loadDirectory(this.path).then((files) => {
