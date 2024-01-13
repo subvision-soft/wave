@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 import { PlastronService } from '../../services/plastron.service';
 import { OpenCVState } from '../../../lib/models';
 import { FilesService } from '../../services/files.service';
+import { WebcamService } from '../../services/webcam.service';
 
 @Component({
   selector: 'app-camera-preview',
@@ -43,36 +44,49 @@ export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
     if (el) {
       this._video = el;
       const scope = this;
-      navigator.mediaDevices
-        .getUserMedia({
-          video: {
-            width: { ideal: 4096 },
-            height: { ideal: 2160 },
-            facingMode: 'environment',
-          },
-
-          audio: false,
-        })
-        .then(function (stream: MediaStream) {
-          let video = el.nativeElement;
-          console.log('video', stream);
-          if (video) {
-            // @ts-ignore
-            video.srcObject = stream;
-            // @ts-ignore
-            const play = video.play();
-            play
-              .then((test: any) => {
-                scope.initOpencv();
-              })
-              .catch((err: any) => {
-                console.log(err);
-              });
-          }
-        })
-        .catch(function (err) {
-          console.log('An error occurred! ' + err);
-        });
+      console.log('video', el);
+      this.webcamService.start(
+        {
+          width: 4096,
+          height: 2160,
+        },
+        (stream: MediaStream) => {
+          scope.stream = stream;
+          scope.initOpencv();
+          console.log('stream', stream);
+        },
+        el.nativeElement
+      );
+      // navigator.mediaDevices
+      //   .getUserMedia({
+      //     video: {
+      //       width: { ideal: 4096 },
+      //       height: { ideal: 2160 },
+      //       facingMode: 'environment',
+      //     },
+      //
+      //     audio: false,
+      //   })
+      //   .then(function (stream: MediaStream) {
+      //     let video = el.nativeElement;
+      //     console.log('video', stream);
+      //     if (video) {
+      //       // @ts-ignore
+      //       video.srcObject = stream;
+      //       // @ts-ignore
+      //       const play = video.play();
+      //       play
+      //         .then((test: any) => {
+      //           scope.initOpencv();
+      //         })
+      //         .catch((err: any) => {
+      //           console.log(err);
+      //         });
+      //     }
+      //   })
+      //   .catch(function (err) {
+      //     console.log('An error occurred! ' + err);
+      //   });
     }
   }
 
@@ -109,6 +123,8 @@ export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
   private _coordinatesPercent: any = null;
   private frame: any = null;
   loading: boolean = false;
+
+  searchingPlastron: boolean = false;
 
   capture() {
     const scope = this;
@@ -149,7 +165,8 @@ export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
     @Inject(DOCUMENT) document: Document,
     private router: Router,
     private plastronService: PlastronService,
-    private filesService: FilesService
+    private filesService: FilesService,
+    private webcamService: WebcamService
   ) {
     console.log('constructor');
     this.filesService.clearTarget();
@@ -212,19 +229,27 @@ export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
       if (scope.height > 0 && scope.width > 0) {
         try {
           scope.camera.read(frame);
-          try {
-            scope.coordinates =
-              scope.plastronService.getPlastronCoordinates(frame);
-          } catch (err) {
-            console.log(err);
-          }
+          cv.imshow('canvas', frame);
+          if (!scope.searchingPlastron) {
+            scope.searchingPlastron = true;
+            new Promise(() => {
+              try {
+                scope.coordinates =
+                  scope.plastronService.getPlastronCoordinates(frame);
+              } catch (err) {
+                console.log(err);
+              } finally {
+                scope.searchingPlastron = false;
+              }
 
-          if (!scope.coordinates) {
-            scope.frame = null;
-          } else {
-            scope.frame = frame;
+              if (!scope.coordinates) {
+                scope.frame = null;
+              } else {
+                scope.frame = frame;
+              }
+              scope.coordinatesToPercent(scope.coordinates);
+            });
           }
-          scope.coordinatesToPercent(scope.coordinates);
         } catch (err) {}
       } else {
         video = document.getElementById('video');

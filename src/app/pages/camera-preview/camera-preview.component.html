@@ -13,6 +13,7 @@
       <path #path d="M0,0 0,100 50,50 100,100 100,0" vector-effect="non-scaling-stroke"/>
     </svg>
     <video #video width="4096" height="4096" autoplay></video>
+    <canvas id="canvas" #canvas width="4096" height="4096"></canvas>
   </div>
   <button ripple (click)="capture()" [class]="coordinates ? 'capture active' :'capture'"></button>
   <app-loading [loading]="loading"></app-loading>
