@@ -1124,6 +1124,7 @@ export class PlastronService {
 
   setFrame(frame: any) {
     this.logger.debug('setFrame', frame);
+    this.frame?.delete();
     this.frame = frame;
   }
 
