@@ -164,73 +164,60 @@ export class CvComponent {
   }
 
   startWebcam() {
-    console.log('startWebcam');
-    const cv = this.plastronService.cv;
-
-    let video = this.video?.nativeElement;
-    this.camera = new cv.VideoCapture(video);
-    this.height = video.videoHeight;
-    video.height = this.height;
-    this.width = video.videoWidth;
-    video.width = this.width;
-
-    let frame: any = null;
-    if (this.plastronService.getFrame()) {
-      frame = this.plastronService.getFrame();
-    } else {
-      frame = new cv.Mat(this.height, this.width, cv.CV_8UC4);
-    }
-    const fps = 24;
-    const scope = this;
-
-    let currentFps = 0;
-    let currentTimestamp = new Date().getTime();
-
-    function processVideo() {
-      if (new Date().getTime() - currentTimestamp > 1000) {
-        scope.currentFps = currentFps;
-        currentFps = 0;
-        currentTimestamp = new Date().getTime();
-      } else {
-        currentFps += 1;
-      }
-
-      if (!scope.playing) {
-        return;
-      }
-      if (scope.height > 0 && scope.width > 0) {
-        try {
-          scope.camera.read(frame);
-          try {
-            scope.coordinates =
-              scope.plastronService.getPlastronCoordinates(frame);
-          } catch (err) {
-            console.log(err);
-          }
-
-          if (!scope.coordinates) {
-            scope.frame = null;
-          } else {
-            scope.frame = frame;
-            scope.plastronService.setFrame(frame);
-            scope.plastronService.process();
-          }
-        } catch (err) {}
-      } else {
-        video = document.getElementById('video');
-        scope.camera = new cv.VideoCapture(video);
-        scope.height = video.videoHeight;
-        video.height = scope.height;
-        scope.width = video.videoWidth;
-        video.width = scope.width;
-        frame.delete();
-        frame = new cv.Mat(scope.height, scope.width, cv.CV_8UC4);
-      }
-
-      setTimeout(processVideo, 1000 / fps);
-    }
-
-    // schedule the first one.
-    setTimeout(processVideo, 0);
+    // console.log('startWebcam');
+    // const cv = this.plastronService.cv;
+    //
+    // let frame: any = null;
+    // if (this.plastronService.getFrame()) {
+    //   frame = this.plastronService.getFrame();
+    // } else {
+    //   frame = new cv.Mat(this.height, this.width, cv.CV_8UC4);
+    // }
+    // const fps = 24;
+    // const scope = this;
+    //
+    // let currentFps = 0;
+    // let currentTimestamp = new Date().getTime();
+    //
+    // function processVideo() {
+    //   if (new Date().getTime() - currentTimestamp > 1000) {
+    //     scope.currentFps = currentFps;
+    //     currentFps = 0;
+    //     currentTimestamp = new Date().getTime();
+    //   } else {
+    //     currentFps += 1;
+    //   }
+    //
+    //   if (!scope.playing) {
+    //     return;
+    //   }
+    //   if (scope.height > 0 && scope.width > 0) {
+    //     try {
+    //       scope.camera.read(frame);
+    //       try {
+    //         scope.coordinates =
+    //           scope.plastronService.getPlastronCoordinates(frame);
+    //       } catch (err) {
+    //         console.log(err);
+    //       }
+    //
+    //       if (!scope.coordinates) {
+    //         scope.frame = null;
+    //       } else {
+    //         scope.frame = frame;
+    //         scope.plastronService.setFrame(frame);
+    //         scope.plastronService.process();
+    //       }
+    //     } catch (err) {}
+    //   } else {
+    //     frame.delete();
+    //     frame = new cv.Mat(scope.height, scope.width, cv.CV_8UC4);
+    //   }
+    //
+    //   setTimeout(processVideo, 1000 / fps);
+    // }
+    //
+    // // schedule the first one.
+    // setTimeout(processVideo, 0);
   }
 }
