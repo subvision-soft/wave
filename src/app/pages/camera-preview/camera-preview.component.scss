@@ -70,8 +70,8 @@
       position: absolute;
       bottom: 20px;
       left: 50%;
-      width: 50px;
-      height: 50px;
+      width: max(10vmin, 50px);
+      height: max(10vmin, 50px);
       border-radius: 100%;
       transform: translateX(-50%) scale(0.8);
       background: transparent;
@@ -89,12 +89,34 @@
 
       &.active:active {
         transform: translateX(-50%) scale(0.9);
+
+        &:after {
+          opacity: 0.5;
+        }
+      }
+
+      &:after {
+        content: "";
+        position: absolute;
+        top: 4px;
+        left: 4px;
+        right: 4px;
+        bottom: 4px;
+
+        border-radius: 100%;
+        background: #fff;
+        transition: var(--transition-fast);
+        opacity: 0;
       }
 
       &.active {
         pointer-events: visible;
         opacity: 1;
         transform: translateX(-50%) scale(1);
+
+        &:after {
+          opacity: 1;
+        }
       }
     }
   }
