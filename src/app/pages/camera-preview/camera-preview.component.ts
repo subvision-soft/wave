@@ -54,7 +54,7 @@ export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit() {
     this.updateParentSize();
-    this.initOpencv();
+    // this.initOpencv();
   }
 
   ngOnDestroy() {
@@ -123,7 +123,7 @@ export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
       position: 'rear',
       disableAudio: true,
       toBack: true,
-    });
+    }).then((r) => this.initOpencv());
   }
 
   initOpencv() {
@@ -205,7 +205,7 @@ export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
       try {
         CameraPreview.captureSample({
           quality: 100,
-        }).then((result) => {
+        }).then((result: { value: string }) => {
           console.log('result', result);
 
           scope._base64ToImageData(result.value, 2000, 2000).then((data) => {
