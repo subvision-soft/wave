@@ -2,6 +2,7 @@ import { Component, HostBinding, isDevMode } from '@angular/core';
 import { fadeAnimation } from './utils/animations';
 import { TranslateService } from '@ngx-translate/core';
 import { ParametersService } from './services/parameters.service';
+import { NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -11,8 +12,8 @@ import { ParametersService } from './services/parameters.service';
 })
 export class AppComponent {
   title = 'wave';
-  @HostBinding('class.backgroundStep-1') backgroundStep1: boolean = true;
-  @HostBinding('class.backgroundStep-2') backgroundStep2: boolean = true;
+  @HostBinding('style.background-color') backgroundColor: string =
+    'var(--color-background-1)';
   tabs = [
     { icon: 'jamHomeF', label: 'Accueil', link: '/home' },
     { icon: 'jamCameraF', label: 'Caméra', link: '/camera' },
@@ -23,8 +24,18 @@ export class AppComponent {
 
   constructor(
     private translate: TranslateService,
-    private parametersService: ParametersService
+    private parametersService: ParametersService,
+    private router: Router
   ) {
+    router.events.subscribe((ev) => {
+      if (ev instanceof NavigationEnd) {
+        if (ev.urlAfterRedirects.includes('camera/preview')) {
+          this.backgroundColor = 'transparent';
+        } else {
+          this.backgroundColor = 'var(--color-background-1)';
+        }
+      }
+    });
     if (isDevMode()) {
       this.tabs = [
         {

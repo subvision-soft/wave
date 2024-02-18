@@ -261,6 +261,7 @@ export class ResultComponent implements OnInit {
               duration: 4000,
             });
             this.router.navigate(['/camera']);
+            console.log('Error while processing image', JSON.stringify(error));
             console.error(error);
           }
         }

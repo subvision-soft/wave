@@ -17,6 +17,15 @@
   font-size: var(--font-size);
 }
 
+#video {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  object-fit: cover;
+}
+
 .soon:after {
   content: "Dans une prochaine version";
   position: fixed;
@@ -60,7 +69,6 @@
   --theme-color-1: #fff;
   --theme-color-2: var(--dark);
   --dark: #242e42;
-
   --color-primary-darker: color-mix(
     in srgb,
     var(--color-primary),
@@ -202,7 +210,7 @@
 }
 
 body {
-  background: var(--color-background-1);
+  //background: var(--color-background-1);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -270,6 +278,7 @@ body {
     transform: scale(2.5);
   }
 }
+
 .opencv-imshow {
   display: flex;
   justify-content: center;
@@ -278,8 +287,8 @@ body {
   height: 300px;
   background-color: #000;
   position: relative;
-  label {
 
+  label {
     position: absolute;
     top: 0;
     left: 0;

@@ -30,6 +30,7 @@ const routes: Routes = [
       {
         path: 'preview',
         component: CameraPreviewComponent,
+        data: { transparentBackground: true },
       },
       {
         path: 'result',

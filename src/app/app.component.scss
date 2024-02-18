@@ -2,6 +2,7 @@
   max-height: 100vh;
   display: flex;
   flex-direction: column;
+  transition: var(--transition-slow);
 
   .app-page {
     flex: 1;
