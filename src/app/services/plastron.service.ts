@@ -248,7 +248,13 @@ export class PlastronService {
 
     let dilatedEdges = new this.cv.Mat();
 
-    this.cv.dilate(img, dilatedEdges, kernel, new this.cv.Point(-1, -1), 1);
+    this.cv.dilate(
+      enhancedImage,
+      dilatedEdges,
+      kernel,
+      new this.cv.Point(-1, -1),
+      1
+    );
     //invert dilate
     this.cv.bitwise_not(dilatedEdges, dilatedEdges);
     this.opencvImshowService.showImage(dilatedEdges, 'dilated', 'dilated');
@@ -274,6 +280,7 @@ export class PlastronService {
     const biggestContour = this.getBiggestValidContour(contoursArray);
 
     img.delete();
+    enhancedImage.delete();
     contours.delete();
     hierarchy.delete();
     dilatedEdges.delete();

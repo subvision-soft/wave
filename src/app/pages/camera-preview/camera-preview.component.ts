@@ -221,7 +221,7 @@ export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
               scope.searchingPlastron = true;
               try {
                 scope.coordinates =
-                  scope.plastronService.getPlastronCoordinates(frame);
+                  scope.plastronService.getSheetCoordinates(frame);
               } catch (err) {
                 console.log(err);
               } finally {
