@@ -28,7 +28,7 @@ export class PlastronService {
 
   private frame: any = null;
 
-  private detectionSize: number = 300;
+  private PICTURE_SIZE_SHEET_DETECTION: number = 1000;
 
   private impactColor = null;
 
@@ -37,69 +37,134 @@ export class PlastronService {
     private opencvImshowService: OpencvImshowService
   ) {}
 
+  // UTILS FUNCTIONS ##########
+  toRadians = (degrees: number) => {
+    this.logger.debug('start toRadians');
+    this.logger.debug('end toRadians');
+    return (degrees * Math.PI) / 180;
+  };
+
+  rotatePoint(center: PointCv, point: PointCv, angle: number) {
+    const s = Math.sin(angle);
+    const c = Math.cos(angle);
+
+    // Translate point back to origin:
+    const translatedX = point.x - center.x;
+    const translatedY = point.y - center.y;
+
+    // Rotate point
+    const rotatedX = translatedX * c - translatedY * s;
+    const rotatedY = translatedX * s + translatedY * c;
+
+    // Translate point back:
+    point.x = rotatedX + center.x;
+    point.y = rotatedY + center.y;
+
+    return point;
+  }
+
+  getPointOnEllipse(
+    center: PointCv,
+    radiusX: number,
+    radiusY: number,
+    angle: number
+  ) {
+    const x = center.x + Math.cos(angle) * radiusX;
+    const y = center.y + Math.sin(angle) * radiusY;
+    return new this.cv.Point(x, y);
+  }
+
+  growEllipse(ellipse: any, factor: number) {
+    ellipse.size.width *= factor;
+    ellipse.size.height *= factor;
+    return ellipse;
+  }
+
   private getDistance(p1: PointCv, p2: PointCv) {
     return Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
   }
 
-  private orderPoints(pts: PointCv[]) {
-    let rect = new Array(4);
-    let pts2 = [...pts];
-
-    pts2.sort((a, b) => a.x + a.y - (b.x + b.y));
-    rect[0] = pts2[0];
-    rect[2] = pts2[pts2.length - 1];
-
-    pts2.sort((a, b) => a.x - a.y - (b.x - b.y));
-    rect[3] = pts2[0];
-    rect[1] = pts2[pts2.length - 1];
-
-    return rect;
+  getAngle(p1: PointCv, p2: PointCv) {
+    this.logger.debug('start getAngle');
+    this.logger.debug('end getAngle');
+    return Math.atan2(p2.y - p1.y, p2.x - p1.x);
   }
 
-  getPlastronCoordinates(mat: any) {
-    // @ts-ignore
-    let img = mat.clone();
-    this.logger.debug('after clone');
-    this.cv.resize(
-      img,
-      img,
-      new this.cv.Size(this.detectionSize, this.detectionSize)
-    );
-    this.cv.bitwise_not(img, img);
-    img = this.detectEdges(img, 5);
+  getRealDistance(center: PointCv, border: PointCv, impact: PointCv) {
+    const length = this.getDistance(center, border);
+    const distance = this.getDistance(center, impact);
+    const percent = distance / length;
+    const realLength = 25;
+    const milimeterDistance = realLength * percent;
+    return Math.round(milimeterDistance);
+  }
 
-    this.opencvImshowService.showImage(img, 'img', 'img');
-    let kernelSize = this.detectionSize / 90;
-    let kernel = new this.cv.Mat.ones(kernelSize, kernelSize, this.cv.CV_8UC1);
-
-    let edged = new this.cv.Mat();
-
-    this.cv.dilate(img, edged, kernel, new this.cv.Point(-1, -1), 2);
-    //invert dilate
-    this.cv.bitwise_not(edged, edged);
-    this.opencvImshowService.showImage(edged, 'dilated', 'dilated');
-    let contours = new this.cv.MatVector();
-    let hierarchy = new this.cv.Mat();
-    this.cv.findContours(
-      edged,
-      contours,
-      hierarchy,
-      this.cv.RETR_CCOMP,
-      this.cv.CHAIN_APPROX_SIMPLE
-    );
-    this.cv.drawContours(img, contours, -1, [255, 0, 255, 255], 1);
-    this.opencvImshowService.showImage(img, 'contours', 'contours');
-    let contoursArray = [];
-    for (let i = 0; i < contours.size(); i++) {
-      contoursArray.push(contours.get(i));
+  getPoints(distance: number) {
+    let point = 570;
+    let i = 0;
+    if (distance > this.maximumImpactDistance) {
+      return 0;
     }
-    contoursArray.sort(
-      (contour1, contour2) =>
-        this.cv.contourArea(contour1) - this.cv.contourArea(contour2)
-    );
+    for (; i < 5 && distance > 0; i++) {
+      point -= 6;
+      distance -= 1;
+    }
+    for (; i < 48 && distance > 0; i++) {
+      point -= 3;
+      distance -= 1;
+    }
+    return point;
+  }
 
-    let screenCnt = null;
-    for (let contour of contoursArray) {
+  // ##########################
+
+  // GET SHEET COORDINATES ####
+
+  enhancedImageForEdgeDetection(im: any, blurRadius: number) {
+    this.logger.debug('start preprocess');
+    let value = new this.cv.Mat();
+    this.cv.cvtColor(im, value, this.cv.COLOR_BGR2HSV);
+    let hsvChannels = new this.cv.MatVector();
+    this.cv.split(value, hsvChannels);
+
+    value = hsvChannels.get(2);
+    hsvChannels.delete();
+    if (blurRadius !== 0) {
+      this.cv.medianBlur(value, value, blurRadius);
+    }
+    this.logger.debug('end preprocess');
+    return value;
+  }
+
+  // def get_edges(image: ndarray, blur_radius: int = 0, canny_threshold_1: int = 100, canny_threshold_2: int = 200):
+  //   image_clone = image.copy()
+  //   if blur_radius > 0:
+  //     image_clone = cv.blur(image_clone, (blur_radius, blur_radius))
+  //   return cv.Canny(image_clone, canny_threshold_1, canny_threshold_2)
+
+  getEdges(
+    image: any,
+    blurRadius: number = 0,
+    cannyThreshold1: number = 100,
+    cannyThreshold2: number = 200
+  ) {
+    this.logger.debug('start getEdges');
+    let imageClone = image.clone();
+    if (blurRadius > 0) {
+      this.cv.blur(
+        imageClone,
+        imageClone,
+        new this.cv.Size(blurRadius, blurRadius)
+      );
+    }
+    let edges = new this.cv.Mat();
+    this.cv.Canny(imageClone, edges, cannyThreshold1, cannyThreshold2);
+    this.logger.debug('end getEdges');
+    return edges;
+  }
+
+  getBiggestValidContour(contours: any) {
+    for (let contour of contours) {
       let approxDistance = this.cv.arcLength(contour, true) * 0.1;
       let approx = new this.cv.Mat();
       this.cv.approxPolyDP(contour, approx, approxDistance, true);
@@ -138,7 +203,10 @@ export class PlastronService {
         }
 
         let area = this.cv.contourArea(approx);
-        let ratio = area / (img.cols * img.rows);
+        let ratio =
+          area /
+          (this.PICTURE_SIZE_SHEET_DETECTION *
+            this.PICTURE_SIZE_SHEET_DETECTION);
         if (ratio < 0.1) {
           valid = false;
         }
@@ -147,28 +215,86 @@ export class PlastronService {
         }
 
         if (valid) {
-          screenCnt = approx;
-          break;
+          return approx;
         }
         approx.delete();
       }
     }
+  }
+
+  coordinatesToPercentage(coordinates: any, width: number, height: number) {}
+
+  getSheetCoordinates(mat: any) {
+    // @ts-ignore
+    let img = mat.clone();
+    this.logger.debug('after clone');
+    this.cv.resize(
+      img,
+      img,
+      new this.cv.Size(
+        this.PICTURE_SIZE_SHEET_DETECTION,
+        this.PICTURE_SIZE_SHEET_DETECTION
+      )
+    );
+
+    let enhancedImage = this.enhancedImageForEdgeDetection(img, 5);
+
+    this.cv.bitwise_not(enhancedImage, enhancedImage);
+    enhancedImage = this.getEdges(enhancedImage, 5);
+
+    this.opencvImshowService.showImage(img, 'img', 'img');
+    let kernelSize = this.PICTURE_SIZE_SHEET_DETECTION / 200;
+    let kernel = new this.cv.Mat.ones(kernelSize, kernelSize, this.cv.CV_8UC1);
+
+    let dilatedEdges = new this.cv.Mat();
+
+    this.cv.dilate(img, dilatedEdges, kernel, new this.cv.Point(-1, -1), 1);
+    //invert dilate
+    this.cv.bitwise_not(dilatedEdges, dilatedEdges);
+    this.opencvImshowService.showImage(dilatedEdges, 'dilated', 'dilated');
+    let contours = new this.cv.MatVector();
+    let hierarchy = new this.cv.Mat();
+    this.cv.findContours(
+      dilatedEdges,
+      contours,
+      hierarchy,
+      this.cv.RETR_CCOMP,
+      this.cv.CHAIN_APPROX_SIMPLE
+    );
+    this.cv.drawContours(img, contours, -1, [255, 0, 255, 255], 1);
+    this.opencvImshowService.showImage(img, 'contours', 'contours');
+    let contoursArray = [];
+    for (let i = 0; i < contours.size(); i++) {
+      contoursArray.push(contours.get(i));
+    }
+    contoursArray.sort(
+      (contour1, contour2) =>
+        this.cv.contourArea(contour1) - this.cv.contourArea(contour2)
+    );
+    const biggestContour = this.getBiggestValidContour(contoursArray);
+
     img.delete();
-    // gray.delete();
     contours.delete();
     hierarchy.delete();
+    dilatedEdges.delete();
 
-    if (screenCnt === null) {
+    if (biggestContour === null) {
       return null;
     }
 
-    let topLeft = { x: screenCnt.data32S[0], y: screenCnt.data32S[1] };
+    let topLeft = {
+      x: biggestContour.data32S[0],
+      y: biggestContour.data32S[1],
+    };
     let topLeftIndex = 0;
     let minDistance = this.getDistance(topLeft, new this.cv.Point(0, 0));
 
-    for (let i = 1; i < screenCnt.total(); i++) {
+    for (let i = 1; i < biggestContour.total(); i++) {
       let distance = this.getDistance(
-        { x: screenCnt.data32S[i * 2], y: screenCnt.data32S[i * 2 + 1] },
+        {
+          x: biggestContour.data32S[i * 2],
+          y: biggestContour.data32S[i * 2 + 1],
+        },
         new this.cv.Point(0, 0)
       );
       if (distance < minDistance) {
@@ -180,26 +306,46 @@ export class PlastronService {
     let firstHalf = [];
     for (let i = 0; i < topLeftIndex; i++) {
       firstHalf.push({
-        x: screenCnt.data32S[i * 2],
-        y: screenCnt.data32S[i * 2 + 1],
+        x: biggestContour.data32S[i * 2],
+        y: biggestContour.data32S[i * 2 + 1],
       });
     }
 
     let secondHalf = [];
-    for (let i = topLeftIndex; i < screenCnt.total(); i++) {
+    for (let i = topLeftIndex; i < biggestContour.total(); i++) {
       secondHalf.push({
-        x: screenCnt.data32S[i * 2],
-        y: screenCnt.data32S[i * 2 + 1],
+        x: biggestContour.data32S[i * 2],
+        y: biggestContour.data32S[i * 2 + 1],
       });
     }
 
     const concat = firstHalf.concat(secondHalf);
 
     concat.map((coordinate) => {
-      coordinate.x = (coordinate.x / this.detectionSize) * mat.cols;
-      coordinate.y = (coordinate.y / this.detectionSize) * mat.rows;
+      coordinate.x =
+        (coordinate.x / this.PICTURE_SIZE_SHEET_DETECTION) * mat.cols;
+      coordinate.y =
+        (coordinate.y / this.PICTURE_SIZE_SHEET_DETECTION) * mat.rows;
     });
+    biggestContour.delete();
     return this.orderPoints(concat);
+  }
+
+  // ##########################
+
+  private orderPoints(pts: PointCv[]) {
+    let rect = new Array(4);
+    let pts2 = [...pts];
+
+    pts2.sort((a, b) => a.x + a.y - (b.x + b.y));
+    rect[0] = pts2[0];
+    rect[2] = pts2[pts2.length - 1];
+
+    pts2.sort((a, b) => a.x - a.y - (b.x - b.y));
+    rect[3] = pts2[0];
+    rect[1] = pts2[pts2.length - 1];
+
+    return rect;
   }
 
   getBiggestContour(contours: any) {
@@ -224,7 +370,7 @@ export class PlastronService {
 
   getPlastronMat(mat: any) {
     this.logger.debug('start getPlastronMat');
-    const coordinates = this.getPlastronCoordinates(mat);
+    const coordinates = this.getSheetCoordinates(mat);
     if (coordinates === null) {
       return mat;
     }
@@ -266,63 +412,7 @@ export class PlastronService {
     return warped;
   }
 
-  getPointOnEllipse(
-    center: PointCv,
-    radiusX: number,
-    radiusY: number,
-    angle: number
-  ) {
-    const x = center.x + Math.cos(angle) * radiusX;
-    const y = center.y + Math.sin(angle) * radiusY;
-    return new this.cv.Point(x, y);
-  }
-
-  rotatePoint(center: PointCv, point: PointCv, angle: number) {
-    const s = Math.sin(angle);
-    const c = Math.cos(angle);
-
-    // Translate point back to origin:
-    const translatedX = point.x - center.x;
-    const translatedY = point.y - center.y;
-
-    // Rotate point
-    const rotatedX = translatedX * c - translatedY * s;
-    const rotatedY = translatedX * s + translatedY * c;
-
-    // Translate point back:
-    point.x = rotatedX + center.x;
-    point.y = rotatedY + center.y;
-
-    return point;
-  }
-
   private readonly maximumImpactDistance = 48;
-
-  getPoint(distance: number) {
-    let point = 570;
-    let i = 0;
-    if (distance > this.maximumImpactDistance) {
-      return 0;
-    }
-    for (; i < 5 && distance > 0; i++) {
-      point -= 6;
-      distance -= 1;
-    }
-    for (; i < 48 && distance > 0; i++) {
-      point -= 3;
-      distance -= 1;
-    }
-    return point;
-  }
-
-  getRealDistance(center: PointCv, border: PointCv, impact: PointCv) {
-    const length = this.getDistance(center, border);
-    const distance = this.getDistance(center, impact);
-    const percent = distance / length;
-    const realLength = 25;
-    const milimeterDistance = realLength * percent;
-    return Math.round(milimeterDistance);
-  }
 
   getImpactsCenters(mat: any): PointCv[] {
     this.logger.debug('start getImpactsCenters');
@@ -855,17 +945,6 @@ export class PlastronService {
     return croppedImage;
   }
 
-  getAngle(p1: PointCv, p2: PointCv) {
-    this.logger.debug('start getAngle');
-    this.logger.debug('end getAngle');
-    return Math.atan2(p2.y - p1.y, p2.x - p1.x);
-  }
-
-  toRadians = (degrees: number) => {
-    this.logger.debug('start toRadians');
-    this.logger.debug('end toRadians');
-    return (degrees * Math.PI) / 180;
-  };
   toDegrees = (radians: number) => {
     this.logger.debug('start toDegrees');
     this.logger.debug('end toDegrees');
@@ -1016,7 +1095,7 @@ export class PlastronService {
         pointOnEllipse,
         point
       );
-      const points = this.getPoint(realDistance);
+      const points = this.getPoints(realDistance);
 
       this.cv.putText(
         mat,
@@ -1130,34 +1209,5 @@ export class PlastronService {
   getFrame() {
     this.logger.debug('getFrame', this.frame);
     return this.frame;
-  }
-
-  detectEdges(img: any, blurRadius = 0, thr1 = 100, thr2 = 200) {
-    this.logger.debug('start detectEdges');
-    let enhancedIm = this.preprocess(img, blurRadius);
-    this.opencvImshowService.showImage(enhancedIm, 'enhancedIm', 'enhancedIm');
-    const edges = new this.cv.Mat();
-    this.cv.Canny(enhancedIm, edges, thr1, thr2);
-
-    this.logger.debug('end detectEdges');
-
-    this.opencvImshowService.showImage(edges, 'edges', 'edges');
-    return edges;
-  }
-
-  preprocess(im: any, blurRadius: number) {
-    this.logger.debug('start preprocess');
-    let saturation = new this.cv.Mat();
-    this.cv.cvtColor(im, saturation, this.cv.COLOR_BGR2HSV);
-    let hsvChannels = new this.cv.MatVector();
-    this.cv.split(saturation, hsvChannels);
-
-    saturation = hsvChannels.get(2);
-    hsvChannels.delete();
-    if (blurRadius !== 0) {
-      this.cv.medianBlur(saturation, saturation, blurRadius);
-    }
-    this.logger.debug('end preprocess');
-    return saturation;
   }
 }
