@@ -1,0 +1,7 @@
+:host {
+  &.connected {
+    app-icon-button {
+      color: var(--color-indicator-2);
+    }
+  }
+}

@@ -1,0 +1,8 @@
+<app-icon-button (click)="onClick()" icon="jamSignal"></app-icon-button>
+<app-message-box message="{{'Vous êtes sur le point de vous déconnecter du serveur distant' | translate}}"
+                 title="{{'Déconnexion' | translate}}"
+                 [(open)]="openMessageBox" (callback)="messageBoxCallback($event)"
+                 type="okcancel"></app-message-box>
+<app-slide-sheet [(open)]="openScanner">
+  <zxing-scanner (scanComplete)="scanComplete($event)"></zxing-scanner>
+</app-slide-sheet>

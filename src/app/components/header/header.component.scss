@@ -45,5 +45,9 @@
     &.menu {
       justify-content: flex-end;
     }
+
+    &.server {
+      z-index: 2;
+    }
   }
 }

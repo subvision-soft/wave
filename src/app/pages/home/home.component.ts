@@ -48,23 +48,6 @@ export class HomeComponent {
     );
     filesService.clearTarget();
     filesService.clearSession();
-    const appPage = document.getElementById('app-page');
-    appPage?.addEventListener('scroll', (event) => {
-      // @ts-ignore
-      let scrollTop = event.target.scrollTop / 30;
-      scrollTop = scrollTop > 1 ? 1 : scrollTop;
-      this.logoSize = 30 + 20 * (1 - scrollTop);
-    });
-
-    appPage?.addEventListener('scrollend', (event) => {
-      console.log(event);
-      // @ts-ignore
-      if (event.target.scrollTop < 30) {
-        appPage?.scrollTo({
-          top: 0,
-        });
-      }
-    });
   }
 
   get seances(): string[] {

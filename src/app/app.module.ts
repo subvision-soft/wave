@@ -23,6 +23,7 @@ import {
   jamMoreVerticalF,
   jamPlus,
   jamSearch,
+  jamSignal,
 } from '@ng-icons/jam-icons';
 import {
   iconoirBinMinus,
@@ -106,6 +107,8 @@ import { OpencvImshowComponent } from './components/opencv-imshow/opencv-imshow.
 import { SwiperComponent } from './components/swiper/swiper.component';
 import { SwiperItemComponent } from './components/swiper-item/swiper-item.component';
 import { ResultsPreviewComponent } from './components/results-preview/results-preview.component';
+import { ServerConnectComponent } from './components/server-connect/server-connect.component';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
 
 const openCVConfig: OpenCVConfig = {
   openCVDirPath: 'assets/opencv',
@@ -141,6 +144,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     SelectComponent,
     SessionsComponent,
     SettingPickerComponent,
+    ServerConnectComponent,
     SearchComponent,
     AddButtonComponent,
     SessionItemComponent,
@@ -204,6 +208,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
       iconoirCancel,
       bootstrapHouseFill,
       jamCameraF,
+      jamSignal,
       jamCogF,
       jamHomeF,
       jamFolderF,
@@ -226,10 +231,11 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     OpencvImshowComponent,
     SwiperComponent,
     SwiperItemComponent,
+    ZXingScannerModule,
   ],
   providers: [UserLastnameFirstCharPipe, RSSParserService],
   bootstrap: [AppComponent],
-  exports: [TagComponent],
+  exports: [TagComponent, IconButtonComponent],
 })
 export class AppModule {
   constructor() {

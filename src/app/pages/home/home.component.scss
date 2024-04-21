@@ -5,17 +5,6 @@
   gap: var(--padding);
   color: var(--color-dark1-1);
 
-  .logo {
-    padding: var(--padding-sm);
-    position: sticky;
-    top: 0;
-    background: var(--color-background-1);
-    transition: var(--transition);
-    z-index: 1;
-    display: flex;
-    justify-content: center;
-  }
-
   h1 {
     font-size: var(--font-size-lg);
     font-weight: var(--font-weight-bold);
@@ -34,6 +23,7 @@
     overflow-x: auto;
     padding: var(--padding);
     margin: calc(-1 * var(--padding)) 0;
+    z-index: 0;
 
     .actualite {
       background: var(--color-background-2);

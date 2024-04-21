@@ -4,6 +4,7 @@
 <div class="header-item content">
   <ng-content></ng-content>
 </div>
+<app-server-connect class="header-item server"></app-server-connect>
 <div #menuButton class="header-item menu" [style.visibility]="showMenu ? 'visible' : 'hidden'">
   <app-icon-button (click)="toggleMenu()" icon="jamMoreVerticalF"></app-icon-button>
 </div>

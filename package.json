@@ -35,6 +35,7 @@
     "@ng-icons/jam-icons": "^25.2.0",
     "@ngx-translate/core": "^15.0.0",
     "@ngx-translate/http-loader": "^8.0.0",
+    "@zxing/ngx-scanner": "^17.0.1",
     "capacitor-blob-writer": "^1.1.14",
     "color": "^4.2.3",
     "cordova-plugin-lottie-splashscreen": "github:timbru31/cordova-plugin-lottie-splashscreen",
