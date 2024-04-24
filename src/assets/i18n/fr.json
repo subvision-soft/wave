@@ -1,4 +1,12 @@
 {
+  "SERVER": {
+    "TOASTS": {
+      "SUCCESS": {
+        "TITLE": "Vous êtes connecté",
+        "CONTENT": "Vous venez de vous connecter au serveur distant"
+      }
+    }
+  },
   "HOME": {
     "ACTUALITIES": "Actualités",
     "RECENTLY_OPENED": "Récemment ouverts",

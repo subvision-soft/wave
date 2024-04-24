@@ -1,5 +1,7 @@
 import { Component, HostBinding } from '@angular/core';
 import { ServerConnectService } from '../../services/server-connect.service';
+import * as console from 'node:console';
+import { ToastService, ToastTypes } from '../../services/toast.service';
 
 @Component({
   selector: 'app-server-connect',
@@ -7,12 +9,34 @@ import { ServerConnectService } from '../../services/server-connect.service';
   styleUrl: './server-connect.component.scss',
 })
 export class ServerConnectComponent {
-  @HostBinding('class.connected') connected = false;
+  get connected(): boolean {
+    return this._connected;
+  }
+
+  set connected(value: boolean) {
+    this._connected = value;
+
+    if (value) {
+      this.openScanner = false;
+      this.toastService.initiate({
+        title: 'SERVER.TOASTS.SUCCESS.TITLE',
+        content: 'SERVER.TOASTS.SUCCESS.CONTENT',
+        show: true,
+        type: ToastTypes.SUCCESS,
+        duration: 1500,
+      });
+    }
+  }
+
+  @HostBinding('class.connected') private _connected = false;
 
   openMessageBox = false;
   openScanner: boolean = false;
 
-  constructor(private serverConnectService: ServerConnectService) {
+  constructor(
+    private serverConnectService: ServerConnectService,
+    private toastService: ToastService
+  ) {
     serverConnectService.connectionStatus.subscribe((status) => {
       this.connected = status;
     });
@@ -32,10 +56,9 @@ export class ServerConnectComponent {
   }
 
   scanComplete(data: any) {
-    const stringData = data?.text;
-    if (!!stringData) {
-      fetch(`${stringData}/is-wave-db-alive`).then(() => {
-        this.serverConnectService.connect(stringData);
+    if (!!data) {
+      fetch(`${data}/is-wave-db-alive`).then(() => {
+        this.serverConnectService.connect(data);
       });
     }
   }

@@ -4,5 +4,5 @@
                  [(open)]="openMessageBox" (callback)="messageBoxCallback($event)"
                  type="okcancel"></app-message-box>
 <app-slide-sheet [(open)]="openScanner">
-  <zxing-scanner (scanComplete)="scanComplete($event)"></zxing-scanner>
+  <zxing-scanner [enable]="openScanner" (scanSuccess)="scanComplete($event)"></zxing-scanner>
 </app-slide-sheet>
