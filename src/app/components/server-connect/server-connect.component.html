@@ -3,6 +3,4 @@
                  title="{{'Déconnexion' | translate}}"
                  [(open)]="openMessageBox" (callback)="messageBoxCallback($event)"
                  type="okcancel"></app-message-box>
-<app-slide-sheet [(open)]="openScanner">
-  <zxing-scanner [enable]="openScanner" (scanSuccess)="scanComplete($event)"></zxing-scanner>
-</app-slide-sheet>
+

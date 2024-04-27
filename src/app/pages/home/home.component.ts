@@ -3,6 +3,7 @@ import { FilesService } from '../../services/files.service';
 import { HistoryService } from '../../services/history.service';
 import { Router } from '@angular/router';
 import { RSSParserService } from '../../services/rss-parser.service';
+import { AppSettings } from '../../utils/AppSettings';
 
 @Component({
   selector: 'app-home',
@@ -12,11 +13,8 @@ import { RSSParserService } from '../../services/rss-parser.service';
 export class HomeComponent {
   open: boolean = false;
   @ViewChild('app-page', { static: true }) el: ElementRef | undefined;
-  logoSize: number = 50;
 
   actualitesLoading: boolean = true;
-
-  epubFiles: string[] = [];
 
   actualites: any[] = [];
 
@@ -85,4 +83,6 @@ export class HomeComponent {
   openActualite(actualite: any) {
     window.open(actualite.link[0], '_blank');
   }
+
+  protected readonly AppSettings = AppSettings;
 }

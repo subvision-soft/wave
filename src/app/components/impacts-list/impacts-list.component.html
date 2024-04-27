@@ -1,7 +1,7 @@
 <div class="impacts">
   <div [class]="selected === impact ? 'impact selected' : 'impact'" *ngFor="let impact of impacts"
        (click)="select(impact)">
-    {{impact.points}}
+    {{ impact.score }}
   </div>
 </div>
 

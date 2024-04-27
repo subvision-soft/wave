@@ -28,8 +28,8 @@ export class ResultsPreviewComponent {
   ];
 
   getDisplayPoints = (impact: Impact) => {
-    if (impact.amount === 1) return impact.points;
-    return impact.points + '×' + impact.amount;
+    if (impact.amount === 1) return impact.score;
+    return impact.score + '×' + impact.amount;
   };
 
   getImpactsByZone = (zone: Zone) => {

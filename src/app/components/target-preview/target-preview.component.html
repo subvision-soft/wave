@@ -6,7 +6,7 @@
      [style.--impact-y]="getBottomAndLeft(impact).bottom"
      [style.--impact-x]="getBottomAndLeft(impact).left"
      [style.--impact-rotation]="impact.angle + 'deg'"
-     [style.--impact-distance]="impact.points > 0 ? getDistance(impact) : getDistanceFromMm(impact.distance)"
+     [style.--impact-distance]="impact.score > 0 ? getDistance(impact) : getDistanceFromMm(impact.distance)"
 >
-  <span>{{impact.amount > 1 ? impact.amount : ''}}</span>
+  <span>{{ impact.amount > 1 ? impact.amount : '' }}</span>
 </div>

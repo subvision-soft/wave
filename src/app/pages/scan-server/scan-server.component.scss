@@ -1,0 +1,14 @@
+:host {
+  height: 100%;
+  object-fit: cover;
+  display: flex;
+  flex-direction: column;
+  gap: var(--padding-sm);
+
+  zxing-scanner {
+    display: flex;
+    flex: 1;
+    border-radius: var(--border-radius-sm);
+    overflow: hidden;
+  }
+}

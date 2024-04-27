@@ -12,6 +12,7 @@ import { TeamsComponent } from './pages/teams/teams.component';
 import { SavingComponent } from './pages/saving/saving.component';
 import { UserComponent } from './pages/user/user.component';
 import { CvComponent } from './pages/playground/cv/cv.component';
+import { ScanServerComponent } from './pages/scan-server/scan-server.component';
 
 const routes: Routes = [
   {
@@ -88,6 +89,10 @@ const routes: Routes = [
         component: TeamsComponent,
       },
     ],
+  },
+  {
+    path: 'server-connect',
+    component: ScanServerComponent,
   },
   {
     path: '',

@@ -1124,7 +1124,7 @@ export class PlastronService {
       );
       let impactDTO = {
         zone: closestZone as Zone,
-        points: points,
+        score: points,
         angle: this.toDegrees(radAngle) + 180,
         distance: realDistance,
         amount: 0,

@@ -11,7 +11,7 @@
     text-align: left;
   }
 
-  & > * {
+  & > *:not(app-header) {
     padding: 0 var(--padding);
   }
 

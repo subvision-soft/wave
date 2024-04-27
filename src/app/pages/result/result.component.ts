@@ -16,6 +16,10 @@ import { ToastService, ToastTypes } from '../../services/toast.service';
 import { Target } from '../../models/target';
 import { Action } from '../../models/action';
 import { FilesService } from '../../services/files.service';
+import { AppSettings } from '../../utils/AppSettings';
+import { User } from '../../models/user';
+import { ServerService } from '../../services/server.service';
+import { Category } from '../../models/category';
 
 @Pipe({ name: 'pluck' })
 export class PluckPipe implements PipeTransform {
@@ -36,9 +40,15 @@ export class ResultComponent implements OnInit {
   menuActions: Action[] = [
     new Action('Enregistrer', undefined, () => {
       this.filesService.target = this.target;
-      this.router.navigate(['/sessions']);
+      if (AppSettings.ENABLE_LOCAL_SAVE) {
+        this.router.navigate(['/sessions']);
+      } else {
+        this.openSaveForm = true;
+      }
     }),
   ];
+
+  openSaveForm: boolean = true;
 
   get epreuve(): Event {
     return this.target.event;
@@ -194,8 +204,34 @@ export class ResultComponent implements OnInit {
     private router: Router,
     private toastService: ToastService,
     private filesService: FilesService,
-    public activatedRoute: ActivatedRoute
-  ) {}
+    public activatedRoute: ActivatedRoute,
+    private serverService: ServerService
+  ) {
+    if (!AppSettings.ENABLE_LOCAL_SAVE) {
+      this.loadCompetitors();
+    }
+  }
+
+  get competitorsStore(): any[] {
+    return this.competitors.map((competitor) => ({
+      label: `${competitor.firstname} ${competitor.lastname}`,
+      id: competitor.id,
+    }));
+  }
+
+  loadCompetitors() {
+    this.serverService.getCompetitors().then((competitors) => {
+      this.competitors = competitors.map((competitor) => {
+        return {
+          id: competitor.id.toString(),
+          firstname: competitor.firstName,
+          lastname: competitor.lastName,
+          category: Category[competitor.category as keyof typeof Category],
+          targets: [],
+        };
+      });
+    });
+  }
 
   ngOnInit(): void {
     console.log('ResultComponent.ngOnInit');
@@ -224,7 +260,7 @@ export class ResultComponent implements OnInit {
               show: true,
               duration: 3000,
             });
-            this.router.navigate(['/camera']);
+            // this.router.navigate(['/camera']);
             return;
           }
           const cv = (window as any).cv;
@@ -239,7 +275,7 @@ export class ResultComponent implements OnInit {
               image: base64,
               impacts: cible.impacts,
               total: cible.impacts
-                .map((impact: any) => impact.points)
+                .map((impact: any) => impact.score)
                 .reduce((a: number, b: number) => a + b, 0),
               date: new Date(),
               time: 0,
@@ -248,7 +284,7 @@ export class ResultComponent implements OnInit {
             };
             this.impacts = cible.impacts;
             this.total = cible.impacts
-              .map((impact: any) => impact.points)
+              .map((impact: any) => impact.score)
               .reduce((a: number, b: number) => a + b, 0);
             cible.image.delete();
           } catch (error) {
@@ -260,7 +296,7 @@ export class ResultComponent implements OnInit {
               show: true,
               duration: 4000,
             });
-            this.router.navigate(['/camera']);
+            // this.router.navigate(['/camera']);
             console.log('Error while processing image', JSON.stringify(error));
             console.error(error);
           }
@@ -270,6 +306,30 @@ export class ResultComponent implements OnInit {
 
   save() {
     this.saving = true;
+    if (!AppSettings.ENABLE_LOCAL_SAVE) {
+      this.serverService.postTarget(this.uploadTarget).then(() => {
+        this.saving = false;
+        this.toastService.initiate({
+          title: 'Cible enregistrée',
+          content: 'La cible a bien été enregistrée',
+          type: ToastTypes.SUCCESS,
+          show: true,
+          duration: 3000,
+        });
+        this.router.navigate(['/sessions']);
+      });
+    }
+  }
+
+  get uploadTarget(): any {
+    return {
+      time: this.target.time,
+      date: this.target.date,
+      userId: this.selectedCompetitors[0].id,
+      id: null,
+      pictureBase64: this.target.image,
+      impacts: this.target.impacts,
+    };
   }
 
   togglePreview() {
@@ -277,6 +337,8 @@ export class ResultComponent implements OnInit {
   }
 
   protected readonly pluck = pluck;
+  competitors: User[];
+  selectedCompetitors: User[] = [];
 
   get showChrono() {
     console.log(this.superBiathlon || this.biathlon);

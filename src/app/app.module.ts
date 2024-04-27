@@ -109,6 +109,9 @@ import { SwiperItemComponent } from './components/swiper-item/swiper-item.compon
 import { ResultsPreviewComponent } from './components/results-preview/results-preview.component';
 import { ServerConnectComponent } from './components/server-connect/server-connect.component';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
+import { ScanServerComponent } from './pages/scan-server/scan-server.component';
+import { ServerService } from './services/server.service';
+import { TargetFormComponent } from './pages/target-form/target-form.component';
 
 const openCVConfig: OpenCVConfig = {
   openCVDirPath: 'assets/opencv',
@@ -174,6 +177,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     LoadingComponent,
     ListTargetsComponent,
     ResultsPreviewComponent,
+    ScanServerComponent,
+    TargetFormComponent,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -233,9 +238,14 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     SwiperItemComponent,
     ZXingScannerModule,
   ],
-  providers: [UserLastnameFirstCharPipe, RSSParserService],
+  providers: [UserLastnameFirstCharPipe, RSSParserService, ServerService],
   bootstrap: [AppComponent],
-  exports: [TagComponent, IconButtonComponent],
+  exports: [
+    TagComponent,
+    IconButtonComponent,
+    HeaderComponent,
+    SelectComponent,
+  ],
 })
 export class AppModule {
   constructor() {

@@ -1,13 +1,23 @@
 <div class="header-item back" [style.visibility]="showBack ? 'visible' : 'hidden'">
   <app-icon-button icon="jamChevronLeft" (click)="goBack()"></app-icon-button>
 </div>
+<div class="header-item">
+
+</div>
 <div class="header-item content">
   <ng-content></ng-content>
 </div>
-<app-server-connect class="header-item server"></app-server-connect>
-<div #menuButton class="header-item menu" [style.visibility]="showMenu ? 'visible' : 'hidden'">
-  <app-icon-button (click)="toggleMenu()" icon="jamMoreVerticalF"></app-icon-button>
+
+<div *ngIf="!showMenu" class="header-item">
+
 </div>
+<app-server-connect class="header-item server"></app-server-connect>
+
+<ng-container #menuButton>
+  <div *ngIf="showMenu" class="header-item menu">
+    <app-icon-button (click)="toggleMenu()" icon="jamMoreVerticalF"></app-icon-button>
+  </div>
+</ng-container>
 
 <app-menu [attachTo]="menuButton" anchorLocation="topRight" [(open)]="openMenu"
           [actions]="actions"></app-menu>

@@ -4,6 +4,10 @@
       "SUCCESS": {
         "TITLE": "Vous êtes connecté",
         "CONTENT": "Vous venez de vous connecter au serveur distant"
+      },
+      "DISCONNECTED": {
+        "TITLE": "Vous êtes déconnecté",
+        "CONTENT": "Vous venez de vous déconnecter du serveur distant"
       }
     }
   },

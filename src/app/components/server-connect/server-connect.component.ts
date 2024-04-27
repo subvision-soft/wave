@@ -1,7 +1,7 @@
 import { Component, HostBinding } from '@angular/core';
-import { ServerConnectService } from '../../services/server-connect.service';
-import * as console from 'node:console';
 import { ToastService, ToastTypes } from '../../services/toast.service';
+import { Router } from '@angular/router';
+import { ServerService } from '../../services/server.service';
 
 @Component({
   selector: 'app-server-connect',
@@ -34,10 +34,12 @@ export class ServerConnectComponent {
   openScanner: boolean = false;
 
   constructor(
-    private serverConnectService: ServerConnectService,
-    private toastService: ToastService
+    private serverService: ServerService,
+    private toastService: ToastService,
+    private router: Router
   ) {
-    serverConnectService.connectionStatus.subscribe((status) => {
+    this.connected = this.serverService.isConnected();
+    serverService.connectionStatus.subscribe((status) => {
       this.connected = status;
     });
   }
@@ -51,20 +53,18 @@ export class ServerConnectComponent {
   }
 
   connect() {
-    this.openScanner = true;
-    console.log('Connecting to server...');
-  }
-
-  scanComplete(data: any) {
-    if (!!data) {
-      fetch(`${data}/is-wave-db-alive`).then(() => {
-        this.serverConnectService.connect(data);
+    this.router
+      .navigate(['server-connect'])
+      .then(() => {
+        console.log('Connecting to server...');
+      })
+      .catch((error) => {
+        console.error('Error connecting to server:', error);
       });
-    }
   }
 
   disconnect() {
-    this.serverConnectService.disconnect();
+    this.serverService.disconnect();
     console.log('Disconnecting from server...');
   }
 

@@ -45,16 +45,16 @@ export class TotalPreviewComponent {
   get total(): number {
     if (this.precision) {
       const number1 = this.tirsValides;
-      return number1.reduce((acc, impact) => acc + impact.points, 0);
+      return number1.reduce((acc, impact) => acc + impact.score, 0);
     } else if (this.biathlon) {
       const number =
-        (this.tirsValides.reduce((acc, impact) => acc + impact.points, 0) -
+        (this.tirsValides.reduce((acc, impact) => acc + impact.score, 0) -
           this.time * 2) *
         3;
       return number > 0 ? number : 0;
     } else if (this.superBiathlon) {
       const contrats = this.tirsValides.filter(
-        (impact) => impact.points >= 471
+        (impact) => impact.score >= 471
       ).length;
       const capitalPoints = 5000;
       const tempsReference = 90;
@@ -65,7 +65,7 @@ export class TotalPreviewComponent {
       }
     } else if (this.saisieLibre) {
       const number1 = this.tirsValides;
-      return number1.reduce((acc, impact) => acc + impact.points, 0);
+      return number1.reduce((acc, impact) => acc + impact.score, 0);
     }
     return 0;
   }
@@ -74,7 +74,7 @@ export class TotalPreviewComponent {
     if (this.precision) {
       //On garde les 10 moins bons impacts
       let impacts = this._impacts
-        .sort((a, b) => a.points - b.points)
+        .sort((a, b) => a.score - b.score)
         .slice(0, 10);
       let zones: any = {};
       zones = impacts.reduce((acc, impact) => {
@@ -88,16 +88,14 @@ export class TotalPreviewComponent {
       Object.keys(zones).map((zone) => {
         impacts.push(
           ...zones[zone]
-            .sort((a: Impact, b: Impact) => b.points - a.points)
+            .sort((a: Impact, b: Impact) => b.score - a.score)
             .slice(0, 2)
         );
       });
       return impacts;
     } else if (this.biathlon) {
       //On garde les 3 moins bons impacts
-      let impacts = this._impacts
-        .sort((a, b) => a.points - b.points)
-        .slice(0, 3);
+      let impacts = this._impacts.sort((a, b) => a.score - b.score).slice(0, 3);
       let zones: any = {};
       zones = impacts.reduce((acc, impact) => {
         const zone = zones[impact.zone] || [];
@@ -110,7 +108,7 @@ export class TotalPreviewComponent {
       Object.keys(zones).map((zone) => {
         impacts.push(
           ...zones[zone]
-            .sort((a: Impact, b: Impact) => b.points - a.points)
+            .sort((a: Impact, b: Impact) => b.score - a.score)
             .slice(0, 1)
         );
       });

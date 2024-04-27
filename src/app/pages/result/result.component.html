@@ -37,4 +37,11 @@
 </div>
 
 
+<app-message-box [(open)]="openSaveForm" (callback)="save()">
+  <app-select [compact]="true" [label]="'Compétiteur'" [store]="competitorsStore" [(value)]="selectedCompetitors">
+
+  </app-select>
+</app-message-box>
+
+
 <!--<canvas id="debug" width="4096" height="4096"></canvas>-->

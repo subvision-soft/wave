@@ -21,27 +21,27 @@
     flex-direction: column;
     gap: var(--padding-sm);
 
-    &.top-left {
+    &.TOP_LEFT {
       top: 0;
       left: 0;
     }
 
-    &.top-right {
+    &.TOP_RIGHT {
       top: 0;
       right: 0;
     }
 
-    &.bottom-left {
+    &.BOTTOM_LEFT {
       bottom: 0;
       left: 0;
     }
 
-    &.bottom-right {
+    &.BOTTOM_RIGHT {
       bottom: 0;
       right: 0;
     }
 
-    &.center {
+    &.CENTER {
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);

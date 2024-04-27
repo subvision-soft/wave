@@ -1,8 +1,8 @@
 export enum Zone {
-  TOP_LEFT = 'top-left',
-  TOP_RIGHT = 'top-right',
-  BOTTOM_LEFT = 'bottom-left',
-  BOTTOM_RIGHT = 'bottom-right',
-  CENTER = 'center',
-  UNDEFINED = 'undefined',
+  TOP_LEFT = 'TOP_LEFT',
+  TOP_RIGHT = 'TOP_RIGHT',
+  BOTTOM_LEFT = 'BOTTOM_LEFT',
+  BOTTOM_RIGHT = 'BOTTOM_RIGHT',
+  CENTER = 'CENTER',
+  UNDEFINED = 'UNDEFINED',
 }

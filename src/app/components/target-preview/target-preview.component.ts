@@ -34,7 +34,7 @@ export class TargetPreviewComponent {
 
   getDistance = (impact: Impact) => {
     return (
-      ((this.pointToDistance(impact.points) * this.caseSize) / this.arrowSize) *
+      ((this.pointToDistance(impact.score) * this.caseSize) / this.arrowSize) *
         100 +
       '%'
     );

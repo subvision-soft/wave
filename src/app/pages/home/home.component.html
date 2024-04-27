@@ -1,4 +1,4 @@
-<app-header>
+<app-header [showMenu]="false">
   <app-logo [size]="40"/>
 </app-header>
 <h1 class="titre">{{ 'HOME.ACTUALITIES' | translate }}</h1>
@@ -16,19 +16,18 @@
     <app-empty-text *ngIf="!actualitesLoading" text="{{'HOME.NO_ACTUALITY'| translate}}"></app-empty-text>
   </div>
 </div>
-<div class="titre-sessions">
-  <h1>{{ 'HOME.RECENTLY_OPENED' | translate }}</h1>
-  <app-tag ripple *ngIf="seances.length != 0" class="button"
-           routerLink="/sessions">{{ 'HOME.SHOW_ALL' | translate }}
-  </app-tag>
-</div>
-<div class="sessions">
-  <app-session-item (click)="openSession(seance)" [url]="seance" *ngFor="let seance of seances" [showLogo]="true">
-  </app-session-item>
-  <app-empty-text *ngIf="seances.length == 0" text="{{'HOME.NO_SESSION'|translate}}"></app-empty-text>
-</div>
+<ng-container *ngIf="AppSettings.ENABLE_LOCAL_SAVE">
 
-<div *ngFor="let file of epubFiles">
-  {{ file }}
-</div>
+  <div class="titre-sessions">
+    <h1>{{ 'HOME.RECENTLY_OPENED' | translate }}</h1>
+    <app-tag ripple *ngIf="seances.length != 0" class="button"
+             routerLink="/sessions">{{ 'HOME.SHOW_ALL' | translate }}
+    </app-tag>
+  </div>
+  <div class="sessions">
+    <app-session-item (click)="openSession(seance)" [url]="seance" *ngFor="let seance of seances" [showLogo]="true">
+    </app-session-item>
+    <app-empty-text *ngIf="seances.length == 0" text="{{'HOME.NO_SESSION'|translate}}"></app-empty-text>
+  </div>
+</ng-container>
 
