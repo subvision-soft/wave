@@ -213,7 +213,7 @@ export class ResultComponent implements OnInit {
   }
 
   get competitorsStore(): any[] {
-    return this.competitors.map((competitor) => ({
+    return this.competitors?.map((competitor) => ({
       label: `${competitor.firstname} ${competitor.lastname}`,
       id: competitor.id,
     }));
@@ -307,6 +307,7 @@ export class ResultComponent implements OnInit {
   save() {
     this.saving = true;
     if (!AppSettings.ENABLE_LOCAL_SAVE) {
+      console.log('Saving to server', this.uploadTarget);
       this.serverService.postTarget(this.uploadTarget).then(() => {
         this.saving = false;
         this.toastService.initiate({
@@ -325,10 +326,11 @@ export class ResultComponent implements OnInit {
     return {
       time: this.target.time,
       date: this.target.date,
-      userId: this.selectedCompetitors[0].id,
+      userId: this.selectedCompetitors,
       id: null,
       pictureBase64: this.target.image,
       impacts: this.target.impacts,
+      event: this.epreuve,
     };
   }
 
