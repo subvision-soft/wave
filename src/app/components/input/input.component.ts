@@ -14,23 +14,23 @@ import {
   styleUrls: ['./input.component.scss'],
 })
 export class InputComponent {
-  get value(): string {
+  get value(): any {
     return this._value;
   }
 
   @Input() @HostBinding('class.horizontal') horizontal: boolean = false;
 
   @Input()
-  set value(value: string) {
+  set value(value: any) {
     this._value = value;
     this.valueChange.emit(value);
   }
 
   get checked(): boolean {
-    return this.value === 'true' || this.value === 'on';
+    return this.value === 'true' || this.value === 'on' || this.value === true;
   }
 
-  @Output('valueChange') valueChange = new EventEmitter<string>();
+  @Output('valueChange') valueChange = new EventEmitter<any>();
   @Input() type:
     | 'text'
     | 'password'
@@ -48,7 +48,7 @@ export class InputComponent {
     | 'checkbox'
     | 'color' = 'text';
   @Input() placeholder: string = '';
-  private _value: string = '';
+  private _value: any = '';
   @Input() label: string = '';
   @Input() required: boolean = false;
   @Input() disabled: boolean = false;

@@ -51,10 +51,12 @@ export class ResultComponent implements OnInit {
   openSaveForm: boolean = true;
 
   get epreuve(): Event {
+    console.log('Getting epreuve', this.target.event);
     return this.target.event;
   }
 
   set epreuve(value: Event) {
+    console.log('Setting epreuve', value);
     this.target.event = value;
   }
 
@@ -158,7 +160,7 @@ export class ResultComponent implements OnInit {
     total: 0,
     date: new Date(),
     time: 0,
-    event: Event.SUPER_BIATHLON,
+    event: Event.PRECISION,
     user: '',
     shotsTooCloseCount: 0,
     badArrowExtractionsCount: 0,
@@ -298,7 +300,7 @@ export class ResultComponent implements OnInit {
                 .reduce((a: number, b: number) => a + b, 0),
               date: new Date(),
               time: 0,
-              event: Event.SAISIE_LIBRE,
+              event: Event.PRECISION,
               user: '',
             };
             this.impacts = cible.impacts;
@@ -365,4 +367,6 @@ export class ResultComponent implements OnInit {
     console.log(this.superBiathlon || this.biathlon);
     return (this.superBiathlon || this.biathlon) && !this.saving;
   }
+
+  protected readonly Event = Event;
 }

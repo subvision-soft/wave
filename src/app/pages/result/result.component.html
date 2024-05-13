@@ -38,13 +38,27 @@
 
 
 <app-message-box [(open)]="openSaveForm" (callback)="save()">
-  <app-select [compact]="true" [label]="'Compétiteur'" [store]="competitorsStore" [(value)]="selectedCompetitors">
+  <div class="message-box-body">
 
-  </app-select>
-  <app-spinner></app-spinner>
-  <app-input></app-input>
-  <app-number-spinner [min]="0" [max]="10" [(value)]="target.badArrowExtractionsCount"
-                      title="Mauvaises extractions de flèches"></app-number-spinner>
+    <app-select [compact]="true" [label]="'Compétiteur'" [store]="competitorsStore" [(value)]="selectedCompetitors">
+
+    </app-select>
+    <div class="penalites">
+      <app-input type="number" label="Mauvaise extraction de flèche"
+                 [(value)]="target.badArrowExtractionsCount"></app-input>
+      <app-input type="number" label="Dépassement de fenêtre de tir"
+                 [(value)]="target.shotsTooCloseCount"></app-input>
+      <app-input type="number" label="Cible non touchée"
+                 [(value)]="target.targetSheetNotTouchedCount"></app-input>
+      <app-input type="checkbox" label="Départ volé"
+                 [(value)]="target.departureSteal"></app-input>
+      <app-input type="checkbox" label="Dépassement de fenêtre de tir"
+                 [(value)]="target.armedBeforeCountdown"></app-input>
+      <app-input *ngIf="target.event === Event.PRECISION" type="checkbox" label="Temps écoulé"
+                 [(value)]="target.timeRanOut"></app-input>
+    </div>
+
+  </div>
 
 </app-message-box>
 

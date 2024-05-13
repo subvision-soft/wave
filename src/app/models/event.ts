@@ -1,6 +1,6 @@
 export enum Event {
-  PRECISION = 'Précision',
-  BIATHLON = 'Biathlon',
-  SUPER_BIATHLON = 'Super biathlon',
-  SAISIE_LIBRE = 'Saisie libre',
+  PRECISION = 'PRECISION',
+  BIATHLON = 'BIATHLON',
+  SUPER_BIATHLON = 'SUPER_BIATHLON',
+  SAISIE_LIBRE = 'SAISIE_LIBRE',
 }

@@ -43,6 +43,7 @@ export class TotalPreviewComponent {
   }
 
   get total(): number {
+    if (this.tirsValides.length === 0) return 0;
     if (this.precision) {
       const number1 = this.tirsValides;
       return number1.reduce((acc, impact) => acc + impact.score, 0);
@@ -71,11 +72,13 @@ export class TotalPreviewComponent {
   }
 
   get tirsValides(): Impact[] {
+    if (this._impacts.length === 0) return [];
     if (this.precision) {
       //On garde les 10 moins bons impacts
       let impacts = this._impacts
         .sort((a, b) => a.score - b.score)
         .slice(0, 10);
+
       let zones: any = {};
       zones = impacts.reduce((acc, impact) => {
         const zone = zones[impact.zone] || [];
