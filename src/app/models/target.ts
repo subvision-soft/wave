@@ -9,4 +9,10 @@ export interface Target {
   date: Date;
   user: string;
   image: string;
+  shotsTooCloseCount: number;
+  badArrowExtractionsCount: number;
+  targetSheetNotTouchedCount: number;
+  departureSteal: boolean;
+  armedBeforeCountdown: boolean;
+  timeRanOut: boolean;
 }

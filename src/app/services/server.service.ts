@@ -3,6 +3,8 @@ import { Subject } from 'rxjs';
 import { ToastService, ToastTypes } from './toast.service';
 import { CompetitorModel } from '../models/competitor.model';
 import { UploadTargetModel } from '../models/upload-target.model';
+import { CapacitorHttp } from '@capacitor/core';
+import { EventModel } from '../models/event.model';
 
 @Injectable()
 export class ServerService {
@@ -34,8 +36,9 @@ export class ServerService {
   }
 
   connect(uri: string) {
-    fetch(`${uri}/is-wave-db-alive`).then(() => {
-      console.log(`Connected to ${uri}`);
+    CapacitorHttp.get({
+      url: `${uri}/is-wave-db-alive`,
+    }).then((res) => {
       this.connectionStatus.next(true);
       this.uri = uri;
     });
@@ -53,12 +56,26 @@ export class ServerService {
     return fetch(`${this.uri}/categories`);
   }
 
+  getEvents(): Promise<EventModel[]> {
+    return new Promise((resolve, reject) => {
+      CapacitorHttp.get({
+        url: `${this.uri}/events`,
+      })
+        .then((res) => {
+          resolve(res.data);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  }
+
   getCompetitors(): Promise<CompetitorModel[]> {
     return new Promise((resolve, reject) => {
-      fetch(`${this.uri}/competitors`).then((res) => {
-        res.json().then((data) => {
-          resolve(data);
-        });
+      CapacitorHttp.get({
+        url: `${this.uri}/competitors`,
+      }).then((res) => {
+        resolve(res.data);
       });
     });
   }

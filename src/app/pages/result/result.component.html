@@ -41,6 +41,11 @@
   <app-select [compact]="true" [label]="'Compétiteur'" [store]="competitorsStore" [(value)]="selectedCompetitors">
 
   </app-select>
+  <app-spinner></app-spinner>
+  <app-input></app-input>
+  <app-number-spinner [min]="0" [max]="10" [(value)]="target.badArrowExtractionsCount"
+                      title="Mauvaises extractions de flèches"></app-number-spinner>
+
 </app-message-box>
 
 

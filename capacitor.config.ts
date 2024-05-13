@@ -9,7 +9,11 @@ const config: CapacitorConfig = {
     // url: 'http://192.168.1.40:4200',
     // cleartext: true,
   },
-
+  plugins: {
+    CapacitorHttp: {
+      enabled: true,
+    },
+  },
   cordova: {
     preferences: {
       LottieFullscreen: 'true',

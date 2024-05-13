@@ -160,6 +160,12 @@ export class ResultComponent implements OnInit {
     time: 0,
     event: Event.SUPER_BIATHLON,
     user: '',
+    shotsTooCloseCount: 0,
+    badArrowExtractionsCount: 0,
+    targetSheetNotTouchedCount: 0,
+    departureSteal: false,
+    armedBeforeCountdown: false,
+    timeRanOut: false,
   };
 
   get precision(): boolean {
@@ -209,6 +215,7 @@ export class ResultComponent implements OnInit {
   ) {
     if (!AppSettings.ENABLE_LOCAL_SAVE) {
       this.loadCompetitors();
+      this.loadEvents();
     }
   }
 
@@ -217,6 +224,17 @@ export class ResultComponent implements OnInit {
       label: `${competitor.firstname} ${competitor.lastname}`,
       id: competitor.id,
     }));
+  }
+
+  loadEvents() {
+    this.serverService.getEvents().then((events) => {
+      this.selectStore = events.map((event) => {
+        return {
+          label: event.label,
+          id: event.value,
+        };
+      });
+    });
   }
 
   loadCompetitors() {
@@ -272,6 +290,7 @@ export class ResultComponent implements OnInit {
             // @ts-ignore
             const base64 = canvas.toDataURL('image/jpeg', 1.0);
             this.target = {
+              ...this.target,
               image: base64,
               impacts: cible.impacts,
               total: cible.impacts
