@@ -352,6 +352,12 @@ export class ResultComponent implements OnInit {
       pictureBase64: this.target.image,
       impacts: this.target.impacts,
       event: this.epreuve,
+      shotsTooCloseCount: this.target.shotsTooCloseCount,
+      badArrowExtractionsCount: this.target.badArrowExtractionsCount,
+      targetSheetNotTouchedCount: this.target.targetSheetNotTouchedCount,
+      departureSteal: this.target.departureSteal,
+      armedBeforeCountdown: this.target.armedBeforeCountdown,
+      timeRanOut: this.target.timeRanOut,
     };
   }
 
