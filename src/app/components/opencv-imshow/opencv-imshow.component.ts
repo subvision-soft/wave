@@ -34,6 +34,7 @@ export class OpencvImshowComponent implements OnDestroy {
           this.subscriptions.push(
             this.OpenCVImshowService.imageToShow.subscribe((data) => {
               if (data) {
+                console.log('add canvas');
                 this.addCanvas(data);
               }
             })

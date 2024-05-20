@@ -10,7 +10,7 @@ import { EventModel } from '../models/event.model';
 export class ServerService {
   public connectionStatus: Subject<boolean> = new Subject<boolean>();
 
-  public uri: string = 'http://192.168.1.41:8080/api/competitions/102';
+  public uri: string = 'http://192.168.1.41:8080/api/competitions/202';
 
   constructor(private toastService: ToastService) {
     this.connectionStatus.subscribe((status) => {
