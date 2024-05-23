@@ -25,7 +25,7 @@
       </div>
     </app-swiper-item>
   </app-swiper>
-  <app-spinner *ngIf="impacts.length > 0" [(value)]="selectedIndex" [values]="impacts | pluck:'points'"></app-spinner>
+  <app-spinner *ngIf="impacts.length > 0" [(value)]="selectedIndex" [values]="impacts | pluck:'score'"></app-spinner>
   <div class="tools">
     <app-select [compact]="true" class="multi-impacts" *ngIf="selected && editable" [store]="multipleStore"
                 [(value)]="selected.amount"></app-select>
