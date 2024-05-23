@@ -7,11 +7,7 @@
   </div>
 </app-header>
 <div class="content">
-  <div class="epreuve" *ngIf="editable || showChrono">
-    <app-select *ngIf="editable" [compact]="true" [store]="selectStore" [(value)]="epreuve"></app-select>
-    <app-chrono-picker [compact]="true" *ngIf="showChrono"
-                       [(time)]="time"></app-chrono-picker>
-  </div>
+
   <app-swiper>
     <app-swiper-item>
       <div class="result-preview">
@@ -43,6 +39,9 @@
     <app-select [compact]="true" [label]="'Compétiteur'" [store]="competitorsStore" [(value)]="selectedCompetitors">
 
     </app-select>
+    <app-select *ngIf="editable" [compact]="true" [store]="selectStore" [(value)]="epreuve"></app-select>
+    <app-chrono-picker [compact]="true" *ngIf="showChrono"
+                       [(time)]="time"></app-chrono-picker>
     <div class="penalites">
       <app-input type="number" label="Mauvaise extraction de flèche"
                  [(value)]="target.badArrowExtractionsCount"></app-input>

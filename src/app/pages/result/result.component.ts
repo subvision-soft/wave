@@ -48,7 +48,7 @@ export class ResultComponent implements OnInit {
     }),
   ];
 
-  openSaveForm: boolean = true;
+  openSaveForm: boolean = false;
 
   get epreuve(): Event {
     console.log('Getting epreuve', this.target.event);
