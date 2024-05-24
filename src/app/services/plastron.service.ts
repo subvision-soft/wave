@@ -136,12 +136,6 @@ export class PlastronService {
     return value;
   }
 
-  // def get_edges(image: ndarray, blur_radius: int = 0, canny_threshold_1: int = 100, canny_threshold_2: int = 200):
-  //   image_clone = image.copy()
-  //   if blur_radius > 0:
-  //     image_clone = cv.blur(image_clone, (blur_radius, blur_radius))
-  //   return cv.Canny(image_clone, canny_threshold_1, canny_threshold_2)
-
   getEdges(
     image: any,
     blurRadius: number = 0,
@@ -163,7 +157,7 @@ export class PlastronService {
     return edges;
   }
 
-  getBiggestValidContour(contours: any) {
+  getBiggestValidContour(contours: any[]) {
     for (let contour of contours) {
       let approxDistance = this.cv.arcLength(contour, true) * 0.1;
       let approx = new this.cv.Mat();
@@ -222,41 +216,82 @@ export class PlastronService {
     }
   }
 
-  coordinatesToPercentage(coordinates: any, width: number, height: number) {}
+  coordinatesToPercentage(
+    coordinates: { x: any; y: any }[],
+    width: number,
+    height: number
+  ) {
+    let percentageCoordinates = [];
+    for (let coordinate of coordinates) {
+      percentageCoordinates.push({
+        x: coordinate.x / width,
+        y: coordinate.y / height,
+      });
+    }
+    return percentageCoordinates;
+  }
+
+  private orderPoints(pts: PointCv[]) {
+    let rect = new Array(4);
+    let pts2 = [...pts];
+
+    pts2.sort((a, b) => a.x + a.y - (b.x + b.y));
+    rect[0] = pts2[0];
+    rect[2] = pts2[pts2.length - 1];
+
+    pts2.sort((a, b) => a.x - a.y - (b.x - b.y));
+    rect[3] = pts2[0];
+    rect[1] = pts2[pts2.length - 1];
+
+    return rect;
+  }
+
+  getBiggestContour(contours: any) {
+    this.logger.debug('start getBiggestContour');
+    let maxArea = 0;
+    let biggestContour = null;
+    let contoursArray = [];
+    for (let i = 0; i < contours.size(); i++) {
+      contoursArray.push(contours.get(i));
+    }
+    for (let contour of contoursArray) {
+      const boundingRect = this.cv.boundingRect(contour);
+      const area = boundingRect.width * boundingRect.height;
+      if (area > maxArea) {
+        maxArea = area;
+        biggestContour = contour;
+      }
+    }
+    this.logger.debug('end getBiggestContour');
+    return biggestContour;
+  }
 
   getSheetCoordinates(mat: any) {
-    // @ts-ignore
-    let img = mat.clone();
-    this.logger.debug('after clone');
+    // Enhance image for edge detection
+    this.opencvImshowService.showImage(mat, 'original', 'original');
+    const clone = mat.clone();
     this.cv.resize(
-      img,
-      img,
+      clone,
+      clone,
       new this.cv.Size(
         this.PICTURE_SIZE_SHEET_DETECTION,
         this.PICTURE_SIZE_SHEET_DETECTION
       )
     );
-
-    let enhancedImage = this.enhancedImageForEdgeDetection(img, 5);
-
+    const enhancedImage = this.enhancedImageForEdgeDetection(clone, 5);
     this.cv.bitwise_not(enhancedImage, enhancedImage);
-    enhancedImage = this.getEdges(enhancedImage, 5);
-
-    this.opencvImshowService.showImage(img, 'img', 'img');
+    //Get edges and dilate them
     let kernelSize = this.PICTURE_SIZE_SHEET_DETECTION / 200;
     let kernel = new this.cv.Mat.ones(kernelSize, kernelSize, this.cv.CV_8UC1);
-
     let dilatedEdges = new this.cv.Mat();
-
     this.cv.dilate(
-      enhancedImage,
+      this.getEdges(enhancedImage, 5),
       dilatedEdges,
       kernel,
       new this.cv.Point(-1, -1),
       1
     );
-    //invert dilate
-    this.cv.bitwise_not(dilatedEdges, dilatedEdges);
+
     this.opencvImshowService.showImage(dilatedEdges, 'dilated', 'dilated');
     let contours = new this.cv.MatVector();
     let hierarchy = new this.cv.Mat();
@@ -267,8 +302,8 @@ export class PlastronService {
       this.cv.RETR_CCOMP,
       this.cv.CHAIN_APPROX_SIMPLE
     );
-    this.cv.drawContours(img, contours, -1, [255, 0, 255, 255], 1);
-    this.opencvImshowService.showImage(img, 'contours', 'contours');
+    this.cv.drawContours(clone, contours, -1, [255, 0, 255, 255], 1);
+    this.opencvImshowService.showImage(clone, 'contours', 'contours');
     let contoursArray = [];
     for (let i = 0; i < contours.size(); i++) {
       contoursArray.push(contours.get(i));
@@ -279,13 +314,13 @@ export class PlastronService {
     );
     const biggestContour = this.getBiggestValidContour(contoursArray);
 
-    img.delete();
+    clone.delete();
     enhancedImage.delete();
     contours.delete();
     hierarchy.delete();
     dilatedEdges.delete();
 
-    if (biggestContour === null) {
+    if (!biggestContour) {
       return null;
     }
 
@@ -326,62 +361,39 @@ export class PlastronService {
       });
     }
 
-    const concat = firstHalf.concat(secondHalf);
-
-    concat.map((coordinate) => {
-      coordinate.x =
-        (coordinate.x / this.PICTURE_SIZE_SHEET_DETECTION) * mat.cols;
-      coordinate.y =
-        (coordinate.y / this.PICTURE_SIZE_SHEET_DETECTION) * mat.rows;
-    });
+    let concat = firstHalf.concat(secondHalf);
+    concat = this.coordinatesToPercentage(
+      concat,
+      this.PICTURE_SIZE_SHEET_DETECTION,
+      this.PICTURE_SIZE_SHEET_DETECTION
+    );
+    console.log(concat);
     biggestContour.delete();
     return this.orderPoints(concat);
   }
 
-  // ##########################
+  // ########################## EXTRACTION DE L'IMAGE DE LA CIBLE ####
 
-  private orderPoints(pts: PointCv[]) {
-    let rect = new Array(4);
-    let pts2 = [...pts];
-
-    pts2.sort((a, b) => a.x + a.y - (b.x + b.y));
-    rect[0] = pts2[0];
-    rect[2] = pts2[pts2.length - 1];
-
-    pts2.sort((a, b) => a.x - a.y - (b.x - b.y));
-    rect[3] = pts2[0];
-    rect[1] = pts2[pts2.length - 1];
-
-    return rect;
+  percentToCoordinates(percent: any, width: number, height: number) {
+    let coordinates = [];
+    for (let percentageCoordinate of percent) {
+      coordinates.push({
+        x: Math.round(percentageCoordinate.x * width),
+        y: Math.round(percentageCoordinate.y * height),
+      });
+    }
+    return coordinates;
   }
 
-  getBiggestContour(contours: any) {
-    this.logger.debug('start getBiggestContour');
-    let maxArea = 0;
-    let biggestContour = null;
-    let contoursArray = [];
-    for (let i = 0; i < contours.size(); i++) {
-      contoursArray.push(contours.get(i));
-    }
-    for (let contour of contoursArray) {
-      const boundingRect = this.cv.boundingRect(contour);
-      const area = boundingRect.width * boundingRect.height;
-      if (area > maxArea) {
-        maxArea = area;
-        biggestContour = contour;
-      }
-    }
-    this.logger.debug('end getBiggestContour');
-    return biggestContour;
-  }
-
-  getPlastronMat(mat: any) {
+  getSheetPicture(mat: any) {
     this.logger.debug('start getPlastronMat');
-    const coordinates = this.getSheetCoordinates(mat);
+    this.opencvImshowService.showImage(mat, 'test', 'test');
+    let coordinates = this.getSheetCoordinates(mat);
     if (coordinates === null) {
       return mat;
     }
-
+    coordinates = this.percentToCoordinates(coordinates, mat.cols, mat.rows);
+    console.log('coordinates', coordinates);
     const sourceCoordinates = [
       [coordinates[0].x, coordinates[0].y],
       [coordinates[1].x, coordinates[1].y],
@@ -960,8 +972,9 @@ export class PlastronService {
 
   process(): Cible {
     this.logger.debug('start process');
-    console.log('process', this.frame);
-    let mat = this.getPlastronMat(this.frame);
+    // console.log('process', this.frame);
+
+    let mat = this.getSheetPicture(this.frame);
     this.impactColor = this.getAverageColor(mat);
     console.log('impactColor', this.impactColor);
     let hashMapVisuels = this.getHashMapVisuels(mat);

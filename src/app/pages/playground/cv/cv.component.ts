@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 import { PlastronService } from '../../../services/plastron.service';
 import { FilesService } from '../../../services/files.service';
 import { RippleDirective } from '../../../directives/ripple.directive';
+import { CameraPreview } from '@capacitor-community/camera-preview';
 
 @Component({
   selector: 'app-cv',
@@ -22,6 +23,8 @@ import { RippleDirective } from '../../../directives/ripple.directive';
   styleUrl: './cv.component.scss',
 })
 export class CvComponent {
+  searchingPlastron: boolean = false;
+
   get coordinatesPercent(): any {
     return this._coordinatesPercent;
   }
@@ -38,43 +41,43 @@ export class CvComponent {
     return this._video;
   }
 
-  @ViewChild('video', { static: true }) set video(el: ElementRef | undefined) {
-    console.log('video', el);
-    if (el) {
-      this._video = el;
-      const scope = this;
-      navigator.mediaDevices
-        .getUserMedia({
-          video: {
-            width: { ideal: 4096 },
-            height: { ideal: 2160 },
-            facingMode: 'environment',
-          },
-
-          audio: false,
-        })
-        .then(function (stream: MediaStream) {
-          let video = el.nativeElement;
-          console.log('video', stream);
-          if (video) {
-            // @ts-ignore
-            video.srcObject = stream;
-            // @ts-ignore
-            const play = video.play();
-            play
-              .then((test: any) => {
-                scope.initOpencv();
-              })
-              .catch((err: any) => {
-                console.log(err);
-              });
-          }
-        })
-        .catch(function (err) {
-          console.log('An error occurred! ' + err);
-        });
-    }
-  }
+  // @ViewChild('video', { static: true }) set video(el: ElementRef | undefined) {
+  //   console.log('video', el);
+  //   if (el) {
+  //     this._video = el;
+  //     const scope = this;
+  //     navigator.mediaDevices
+  //       .getUserMedia({
+  //         video: {
+  //           width: { ideal: 4096 },
+  //           height: { ideal: 2160 },
+  //           facingMode: 'environment',
+  //         },
+  //
+  //         audio: false,
+  //       })
+  //       .then(function (stream: MediaStream) {
+  //         let video = el.nativeElement;
+  //         console.log('video', stream);
+  //         if (video) {
+  //           // @ts-ignore
+  //           video.srcObject = stream;
+  //           // @ts-ignore
+  //           const play = video.play();
+  //           play
+  //             .then((test: any) => {
+  //               // scope.initOpencv();
+  //             })
+  //             .catch((err: any) => {
+  //               console.log(err);
+  //             });
+  //         }
+  //       })
+  //       .catch(function (err) {
+  //         console.log('An error occurred! ' + err);
+  //       });
+  //   }
+  // }
 
   @ViewChild('svg') svg: ElementRef | undefined;
   @ViewChild('path') path: ElementRef | undefined;
@@ -143,6 +146,12 @@ export class CvComponent {
     console.log('constructor');
     this.filesService.clearTarget();
     this.filesService.clearSession();
+    CameraPreview.start({
+      parent: 'cameraPreview',
+      position: 'rear',
+      disableAudio: true,
+      toBack: true,
+    }).then((r) => this.initOpencv());
   }
 
   initOpencv() {
@@ -191,27 +200,45 @@ export class CvComponent {
       if (!scope.playing) {
         return;
       }
-      if (scope.height > 0 && scope.width > 0) {
-        try {
-          scope.camera.read(frame);
-          try {
-            scope.coordinates =
-              scope.plastronService.getSheetCoordinates(frame);
-          } catch (err) {
-            console.log(err);
-          }
+      try {
+        CameraPreview.captureSample({
+          quality: 100,
+        }).then((result: { value: string }) => {
+          console.log('result', result);
 
-          if (!scope.coordinates) {
-            scope.frame = null;
-          } else {
-            scope.frame = frame;
-            scope.plastronService.setFrame(frame);
-            scope.plastronService.process();
-          }
-        } catch (err) {}
-      } else {
-        frame.delete();
-        frame = new cv.Mat(scope.height, scope.width, cv.CV_8UC4);
+          scope._base64ToImageData(result.value, 2000, 2000).then((data) => {
+            frame = cv.matFromImageData(data);
+            // cv.flip(frame, frame, 1);
+
+            scope.width = frame.cols;
+            scope.height = frame.rows;
+            console.log('frame', scope.width);
+
+            // cv.imshow('canvas', frame);
+            if (!scope.searchingPlastron) {
+              scope.searchingPlastron = true;
+              try {
+                scope.coordinatesPercent =
+                  scope.plastronService.getSheetCoordinates(frame);
+              } catch (err) {
+                console.log(err);
+              } finally {
+                scope.searchingPlastron = false;
+              }
+
+              if (!scope.coordinatesPercent) {
+                scope.frame = null;
+                frame.delete();
+              } else {
+                scope.frame = frame;
+                scope.plastronService.setFrame(frame);
+                scope.plastronService.process();
+              }
+            }
+          });
+        });
+      } catch (err) {
+        console.log(err);
       }
 
       setTimeout(processVideo, 1000 / fps);
@@ -219,5 +246,36 @@ export class CvComponent {
 
     // schedule the first one.
     setTimeout(processVideo, 0);
+  }
+
+  _base64ToImageData(buffer: string, width: number, height: number) {
+    return new Promise((resolve) => {
+      var image = new Image();
+      image.addEventListener('load', function (e: Event) {
+        var canvasElement = document.createElement('canvas');
+        canvasElement.width = width;
+        canvasElement.height = height;
+        var context = canvasElement.getContext('2d');
+        // @ts-ignore
+        context.drawImage(
+          e.target as HTMLImageElement,
+          0,
+          0,
+          image.naturalWidth,
+          image.naturalHeight
+        );
+
+        // @ts-ignore
+        resolve(
+          context?.getImageData(0, 0, image.naturalWidth, image.naturalHeight)
+        );
+      });
+      image.src = 'data:image/png;base64,' + buffer;
+      image.style.display = 'none';
+      document.body.appendChild(image);
+      setTimeout(() => {
+        document.body.removeChild(image);
+      }, 1);
+    });
   }
 }

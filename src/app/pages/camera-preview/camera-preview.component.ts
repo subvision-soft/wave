@@ -65,7 +65,6 @@ export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
   height: number = 0;
   width: number = 0;
   currentFps: number = 0;
-  coordinates: any = null;
   private _coordinatesPercent: any = null;
   private frame: any = null;
   loading: boolean = false;
@@ -84,25 +83,13 @@ export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
     }, 500);
   }
 
-  coordinatesToPercent(coordinates: any) {
-    if (!coordinates) {
-      return;
-    }
-    this.coordinatesPercent = coordinates.map((coordinate: any) => {
-      return {
-        x: (coordinate.x / this.width) * 100,
-        y: ((coordinate.y + 70) / this.height) * 100,
-      };
-    });
-  }
-
   getPath() {
     let result = '';
     if (!this._coordinatesPercent) {
       return;
     }
     for (const coordinate of this._coordinatesPercent) {
-      result += `${coordinate.x},${coordinate.y} `;
+      result += `${coordinate.x * 100},${coordinate.y * 100} `;
     }
     return `M ${result.slice(0, -1)} Z`;
   }
@@ -220,7 +207,7 @@ export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
             if (!scope.searchingPlastron) {
               scope.searchingPlastron = true;
               try {
-                scope.coordinates =
+                scope.coordinatesPercent =
                   scope.plastronService.getSheetCoordinates(frame);
               } catch (err) {
                 console.log(err);
@@ -228,13 +215,12 @@ export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
                 scope.searchingPlastron = false;
               }
 
-              if (!scope.coordinates) {
+              if (!scope.coordinatesPercent) {
                 scope.frame = null;
               } else {
                 scope.frame = frame;
                 scope.plastronService.setFrame(frame);
               }
-              scope.coordinatesToPercent(scope.coordinates);
             }
           });
         });
