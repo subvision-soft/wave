@@ -5,6 +5,8 @@ import { CompetitorModel } from '../models/competitor.model';
 import { UploadTargetModel } from '../models/upload-target.model';
 import { CapacitorHttp } from '@capacitor/core';
 import { EventModel } from '../models/event.model';
+import { StageModel } from '../models/stage.model';
+import { Event } from '../models/event';
 
 @Injectable()
 export class ServerService {
@@ -70,10 +72,22 @@ export class ServerService {
     });
   }
 
-  getCompetitors(): Promise<CompetitorModel[]> {
+  getCompetitors(event?: Event, stage?: string): Promise<CompetitorModel[]> {
     return new Promise((resolve, reject) => {
+      let params: {
+        event?: string;
+        stage?: string;
+      } = {};
+      if (event) {
+        params['event'] = event;
+      }
+      if (stage) {
+        params['stage'] = stage;
+      }
+
       CapacitorHttp.get({
         url: `${this.uri}/competitors`,
+        params: params,
       }).then((res) => {
         resolve(res.data);
       });
@@ -87,6 +101,20 @@ export class ServerService {
       headers: {
         'Content-Type': 'application/json',
       },
+    });
+  }
+
+  getStages(): Promise<StageModel[]> {
+    return new Promise((resolve, reject) => {
+      CapacitorHttp.get({
+        url: `${this.uri}/stages`,
+      })
+        .then((res) => {
+          resolve(res.data);
+        })
+        .catch((err) => {
+          reject(err);
+        });
     });
   }
 }

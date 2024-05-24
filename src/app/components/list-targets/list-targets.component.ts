@@ -42,8 +42,8 @@ export class ListTargetsComponent {
     this._selectedTargets.push(target);
   }
 
-  getUserById(userId: string) {
-    return this.users.find((u) => u.id === userId);
+  getUserById(competitorId: string) {
+    return this.users.find((u) => u.id === competitorId);
   }
 
   targetClick(target: Target) {

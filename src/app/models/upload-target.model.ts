@@ -4,7 +4,7 @@ export interface UploadTargetModel {
   time: number;
   date: Date;
   competitionId: number;
-  userId: number;
+  competitorId: number;
   id: number;
   pictureBase64: number;
   impacts: Impact[];

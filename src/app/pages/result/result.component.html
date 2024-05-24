@@ -36,12 +36,14 @@
 <app-message-box [(open)]="openSaveForm" (callback)="save()">
   <div class="message-box-body">
 
-    <app-select [compact]="true" [label]="'Compétiteur'" [store]="competitorsStore" [(value)]="selectedCompetitors">
-
-    </app-select>
-    <app-select *ngIf="editable" [compact]="true" [store]="selectStore" [(value)]="epreuve"></app-select>
+    <app-select [compact]="true" [store]="selectStore" [(value)]="epreuve"></app-select>
+    <app-select valueField="value" *ngIf="superBiathlon" [compact]="true" [store]="stageStore"
+                [(value)]="stage"></app-select>
     <app-chrono-picker [compact]="true" *ngIf="showChrono"
                        [(time)]="time"></app-chrono-picker>
+    <app-select *ngIf="epreuve && (!superBiathlon || (superBiathlon && stage))" [compact]="true" [label]="'Compétiteur'"
+                [store]="competitorsStore" [(value)]="selectedCompetitor">
+    </app-select>
     <div class="penalites">
       <app-input type="number" label="Mauvaise extraction de flèche"
                  [(value)]="target.badArrowExtractionsCount"></app-input>

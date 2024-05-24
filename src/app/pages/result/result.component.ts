@@ -20,6 +20,7 @@ import { AppSettings } from '../../utils/AppSettings';
 import { User } from '../../models/user';
 import { ServerService } from '../../services/server.service';
 import { Category } from '../../models/category';
+import { StageModel } from '../../models/stage.model';
 
 @Pipe({ name: 'pluck' })
 export class PluckPipe implements PipeTransform {
@@ -58,6 +59,16 @@ export class ResultComponent implements OnInit {
   set epreuve(value: Event) {
     console.log('Setting epreuve', value);
     this.target.event = value;
+    this.loadCompetitors();
+  }
+
+  get stage(): string {
+    return this.target.stage || '';
+  }
+
+  set stage(value: string) {
+    this.target.stage = value;
+    this.loadCompetitors();
   }
 
   get total(): number {
@@ -91,6 +102,8 @@ export class ResultComponent implements OnInit {
   setPath(value: string[]) {
     this.path = value.join('/');
   }
+
+  stageStore: StageModel[] = [];
 
   selectStore: any[] = [
     {
@@ -167,6 +180,7 @@ export class ResultComponent implements OnInit {
     targetSheetNotTouchedCount: 0,
     departureSteal: false,
     armedBeforeCountdown: false,
+    stage: undefined,
     timeRanOut: false,
   };
 
@@ -217,13 +231,14 @@ export class ResultComponent implements OnInit {
   ) {
     if (!AppSettings.ENABLE_LOCAL_SAVE) {
       this.loadCompetitors();
+      this.loadStages();
       this.loadEvents();
     }
   }
 
   get competitorsStore(): any[] {
     return this.competitors?.map((competitor) => ({
-      label: `${competitor.firstname} ${competitor.lastname}`,
+      label: `${competitor.id} - ${competitor.firstname} ${competitor.lastname}`,
       id: competitor.id,
     }));
   }
@@ -240,17 +255,27 @@ export class ResultComponent implements OnInit {
   }
 
   loadCompetitors() {
-    this.serverService.getCompetitors().then((competitors) => {
-      this.competitors = competitors.map((competitor) => {
-        return {
-          id: competitor.id.toString(),
-          firstname: competitor.firstName,
-          lastname: competitor.lastName,
-          category: Category[competitor.category as keyof typeof Category],
-          targets: [],
-        };
+    this.serverService
+      .getCompetitors(this.target.event, this.target.stage)
+      .then((competitors) => {
+        this.competitors = competitors.map((competitor) => {
+          return {
+            id: competitor.id.toString(),
+            firstname: competitor.firstName,
+            lastname: competitor.lastName,
+            category: Category[competitor.category as keyof typeof Category],
+            targets: [],
+          };
+        });
+        if (
+          this.selectedCompetitor &&
+          !this.competitors.find(
+            (competitor) => competitor.id === this.selectedCompetitor
+          )
+        ) {
+          this.selectedCompetitor = undefined;
+        }
       });
-    });
   }
 
   ngOnInit(): void {
@@ -347,7 +372,7 @@ export class ResultComponent implements OnInit {
     return {
       time: this.target.time,
       date: this.target.date,
-      userId: this.selectedCompetitors,
+      competitorId: this.selectedCompetitor,
       id: null,
       pictureBase64: this.target.image,
       impacts: this.target.impacts,
@@ -358,6 +383,7 @@ export class ResultComponent implements OnInit {
       departureSteal: this.target.departureSteal,
       armedBeforeCountdown: this.target.armedBeforeCountdown,
       timeRanOut: this.target.timeRanOut,
+      stage: this.superBiathlon ? this.target.stage : undefined,
     };
   }
 
@@ -367,7 +393,7 @@ export class ResultComponent implements OnInit {
 
   protected readonly pluck = pluck;
   competitors: User[];
-  selectedCompetitors: User[] = [];
+  selectedCompetitor?: string;
 
   get showChrono() {
     console.log(this.superBiathlon || this.biathlon);
@@ -375,4 +401,10 @@ export class ResultComponent implements OnInit {
   }
 
   protected readonly Event = Event;
+
+  private loadStages() {
+    this.serverService.getStages().then((stages) => {
+      this.stageStore = stages;
+    });
+  }
 }
