@@ -227,9 +227,10 @@ export class ResultComponent implements OnInit {
     private toastService: ToastService,
     private filesService: FilesService,
     public activatedRoute: ActivatedRoute,
-    private serverService: ServerService
+    private serverService: ServerService,
+    private server: ServerService
   ) {
-    if (!AppSettings.ENABLE_LOCAL_SAVE) {
+    if (server.isConnected()) {
       this.loadCompetitors();
       this.loadStages();
       this.loadEvents();
@@ -305,7 +306,7 @@ export class ResultComponent implements OnInit {
               show: true,
               duration: 3000,
             });
-            // this.router.navigate(['/camera']);
+            this.router.navigate(['/camera']);
             return;
           }
           const cv = (window as any).cv;
@@ -354,16 +355,28 @@ export class ResultComponent implements OnInit {
     this.saving = true;
     if (!AppSettings.ENABLE_LOCAL_SAVE) {
       console.log('Saving to server', this.uploadTarget);
-      this.serverService.postTarget(this.uploadTarget).then(() => {
-        this.saving = false;
-        this.toastService.initiate({
-          title: 'Cible enregistrée',
-          content: 'La cible a bien été enregistrée',
-          type: ToastTypes.SUCCESS,
-          show: true,
-          duration: 3000,
-        });
-        this.router.navigate(['/sessions']);
+      this.serverService.postTarget(this.uploadTarget).then((res) => {
+        if (res.ok) {
+          this.saving = false;
+          this.toastService.initiate({
+            title: 'Cible enregistrée',
+            content: 'La cible a bien été enregistrée',
+            type: ToastTypes.SUCCESS,
+            show: true,
+            duration: 3000,
+          });
+          this.router.navigate(['/camera']);
+        } else {
+          this.toastService.initiate({
+            title: 'Erreur',
+            content:
+              "Une erreur est survenue lors de l'enregistrement de la cible",
+            type: ToastTypes.ERROR,
+            show: true,
+            duration: 3000,
+          });
+          this.saving = false;
+        }
       });
     }
   }
@@ -392,7 +405,7 @@ export class ResultComponent implements OnInit {
   }
 
   protected readonly pluck = pluck;
-  competitors: User[];
+  competitors: User[] = [];
   selectedCompetitor?: string;
 
   get showChrono() {

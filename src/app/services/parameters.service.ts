@@ -3,6 +3,7 @@ import { Directory, Filesystem } from '@capacitor/filesystem';
 import { ToastService, ToastTypes } from './toast.service';
 import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject } from 'rxjs';
+import { ServerService } from './server.service';
 
 @Injectable({
   providedIn: 'root',
@@ -39,6 +40,12 @@ export class ParametersService {
   }
 
   private _parameters: any = {
+    URL_API: {
+      value: 'http://192.168.1.41:8080/api/competitions/202',
+      update: function (value: any, scope: any) {
+        scope.serverService.connect(value);
+      },
+    },
     COULEUR_PRINCIPALE: {
       value: '#a5c8d5',
       update: function (value: any) {
@@ -100,7 +107,8 @@ export class ParametersService {
 
   constructor(
     private toastService: ToastService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private serverService: ServerService
   ) {
     this._parameters.LANGUE.update = (value: any) => {
       this.translate.use(value);
@@ -145,7 +153,7 @@ export class ParametersService {
         }
         this._parameters[k].value = key[k];
         if (this._parameters[k].update) {
-          this._parameters[k].update(this._parameters[k].value);
+          this._parameters[k].update(this._parameters[k].value, this);
         }
       }
     } else {
@@ -154,7 +162,7 @@ export class ParametersService {
       }
       this._parameters[key].value = value;
       if (this._parameters[key].update) {
-        this._parameters[key].update(this._parameters[key].value);
+        this._parameters[key].update(this._parameters[key].value, this);
       }
     }
     if (updateFile) {

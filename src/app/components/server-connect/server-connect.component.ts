@@ -1,5 +1,5 @@
 import { Component, HostBinding } from '@angular/core';
-import { ToastService, ToastTypes } from '../../services/toast.service';
+import { ToastService } from '../../services/toast.service';
 import { Router } from '@angular/router';
 import { ServerService } from '../../services/server.service';
 
@@ -18,13 +18,13 @@ export class ServerConnectComponent {
 
     if (value) {
       this.openScanner = false;
-      this.toastService.initiate({
-        title: 'SERVER.TOASTS.SUCCESS.TITLE',
-        content: 'SERVER.TOASTS.SUCCESS.CONTENT',
-        show: true,
-        type: ToastTypes.SUCCESS,
-        duration: 1500,
-      });
+      // this.toastService.initiate({
+      //   title: 'SERVER.TOASTS.SUCCESS.TITLE',
+      //   content: 'SERVER.TOASTS.SUCCESS.CONTENT',
+      //   show: true,
+      //   type: ToastTypes.SUCCESS,
+      //   duration: 1500,
+      // });
     }
   }
 

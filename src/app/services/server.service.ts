@@ -12,7 +12,7 @@ import { Event } from '../models/event';
 export class ServerService {
   public connectionStatus: Subject<boolean> = new Subject<boolean>();
 
-  public uri: string = 'http://192.168.1.41:8080/api/competitions/202';
+  public uri: string = '';
 
   constructor(private toastService: ToastService) {
     this.connectionStatus.subscribe((status) => {
@@ -38,6 +38,9 @@ export class ServerService {
   }
 
   connect(uri: string) {
+    if (this.uri === uri) {
+      return;
+    }
     CapacitorHttp.get({
       url: `${uri}/is-wave-db-alive`,
     }).then((res) => {

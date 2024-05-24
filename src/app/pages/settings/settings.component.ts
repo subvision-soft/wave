@@ -84,6 +84,12 @@ export class SettingsComponent {
         label: 'SETTINGS.OTHERS.TITLE',
         parameters: [
           {
+            id: 'URL_API',
+            label: 'URL API',
+            value: this.parametersService.get('URL_API').value,
+            type: 'text',
+          },
+          {
             id: 'LANGUE',
             label: 'Langue',
             value: this.parametersService.get('LANGUE').value,
