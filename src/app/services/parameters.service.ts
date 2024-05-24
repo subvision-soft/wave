@@ -41,7 +41,7 @@ export class ParametersService {
 
   private _parameters: any = {
     URL_API: {
-      value: 'http://192.168.1.41:8080/api/competitions/202',
+      value: '',
       update: function (value: any, scope: any) {
         scope.serverService.connect(value);
       },
@@ -127,10 +127,7 @@ export class ParametersService {
         for (const p of parameters) {
           this._parameters[p.key].value = p.value;
           if (this._parameters[p.key].update) {
-            this._parameters[p.key].update(
-              this._parameters[p.key].value,
-              false
-            );
+            this._parameters[p.key].update(this._parameters[p.key].value, this);
           }
         }
         this.loaded.next(true);
