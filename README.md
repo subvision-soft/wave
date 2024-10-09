@@ -1,90 +1,27 @@
-[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://github.com/DayUx/wave/blob/master/LICENCE)
+# Wave
 
-# WIP
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.10.
 
-# WAVE - Application de calcul des points pour le tir sur cible subaquatique
+## Development server
 
-wave (Web App for Visual Estimation) est une application web mobile conçue pour faciliter le calcul des points pour le tir sur cible subaquatique à partir
-d'une photo de la cible. L'application utilise les technologies TypeScript, Angular ainsi que Opencv compilé en wasm.
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-[Projet figma en cours](https://www.figma.com/file/zgSt1eqy80DLdMJD3P1b6O/subapp?type=design&node-id=0%3A1&mode=design&t=2yJoNjEJBKzxWvpx-1)
+## Code scaffolding
 
-## Fonctionnalités
+Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-- Prendre en photo la cible
-- Analyse de la photo pour détecter les impacts
-- Calcul des points en fonction de la position des impacts
-- Affichage des résultats de manière claire et concise
-- Possibilité de sauvegarder les résultats pour référence ultérieure
+## Build
 
-## Aperçu
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-### Détection d'un plastron
+## Running unit tests
 
-<img src="./github/preview1.gif" width=300>
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
-### Saisie d'un temps à l'aide d'un composant personnalisé
+## Running end-to-end tests
 
-<img src="./github/preview2.gif" width=300>
+Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
-## Installation
+## Further help
 
-Pour installer et exécuter l'application subapp sur votre appareil, suivez les étapes ci-dessous :
-
-1. Clonez ce dépôt sur votre machine locale.
-
-2. Assurez-vous d'avoir Node.js et npm installés sur votre machine.
-
-3. Accédez au répertoire racine du projet et exécutez la commande suivante pour installer les dépendances :
-
-```bash
-npm install
-```
-
-4. Ensuite, exécutez la commande suivante pour démarrer l'application en mode de développement :
-
-```bash
-npm start
-```
-
-Cela lancera l'application dans votre navigateur par défaut.
-
-5. Pour générer une version de production de l'application, utilisez la commande suivante :
-
-```bash
-npm build
-```
-
-Les fichiers de build seront générés dans le répertoire **dist/**.
-
-## Configuration
-
-Aucune configuration supplémentaire n'est requise pour exécuter l'application subapp. Cependant, assurez-vous d'avoir
-correctement configuré l'environnement de développement pour Angular et Capacitor.
-
-## Contributions
-
-Les contributions à subapp sont les bienvenues ! Si vous souhaitez contribuer à ce projet, veuillez suivre les étapes
-ci-dessous :
-
-1. Fork ce dépôt et clonez-le localement.
-
-2. Créez une branche pour vos modifications :
-
-```bash
-git checkout -b feature/nouvelle-fonctionnalite
-```
-
-3. Effectuez les modifications nécessaires et committez vos changements :
-
-```bash
-git commit -m "Ajouter une nouvelle fonctionnalité"
-```
-
-4. Poussez les modifications vers votre dépôt forké :
-
-```bash
-git push origin feature/nouvelle-fonctionnalite
-```
-
-5. Ouvrez une pull request sur ce dépôt en fournissant une description détaillée des modifications apportées.
+To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.

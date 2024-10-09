@@ -1,17 +1,40 @@
-import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
-import { FilesService } from '../../services/files.service';
-import { HistoryService } from '../../services/history.service';
-import { Router } from '@angular/router';
-import { RSSParserService } from '../../services/rss-parser.service';
+import {Component, ElementRef, HostListener, ViewChild} from '@angular/core';
+import {FilesService} from '../../services/files.service';
+import {HistoryService} from '../../services/history.service';
+import {Router, RouterLink} from '@angular/router';
+import {RSSParserService} from '../../services/rss-parser.service';
+import {LogoComponent} from "../../components/logo/logo.component";
+import {TranslateModule} from "@ngx-translate/core";
+import {NgForOf, NgIf} from "@angular/common";
+import {LoadingComponent} from "../../components/loading/loading.component";
+import {EmptyTextComponent} from "../../components/empty-text/empty-text.component";
+import {TagComponent} from "../../components/tag/tag.component";
+import {RippleDirective} from "../../directives/ripple.directive";
+import {IonicModule} from "@ionic/angular";
+import {SessionItemComponent} from "../../components/session-item/session-item.component";
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
+  imports: [
+    LogoComponent,
+    TranslateModule,
+    NgForOf,
+    LoadingComponent,
+    EmptyTextComponent,
+    NgIf,
+    TagComponent,
+    RippleDirective,
+    IonicModule,
+    SessionItemComponent,
+    RouterLink
+  ],
+  standalone: true
 })
 export class HomeComponent {
   open: boolean = false;
-  @ViewChild('app-page', { static: true }) el: ElementRef | undefined;
+  @ViewChild('app-page', {static: true}) el: ElementRef | undefined;
   logoSize: number = 50;
 
   actualitesLoading: boolean = true;
@@ -89,7 +112,7 @@ export class HomeComponent {
 
   openSession(url: string) {
     this.router
-      .navigate(['/sessions/session', { url: url }], {
+      .navigate(['/sessions/session', {url: url}], {
         queryParams: {
           url: url,
         },

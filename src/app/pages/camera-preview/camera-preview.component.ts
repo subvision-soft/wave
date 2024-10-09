@@ -1,32 +1,25 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  HostListener,
-  Inject,
-  OnDestroy,
-  ViewChild,
-} from '@angular/core';
-import { CameraPreview } from '@capacitor-community/camera-preview';
-import { NgxOpenCVService } from '../../../lib/ngx-open-cv.service';
-import { DOCUMENT } from '@angular/common';
-import { Router } from '@angular/router';
-import { PlastronService } from '../../services/plastron.service';
-import { OpenCVState } from '../../../lib/models';
-import { FilesService } from '../../services/files.service';
-import { WebcamService } from '../../services/webcam.service';
+import {AfterViewInit, Component, ElementRef, HostListener, OnDestroy, ViewChild,} from '@angular/core';
+import {CameraPreview} from '@capacitor-community/camera-preview';
+import {NgxOpenCVService} from '../../../lib/ngx-open-cv.service';
+import {Router} from '@angular/router';
+import {PlastronService} from '../../services/plastron.service';
+import {OpenCVState} from '../../../lib/models';
+import {FilesService} from '../../services/files.service';
+import {LoadingComponent} from "../../components/loading/loading.component";
+import {RippleDirective} from "../../directives/ripple.directive";
 
 @Component({
   selector: 'app-camera-preview',
   templateUrl: './camera-preview.component.html',
   styleUrls: ['./camera-preview.component.scss'],
+  imports: [
+    LoadingComponent,
+    RippleDirective
+  ],
+  standalone: true
 })
 export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
   flash: boolean = false;
-
-  get coordinatesPercent(): any {
-    return this._coordinatesPercent;
-  }
 
   set coordinatesPercent(value: any) {
     this._coordinatesPercent = value;
@@ -109,11 +102,9 @@ export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
 
   constructor(
     private ngxOpenCv: NgxOpenCVService,
-    @Inject(DOCUMENT) document: Document,
     private router: Router,
     private plastronService: PlastronService,
-    private filesService: FilesService,
-    private webcamService: WebcamService
+    private filesService: FilesService
   ) {
     console.log('constructor');
     this.filesService.clearTarget();

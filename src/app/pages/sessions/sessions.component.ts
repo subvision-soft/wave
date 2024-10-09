@@ -1,13 +1,24 @@
-import { Component } from '@angular/core';
-import { FilesService } from '../../services/files.service';
-import { Directory, FileInfo, Filesystem } from '@capacitor/filesystem';
-import { animate, style, transition, trigger } from '@angular/animations';
-import { Action } from '../../models/action';
-import { Session } from '../../models/session';
-import { Router } from '@angular/router';
-import { ToastService, ToastTypes } from '../../services/toast.service';
-import { Target } from '../../models/target';
-import { TranslateService } from '@ngx-translate/core';
+import {Component} from '@angular/core';
+import {FilesService} from '../../services/files.service';
+import {Directory, FileInfo, Filesystem} from '@capacitor/filesystem';
+import {animate, style, transition, trigger} from '@angular/animations';
+import {Action} from '../../models/action';
+import {Session} from '../../models/session';
+import {Router} from '@angular/router';
+import {ToastService, ToastTypes} from '../../services/toast.service';
+import {Target} from '../../models/target';
+import {TranslateModule, TranslateService} from '@ngx-translate/core';
+import {HeaderComponent} from "../../components/header/header.component";
+import {SearchComponent} from "../../components/search/search.component";
+import {AddButtonComponent} from "../../components/add-button/add-button.component";
+import {TagComponent} from "../../components/tag/tag.component";
+import {SessionItemComponent} from "../../components/session-item/session-item.component";
+import {EmptyTextComponent} from "../../components/empty-text/empty-text.component";
+import {LongPressDirective} from "../../directives/long-press.directive";
+import {DatePipe, NgForOf, NgIf} from "@angular/common";
+import {RippleDirective} from "../../directives/ripple.directive";
+import {MessageBoxComponent} from "../../components/message-box/message-box.component";
+import {InputComponent} from "../../components/input/input.component";
 
 interface File {
   active: boolean;
@@ -21,15 +32,32 @@ interface File {
   animations: [
     trigger('enterAnimation', [
       transition(':enter', [
-        style({ opacity: 0 }),
-        animate('300ms', style({ opacity: 1 })),
+        style({opacity: 0}),
+        animate('300ms', style({opacity: 1})),
       ]),
       transition(':leave', [
-        style({ opacity: 1 }),
-        animate('300ms', style({ opacity: 0 })),
+        style({opacity: 1}),
+        animate('300ms', style({opacity: 0})),
       ]),
     ]),
   ],
+  imports: [
+    HeaderComponent,
+    SearchComponent,
+    AddButtonComponent,
+    TagComponent,
+    SessionItemComponent,
+    EmptyTextComponent,
+    LongPressDirective,
+    NgForOf,
+    NgIf,
+    RippleDirective,
+    TranslateModule,
+    MessageBoxComponent,
+    InputComponent,
+    DatePipe
+  ],
+  standalone: true
 })
 export class SessionsComponent {
   newSession: Session = {
@@ -178,7 +206,8 @@ export class SessionsComponent {
       new Action(
         'SESSIONS.MENU.ORDER_BY.TITLE',
         '',
-        () => {},
+        () => {
+        },
         this.sortActions
       ),
     ];
@@ -406,9 +435,9 @@ export class SessionsComponent {
       this.filesService
         .writeFile(
           this.path +
-            '/' +
-            this.newSession.title.replace(/[^a-zA-Z0-9]/g, '') +
-            '.subapp',
+          '/' +
+          this.newSession.title.replace(/[^a-zA-Z0-9]/g, '') +
+          '.subapp',
           JSON.stringify(this.newSession)
         )
         .then(() => {

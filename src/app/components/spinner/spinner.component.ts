@@ -1,16 +1,15 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, Output, ViewChild,} from '@angular/core';
+import {NgForOf, NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-spinner',
   templateUrl: './spinner.component.html',
   styleUrls: ['./spinner.component.scss'],
+  imports: [
+    NgForOf,
+    NgIf
+  ],
+  standalone: true
 })
 export class SpinnerComponent {
   @ViewChild('container') container: ElementRef | undefined;
@@ -38,7 +37,8 @@ export class SpinnerComponent {
     return this._value;
   }
 
-  constructor() {}
+  constructor() {
+  }
 
   onMouseDown(event: any): void {
     if (event.type === 'touchstart') {

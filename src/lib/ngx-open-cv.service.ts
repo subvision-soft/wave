@@ -1,9 +1,12 @@
-import { Inject, Injectable, InjectionToken, NgZone } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { OpenCVConfig, OpenCVState } from './models';
+import {Inject, Injectable, InjectionToken, NgZone} from '@angular/core';
+import {BehaviorSubject} from 'rxjs';
+import {OpenCVConfig, OpenCVState} from './models';
 
 export const OpenCvConfigToken = new InjectionToken<OpenCVConfig>(
-  'OpenCV config object token'
+  'OpenCV config object token', {
+    providedIn: 'root',
+    factory: () => ({}),
+  }
 );
 
 @Injectable({
@@ -62,7 +65,7 @@ export class NgxOpenCVService {
         this.cvState.next(this.newState('error'));
         this.cvState.error(err);
       },
-      { passive: true }
+      {passive: true}
     );
 
     // set script url

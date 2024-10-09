@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { iconoirHome } from '@ng-icons/iconoir';
-import { Router } from '@angular/router';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Router} from '@angular/router';
+import {NgForOf} from "@angular/common";
+import {TabBarButtonComponent} from "../tab-bar-button/tab-bar-button.component";
 
 class Tab {
   active?: boolean = false;
@@ -13,12 +14,15 @@ class Tab {
   selector: 'app-tab-bar',
   templateUrl: './tab-bar.component.html',
   styleUrls: ['./tab-bar.component.scss'],
+  imports: [
+    NgForOf,
+    TabBarButtonComponent
+  ],
+  standalone: true
 })
 export class TabBarComponent {
   @Input() tabs: Tab[] = [];
   @Output() select = new EventEmitter<Tab>();
-
-  protected readonly iconoirHome = iconoirHome;
 
   constructor(private router: Router) {
     router.events.subscribe((val) => {

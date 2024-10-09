@@ -1,14 +1,20 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
-import { Observable } from 'rxjs';
+import {Observable} from 'rxjs';
 
-import { ParserCallback, RSSEntry } from 'rss-parser';
-import { HttpClient } from '@angular/common/http';
+import {ParserCallback, RSSEntry} from 'rss-parser';
+import {HttpClient} from '@angular/common/http';
 import * as xml2js from 'xml2js';
 
-@Injectable()
+@Injectable(
+  {
+    providedIn: 'root',
+    
+  }
+)
 export class RSSParserService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   parseString(xml: string, callback: ParserCallback) {
     let parseString = xml2js.parseString;

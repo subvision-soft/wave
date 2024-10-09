@@ -1,20 +1,20 @@
-import {
-  Component,
-  ElementRef,
-  HostBinding,
-  HostListener,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
-import { ToastService, ToastTypes } from '../../services/toast.service';
+import {Component, ElementRef, HostBinding, HostListener, OnInit, ViewChild,} from '@angular/core';
+import {ToastService, ToastTypes} from '../../services/toast.service';
+import {TranslateModule} from "@ngx-translate/core";
+import {NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-toast',
   templateUrl: './toast.component.html',
   styleUrls: ['./toast.component.scss'],
+  imports: [
+    TranslateModule,
+    NgIf
+  ],
+  standalone: true
 })
 export class ToastComponent implements OnInit {
-  @ViewChild('element', { static: false }) progressBar?: ElementRef;
+  @ViewChild('element', {static: false}) progressBar?: ElementRef;
 
   @HostBinding('class.success') get success() {
     return this.toastService.data.type === ToastTypes.SUCCESS;
@@ -49,9 +49,9 @@ export class ToastComponent implements OnInit {
   updateProgressWidth() {
     this.progressWidth = this.progressInterval
       ? ((this.endDate.getTime() - Date.now()) /
-          this.toastService.data.duration) *
-          100 +
-        '%'
+        this.toastService.data.duration) *
+      100 +
+      '%'
       : '0%';
   }
 
@@ -64,7 +64,8 @@ export class ToastComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   countDown() {
     this.stopCountDown(false);

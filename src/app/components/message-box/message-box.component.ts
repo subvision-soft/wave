@@ -1,13 +1,7 @@
-import {
-  Component,
-  EventEmitter,
-  HostBinding,
-  Input,
-  Output,
-  ViewChild,
-} from '@angular/core';
-import { animate, style, transition, trigger } from '@angular/animations';
-import { InputComponent } from '../input/input.component';
+import {Component, EventEmitter, HostBinding, Input, Output, ViewChild,} from '@angular/core';
+import {animate, style, transition, trigger} from '@angular/animations';
+import {InputComponent} from '../input/input.component';
+import {NgIf} from "@angular/common";
 
 interface Callback {
   btn: 'ok' | 'cancel';
@@ -25,10 +19,10 @@ interface Callback {
           opacity: 0,
           transform: 'translate(0, calc(100% + var(--padding)))',
         }),
-        animate('200ms', style({ opacity: 1, transform: 'translate(0)' })),
+        animate('200ms', style({opacity: 1, transform: 'translate(0)'})),
       ]),
       transition(':leave', [
-        style({ opacity: 1, transform: 'translate(0)' }),
+        style({opacity: 1, transform: 'translate(0)'}),
         animate(
           '200ms',
           style({
@@ -39,6 +33,11 @@ interface Callback {
       ]),
     ]),
   ],
+  imports: [
+    InputComponent,
+    NgIf
+  ],
+  standalone: true
 })
 export class MessageBoxComponent {
   get open(): boolean {
@@ -92,7 +91,8 @@ export class MessageBoxComponent {
     this.close();
   }
 
-  constructor() {}
+  constructor() {
+  }
 
   close() {
     this._open = false;

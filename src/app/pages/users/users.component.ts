@@ -1,16 +1,41 @@
-import { Component } from '@angular/core';
-import { Session } from '../../models/session';
-import { User } from '../../models/user';
-import { Action } from '../../models/action';
-import { Category } from '../../models/category';
-import { FilesService } from '../../services/files.service';
-import { Target } from '../../models/target';
-import { Router } from '@angular/router';
+import {Component} from '@angular/core';
+import {Session} from '../../models/session';
+import {User} from '../../models/user';
+import {Action} from '../../models/action';
+import {Category} from '../../models/category';
+import {FilesService} from '../../services/files.service';
+import {Target} from '../../models/target';
+import {Router} from '@angular/router';
+import {HeaderComponent} from "../../components/header/header.component";
+import {DatePipe, NgForOf, NgIf} from "@angular/common";
+import {SearchComponent} from "../../components/search/search.component";
+import {AddButtonComponent} from "../../components/add-button/add-button.component";
+import {EmptyTextComponent} from "../../components/empty-text/empty-text.component";
+import {UserItemComponent} from "../../components/user-item/user-item.component";
+import {LongPressDirective} from "../../directives/long-press.directive";
+import {MessageBoxComponent} from "../../components/message-box/message-box.component";
+import {InputComponent} from "../../components/input/input.component";
+import {SelectComponent} from "../../components/select/select.component";
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss'],
+  imports: [
+    HeaderComponent,
+    DatePipe,
+    SearchComponent,
+    AddButtonComponent,
+    EmptyTextComponent,
+    UserItemComponent,
+    NgIf,
+    LongPressDirective,
+    NgForOf,
+    MessageBoxComponent,
+    InputComponent,
+    SelectComponent
+  ],
+  standalone: true
 })
 export class UsersComponent {
   set target(value: Target | undefined) {
@@ -40,7 +65,8 @@ export class UsersComponent {
     new Action(
       'Modifier le tireur',
       undefined,
-      (self) => {},
+      (self) => {
+      },
       undefined,
       () => {
         console.log(this.selectedUsers);
@@ -85,11 +111,11 @@ export class UsersComponent {
   }
 
   storeCategories = [
-    { id: Category.MINIME, label: 'Minime' },
-    { id: Category.CADET, label: 'Cadet' },
-    { id: Category.JUNIOR, label: 'Junior' },
-    { id: Category.SENIOR, label: 'Sénior' },
-    { id: Category.MASTER, label: 'Master' },
+    {id: Category.MINIME, label: 'Minime'},
+    {id: Category.CADET, label: 'Cadet'},
+    {id: Category.JUNIOR, label: 'Junior'},
+    {id: Category.SENIOR, label: 'Sénior'},
+    {id: Category.MASTER, label: 'Master'},
   ];
 
   newUser: User = {
@@ -102,7 +128,7 @@ export class UsersComponent {
 
   createUserCallback(event: any) {
     if (event.btn === 'ok') {
-      this.session.users.push({ ...this.newUser });
+      this.session.users.push({...this.newUser});
       this.filesService.session = this.session;
     }
   }
@@ -140,7 +166,7 @@ export class UsersComponent {
     } else {
       // Ouvrir page user
       if (this.target) {
-        this.target = { ...this.target, user: user.id };
+        this.target = {...this.target, user: user.id};
         this.session.users = this.session.users.map((u) => {
           if (u === user) {
             if (this.target) {
@@ -155,7 +181,7 @@ export class UsersComponent {
         this.router.navigate(['/camera']);
       } else {
         this.router.navigate(['/sessions/user'], {
-          state: { user },
+          state: {user},
         });
       }
     }

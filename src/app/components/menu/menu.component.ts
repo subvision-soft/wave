@@ -1,16 +1,17 @@
-import {
-  Component,
-  EventEmitter,
-  HostBinding,
-  Input,
-  Output,
-} from '@angular/core';
-import { Action } from '../../models/action';
+import {Component, EventEmitter, HostBinding, Input, Output,} from '@angular/core';
+import {Action} from '../../models/action';
+import {MenuActionComponent} from "../menu-action/menu-action.component";
+import {NgForOf} from "@angular/common";
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss'],
+  imports: [
+    MenuActionComponent,
+    NgForOf
+  ],
+  standalone: true
 })
 export class MenuComponent {
   get currentActions(): Action[] {
@@ -119,7 +120,8 @@ export class MenuComponent {
 
   private _originalActions: Action[] = [];
 
-  constructor() {}
+  constructor() {
+  }
 
   close() {
     this.open = false;

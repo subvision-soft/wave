@@ -1,15 +1,18 @@
-import {
-  Component,
-  EventEmitter,
-  HostBinding,
-  Input,
-  Output,
-} from '@angular/core';
+import {Component, EventEmitter, HostBinding, Input, Output,} from '@angular/core';
+import {SlideSheetComponent} from "../slide-sheet/slide-sheet.component";
+import {NumberSpinnerComponent} from "../number-spinner/number-spinner.component";
+import {NgIcon} from "@ng-icons/core";
 
 @Component({
   selector: 'app-chrono-picker',
   templateUrl: './chrono-picker.component.html',
   styleUrls: ['./chrono-picker.component.scss'],
+  imports: [
+    SlideSheetComponent,
+    NumberSpinnerComponent,
+    NgIcon
+  ],
+  standalone: true
 })
 export class ChronoPickerComponent {
   _time: number = 0; // milliseconds
@@ -18,7 +21,8 @@ export class ChronoPickerComponent {
   @Output() timeChange = new EventEmitter<number>();
   open: boolean = false;
 
-  constructor() {}
+  constructor() {
+  }
 
   get minutes(): number {
     return Math.floor(this._time / (60 * 1000)) % 60;

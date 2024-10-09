@@ -1,23 +1,28 @@
-import {
-  Component,
-  EventEmitter,
-  OnInit,
-  Output,
-  Pipe,
-  PipeTransform,
-} from '@angular/core';
-import { PlastronService } from '../../services/plastron.service';
-import { map, pluck } from 'rxjs';
-import { SegmentedButtonItem } from '../../components/segmented-button/segmented-button.component';
-import { Impact } from '../../models/impact';
-import { Event } from '../../models/event';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ToastService, ToastTypes } from '../../services/toast.service';
-import { Target } from '../../models/target';
-import { Action } from '../../models/action';
-import { FilesService } from '../../services/files.service';
+import {Component, EventEmitter, OnInit, Output, Pipe, PipeTransform,} from '@angular/core';
+import {PlastronService} from '../../services/plastron.service';
+import {map, pluck} from 'rxjs';
+import {SegmentedButtonItem} from '../../components/segmented-button/segmented-button.component';
+import {Impact} from '../../models/impact';
+import {Event} from '../../models/event';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ToastService, ToastTypes} from '../../services/toast.service';
+import {Target} from '../../models/target';
+import {Action} from '../../models/action';
+import {FilesService} from '../../services/files.service';
+import {HeaderComponent} from "../../components/header/header.component";
+import {TagComponent} from "../../components/tag/tag.component";
+import {TotalPreviewComponent} from "../../components/total-preview/total-preview.component";
+import {TranslateModule} from "@ngx-translate/core";
+import {SelectComponent} from "../../components/select/select.component";
+import {ChronoPickerComponent} from "../../components/chrono-picker/chrono-picker.component";
+import {SwiperComponent} from "../../components/swiper/swiper.component";
+import {SwiperItemComponent} from "../../components/swiper-item/swiper-item.component";
+import {ResultsPreviewComponent} from "../../components/results-preview/results-preview.component";
+import {TargetPreviewComponent} from "../../components/target-preview/target-preview.component";
+import {NgIf} from "@angular/common";
+import {SpinnerComponent} from "../../components/spinner/spinner.component";
 
-@Pipe({ name: 'pluck' })
+@Pipe({standalone: true, name: 'pluck'})
 export class PluckPipe implements PipeTransform {
   transform(value: any[], key: string): any {
     return value.map((value) => {
@@ -31,6 +36,22 @@ export class PluckPipe implements PipeTransform {
   selector: 'app-result',
   templateUrl: './result.component.html',
   styleUrls: ['./result.component.scss'],
+  imports: [
+    HeaderComponent,
+    TagComponent,
+    TotalPreviewComponent,
+    TranslateModule,
+    SelectComponent,
+    ChronoPickerComponent,
+    SwiperComponent,
+    SwiperItemComponent,
+    ResultsPreviewComponent,
+    TargetPreviewComponent,
+    NgIf,
+    SpinnerComponent,
+    PluckPipe
+  ],
+  standalone: true
 })
 export class ResultComponent implements OnInit {
   menuActions: Action[] = [
@@ -195,7 +216,8 @@ export class ResultComponent implements OnInit {
     private toastService: ToastService,
     private filesService: FilesService,
     public activatedRoute: ActivatedRoute
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     console.log('ResultComponent.ngOnInit');

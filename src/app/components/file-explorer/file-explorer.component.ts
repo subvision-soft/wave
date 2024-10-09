@@ -1,8 +1,11 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { FilesService } from '../../services/files.service';
-import { FileInfo } from '@capacitor/filesystem';
-import { Router } from '@angular/router';
-import { animate, style, transition, trigger } from '@angular/animations';
+import {Component, EventEmitter, Output} from '@angular/core';
+import {FilesService} from '../../services/files.service';
+import {FileInfo} from '@capacitor/filesystem';
+import {Router} from '@angular/router';
+import {animate, style, transition, trigger} from '@angular/animations';
+import {SessionItemComponent} from "../session-item/session-item.component";
+import {EmptyTextComponent} from "../empty-text/empty-text.component";
+import {NgForOf} from "@angular/common";
 
 @Component({
   selector: 'app-file-explorer',
@@ -11,15 +14,21 @@ import { animate, style, transition, trigger } from '@angular/animations';
   animations: [
     trigger('enterAnimation', [
       transition(':enter', [
-        style({ opacity: 0 }),
-        animate('300ms', style({ opacity: 1 })),
+        style({opacity: 0}),
+        animate('300ms', style({opacity: 1})),
       ]),
       transition(':leave', [
-        style({ opacity: 1 }),
-        animate('300ms', style({ opacity: 0 })),
+        style({opacity: 1}),
+        animate('300ms', style({opacity: 0})),
       ]),
     ]),
   ],
+  imports: [
+    SessionItemComponent,
+    EmptyTextComponent,
+    NgForOf
+  ],
+  standalone: true
 })
 export class FileExplorerComponent {
   constructor(private filesService: FilesService, private router: Router) {

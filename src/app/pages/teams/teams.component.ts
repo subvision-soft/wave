@@ -1,15 +1,40 @@
-import { Component } from '@angular/core';
-import { Action } from '../../models/action';
-import { Team } from '../../models/team';
-import { Session } from '../../models/session';
-import { Category } from '../../models/category';
-import { FilesService } from '../../services/files.service';
-import { UserLastnameFirstCharPipe } from '../../pipes/UserLastnameFirstCharPipe';
+import {Component} from '@angular/core';
+import {Action} from '../../models/action';
+import {Team} from '../../models/team';
+import {Session} from '../../models/session';
+import {Category} from '../../models/category';
+import {FilesService} from '../../services/files.service';
+import {UserLastnameFirstCharPipe} from '../../pipes/UserLastnameFirstCharPipe';
+import {SearchComponent} from "../../components/search/search.component";
+import {AddButtonComponent} from "../../components/add-button/add-button.component";
+import {HeaderComponent} from "../../components/header/header.component";
+import {DatePipe, NgForOf, NgIf} from "@angular/common";
+import {EmptyTextComponent} from "../../components/empty-text/empty-text.component";
+import {TeamItemComponent} from "../../components/team-item/team-item.component";
+import {LongPressDirective} from "../../directives/long-press.directive";
+import {MessageBoxComponent} from "../../components/message-box/message-box.component";
+import {InputComponent} from "../../components/input/input.component";
+import {SelectComponent} from "../../components/select/select.component";
 
 @Component({
   selector: 'app-teams',
   templateUrl: './teams.component.html',
   styleUrls: ['./teams.component.scss'],
+  imports: [
+    SearchComponent,
+    AddButtonComponent,
+    HeaderComponent,
+    DatePipe,
+    EmptyTextComponent,
+    NgIf,
+    TeamItemComponent,
+    LongPressDirective,
+    NgForOf,
+    MessageBoxComponent,
+    InputComponent,
+    SelectComponent
+  ],
+  standalone: true
 })
 export class TeamsComponent {
   searchValue = '';
@@ -31,7 +56,8 @@ export class TeamsComponent {
     new Action(
       'Modifier le tireur',
       undefined,
-      (self) => {},
+      (self) => {
+      },
       undefined,
       () => {
         console.log(this.selectedTeams);
@@ -106,7 +132,7 @@ export class TeamsComponent {
   createTeamCallback(event: any) {
     if (event.btn === 'ok') {
       console.log(this.newTeam);
-      this.session.teams.push({ ...this.newTeam });
+      this.session.teams.push({...this.newTeam});
       this.filesService.session = this.session;
     }
   }

@@ -1,14 +1,24 @@
-import { Component, HostBinding, Input } from '@angular/core';
-import { FileInfo } from '@capacitor/filesystem';
-import { FilesService } from '../../services/files.service';
-import { Session } from '../../models/session';
-import { RippleDirective } from '../../directives/ripple.directive';
+import {Component, HostBinding, Input} from '@angular/core';
+import {FileInfo} from '@capacitor/filesystem';
+import {FilesService} from '../../services/files.service';
+import {Session} from '../../models/session';
+import {RippleDirective} from '../../directives/ripple.directive';
+import {NgIcon} from "@ng-icons/core";
+import {LogoComponent} from "../logo/logo.component";
+import {DatePipe, NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-session-item',
   templateUrl: './session-item.component.html',
   styleUrls: ['./session-item.component.scss'],
   hostDirectives: [RippleDirective],
+  imports: [
+    NgIcon,
+    LogoComponent,
+    NgIf,
+    DatePipe
+  ],
+  standalone: true
 })
 export class SessionItemComponent {
   get file(): FileInfo | undefined {
@@ -47,7 +57,8 @@ export class SessionItemComponent {
     return this._url;
   }
 
-  constructor(private filesService: FilesService) {}
+  constructor(private filesService: FilesService) {
+  }
 
   private _file: FileInfo | undefined;
   @Input() goBack: boolean = false;

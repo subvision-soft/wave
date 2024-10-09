@@ -1,15 +1,19 @@
-import {
-  Component,
-  EventEmitter,
-  HostBinding,
-  Input,
-  Output,
-} from '@angular/core';
+import {Component, EventEmitter, HostBinding, Input, Output,} from '@angular/core';
+import {NgForOf, NgIf} from "@angular/common";
+import {NgIcon} from "@ng-icons/core";
+import {SlideSheetComponent} from "../slide-sheet/slide-sheet.component";
 
 @Component({
   selector: 'app-select',
   templateUrl: './select.component.html',
   styleUrls: ['./select.component.scss'],
+  imports: [
+    NgForOf,
+    NgIf,
+    NgIcon,
+    SlideSheetComponent
+  ],
+  standalone: true
 })
 export class SelectComponent {
   @Input() store: any[] = [];
@@ -69,7 +73,8 @@ export class SelectComponent {
 
   open: boolean = false;
 
-  constructor() {}
+  constructor() {
+  }
 
   openChange(open: boolean) {
     this.open = open;

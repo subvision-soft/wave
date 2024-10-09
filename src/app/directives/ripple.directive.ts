@@ -1,4 +1,4 @@
-import { Directive, ElementRef, HostListener, Renderer2 } from '@angular/core';
+import {Directive, ElementRef, HostListener, Renderer2} from '@angular/core';
 
 @Directive({
   selector: '[ripple]',
@@ -13,8 +13,6 @@ export class RippleDirective {
   }
 
   @HostListener('click', ['$event']) onClick(e: MouseEvent) {
-    console.log(e);
-
     let ink, d, x, y;
     if (this.hostEl.querySelector('.ink') === null) {
       ink = this.renderer.createElement('span');

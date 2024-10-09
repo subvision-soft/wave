@@ -1,14 +1,23 @@
-import { Component, HostBinding, Input } from '@angular/core';
-import { Session } from '../../models/session';
-import { Target } from '../../models/target';
-import { User } from '../../models/user';
-import { RippleDirective } from '../../directives/ripple.directive';
+import {Component, HostBinding, Input} from '@angular/core';
+import {Session} from '../../models/session';
+import {Target} from '../../models/target';
+import {User} from '../../models/user';
+import {RippleDirective} from '../../directives/ripple.directive';
+import {TagComponent} from "../tag/tag.component";
+import {NgIf} from "@angular/common";
+import {NgIcon} from "@ng-icons/core";
 
 @Component({
   selector: 'app-target-item',
   templateUrl: './target-item.component.html',
   styleUrls: ['./target-item.component.scss'],
   hostDirectives: [RippleDirective],
+  imports: [
+    TagComponent,
+    NgIf,
+    NgIcon
+  ],
+  standalone: true
 })
 export class TargetItemComponent {
   @Input() target: Target | undefined;

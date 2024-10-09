@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "subapp": {
+    "wave": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -15,22 +15,25 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser-esbuild",
+          "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/subapp",
+            "outputPath": "dist/wave",
             "index": "src/index.html",
-            "main": "src/main.ts",
+            "browser": "src/main.ts",
             "polyfills": [
               "zone.js"
             ],
+            "preserveSymlinks": true,
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/manifest.webmanifest"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/ngx-wave-ui/assets/styles/styles.scss"
             ],
             "scripts": []
           },
@@ -48,35 +51,25 @@
                   "maximumError": "4kb"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "serviceWorker": "ngsw-config.json"
             },
             "development": {
-              "buildOptimizer": false,
               "optimization": false,
-              "vendorChunk": true,
               "extractLicenses": false,
-              "sourceMap": true,
-              "namedChunks": true
+              "sourceMap": true
             }
           },
           "defaultConfiguration": "production"
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
-          "options": {
-            "browserTarget": "web-ui:build",
-            "headers": {
-              "Cross-Origin-Opener-Policy": "unsafe-none",
-              "Cross-Origin-Embedder-Policy": "credentialless",
-              "Cross-Origin-Resource-Policy": "cross-origin"
-            }
-          },
           "configurations": {
             "production": {
-              "browserTarget": "subapp:build:production"
+              "buildTarget": "wave:build:production"
             },
             "development": {
-              "browserTarget": "subapp:build:development"
+              "buildTarget": "wave:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -84,7 +77,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "subapp:build"
+            "buildTarget": "wave:build"
           }
         },
         "test": {
@@ -98,7 +91,8 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/manifest.webmanifest"
             ],
             "styles": [
               "src/styles.scss"
@@ -110,6 +104,9 @@
     }
   },
   "cli": {
-    "analytics": "2a923e87-1257-411e-aa60-1608e149288f"
+    "analytics": false,
+    "cache": {
+      "enabled": false
+    }
   }
 }

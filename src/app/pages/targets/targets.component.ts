@@ -1,10 +1,17 @@
-import { Component } from '@angular/core';
-import { Session } from '../../models/session';
-import { Category } from '../../models/category';
-import { FilesService } from '../../services/files.service';
-import { Event } from '../../models/event';
-import { animate, style, transition, trigger } from '@angular/animations';
-import { Router } from '@angular/router';
+import {Component} from '@angular/core';
+import {Session} from '../../models/session';
+import {Category} from '../../models/category';
+import {FilesService} from '../../services/files.service';
+import {Event} from '../../models/event';
+import {animate, style, transition, trigger} from '@angular/animations';
+import {Router} from '@angular/router';
+import {SearchComponent} from "../../components/search/search.component";
+import {AddButtonComponent} from "../../components/add-button/add-button.component";
+import {SegmentedButtonComponent} from "../../components/segmented-button/segmented-button.component";
+import {ListTargetsComponent} from "../../components/list-targets/list-targets.component";
+import {TranslateModule} from "@ngx-translate/core";
+import {DatePipe} from "@angular/common";
+import {HeaderComponent} from "../../components/header/header.component";
 
 @Component({
   selector: 'app-targets',
@@ -13,15 +20,25 @@ import { Router } from '@angular/router';
   animations: [
     trigger('enterAnimation', [
       transition(':enter', [
-        style({ opacity: 0 }),
-        animate('300ms', style({ opacity: 1 })),
+        style({opacity: 0}),
+        animate('300ms', style({opacity: 1})),
       ]),
       transition(':leave', [
-        style({ opacity: 1 }),
-        animate('300ms', style({ opacity: 0 })),
+        style({opacity: 1}),
+        animate('300ms', style({opacity: 0})),
       ]),
     ]),
   ],
+  imports: [
+    SearchComponent,
+    AddButtonComponent,
+    SegmentedButtonComponent,
+    ListTargetsComponent,
+    TranslateModule,
+    DatePipe,
+    HeaderComponent
+  ],
+  standalone: true
 })
 export class TargetsComponent {
   searchValue = '';
@@ -114,11 +131,11 @@ export class TargetsComponent {
   }
 
   storeCategories = [
-    { id: Category.MINIME, label: 'Minime' },
-    { id: Category.CADET, label: 'Cadet' },
-    { id: Category.JUNIOR, label: 'Junior' },
-    { id: Category.SENIOR, label: 'Sénior' },
-    { id: Category.MASTER, label: 'Master' },
+    {id: Category.MINIME, label: 'Minime'},
+    {id: Category.CADET, label: 'Cadet'},
+    {id: Category.JUNIOR, label: 'Junior'},
+    {id: Category.SENIOR, label: 'Sénior'},
+    {id: Category.MASTER, label: 'Master'},
   ];
 
   parseDate(dateString: string): Date {

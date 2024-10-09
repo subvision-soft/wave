@@ -1,12 +1,26 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Target } from '../../models/target';
-import { Router } from '@angular/router';
-import { User } from '../../models/user';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Target} from '../../models/target';
+import {Router} from '@angular/router';
+import {User} from '../../models/user';
+import {TargetItemComponent} from "../target-item/target-item.component";
+import {NgForOf, NgIf} from "@angular/common";
+import {TranslateModule} from "@ngx-translate/core";
+import {LongPressDirective} from "../../directives/long-press.directive";
+import {EmptyTextComponent} from "../empty-text/empty-text.component";
 
 @Component({
   selector: 'app-list-targets',
   templateUrl: './list-targets.component.html',
   styleUrls: ['./list-targets.component.scss'],
+  imports: [
+    TargetItemComponent,
+    NgIf,
+    TranslateModule,
+    LongPressDirective,
+    NgForOf,
+    EmptyTextComponent
+  ],
+  standalone: true
 })
 export class ListTargetsComponent {
   @Input() targets: Target[] = [];
@@ -30,7 +44,8 @@ export class ListTargetsComponent {
     this.selectedTargetsChange.emit(value);
   }
 
-  constructor(private _router: Router) {}
+  constructor(private _router: Router) {
+  }
 
   isTargetSelected(target: Target): boolean {
     return this._selectedTargets.includes(target);
@@ -59,7 +74,7 @@ export class ListTargetsComponent {
     } else {
       // Ouvrir page target
       this._router.navigate(['/camera/result'], {
-        state: { target },
+        state: {target},
       });
     }
   }

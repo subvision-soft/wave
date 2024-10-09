@@ -1,15 +1,16 @@
-import {
-  Component,
-  EventEmitter,
-  HostBinding,
-  Input,
-  Output,
-} from '@angular/core';
+import {Component, EventEmitter, HostBinding, Input, Output,} from '@angular/core';
+import {TranslateModule} from "@ngx-translate/core";
+import {NgForOf} from "@angular/common";
 
 @Component({
   selector: 'app-segmented-button',
   templateUrl: './segmented-button.component.html',
   styleUrls: ['./segmented-button.component.scss'],
+  imports: [
+    TranslateModule,
+    NgForOf
+  ],
+  standalone: true
 })
 export class SegmentedButtonComponent {
   public _selected: string = '';
@@ -43,5 +44,6 @@ export class SegmentedButtonItem {
     public label: string,
     public key: string,
     public onClick: Function
-  ) {}
+  ) {
+  }
 }

@@ -1,11 +1,16 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Zone } from '../../models/zone';
-import { Impact } from '../../models/impact';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Zone} from '../../models/zone';
+import {Impact} from '../../models/impact';
+import {NgForOf} from "@angular/common";
 
 @Component({
   selector: 'app-target-preview',
   templateUrl: './target-preview.component.html',
   styleUrls: ['./target-preview.component.scss'],
+  imports: [
+    NgForOf
+  ],
+  standalone: true
 })
 export class TargetPreviewComponent {
   @Input() public impacts: Impact[] = [];
@@ -35,7 +40,7 @@ export class TargetPreviewComponent {
   getDistance = (impact: Impact) => {
     return (
       ((this.pointToDistance(impact.points) * this.caseSize) / this.arrowSize) *
-        100 +
+      100 +
       '%'
     );
   };

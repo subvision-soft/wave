@@ -1,12 +1,19 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Session } from '../../models/session';
-import { FilesService } from '../../services/files.service';
+import {Component} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {Session} from '../../models/session';
+import {FilesService} from '../../services/files.service';
+import {SelectComponent} from "../../components/select/select.component";
+import {HeaderComponent} from "../../components/header/header.component";
 
 @Component({
   selector: 'app-saving',
   templateUrl: './saving.component.html',
   styleUrls: ['./saving.component.scss'],
+  imports: [
+    SelectComponent,
+    HeaderComponent
+  ],
+  standalone: true
 })
 export class SavingComponent {
   get session(): Session {

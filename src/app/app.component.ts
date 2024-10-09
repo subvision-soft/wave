@@ -1,24 +1,32 @@
-import { Component, HostBinding, isDevMode } from '@angular/core';
-import { fadeAnimation } from './utils/animations';
-import { TranslateService } from '@ngx-translate/core';
-import { ParametersService } from './services/parameters.service';
-import { NavigationEnd, Router } from '@angular/router';
+import {Component, HostBinding, isDevMode} from '@angular/core';
+import {fadeAnimation} from './utils/animations';
+import {TranslateService} from '@ngx-translate/core';
+import {ParametersService} from './services/parameters.service';
+import {NavigationEnd, Router, RouterOutlet} from '@angular/router';
+import {ToastComponent} from "./components/toast/toast.component";
+import {TabBarComponent} from "./components/tab-bar/tab-bar.component";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   animations: [fadeAnimation],
+  imports: [
+    ToastComponent,
+    RouterOutlet,
+    TabBarComponent
+  ],
+  standalone: true
 })
 export class AppComponent {
   title = 'wave';
   @HostBinding('style.background-color') backgroundColor: string =
     'var(--color-background-1)';
   tabs = [
-    { icon: 'jamHomeF', label: 'Accueil', link: '/home' },
-    { icon: 'jamCameraF', label: 'Caméra', link: '/camera' },
-    { icon: 'jamFolderF', label: 'Sessions', link: '/sessions' },
-    { icon: 'jamCogF', label: 'Paramètres', link: '/settings' },
+    {icon: 'jamHomeF', label: 'Accueil', link: '/home'},
+    {icon: 'jamCameraF', label: 'Caméra', link: '/camera'},
+    {icon: 'jamFolderF', label: 'Sessions', link: '/sessions'},
+    {icon: 'jamCogF', label: 'Paramètres', link: '/settings'},
   ];
   cssVariables: string = '';
 

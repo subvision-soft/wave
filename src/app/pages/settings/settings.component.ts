@@ -1,8 +1,14 @@
-import { Component } from '@angular/core';
-import { Parameter } from '../../models/parameter';
-import { ParameterType } from '../../models/parameter-type';
-import { ParametersService } from '../../services/parameters.service';
-import { FilesService } from '../../services/files.service';
+import {Component} from '@angular/core';
+import {Parameter} from '../../models/parameter';
+import {ParameterType} from '../../models/parameter-type';
+import {ParametersService} from '../../services/parameters.service';
+import {FilesService} from '../../services/files.service';
+import {HeaderComponent} from "../../components/header/header.component";
+import {SearchComponent} from "../../components/search/search.component";
+import {InputComponent} from "../../components/input/input.component";
+import {NgForOf, NgIf} from "@angular/common";
+import {TranslateModule} from "@ngx-translate/core";
+import {SelectComponent} from "../../components/select/select.component";
 
 class ParameterGroup {
   label: string = '';
@@ -13,6 +19,16 @@ class ParameterGroup {
   selector: 'app-settings',
   templateUrl: './settings.component.html',
   styleUrls: ['./settings.component.scss'],
+  imports: [
+    HeaderComponent,
+    SearchComponent,
+    InputComponent,
+    NgIf,
+    TranslateModule,
+    SelectComponent,
+    NgForOf
+  ],
+  standalone: true
 })
 export class SettingsComponent {
   get darkTheme(): string {
@@ -89,10 +105,10 @@ export class SettingsComponent {
             value: this.parametersService.get('LANGUE').value,
             type: 'select',
             store: [
-              { id: 'fr', label: 'Français' },
-              { id: 'en', label: 'English' },
-              { id: 'es', label: 'Español' },
-              { id: 'it', label: 'Italiano' },
+              {id: 'fr', label: 'Français'},
+              {id: 'en', label: 'English'},
+              {id: 'es', label: 'Español'},
+              {id: 'it', label: 'Italiano'},
             ],
           },
         ],

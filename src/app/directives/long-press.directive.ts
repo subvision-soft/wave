@@ -1,13 +1,6 @@
-import {
-  Directive,
-  EventEmitter,
-  HostBinding,
-  HostListener,
-  Input,
-  Output,
-} from '@angular/core';
+import {Directive, EventEmitter, HostBinding, HostListener, Input, Output,} from '@angular/core';
 
-@Directive({ selector: '[long-press]' })
+@Directive({standalone: true, selector: '[long-press]'})
 export class LongPressDirective {
   @Input() duration: number = 300;
 

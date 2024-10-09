@@ -1,16 +1,15 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import {Component, ElementRef, EventEmitter, Input, Output, ViewChild,} from '@angular/core';
+import {NgForOf, NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-number-spinner',
   templateUrl: './number-spinner.component.html',
   styleUrls: ['./number-spinner.component.scss'],
+  imports: [
+    NgIf,
+    NgForOf
+  ],
+  standalone: true
 })
 export class NumberSpinnerComponent {
   @ViewChild('container') container: ElementRef | undefined;
@@ -51,7 +50,7 @@ export class NumberSpinnerComponent {
   set max(max: number) {
     this._max = max;
     this.values = Array.from(
-      { length: (this._max - this._min + 1) / this.step },
+      {length: (this._max - this._min + 1) / this.step},
       (v, k) => k * this.step
     );
   }
@@ -60,14 +59,14 @@ export class NumberSpinnerComponent {
   set min(min: number) {
     this._min = min;
     this.values = Array.from(
-      { length: (this._max - this._min + 1) / this.step },
+      {length: (this._max - this._min + 1) / this.step},
       (v, k) => k * this.step
     );
   }
 
   constructor() {
     this.values = Array.from(
-      { length: (this._max - this._min + 1) / this.step },
+      {length: (this._max - this._min + 1) / this.step},
       (v, k) => k * this.step
     );
   }

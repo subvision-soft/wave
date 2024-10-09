@@ -1,11 +1,12 @@
-import { Component, Input } from '@angular/core';
-import { Impact } from '../../models/impact';
-import { Event } from '../../models/event';
+import {Component, Input} from '@angular/core';
+import {Impact} from '../../models/impact';
+import {Event} from '../../models/event';
 
 @Component({
   selector: 'app-total-preview',
   templateUrl: './total-preview.component.html',
   styleUrls: ['./total-preview.component.scss'],
+  standalone: true
 })
 export class TotalPreviewComponent {
   public _impacts: Impact[] = [];
@@ -17,7 +18,7 @@ export class TotalPreviewComponent {
     this._impacts = [];
     for (let i = 0; i < impacts.length; i++) {
       for (let j = 0; j < impacts[i].amount; j++) {
-        this._impacts.push({ ...impacts[i] });
+        this._impacts.push({...impacts[i]});
       }
     }
   }
