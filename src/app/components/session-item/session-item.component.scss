@@ -1,3 +1,6 @@
+@import "shared";
+
+
 :host {
   display: flex;
   flex-direction: column;
@@ -25,15 +28,15 @@
 
     .infos {
       h1 {
-        font-size: var(--font-size);
+        @include text(text);
         font-weight: var(--font-weight-semi-bold);
         text-align: left;
         flex: 1;
       }
 
       p {
-        font-size: var(--font-size-sm);
-        font-weight: var(--font-weight-normal);
+        @include text(small);
+
         text-align: left;
       }
     }
@@ -47,8 +50,8 @@
 
       span {
         text-align: left;
-        font-weight: var(--font-weight-normal);
-        font-size: var(--font-size-sm);
+
+        @include text(small);
         color: var(--color-dark2-1);
       }
     }

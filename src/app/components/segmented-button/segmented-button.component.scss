@@ -1,3 +1,5 @@
+@import "shared";
+
 :host {
   display: flex;
   flex-direction: row;
@@ -8,7 +10,7 @@
 
   a {
     flex: 1;
-    font-size: var(--font-size-sm);
+    @include text(small);
     display: flex;
     justify-content: center;
     align-items: center;

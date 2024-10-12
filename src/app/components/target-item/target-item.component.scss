@@ -1,3 +1,5 @@
+@import "shared";
+
 :host {
   display: flex;
   flex-direction: column;
@@ -30,14 +32,14 @@
       gap: var(--padding-sm);
 
       h1 {
-        font-size: var(--font-size);
+        @include text(text);
         font-weight: var(--font-weight-semi-bold);
         text-align: left;
       }
 
       p {
-        font-size: var(--font-size-sm);
-        font-weight: var(--font-weight-normal);
+        @include text(small);
+
         background: var(--color-indicator-3);
         width: fit-content;
         padding: 0 var(--padding-sm);

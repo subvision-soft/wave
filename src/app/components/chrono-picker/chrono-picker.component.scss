@@ -1,3 +1,5 @@
+@import "shared";
+
 :host {
   overflow: hidden;
   display: flex;
@@ -7,7 +9,7 @@
       height: auto;
       padding: calc(var(--padding-sm) / 2) var(--padding);
       border-radius: var(--border-radius-sm);
-      font-weight: var(--font-weight-normal);
+
       box-shadow: none;
     }
   }
@@ -20,7 +22,7 @@
     color: var(--color-dark1-1);
     height: 50px;
     padding: 0 var(--padding);
-    font-weight: var(--font-weight-normal);
+
     text-decoration: none;
     border-radius: 1000px;
     transition: var(--transition);
@@ -28,7 +30,7 @@
     width: fit-content;
     background: var(--color-background-2);
     box-shadow: var(--box-shadow-1);
-    font-size: var(--font-size);
+    @include text(text);
 
     span {
       overflow: hidden;

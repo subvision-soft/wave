@@ -1,3 +1,5 @@
+@import "shared";
+
 :host {
   display: flex;
   padding: var(--padding);
@@ -11,7 +13,7 @@
   color: var(--color-dark1-4);
 
   h1 {
-    font-size: var(--font-size);
+    @include text(text);
     font-weight: var(--font-weight-semi-bold);
     text-align: left;
   }

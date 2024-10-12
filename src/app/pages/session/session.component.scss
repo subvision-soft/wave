@@ -1,3 +1,6 @@
+@import "shared";
+
+
 :host {
   height: calc(100vh - var(--navbar-height));
   display: flex;
@@ -18,8 +21,8 @@
     }
 
     p {
-      font-size: var(--font-size-sm);
-      font-weight: var(--font-weight-normal);
+      @include text(small);
+
       text-align: left;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -36,6 +39,7 @@
     padding: var(--padding);
     box-sizing: border-box;
     flex: 1;
+
     .card {
       border-radius: var(--border-radius-sm);
       padding: var(--padding);

@@ -15,13 +15,13 @@
     flex: 1;
     overflow: hidden;
     mask-image: linear-gradient(
-      to right,
-      transparent 0%,
-      transparent 10%,
-      black 20%,
-      black 80%,
-      transparent 90%,
-      transparent 100%
+        to right,
+        transparent 0%,
+        transparent 10%,
+        black 20%,
+        black 80%,
+        transparent 90%,
+        transparent 100%
     );
 
     .container {
@@ -42,7 +42,7 @@
         align-items: center;
         transition: var(--transition);
         transform: scale(0.9);
-        font-weight: var(--font-weight-normal);
+
         padding: var(--padding-sm) 0;
         box-sizing: border-box;
 

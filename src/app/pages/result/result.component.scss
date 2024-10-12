@@ -1,3 +1,5 @@
+@import "shared";
+
 :host {
   height: 100%;
   display: flex;
@@ -7,7 +9,7 @@
     z-index: 2;
 
     h1 {
-      font-size: var(--font-size);
+      @include text(text);
       font-weight: var(--font-weight-bold);
       text-align: left;
     }
@@ -66,9 +68,9 @@
         height: 30px;
         width: 30px;
         background: color-mix(
-          in srgb,
-          var(--color-background-1),
-          transparent 50%
+            in srgb,
+            var(--color-background-1),
+            transparent 50%
         );
       }
 

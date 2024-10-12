@@ -1,3 +1,5 @@
+@import "shared";
+
 :host {
   display: flex;
   flex-direction: column;
@@ -22,15 +24,15 @@
       flex: 1;
 
       h1 {
-        font-size: var(--font-size);
+        @include text(text);
         font-weight: var(--font-weight-semi-bold);
         text-align: left;
         flex: 1;
       }
 
       p {
-        font-size: var(--font-size-sm);
-        font-weight: var(--font-weight-normal);
+        @include text(small);
+
         background: var(--color-indicator-3);
         width: fit-content;
         padding: 0 var(--padding-sm);
@@ -48,7 +50,7 @@
 
         .user {
           background: var(--color-primary-lighter-5);
-          font-size: var(--font-size-sm);
+          @include text(small);
           font-weight: var(--font-weight-semi-bold);
           color: var(--color-dark1-1);
           padding: calc(var(--padding-sm) / 3) var(--padding-sm);

@@ -1,3 +1,5 @@
+@import "shared";
+
 :host {
   border-radius: var(--border-radius-sm);
   background-color: var(--color-background-1);
@@ -30,12 +32,12 @@
     flex-direction: column;
 
     .toast-title {
-      font-size: var(--font-size);
+      @include text(text);
       font-weight: var(--font-weight-bold);
     }
 
     .toast-text {
-      font-weight: var(--font-weight-normal);
+
     }
   }
 

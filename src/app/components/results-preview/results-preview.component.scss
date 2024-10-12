@@ -1,3 +1,6 @@
+@import "shared";
+
+
 :host {
   $visuelSize: 180;
   $plastronSize: 2565;
@@ -51,7 +54,7 @@
     app-tag {
       text-align: center;
       box-shadow: 0 0 0 0 var(--color-primary-darker);
-      font-size: var(--font-size);
+      @include text(text);
 
       &.selected {
         color: var(--color-primary-darker);

@@ -1,6 +1,8 @@
+@import "shared";
+
 :host {
   background: var(--color-primary-lighter-5);
-  font-size: var(--font-size-sm);
+  @include text(small);
   font-weight: var(--font-weight-semi-bold);
   color: var(--color-dark1-1);
   padding: calc(var(--padding-sm) / 3) var(--padding-sm);

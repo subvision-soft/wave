@@ -31,9 +31,15 @@
               "src/assets",
               "src/manifest.webmanifest"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "node_modules/ngx-wave-ui/src/assets/styles"
+              ]
+            },
             "styles": [
               "src/styles.scss",
-              "node_modules/ngx-wave-ui/assets/styles/styles.scss"
+              "node_modules/ngx-wave-ui/src/assets/styles/styles.scss",
+              "node_modules/ngx-wave-ui/src/assets/styles/theme/typography.scss"
             ],
             "scripts": []
           },
