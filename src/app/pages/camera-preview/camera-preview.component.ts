@@ -2,7 +2,9 @@
 import {
   Component,
   ElementRef,
+  HostListener,
   inject,
+  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -11,19 +13,34 @@ import { download } from '../../utils/download';
 import { detectImage } from '../../utils/detect';
 import { NgIf } from '@angular/common';
 import { NgxOpenCVService } from '../../../lib/ngx-open-cv.service';
+import { LoadingComponent } from '../../components/loading/loading.component';
 
 @Component({
   selector: 'app-camera-preview',
   templateUrl: './camera-preview.component.html',
   styleUrls: ['./camera-preview.component.scss'],
   standalone: true,
-  imports: [NgIf],
+  imports: [NgIf, LoadingComponent],
 })
-export class CameraPreviewComponent implements OnInit {
+export class CameraPreviewComponent implements OnInit, OnDestroy {
   @ViewChild('inputImage') inputImage!: ElementRef;
   @ViewChild('imageRef') imageRef!: ElementRef;
+  @ViewChild('videoRef') videoRef!: ElementRef;
   @ViewChild('canvasRef') canvasRef!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('inputCanvasRef') inputCanvasRef!: ElementRef<HTMLCanvasElement>;
   private openCvService: NgxOpenCVService = inject(NgxOpenCVService);
+  parentHeight: number = 0;
+  parentWidth: number = 0;
+
+  @HostListener('window:resize', ['$event'])
+  onResize() {
+    this.updateParentSize();
+  }
+
+  private updateParentSize() {
+    this.parentHeight = this.videoRef?.nativeElement.offsetHeight;
+    this.parentWidth = this.videoRef?.nativeElement.offsetWidth;
+  }
 
   session: any = null;
   loading: { text: string; progress: number | null } | null = {
@@ -38,15 +55,75 @@ export class CameraPreviewComponent implements OnInit {
   topk = 100;
   iouThreshold = 0.45;
   scoreThreshold = 0.85;
+  private camera_stream: null | MediaStream = null;
+  width: number;
+  height: number;
 
   ngOnInit(): void {
     this.openCvService.loadOpenCv();
     this.openCvService.cvState.subscribe((state) => {
       if (state.ready) {
         env.wasm.wasmPaths = '/assets/';
-        this.loadModel();
+        this.loadModel().then(() => {
+          this.startCamera();
+        });
       }
     });
+  }
+
+  async startCamera(): Promise<void> {
+    this.loading = { text: 'Starting Camera...', progress: null };
+    let continuous: boolean;
+    let input_canvas_ctx: CanvasRenderingContext2D | null;
+    // capture frame loop
+    const capture_frame_continuous = async () => {
+      if (!continuous) return;
+      this.loading = null;
+      // @ts-ignore
+      const cv = window.cv;
+      input_canvas_ctx?.drawImage(
+        this.videoRef.nativeElement,
+        0,
+        0,
+        this.inputCanvasRef.nativeElement.width,
+        this.inputCanvasRef.nativeElement.height
+      ); // Draw frame to input <canvas>
+      const frame_mat = cv.imread(this.inputCanvasRef.nativeElement); // read frame to Cv.Mat
+      this.width = frame_mat.cols;
+      this.height = frame_mat.rows;
+      detectImage(
+        frame_mat,
+        this.canvasRef.nativeElement,
+        this.session,
+        this.topk,
+        this.iouThreshold,
+        this.scoreThreshold,
+        this.modelInputShape
+      ); // detect
+
+      requestAnimationFrame(capture_frame_continuous); // loop
+    };
+
+    if (this.camera_stream) {
+      // stop camera
+      this.camera_stream.getTracks().forEach((track) => track.stop());
+      this.videoRef.nativeElement.srcObject = null;
+      this.camera_stream = null;
+      continuous = false;
+    } else {
+      // get user media
+      this.camera_stream = await navigator.mediaDevices.getUserMedia({
+        video: true,
+        audio: false,
+      });
+      this.videoRef.nativeElement.srcObject = this.camera_stream; // set to <video>
+      input_canvas_ctx = this.inputCanvasRef.nativeElement.getContext('2d', {
+        willReadFrequently: true,
+      }); // get input <canvas> ctx
+      // start frame capture
+      continuous = true;
+      capture_frame_continuous();
+    }
   }
 
   async loadModel(): Promise<void> {
@@ -80,7 +157,6 @@ export class CameraPreviewComponent implements OnInit {
         this.modelInputShape
       );
       await yolov8.run({ images: tensor });
-
       this.session = { net: yolov8, nms: nms, mask: mask };
       this.setLoading(null);
     } catch (error) {
@@ -131,4 +207,6 @@ export class CameraPreviewComponent implements OnInit {
       );
     }
   }
+
+  ngOnDestroy(): void {}
 }

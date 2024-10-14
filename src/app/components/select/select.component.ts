@@ -58,7 +58,6 @@ export class SelectComponent {
     } else {
       this.value = value;
     }
-    console.log(this.value);
     this.valueChange.emit(this.value);
     if (!this.multiple) {
       this.open = false;

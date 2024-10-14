@@ -44,12 +44,9 @@ export const detectImage = async (
   ); // nms config tensor
 
   let output0, output1;
-  const start = performance.now();
   let res = await session.net.run({ images: tensor }); // run session and get output layer. out1: detect layer, out2: seg layer
   output0 = res.output0;
   output1 = res.output1;
-  const end = performance.now();
-  console.log(end - start);
 
   const { selected } = await session.nms.run({
     detection: output0,
@@ -129,8 +126,6 @@ export const detectImage = async (
 
     overlay = mask_filter; // update overlay with the new one
   }
-  console.log(overlay);
-
   const mask_img = new ImageData(
     new Uint8ClampedArray(overlay.data),
     modelHeight,
@@ -159,7 +154,7 @@ const preprocessing = (
 ): any[] => {
   // @ts-ignore
   const cv = window.cv;
-  const mat = cv.imread(source); // read from img tag
+  const mat = source; // read from img tag
   const matC3 = new cv.Mat(mat.rows, mat.cols, cv.CV_8UC3); // new image matrix
   cv.cvtColor(mat, matC3, cv.COLOR_RGBA2BGR); // RGBA to BGR
 

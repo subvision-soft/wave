@@ -13,19 +13,17 @@
   opacity: 0;
   transition: var(--primary-transition);
   z-index: 1000;
+  flex-direction: column;
+
   &.loading {
     display: flex;
     visibility: visible;
     opacity: 1;
   }
 
-
-
-
-    img {
-      width: 70px;
-      height: 70px;
-      object-fit: contain;
-    }
-
+  img {
+    width: 70px;
+    height: 70px;
+    object-fit: contain;
+  }
 }
