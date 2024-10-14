@@ -1,18 +1,18 @@
-import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
-import { FilesService } from '../../services/files.service';
-import { HistoryService } from '../../services/history.service';
-import { Router, RouterLink } from '@angular/router';
-import { RSSParserService } from '../../services/rss-parser.service';
-import { AppSettings } from '../../utils/AppSettings';
-import { TagComponent } from '../../components/tag/tag.component';
-import { SessionItemComponent } from '../../components/session-item/session-item.component';
-import { EmptyTextComponent } from '../../components/empty-text/empty-text.component';
-import { TranslateModule } from '@ngx-translate/core';
-import { RippleDirective } from '../../directives/ripple.directive';
-import { LoadingComponent } from '../../components/loading/loading.component';
-import { NgForOf, NgIf } from '@angular/common';
-import { LogoComponent } from '../../components/logo/logo.component';
-import { HeaderComponent } from '../../components/header/header.component';
+import {Component, ElementRef, ViewChild} from '@angular/core';
+import {FilesService} from '../../services/files.service';
+import {HistoryService} from '../../services/history.service';
+import {Router, RouterLink} from '@angular/router';
+import {RSSParserService} from '../../services/rss-parser.service';
+import {AppSettings} from '../../utils/AppSettings';
+import {TagComponent} from '../../components/tag/tag.component';
+import {SessionItemComponent} from '../../components/session-item/session-item.component';
+import {EmptyTextComponent} from '../../components/empty-text/empty-text.component';
+import {TranslateModule} from '@ngx-translate/core';
+import {RippleDirective} from '../../directives/ripple.directive';
+import {LoadingComponent} from '../../components/loading/loading.component';
+import {NgForOf, NgIf} from '@angular/common';
+import {LogoComponent} from '../../components/logo/logo.component';
+import {HeaderComponent} from '../../components/header/header.component';
 
 @Component({
   selector: 'app-home',
@@ -35,7 +35,7 @@ import { HeaderComponent } from '../../components/header/header.component';
 })
 export class HomeComponent {
   open: boolean = false;
-  @ViewChild('app-page', { static: true }) el: ElementRef | undefined;
+  @ViewChild('app-page', {static: true}) el: ElementRef | undefined;
 
   actualitesLoading: boolean = true;
 
@@ -81,19 +81,10 @@ export class HomeComponent {
     return map;
   }
 
-  @HostListener('window:scroll', ['$event'])
-  onScroll(event: any) {
-    if (
-      event.target.offsetHeight + event.target.scrollTop >=
-      event.target.scrollHeight
-    ) {
-      console.log('End');
-    }
-  }
 
   openSession(url: string) {
     this.router
-      .navigate(['/sessions/session', { url: url }], {
+      .navigate(['/sessions/session', {url: url}], {
         queryParams: {
           url: url,
         },

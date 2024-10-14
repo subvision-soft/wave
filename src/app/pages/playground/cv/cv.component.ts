@@ -1,19 +1,13 @@
-import {
-  Component,
-  ElementRef,
-  HostListener,
-  Inject,
-  ViewChild,
-} from '@angular/core';
-import { CommonModule, DOCUMENT } from '@angular/common';
-import { OpencvImshowComponent } from '../../../components/opencv-imshow/opencv-imshow.component';
-import { OpenCVState } from '../../../../lib/models';
-import { NgxOpenCVService } from '../../../../lib/ngx-open-cv.service';
-import { Router } from '@angular/router';
-import { PlastronService } from '../../../services/plastron.service';
-import { FilesService } from '../../../services/files.service';
-import { RippleDirective } from '../../../directives/ripple.directive';
-import { CameraPreview } from '@capacitor-community/camera-preview';
+import {Component, ElementRef, HostListener, Inject, ViewChild,} from '@angular/core';
+import {CommonModule, DOCUMENT} from '@angular/common';
+import {OpencvImshowComponent} from '../../../components/opencv-imshow/opencv-imshow.component';
+import {OpenCVState} from '../../../../lib/models';
+import {NgxOpenCVService} from '../../../../lib/ngx-open-cv.service';
+import {Router} from '@angular/router';
+import {PlastronService} from '../../../services/plastron.service';
+import {FilesService} from '../../../services/files.service';
+import {RippleDirective} from '../../../directives/ripple.directive';
+import {CameraPreview} from '@capacitor-community/camera-preview';
 
 @Component({
   selector: 'app-cv',
@@ -143,7 +137,6 @@ export class CvComponent {
     private plastronService: PlastronService,
     private filesService: FilesService
   ) {
-    console.log('constructor');
     this.filesService.clearTarget();
     this.filesService.clearSession();
     CameraPreview.start({

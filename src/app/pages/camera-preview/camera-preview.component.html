@@ -1,24 +1,22 @@
 <!--webcam video-->
 <div class="camera-preview-container" #cameraPreview>
-  <div class="canvas"
-       [style.aspect-ratio]="width +'/'+ height"
-       [style.width]="parentWidth/parentHeight > width/height ? '100%' : 'auto'"
-       [style.height]="parentWidth/parentHeight > width/height ? 'auto' : '100%'"
-  >
-    <video #videoRef autoplay playsinline></video>
-    <canvas
-      #inputCanvasRef
-      width={input_shape[2]}
-      height={input_shape[3]}
-      hidden
-    ></canvas>
-    <canvas #canvasRef id="canvas" [width]="modelInputShape[2]" [height]="modelInputShape[3]"></canvas>
-    <canvas id="imshow" [width]="modelInputShape[2]" [height]="modelInputShape[3]"></canvas>
-  </div>
-  <app-loading *ngIf="loading" [loading]="!!loading">
-    <p>{{ loading.progress ? loading.text + ' - ' + loading.progress + '%' : loading.text }}</p>
-  </app-loading>
-  <div id="cameraPreview"></div>
+    <div class="canvas"
+         [style.aspect-ratio]="width +'/'+ height"
+         [style.width]="parentWidth/parentHeight > width/height ? '100%' : 'auto'"
+         [style.height]="parentWidth/parentHeight > width/height ? 'auto' : '100%'"
+    >
+        <video #videoRef autoplay playsinline></video>
+        <canvas
+            #inputCanvasRef
+            hidden
+        ></canvas>
+        <canvas #canvasRef id="canvas" [width]="modelInputShape[2]" [height]="modelInputShape[3]"></canvas>
+        <canvas id="imshow" [width]="modelInputShape[2]" [height]="modelInputShape[3]"></canvas>
+    </div>
+    <app-loading *ngIf="loading" [loading]="!!loading">
+        <p>{{ loading.progress ? loading.text + ' - ' + loading.progress + '%' : loading.text }}</p>
+    </app-loading>
+    <div id="cameraPreview"></div>
 
 </div>
 <!--<app-opencv-imshow></app-opencv-imshow>-->
