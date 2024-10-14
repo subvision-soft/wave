@@ -6,8 +6,9 @@ export const download = (url: string | URL, logger: any): Promise<any> => {
     if (logger) {
       const [log, setState] = logger;
       request.onprogress = (e) => {
-        const progress = (e.loaded / e.total) * 100;
-        setState({ text: log, progress: progress.toFixed(2) });
+        console.log(e);
+        const progress = ((e.loaded / e.total) * 100);
+        setState({text: log, progress: progress <= 100 ? progress.toFixed(2) : 100});
       };
     }
     request.onload = function () {

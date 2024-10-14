@@ -74,8 +74,6 @@ export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
         let input_canvas_ctx: CanvasRenderingContext2D | null;
         // capture frame loop
         const capture_frame_continuous = async () => {
-            const start = performance.now();
-            const startReadImage = performance.now();
             if (!this.continuous || this.loading) return;
             // @ts-ignore
             const cv = window.cv;
@@ -87,7 +85,6 @@ export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
                 this.inputCanvasRef.nativeElement.height
             ); // Draw frame to input <canvas>
             const frame_mat = cv.imread(this.inputCanvasRef.nativeElement); // read frame to Cv.Mat
-            const endReadImage = performance.now();
             this.width = frame_mat.cols;
             this.height = frame_mat.rows;
             detectImage(
@@ -98,10 +95,9 @@ export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
                 this.iouThreshold,
                 this.scoreThreshold,
                 this.modelInputShape
-            ); // detect
-
-            const end = performance.now();
-            requestAnimationFrame(capture_frame_continuous); // loop
+            ).then(() => {
+                requestAnimationFrame(capture_frame_continuous);
+            }); // detect
         };
 
         // get user media
@@ -133,6 +129,7 @@ export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
                 `${baseModelURL}/yolov8n-tsc-seg.onnx`,
                 ['Loading YOLO model', this.setLoading.bind(this)]
             );
+            this.setLoading({text: 'Warmup YOLO model...', progress: null});
             const yolov8 = await InferenceSession.create(arrBufYolo, options);
             const arrBufNMS = await download(`${baseModelURL}/nms-yolov8.onnx`, [
                 'Loading NMS model',
