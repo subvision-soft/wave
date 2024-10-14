@@ -69,7 +69,7 @@ export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
     this.openCVState = this.openCvService.cvState.subscribe((state) => {
       if (state.ready) {
         this.openCVState?.unsubscribe();
-        env.wasm.wasmPaths = '/assets/';
+        env.wasm.wasmPaths = 'https://cdn.jsdelivr.net/npm/onnxruntime-web@1.19.2/dist/'
         this.loadModel().then(async () => {
           await this.startCamera();
         });
@@ -133,25 +133,25 @@ export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
     try {
       console.log('loading model');
       const baseModelURL = `${window.location.origin}/assets/models`;
-      const arrBufNMS = await download(`${baseModelURL}/nms-yolov8.onnx`, [
-        'Loading NMS model',
-        this.setLoading.bind(this),
-      ]);
-      const nms = await InferenceSession.create(arrBufNMS, {
+      const options = {
         executionProviders: ['wasm'],
-      });
-
+      };
       const arrBufYolo = await download(
         `${baseModelURL}/yolov8n-tsc-seg.onnx`,
         ['Loading YOLO model', this.setLoading.bind(this)]
       );
-      const yolov8 = await InferenceSession.create(arrBufYolo);
+      const yolov8 = await InferenceSession.create(arrBufYolo, options);
+      const arrBufNMS = await download(`${baseModelURL}/nms-yolov8.onnx`, [
+        'Loading NMS model',
+        this.setLoading.bind(this),
+      ]);
 
+      const nms = await InferenceSession.create(arrBufNMS, options);
       const arrBufMask = await download(
         `${baseModelURL}/mask-yolov8-seg.onnx`,
         ['Loading Mask model', this.setLoading.bind(this)]
       );
-      const mask = await InferenceSession.create(arrBufMask);
+      const mask = await InferenceSession.create(arrBufMask, options);
 
       this.setLoading({ text: 'Warming up model...', progress: null });
       const tensor = new Tensor(

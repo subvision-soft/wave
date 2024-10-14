@@ -70,111 +70,111 @@
   --theme-color-2: var(--dark);
   --dark: #242e42;
   --color-primary-darker: color-mix(
-    in srgb,
-    var(--color-primary),
-    var(--theme-color-2) 10%
+      in srgb,
+      var(--color-primary),
+      var(--theme-color-2) 10%
   );
   --color-primary-lighter-1: color-mix(
-    in srgb,
-    var(--color-primary),
-    var(--theme-color-1) 20%
+      in srgb,
+      var(--color-primary),
+      var(--theme-color-1) 20%
   );
   --color-primary-lighter-3: color-mix(
-    in srgb,
-    var(--color-primary),
-    var(--theme-color-1) 40%
+      in srgb,
+      var(--color-primary),
+      var(--theme-color-1) 40%
   );
   --color-primary-lighter-4: color-mix(
-    in srgb,
-    var(--color-primary),
-    var(--theme-color-1) 60%
+      in srgb,
+      var(--color-primary),
+      var(--theme-color-1) 60%
   );
   --color-primary-lighter-5: color-mix(
-    in srgb,
-    var(--color-primary),
-    var(--theme-color-1) 80%
+      in srgb,
+      var(--color-primary),
+      var(--theme-color-1) 80%
   );
 
   --color-secondary-darker: color-mix(
-    in srgb,
-    var(--color-secondary),
-    var(--theme-color-2) 10%
+      in srgb,
+      var(--color-secondary),
+      var(--theme-color-2) 10%
   );
   --color-secondary-lighter-2: color-mix(
-    in srgb,
-    var(--color-secondary),
-    var(--theme-color-1) 20%
+      in srgb,
+      var(--color-secondary),
+      var(--theme-color-1) 20%
   );
   --color-secondary-lighter-3: color-mix(
-    in srgb,
-    var(--color-secondary),
-    var(--theme-color-1) 40%
+      in srgb,
+      var(--color-secondary),
+      var(--theme-color-1) 40%
   );
   --color-secondary-lighter-4: color-mix(
-    in srgb,
-    var(--color-secondary),
-    var(--theme-color-1) 60%
+      in srgb,
+      var(--color-secondary),
+      var(--theme-color-1) 60%
   );
   --color-secondary-lighter-5: color-mix(
-    in srgb,
-    var(--color-secondary),
-    var(--theme-color-1) 80%
+      in srgb,
+      var(--color-secondary),
+      var(--theme-color-1) 80%
   );
 
   --color-dark1-1: color-mix(
-    in srgb,
-    var(--color-primary),
-    var(--theme-color-2) 95%
+      in srgb,
+      var(--color-primary),
+      var(--theme-color-2) 95%
   );
   --color-dark1-2: color-mix(
-    in srgb,
-    var(--color-primary),
-    var(--theme-color-2) 85%
+      in srgb,
+      var(--color-primary),
+      var(--theme-color-2) 85%
   );
   --color-dark1-3: color-mix(
-    in srgb,
-    var(--color-primary),
-    var(--theme-color-2) 65%
+      in srgb,
+      var(--color-primary),
+      var(--theme-color-2) 65%
   );
   --color-dark1-4: color-mix(
-    in srgb,
-    var(--color-primary),
-    var(--theme-color-2) 45%
+      in srgb,
+      var(--color-primary),
+      var(--theme-color-2) 45%
   );
   --color-dark1-5: color-mix(
-    in srgb,
-    var(--color-primary),
-    var(--theme-color-2) 25%
+      in srgb,
+      var(--color-primary),
+      var(--theme-color-2) 25%
   );
   --color-dark1-6: color-mix(
-    in srgb,
-    var(--color-primary),
-    var(--theme-color-2) 5%
+      in srgb,
+      var(--color-primary),
+      var(--theme-color-2) 5%
   );
   --color-dark2-1: color-mix(
-    in srgb,
-    var(--theme-color-1),
-    var(--theme-color-2) 65%
+      in srgb,
+      var(--theme-color-1),
+      var(--theme-color-2) 65%
   );
   --color-dark2-2: color-mix(
-    in srgb,
-    var(--theme-color-1),
-    var(--theme-color-2) 45%
+      in srgb,
+      var(--theme-color-1),
+      var(--theme-color-2) 45%
   );
   --color-dark2-3: color-mix(
-    in srgb,
-    var(--theme-color-1),
-    var(--theme-color-2) 25%
+      in srgb,
+      var(--theme-color-1),
+      var(--theme-color-2) 25%
   );
   --color-dark2-4: color-mix(
-    in srgb,
-    var(--theme-color-1),
-    var(--theme-color-2) 5%
+      in srgb,
+      var(--theme-color-1),
+      var(--theme-color-2) 5%
   );
   --color-background-2: color-mix(
-    in srgb,
-    color-mix(in srgb, var(--color-primary), var(--theme-color-1) 95%),
-    #000 2%
+      in srgb,
+      color-mix(in srgb, var(--color-primary), var(--theme-color-1) 95%),
+      #000 2%
   );
   --color-background-1: var(--theme-color-1);
 
