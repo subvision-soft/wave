@@ -129,7 +129,7 @@ export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
                 `${baseModelURL}/yolov8n-tsc-seg.onnx`,
                 ['Loading YOLO model', this.setLoading.bind(this)]
             );
-            this.setLoading({text: 'Warmup YOLO model...', progress: null});
+            this.setLoading({text: 'Preheating YOLO model...', progress: null});
             const yolov8 = await InferenceSession.create(arrBufYolo, options);
             const arrBufNMS = await download(`${baseModelURL}/nms-yolov8.onnx`, [
                 'Loading NMS model',
