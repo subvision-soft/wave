@@ -112,7 +112,11 @@ export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
 
     // get user media
     this.camera_stream = await navigator.mediaDevices.getUserMedia({
-      video: true,
+      video: {
+        facingMode: 'environment',
+        width: { ideal: 3880 },
+        height: { ideal: 2160 },
+      },
       audio: false,
     });
     this.videoRef.nativeElement.srcObject = this.camera_stream; // set to <video>
