@@ -2,11 +2,14 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Impact } from '../../models/impact';
 import { Zone } from '../../models/zone';
 import { pluck } from 'rxjs';
+import { TagComponent } from '../tag/tag.component';
 
 @Component({
   selector: 'app-results-preview',
   templateUrl: './results-preview.component.html',
   styleUrl: './results-preview.component.scss',
+  standalone: true,
+  imports: [TagComponent],
 })
 export class ResultsPreviewComponent {
   @Input() public impacts: Impact[] = [];

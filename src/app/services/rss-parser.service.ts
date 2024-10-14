@@ -6,7 +6,9 @@ import { ParserCallback, RSSEntry } from 'rss-parser';
 import { HttpClient } from '@angular/common/http';
 import * as xml2js from 'xml2js';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class RSSParserService {
   constructor(private http: HttpClient) {}
 

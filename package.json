@@ -38,11 +38,13 @@
     "@zxing/ngx-scanner": "^17.0.1",
     "capacitor-blob-writer": "^1.1.14",
     "color": "^4.2.3",
+    "copy-webpack-plugin": "^12.0.2",
     "cordova-plugin-lottie-splashscreen": "github:timbru31/cordova-plugin-lottie-splashscreen",
     "cordova-plugin-screen-orientation": "^3.0.3",
     "cordova-plugin-zip": "^3.1.0",
     "es6-promise-plugin": "^4.2.2",
     "ngx-color-picker": "^14.0.0",
+    "onnxruntime-web": "^1.19.2",
     "rss-parser": "^3.13.0",
     "rxjs": "~7.8.0",
     "stream": "^0.0.2",
@@ -52,6 +54,7 @@
     "zone.js": "^0.14.2"
   },
   "devDependencies": {
+    "@angular-builders/custom-webpack": "^17.0.2",
     "@angular-devkit/build-angular": "^17.0.2",
     "@angular/cli": "^17.0.2",
     "@angular/compiler-cli": "^17.0.4",

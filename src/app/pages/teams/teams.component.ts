@@ -5,11 +5,36 @@ import { Session } from '../../models/session';
 import { Category } from '../../models/category';
 import { FilesService } from '../../services/files.service';
 import { UserLastnameFirstCharPipe } from '../../pipes/UserLastnameFirstCharPipe';
+import { SearchComponent } from '../../components/search/search.component';
+import { AddButtonComponent } from '../../components/add-button/add-button.component';
+import { EmptyTextComponent } from '../../components/empty-text/empty-text.component';
+import { TeamItemComponent } from '../../components/team-item/team-item.component';
+import { LongPressDirective } from '../../directives/long-press.directive';
+import { DatePipe, NgForOf, NgIf } from '@angular/common';
+import { MessageBoxComponent } from '../../components/message-box/message-box.component';
+import { InputComponent } from '../../components/input/input.component';
+import { SelectComponent } from '../../components/select/select.component';
+import { HeaderComponent } from '../../components/header/header.component';
 
 @Component({
   selector: 'app-teams',
   templateUrl: './teams.component.html',
   styleUrls: ['./teams.component.scss'],
+  standalone: true,
+  imports: [
+    SearchComponent,
+    AddButtonComponent,
+    EmptyTextComponent,
+    TeamItemComponent,
+    LongPressDirective,
+    NgIf,
+    NgForOf,
+    MessageBoxComponent,
+    InputComponent,
+    SelectComponent,
+    DatePipe,
+    HeaderComponent,
+  ],
 })
 export class TeamsComponent {
   searchValue = '';

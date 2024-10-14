@@ -6,6 +6,7 @@ import { User } from '../../models/user';
   selector: 'app-target-form',
   templateUrl: './target-form.component.html',
   styleUrl: './target-form.component.scss',
+  standalone: true,
 })
 export class TargetFormComponent {
   competitors: User[] = [];

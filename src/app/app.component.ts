@@ -2,14 +2,19 @@ import { Component, HostBinding, isDevMode } from '@angular/core';
 import { fadeAnimation } from './utils/animations';
 import { TranslateService } from '@ngx-translate/core';
 import { ParametersService } from './services/parameters.service';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { AppSettings } from './utils/AppSettings';
+import { ToastComponent } from './components/toast/toast.component';
+import { TabBarComponent } from './components/tab-bar/tab-bar.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   animations: [fadeAnimation],
+  standalone: true,
+  providers: [TranslateService],
+  imports: [RouterOutlet, ToastComponent, TabBarComponent],
 })
 export class AppComponent {
   title = 'wave';

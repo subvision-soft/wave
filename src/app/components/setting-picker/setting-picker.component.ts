@@ -7,6 +7,7 @@ import { ParameterType } from '../../models/parameter-type';
   selector: 'app-setting-picker',
   templateUrl: './setting-picker.component.html',
   styleUrls: ['./setting-picker.component.scss'],
+  standalone: true,
 })
 export class SettingPickerComponent {
   @Input() setting: Parameter = new Parameter();

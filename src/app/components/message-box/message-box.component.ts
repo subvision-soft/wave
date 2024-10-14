@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { InputComponent } from '../input/input.component';
+import { NgIf } from '@angular/common';
 
 interface Callback {
   btn: 'ok' | 'cancel';
@@ -39,6 +40,8 @@ interface Callback {
       ]),
     ]),
   ],
+  standalone: true,
+  imports: [InputComponent, NgIf],
 })
 export class MessageBoxComponent {
   get open(): boolean {

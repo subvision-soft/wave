@@ -5,6 +5,13 @@ import { FilesService } from '../../services/files.service';
 import { Event } from '../../models/event';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Router } from '@angular/router';
+import { SearchComponent } from '../../components/search/search.component';
+import { AddButtonComponent } from '../../components/add-button/add-button.component';
+import { HeaderComponent } from '../../components/header/header.component';
+import { SegmentedButtonComponent } from '../../components/segmented-button/segmented-button.component';
+import { ListTargetsComponent } from '../../components/list-targets/list-targets.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-targets',
@@ -21,6 +28,16 @@ import { Router } from '@angular/router';
         animate('300ms', style({ opacity: 0 })),
       ]),
     ]),
+  ],
+  standalone: true,
+  imports: [
+    SearchComponent,
+    AddButtonComponent,
+    HeaderComponent,
+    SegmentedButtonComponent,
+    ListTargetsComponent,
+    TranslateModule,
+    DatePipe,
   ],
 })
 export class TargetsComponent {

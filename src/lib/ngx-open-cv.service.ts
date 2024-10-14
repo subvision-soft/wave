@@ -1,10 +1,6 @@
-import { Inject, Injectable, InjectionToken, NgZone } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { OpenCVConfig, OpenCVState } from './models';
-
-export const OpenCvConfigToken = new InjectionToken<OpenCVConfig>(
-  'OpenCV config object token'
-);
 
 @Injectable({
   providedIn: 'root',
@@ -18,14 +14,8 @@ export class NgxOpenCVService {
   });
   configModule: OpenCvConfigModule;
 
-  constructor(
-    @Inject(OpenCvConfigToken) options: OpenCVConfig,
-    private _ngZone: NgZone
-  ) {
-    if (!options) {
-      options = {};
-    }
-    this.configModule = this.generateConfigModule(options);
+  constructor(private _ngZone: NgZone) {
+    this.configModule = this.generateConfigModule({});
     if (this.cvState.value.loading) {
       return;
     }

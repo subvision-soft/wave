@@ -1,11 +1,14 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Zone } from '../../models/zone';
 import { Impact } from '../../models/impact';
+import { NgForOf } from '@angular/common';
 
 @Component({
   selector: 'app-target-preview',
   templateUrl: './target-preview.component.html',
   styleUrls: ['./target-preview.component.scss'],
+  standalone: true,
+  imports: [NgForOf],
 })
 export class TargetPreviewComponent {
   @Input() public impacts: Impact[] = [];

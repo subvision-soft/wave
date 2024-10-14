@@ -7,7 +7,18 @@ import { Session } from '../../models/session';
 import { Router } from '@angular/router';
 import { ToastService, ToastTypes } from '../../services/toast.service';
 import { Target } from '../../models/target';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { HeaderComponent } from '../../components/header/header.component';
+import { SearchComponent } from '../../components/search/search.component';
+import { AddButtonComponent } from '../../components/add-button/add-button.component';
+import { TagComponent } from '../../components/tag/tag.component';
+import { SessionItemComponent } from '../../components/session-item/session-item.component';
+import { EmptyTextComponent } from '../../components/empty-text/empty-text.component';
+import { LongPressDirective } from '../../directives/long-press.directive';
+import { DatePipe, NgForOf, NgIf } from '@angular/common';
+import { RippleDirective } from '../../directives/ripple.directive';
+import { MessageBoxComponent } from '../../components/message-box/message-box.component';
+import { InputComponent } from '../../components/input/input.component';
 
 interface File {
   active: boolean;
@@ -29,6 +40,23 @@ interface File {
         animate('300ms', style({ opacity: 0 })),
       ]),
     ]),
+  ],
+  standalone: true,
+  imports: [
+    HeaderComponent,
+    SearchComponent,
+    AddButtonComponent,
+    TagComponent,
+    SessionItemComponent,
+    EmptyTextComponent,
+    LongPressDirective,
+    NgForOf,
+    TranslateModule,
+    NgIf,
+    RippleDirective,
+    MessageBoxComponent,
+    InputComponent,
+    DatePipe,
   ],
 })
 export class SessionsComponent {

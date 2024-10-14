@@ -8,6 +8,7 @@ import {
 
 @Directive({
   selector: '[ngVar]',
+  standalone: true,
 })
 export class NgVar<T = unknown> {
   private _context: NgVarContext<T> = new NgVarContext<T>();

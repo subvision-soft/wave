@@ -2,11 +2,25 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Target } from '../../models/target';
 import { Router } from '@angular/router';
 import { User } from '../../models/user';
+import { TargetItemComponent } from '../target-item/target-item.component';
+import { EmptyTextComponent } from '../empty-text/empty-text.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { LongPressDirective } from '../../directives/long-press.directive';
+import { NgForOf, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-list-targets',
   templateUrl: './list-targets.component.html',
   styleUrls: ['./list-targets.component.scss'],
+  standalone: true,
+  imports: [
+    TargetItemComponent,
+    EmptyTextComponent,
+    TranslateModule,
+    LongPressDirective,
+    NgForOf,
+    NgIf,
+  ],
 })
 export class ListTargetsComponent {
   @Input() targets: Target[] = [];

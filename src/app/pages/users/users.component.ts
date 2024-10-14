@@ -6,11 +6,36 @@ import { Category } from '../../models/category';
 import { FilesService } from '../../services/files.service';
 import { Target } from '../../models/target';
 import { Router } from '@angular/router';
+import { SearchComponent } from '../../components/search/search.component';
+import { HeaderComponent } from '../../components/header/header.component';
+import { DatePipe, NgForOf, NgIf } from '@angular/common';
+import { AddButtonComponent } from '../../components/add-button/add-button.component';
+import { EmptyTextComponent } from '../../components/empty-text/empty-text.component';
+import { UserItemComponent } from '../../components/user-item/user-item.component';
+import { LongPressDirective } from '../../directives/long-press.directive';
+import { MessageBoxComponent } from '../../components/message-box/message-box.component';
+import { InputComponent } from '../../components/input/input.component';
+import { SelectComponent } from '../../components/select/select.component';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss'],
+  standalone: true,
+  imports: [
+    SearchComponent,
+    HeaderComponent,
+    DatePipe,
+    AddButtonComponent,
+    EmptyTextComponent,
+    UserItemComponent,
+    NgIf,
+    LongPressDirective,
+    NgForOf,
+    MessageBoxComponent,
+    InputComponent,
+    SelectComponent,
+  ],
 })
 export class UsersComponent {
   set target(value: Target | undefined) {

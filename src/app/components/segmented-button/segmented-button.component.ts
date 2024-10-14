@@ -5,11 +5,15 @@ import {
   Input,
   Output,
 } from '@angular/core';
+import { TranslateModule } from '@ngx-translate/core';
+import { NgForOf } from '@angular/common';
 
 @Component({
   selector: 'app-segmented-button',
   templateUrl: './segmented-button.component.html',
   styleUrls: ['./segmented-button.component.scss'],
+  standalone: true,
+  imports: [TranslateModule, NgForOf],
 })
 export class SegmentedButtonComponent {
   public _selected: string = '';

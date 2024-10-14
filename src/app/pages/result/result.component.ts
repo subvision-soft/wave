@@ -21,8 +21,22 @@ import { User } from '../../models/user';
 import { ServerService } from '../../services/server.service';
 import { Category } from '../../models/category';
 import { StageModel } from '../../models/stage.model';
+import { InputComponent } from '../../components/input/input.component';
+import { SelectComponent } from '../../components/select/select.component';
+import { ChronoPickerComponent } from '../../components/chrono-picker/chrono-picker.component';
+import { MessageBoxComponent } from '../../components/message-box/message-box.component';
+import { SwiperItemComponent } from '../../components/swiper-item/swiper-item.component';
+import { TargetPreviewComponent } from '../../components/target-preview/target-preview.component';
+import { SpinnerComponent } from '../../components/spinner/spinner.component';
+import { ResultsPreviewComponent } from '../../components/results-preview/results-preview.component';
+import { SwiperComponent } from '../../components/swiper/swiper.component';
+import { TotalPreviewComponent } from '../../components/total-preview/total-preview.component';
+import { TagComponent } from '../../components/tag/tag.component';
+import { HeaderComponent } from '../../components/header/header.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { NgIf } from '@angular/common';
 
-@Pipe({ name: 'pluck' })
+@Pipe({ standalone: true, name: 'pluck' })
 export class PluckPipe implements PipeTransform {
   transform(value: any[], key: string): any {
     return value.map((value) => {
@@ -36,6 +50,24 @@ export class PluckPipe implements PipeTransform {
   selector: 'app-result',
   templateUrl: './result.component.html',
   styleUrls: ['./result.component.scss'],
+  standalone: true,
+  imports: [
+    InputComponent,
+    SelectComponent,
+    ChronoPickerComponent,
+    MessageBoxComponent,
+    SwiperItemComponent,
+    TargetPreviewComponent,
+    SpinnerComponent,
+    ResultsPreviewComponent,
+    SwiperComponent,
+    TotalPreviewComponent,
+    TagComponent,
+    HeaderComponent,
+    TranslateModule,
+    PluckPipe,
+    NgIf,
+  ],
 })
 export class ResultComponent implements OnInit {
   menuActions: Action[] = [

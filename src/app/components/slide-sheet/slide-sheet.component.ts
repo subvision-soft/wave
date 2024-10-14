@@ -10,6 +10,7 @@ import {
   selector: 'app-slide-sheet',
   templateUrl: './slide-sheet.component.html',
   styleUrls: ['./slide-sheet.component.scss'],
+  standalone: true,
 })
 export class SlideSheetComponent {
   @Input() @HostBinding('class.open') open: boolean = false;

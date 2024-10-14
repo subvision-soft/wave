@@ -2,11 +2,16 @@ import { Component, HostBinding } from '@angular/core';
 import { ToastService } from '../../services/toast.service';
 import { Router } from '@angular/router';
 import { ServerService } from '../../services/server.service';
+import { IconButtonComponent } from '../icon-button/icon-button.component';
+import { MessageBoxComponent } from '../message-box/message-box.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-server-connect',
   templateUrl: './server-connect.component.html',
   styleUrl: './server-connect.component.scss',
+  standalone: true,
+  imports: [IconButtonComponent, MessageBoxComponent, TranslateModule],
 })
 export class ServerConnectComponent {
   get connected(): boolean {

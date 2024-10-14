@@ -1,11 +1,14 @@
 import { Component, HostBinding, HostListener, Input } from '@angular/core';
 import { RippleDirective } from '../../directives/ripple.directive';
+import { NgIcon } from '@ng-icons/core';
 
 @Component({
   selector: 'app-button',
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss'],
   hostDirectives: [RippleDirective],
+  standalone: true,
+  imports: [NgIcon],
 })
 export class ButtonComponent {
   @Input() icon: string = '';

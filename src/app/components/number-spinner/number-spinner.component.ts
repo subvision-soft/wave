@@ -6,11 +6,14 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
+import { NgForOf, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-number-spinner',
   templateUrl: './number-spinner.component.html',
   styleUrls: ['./number-spinner.component.scss'],
+  standalone: true,
+  imports: [NgIf, NgForOf],
 })
 export class NumberSpinnerComponent {
   @ViewChild('container') container: ElementRef | undefined;

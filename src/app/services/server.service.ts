@@ -8,7 +8,9 @@ import { EventModel } from '../models/event.model';
 import { StageModel } from '../models/stage.model';
 import { Event } from '../models/event';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class ServerService {
   public connectionStatus: Subject<boolean> = new Subject<boolean>();
 

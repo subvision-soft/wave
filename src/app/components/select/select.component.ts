@@ -5,11 +5,16 @@ import {
   Input,
   Output,
 } from '@angular/core';
+import { NgForOf, NgIf } from '@angular/common';
+import { NgIcon } from '@ng-icons/core';
+import { SlideSheetComponent } from '../slide-sheet/slide-sheet.component';
 
 @Component({
   selector: 'app-select',
   templateUrl: './select.component.html',
   styleUrls: ['./select.component.scss'],
+  standalone: true,
+  imports: [NgForOf, NgIf, NgIcon, SlideSheetComponent],
 })
 export class SelectComponent {
   @Input() store: any[] = [];

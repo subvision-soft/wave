@@ -6,6 +6,7 @@ import { Event } from '../../models/event';
   selector: 'app-total-preview',
   templateUrl: './total-preview.component.html',
   styleUrls: ['./total-preview.component.scss'],
+  standalone: true,
 })
 export class TotalPreviewComponent {
   public _impacts: Impact[] = [];

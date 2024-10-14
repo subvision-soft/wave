@@ -1,11 +1,8 @@
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import 'zone.js';
+import { bootstrapApplication } from '@angular/platform-browser';
+import { AppComponent } from './app/app.component';
+import { appConfig } from './app.config';
 
-import { AppModule } from './app/app.module';
+bootstrapApplication(AppComponent, appConfig);
 
-platformBrowserDynamic()
-  .bootstrapModule(AppModule)
-  .catch((err) => console.error(err));
-platformBrowserDynamic()
-  .bootstrapModule(AppModule)
-  .catch((err) => console.error(err));
 declare let cv: any;

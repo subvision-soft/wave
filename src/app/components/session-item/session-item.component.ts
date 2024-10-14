@@ -3,12 +3,17 @@ import { FileInfo } from '@capacitor/filesystem';
 import { FilesService } from '../../services/files.service';
 import { Session } from '../../models/session';
 import { RippleDirective } from '../../directives/ripple.directive';
+import { DatePipe, NgIf } from '@angular/common';
+import { NgIcon } from '@ng-icons/core';
+import { LogoComponent } from '../logo/logo.component';
 
 @Component({
   selector: 'app-session-item',
   templateUrl: './session-item.component.html',
   styleUrls: ['./session-item.component.scss'],
   hostDirectives: [RippleDirective],
+  standalone: true,
+  imports: [NgIf, NgIcon, LogoComponent, DatePipe],
 })
 export class SessionItemComponent {
   get file(): FileInfo | undefined {

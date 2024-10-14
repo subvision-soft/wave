@@ -1,14 +1,37 @@
 import { Component, ElementRef, HostListener, ViewChild } from '@angular/core';
 import { FilesService } from '../../services/files.service';
 import { HistoryService } from '../../services/history.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { RSSParserService } from '../../services/rss-parser.service';
 import { AppSettings } from '../../utils/AppSettings';
+import { TagComponent } from '../../components/tag/tag.component';
+import { SessionItemComponent } from '../../components/session-item/session-item.component';
+import { EmptyTextComponent } from '../../components/empty-text/empty-text.component';
+import { TranslateModule } from '@ngx-translate/core';
+import { RippleDirective } from '../../directives/ripple.directive';
+import { LoadingComponent } from '../../components/loading/loading.component';
+import { NgForOf, NgIf } from '@angular/common';
+import { LogoComponent } from '../../components/logo/logo.component';
+import { HeaderComponent } from '../../components/header/header.component';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
+  standalone: true,
+  imports: [
+    TagComponent,
+    SessionItemComponent,
+    EmptyTextComponent,
+    TranslateModule,
+    RippleDirective,
+    LoadingComponent,
+    NgIf,
+    LogoComponent,
+    HeaderComponent,
+    RouterLink,
+    NgForOf,
+  ],
 })
 export class HomeComponent {
   open: boolean = false;

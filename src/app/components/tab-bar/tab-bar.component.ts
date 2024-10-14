@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { iconoirHome } from '@ng-icons/iconoir';
 import { Router } from '@angular/router';
+import { TabBarButtonComponent } from '../tab-bar-button/tab-bar-button.component';
+import { NgForOf } from '@angular/common';
 
 class Tab {
   active?: boolean = false;
@@ -13,6 +15,8 @@ class Tab {
   selector: 'app-tab-bar',
   templateUrl: './tab-bar.component.html',
   styleUrls: ['./tab-bar.component.scss'],
+  standalone: true,
+  imports: [TabBarButtonComponent, NgForOf],
 })
 export class TabBarComponent {
   @Input() tabs: Tab[] = [];

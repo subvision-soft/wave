@@ -2,12 +2,16 @@ import { Component, HostBinding, Input } from '@angular/core';
 import { User } from '../../models/user';
 import { Session } from '../../models/session';
 import { RippleDirective } from '../../directives/ripple.directive';
+import { NgIcon } from '@ng-icons/core';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-user-item',
   templateUrl: './user-item.component.html',
   styleUrls: ['./user-item.component.scss'],
   hostDirectives: [RippleDirective],
+  standalone: true,
+  imports: [NgIcon, NgIf],
 })
 export class UserItemComponent {
   @Input() user: User | undefined;

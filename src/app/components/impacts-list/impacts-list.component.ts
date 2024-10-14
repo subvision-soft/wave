@@ -1,10 +1,13 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Impact } from '../../models/impact';
+import { NgForOf } from '@angular/common';
 
 @Component({
   selector: 'app-impacts-list',
   templateUrl: './impacts-list.component.html',
   styleUrls: ['./impacts-list.component.scss'],
+  standalone: true,
+  imports: [NgForOf],
 })
 export class ImpactsListComponent {
   protected _impacts: Impact[] = [];

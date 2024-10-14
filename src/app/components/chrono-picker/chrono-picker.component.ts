@@ -5,11 +5,16 @@ import {
   Input,
   Output,
 } from '@angular/core';
+import { NgIcon } from '@ng-icons/core';
+import { SlideSheetComponent } from '../slide-sheet/slide-sheet.component';
+import { NumberSpinnerComponent } from '../number-spinner/number-spinner.component';
 
 @Component({
   selector: 'app-chrono-picker',
   templateUrl: './chrono-picker.component.html',
   styleUrls: ['./chrono-picker.component.scss'],
+  standalone: true,
+  imports: [NgIcon, SlideSheetComponent, NumberSpinnerComponent],
 })
 export class ChronoPickerComponent {
   _time: number = 0; // milliseconds

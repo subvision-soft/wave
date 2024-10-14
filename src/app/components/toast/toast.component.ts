@@ -7,11 +7,15 @@ import {
   ViewChild,
 } from '@angular/core';
 import { ToastService, ToastTypes } from '../../services/toast.service';
+import { TranslateModule } from '@ngx-translate/core';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-toast',
   templateUrl: './toast.component.html',
   styleUrls: ['./toast.component.scss'],
+  standalone: true,
+  imports: [TranslateModule, NgIf],
 })
 export class ToastComponent implements OnInit {
   @ViewChild('element', { static: false }) progressBar?: ElementRef;

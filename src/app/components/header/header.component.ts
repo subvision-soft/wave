@@ -6,13 +6,18 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { Location } from '@angular/common';
+import { Location, NgIf } from '@angular/common';
 import { Action } from '../../models/action';
+import { IconButtonComponent } from '../icon-button/icon-button.component';
+import { ServerConnectComponent } from '../server-connect/server-connect.component';
+import { MenuComponent } from '../menu/menu.component';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
+  standalone: true,
+  imports: [IconButtonComponent, NgIf, ServerConnectComponent, MenuComponent],
 })
 export class HeaderComponent {
   @Input() showBack: boolean = true;

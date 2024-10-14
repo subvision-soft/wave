@@ -1,237 +1,134 @@
+// app.component.ts
 import {
-  AfterViewInit,
   Component,
   ElementRef,
-  HostListener,
-  Inject,
-  OnDestroy,
+  inject,
+  OnInit,
   ViewChild,
 } from '@angular/core';
-import { CameraPreview } from '@capacitor-community/camera-preview';
+import { env, InferenceSession, Tensor } from 'onnxruntime-web';
+import { download } from '../../utils/download';
+import { detectImage } from '../../utils/detect';
+import { NgIf } from '@angular/common';
 import { NgxOpenCVService } from '../../../lib/ngx-open-cv.service';
-import { DOCUMENT } from '@angular/common';
-import { Router } from '@angular/router';
-import { PlastronService } from '../../services/plastron.service';
-import { OpenCVState } from '../../../lib/models';
-import { FilesService } from '../../services/files.service';
-import { WebcamService } from '../../services/webcam.service';
 
 @Component({
   selector: 'app-camera-preview',
   templateUrl: './camera-preview.component.html',
   styleUrls: ['./camera-preview.component.scss'],
+  standalone: true,
+  imports: [NgIf],
 })
-export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
-  flash: boolean = false;
+export class CameraPreviewComponent implements OnInit {
+  @ViewChild('inputImage') inputImage!: ElementRef;
+  @ViewChild('imageRef') imageRef!: ElementRef;
+  @ViewChild('canvasRef') canvasRef!: ElementRef<HTMLCanvasElement>;
+  private openCvService: NgxOpenCVService = inject(NgxOpenCVService);
 
-  get coordinatesPercent(): any {
-    return this._coordinatesPercent;
-  }
+  session: any = null;
+  loading: { text: string; progress: number | null } | null = {
+    text: 'Loading OpenCV.js',
+    progress: null,
+  };
+  image: string | null = null;
 
-  set coordinatesPercent(value: any) {
-    this._coordinatesPercent = value;
-    this.path?.nativeElement.setAttribute('d', this.getPath());
-  }
+  // Configs
+  modelName = 'yolov8n-tsc-seg.onnx';
+  modelInputShape = [1, 3, 640, 640];
+  topk = 100;
+  iouThreshold = 0.45;
+  scoreThreshold = 0.85;
 
-  stream: MediaStream | undefined;
-
-  @ViewChild('svg') svg: ElementRef | undefined;
-  @ViewChild('path') path: ElementRef | undefined;
-  @ViewChild('cameraPreview') cameraPreview: ElementRef | undefined;
-  private playing: boolean = true;
-  parentHeight: number = 0;
-  parentWidth: number = 0;
-
-  @HostListener('window:resize', ['$event'])
-  onResize() {
-    this.updateParentSize();
-  }
-
-  private updateParentSize() {
-    this.parentHeight = this.cameraPreview?.nativeElement.offsetHeight;
-    this.parentWidth = this.cameraPreview?.nativeElement.offsetWidth;
-  }
-
-  ngAfterViewInit() {
-    this.updateParentSize();
-    // this.initOpencv();
-  }
-
-  ngOnDestroy() {
-    this.playing = false;
-    CameraPreview.stop();
-  }
-
-  height: number = 0;
-  width: number = 0;
-  currentFps: number = 0;
-  private _coordinatesPercent: any = null;
-  private frame: any = null;
-  loading: boolean = false;
-
-  searchingPlastron: boolean = false;
-
-  capture() {
-    console.log('### capture ###');
-    console.log('this.frame', this.frame);
-    const scope = this;
-    this.playing = false;
-    this.flash = true;
-    setTimeout(() => {
-      scope.router.navigate(['camera/result']);
-      this.flash = false;
-    }, 500);
-  }
-
-  getPath() {
-    let result = '';
-    if (!this._coordinatesPercent) {
-      return;
-    }
-    for (const coordinate of this._coordinatesPercent) {
-      result += `${coordinate.x * 100},${coordinate.y * 100} `;
-    }
-    return `M ${result.slice(0, -1)} Z`;
-  }
-
-  constructor(
-    private ngxOpenCv: NgxOpenCVService,
-    @Inject(DOCUMENT) document: Document,
-    private router: Router,
-    private plastronService: PlastronService,
-    private filesService: FilesService,
-    private webcamService: WebcamService
-  ) {
-    console.log('constructor');
-    this.filesService.clearTarget();
-    this.filesService.clearSession();
-    CameraPreview.start({
-      parent: 'cameraPreview',
-      position: 'rear',
-      disableAudio: true,
-      toBack: true,
-    }).then((r) => this.initOpencv());
-  }
-
-  initOpencv() {
-    // subscribe to status of OpenCV module
-    this.ngxOpenCv.cvState.subscribe((cvState: OpenCVState) => {
-      if (cvState.error) {
-        // handle errors
-        console.log('error');
-      } else if (cvState.loading) {
-        // e.g. show loading indicator
-        console.log('loading');
-      } else if (cvState.ready) {
-        // do image processing stuff
-        console.log('ready');
-        this.playing = true;
-        this.startWebcam();
+  ngOnInit(): void {
+    this.openCvService.loadOpenCv();
+    this.openCvService.cvState.subscribe((state) => {
+      if (state.ready) {
+        env.wasm.wasmPaths = '/assets/';
+        this.loadModel();
       }
     });
   }
 
-  _base64ToImageData(buffer: string, width: number, height: number) {
-    return new Promise((resolve) => {
-      var image = new Image();
-      image.addEventListener('load', function (e: Event) {
-        var canvasElement = document.createElement('canvas');
-        canvasElement.width = width;
-        canvasElement.height = height;
-        var context = canvasElement.getContext('2d');
-        // @ts-ignore
-        context.drawImage(
-          e.target as HTMLImageElement,
-          0,
-          0,
-          image.naturalWidth,
-          image.naturalHeight
-        );
+  async loadModel(): Promise<void> {
+    try {
+      const baseModelURL = `${window.location.origin}/assets/models`;
 
-        // @ts-ignore
-        resolve(
-          context?.getImageData(0, 0, image.naturalWidth, image.naturalHeight)
-        );
+      const arrBufNMS = await download(`${baseModelURL}/nms-yolov8.onnx`, [
+        'Loading NMS model',
+        this.setLoading.bind(this),
+      ]);
+      const nms = await InferenceSession.create(arrBufNMS, {
+        executionProviders: ['wasm'],
       });
-      image.src = 'data:image/png;base64,' + buffer;
-      image.style.display = 'none';
-      document.body.appendChild(image);
-      setTimeout(() => {
-        document.body.removeChild(image);
-      }, 1);
-    });
+
+      const arrBufYolo = await download(
+        `${baseModelURL}/yolov8n-tsc-seg.onnx`,
+        ['Loading YOLO model', this.setLoading.bind(this)]
+      );
+      const yolov8 = await InferenceSession.create(arrBufYolo);
+
+      const arrBufMask = await download(
+        `${baseModelURL}/mask-yolov8-seg.onnx`,
+        ['Loading Mask model', this.setLoading.bind(this)]
+      );
+      const mask = await InferenceSession.create(arrBufMask);
+
+      this.setLoading({ text: 'Warming up model...', progress: null });
+      const tensor = new Tensor(
+        'float32',
+        new Float32Array(this.modelInputShape.reduce((a, b) => a * b)),
+        this.modelInputShape
+      );
+      await yolov8.run({ images: tensor });
+
+      this.session = { net: yolov8, nms: nms, mask: mask };
+      this.setLoading(null);
+    } catch (error) {
+      console.error(error);
+      this.setLoading(null);
+    }
   }
 
-  startWebcam() {
-    console.log('startWebcam');
-    const cv = this.plastronService.cv;
-    let frame: any = null;
-    if (this.plastronService.getFrame()) {
-      frame = this.plastronService.getFrame();
-    } else {
-      frame = new cv.Mat(this.height, this.width, cv.CV_8UC4);
-    }
-    const fps = 24;
-    const scope = this;
+  setLoading(loading: { text: string; progress: number | null } | null): void {
+    this.loading = loading;
+  }
 
-    let currentFps = 0;
-    let currentTimestamp = new Date().getTime();
-
-    function processVideo() {
-      if (new Date().getTime() - currentTimestamp > 1000) {
-        scope.currentFps = currentFps;
-        currentFps = 0;
-        currentTimestamp = new Date().getTime();
-      } else {
-        currentFps += 1;
-      }
-
-      if (!scope.playing) {
-        return;
-      }
-      try {
-        CameraPreview.captureSample({
-          quality: 100,
-        }).then((result: { value: string }) => {
-          console.log('result', result);
-
-          scope._base64ToImageData(result.value, 2000, 2000).then((data) => {
-            frame = cv.matFromImageData(data);
-            // cv.flip(frame, frame, 1);
-
-            scope.width = frame.cols;
-            scope.height = frame.rows;
-            console.log('frame', scope.width);
-
-            // cv.imshow('canvas', frame);
-            if (!scope.searchingPlastron) {
-              scope.searchingPlastron = true;
-              try {
-                scope.coordinatesPercent =
-                  scope.plastronService.getSheetCoordinates(frame);
-              } catch (err) {
-                console.log(err);
-              } finally {
-                scope.searchingPlastron = false;
-              }
-
-              if (!scope.coordinatesPercent) {
-                scope.frame = null;
-              } else {
-                scope.frame = frame;
-                scope.plastronService.setFrame(frame);
-              }
-            }
-          });
-        });
-      } catch (err) {
-        console.log(err);
-      }
-
-      setTimeout(processVideo, 1000 / fps);
+  handleImageChange(event: any): void {
+    if (this.image) {
+      URL.revokeObjectURL(this.image);
+      this.image = null;
     }
 
-    // schedule the first one.
-    setTimeout(processVideo, 0);
+    const file = event.target.files[0];
+    if (file) {
+      const url = URL.createObjectURL(file);
+      this.imageRef.nativeElement.src = url;
+      this.image = url;
+    }
+  }
+
+  openLocalImage(): void {
+    this.inputImage.nativeElement.click();
+  }
+
+  closeImage(): void {
+    this.inputImage.nativeElement.value = '';
+    this.imageRef.nativeElement.src = '#';
+    URL.revokeObjectURL(this.image!);
+    this.image = null;
+  }
+
+  onImageLoad(): void {
+    if (this.image) {
+      detectImage(
+        this.imageRef.nativeElement,
+        this.canvasRef.nativeElement,
+        this.session,
+        this.topk,
+        this.iouThreshold,
+        this.scoreThreshold,
+        this.modelInputShape
+      );
+    }
   }
 }

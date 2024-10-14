@@ -6,11 +6,15 @@ import {
   Output,
 } from '@angular/core';
 import { Action } from '../../models/action';
+import { MenuActionComponent } from '../menu-action/menu-action.component';
+import { NgForOf } from '@angular/common';
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss'],
+  standalone: true,
+  imports: [MenuActionComponent, NgForOf],
 })
 export class MenuComponent {
   get currentActions(): Action[] {

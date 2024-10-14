@@ -3,6 +3,9 @@ import { FilesService } from '../../services/files.service';
 import { FileInfo } from '@capacitor/filesystem';
 import { Router } from '@angular/router';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { EmptyTextComponent } from '../empty-text/empty-text.component';
+import { SessionItemComponent } from '../session-item/session-item.component';
+import { NgForOf, NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-file-explorer',
@@ -20,6 +23,8 @@ import { animate, style, transition, trigger } from '@angular/animations';
       ]),
     ]),
   ],
+  standalone: true,
+  imports: [EmptyTextComponent, SessionItemComponent, NgForOf, NgIf],
 })
 export class FileExplorerComponent {
   constructor(private filesService: FilesService, private router: Router) {

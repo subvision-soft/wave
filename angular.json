@@ -27,7 +27,12 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              {
+                "glob": "**/*.wasm",
+                "input": "node_modules/onnxruntime-web/dist/",
+                "output": "/assets/"
+              }
             ],
             "styles": [
               "src/styles.scss"
@@ -66,8 +71,8 @@
           "options": {
             "browserTarget": "web-ui:build",
             "headers": {
-              "Cross-Origin-Opener-Policy": "unsafe-none",
-              "Cross-Origin-Embedder-Policy": "credentialless",
+              "Cross-Origin-Opener-Policy": "same-origin",
+              "Cross-Origin-Embedder-Policy": "require-corp",
               "Cross-Origin-Resource-Policy": "cross-origin"
             }
           },
@@ -110,6 +115,9 @@
     }
   },
   "cli": {
-    "analytics": "2a923e87-1257-411e-aa60-1608e149288f"
+    "analytics": "2a923e87-1257-411e-aa60-1608e149288f",
+    "cache": {
+      "enabled": false
+    }
   }
 }

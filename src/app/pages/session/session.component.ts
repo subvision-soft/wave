@@ -1,13 +1,28 @@
 import { Component, OnInit } from '@angular/core';
 import { Action } from '../../models/action';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Session } from '../../models/session';
 import { FilesService } from '../../services/files.service';
+import { TranslateModule } from '@ngx-translate/core';
+import { NgIcon } from '@ng-icons/core';
+import { DatePipe, NgPlural } from '@angular/common';
+import { RippleDirective } from '../../directives/ripple.directive';
+import { HeaderComponent } from '../../components/header/header.component';
 
 @Component({
   selector: 'app-session',
   templateUrl: './session.component.html',
   styleUrls: ['./session.component.scss'],
+  standalone: true,
+  imports: [
+    TranslateModule,
+    NgIcon,
+    NgPlural,
+    RippleDirective,
+    RouterLink,
+    DatePipe,
+    HeaderComponent,
+  ],
 })
 export class SessionComponent implements OnInit {
   session: Session = {
