@@ -5,13 +5,6 @@
        [style.width]="parentWidth/parentHeight > width/height ? '100%' : 'auto'"
        [style.height]="parentWidth/parentHeight > width/height ? 'auto' : '100%'"
   >
-    <img
-      #imageRef
-      src="#"
-      alt=""
-      [style.display]="image ? 'block' : 'none'"
-      (load)="onImageLoad()"
-    />
     <video #videoRef autoplay playsinline></video>
     <canvas
       #inputCanvasRef

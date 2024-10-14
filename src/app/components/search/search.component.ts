@@ -1,13 +1,14 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgIcon } from '@ng-icons/core';
 import { FormsModule } from '@angular/forms';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
   styleUrls: ['./search.component.scss'],
   standalone: true,
-  imports: [NgIcon, FormsModule],
+  imports: [NgIcon, FormsModule, NgIf],
 })
 export class SearchComponent {
   get value(): string {

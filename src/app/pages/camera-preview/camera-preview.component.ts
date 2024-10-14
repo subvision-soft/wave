@@ -1,11 +1,11 @@
 // app.component.ts
 import {
+  AfterViewInit,
   Component,
   ElementRef,
   HostListener,
   inject,
   OnDestroy,
-  OnInit,
   ViewChild,
 } from '@angular/core';
 import { env, InferenceSession, Tensor } from 'onnxruntime-web';
@@ -14,6 +14,7 @@ import { detectImage } from '../../utils/detect';
 import { NgIf } from '@angular/common';
 import { NgxOpenCVService } from '../../../lib/ngx-open-cv.service';
 import { LoadingComponent } from '../../components/loading/loading.component';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-camera-preview',
@@ -22,7 +23,7 @@ import { LoadingComponent } from '../../components/loading/loading.component';
   standalone: true,
   imports: [NgIf, LoadingComponent],
 })
-export class CameraPreviewComponent implements OnInit, OnDestroy {
+export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
   @ViewChild('inputImage') inputImage!: ElementRef;
   @ViewChild('imageRef') imageRef!: ElementRef;
   @ViewChild('videoRef') videoRef!: ElementRef;
@@ -31,6 +32,8 @@ export class CameraPreviewComponent implements OnInit, OnDestroy {
   private openCvService: NgxOpenCVService = inject(NgxOpenCVService);
   parentHeight: number = 0;
   parentWidth: number = 0;
+  private continuous: boolean = false;
+  private openCVState: Subscription;
 
   @HostListener('window:resize', ['$event'])
   onResize() {
@@ -59,26 +62,29 @@ export class CameraPreviewComponent implements OnInit, OnDestroy {
   width: number;
   height: number;
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {}
+
+  constructor() {
     this.openCvService.loadOpenCv();
-    this.openCvService.cvState.subscribe((state) => {
+    this.openCVState = this.openCvService.cvState.subscribe((state) => {
       if (state.ready) {
+        this.openCVState?.unsubscribe();
         env.wasm.wasmPaths = '/assets/';
-        this.loadModel().then(() => {
-          this.startCamera();
+        this.loadModel().then(async () => {
+          await this.startCamera();
         });
       }
     });
   }
 
   async startCamera(): Promise<void> {
+    console.log('start camera');
     this.loading = { text: 'Starting Camera...', progress: null };
-    let continuous: boolean;
     let input_canvas_ctx: CanvasRenderingContext2D | null;
     // capture frame loop
     const capture_frame_continuous = async () => {
-      if (!continuous) return;
-      this.loading = null;
+      console.log('capture frame');
+      if (!this.continuous || this.loading) return;
       // @ts-ignore
       const cv = window.cv;
       input_canvas_ctx?.drawImage(
@@ -104,32 +110,25 @@ export class CameraPreviewComponent implements OnInit, OnDestroy {
       requestAnimationFrame(capture_frame_continuous); // loop
     };
 
-    if (this.camera_stream) {
-      // stop camera
-      this.camera_stream.getTracks().forEach((track) => track.stop());
-      this.videoRef.nativeElement.srcObject = null;
-      this.camera_stream = null;
-      continuous = false;
-    } else {
-      // get user media
-      this.camera_stream = await navigator.mediaDevices.getUserMedia({
-        video: true,
-        audio: false,
-      });
-      this.videoRef.nativeElement.srcObject = this.camera_stream; // set to <video>
-      input_canvas_ctx = this.inputCanvasRef.nativeElement.getContext('2d', {
-        willReadFrequently: true,
-      }); // get input <canvas> ctx
-      // start frame capture
-      continuous = true;
-      capture_frame_continuous();
-    }
+    // get user media
+    this.camera_stream = await navigator.mediaDevices.getUserMedia({
+      video: true,
+      audio: false,
+    });
+    this.videoRef.nativeElement.srcObject = this.camera_stream; // set to <video>
+    input_canvas_ctx = this.inputCanvasRef.nativeElement.getContext('2d', {
+      willReadFrequently: true,
+    }); // get input <canvas> ctx
+    // start frame capture
+    this.continuous = true;
+    this.loading = null;
+    capture_frame_continuous();
   }
 
   async loadModel(): Promise<void> {
     try {
+      console.log('loading model');
       const baseModelURL = `${window.location.origin}/assets/models`;
-
       const arrBufNMS = await download(`${baseModelURL}/nms-yolov8.onnx`, [
         'Loading NMS model',
         this.setLoading.bind(this),
@@ -169,44 +168,13 @@ export class CameraPreviewComponent implements OnInit, OnDestroy {
     this.loading = loading;
   }
 
-  handleImageChange(event: any): void {
-    if (this.image) {
-      URL.revokeObjectURL(this.image);
-      this.image = null;
-    }
-
-    const file = event.target.files[0];
-    if (file) {
-      const url = URL.createObjectURL(file);
-      this.imageRef.nativeElement.src = url;
-      this.image = url;
-    }
+  ngOnDestroy(): void {
+    this.openCVState?.unsubscribe();
+    // stop camera
+    console.log('stop camera');
+    this.camera_stream?.getTracks()?.forEach((track) => track.stop());
+    this.videoRef.nativeElement.srcObject = null;
+    this.camera_stream = null;
+    this.continuous = false;
   }
-
-  openLocalImage(): void {
-    this.inputImage.nativeElement.click();
-  }
-
-  closeImage(): void {
-    this.inputImage.nativeElement.value = '';
-    this.imageRef.nativeElement.src = '#';
-    URL.revokeObjectURL(this.image!);
-    this.image = null;
-  }
-
-  onImageLoad(): void {
-    if (this.image) {
-      detectImage(
-        this.imageRef.nativeElement,
-        this.canvasRef.nativeElement,
-        this.session,
-        this.topk,
-        this.iouThreshold,
-        this.scoreThreshold,
-        this.modelInputShape
-      );
-    }
-  }
-
-  ngOnDestroy(): void {}
 }

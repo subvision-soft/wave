@@ -29,7 +29,6 @@ export class SelectComponent {
   @Input() @HostBinding('class.compact') compact: boolean = false;
 
   get displayedField(): string[] {
-    console.log('displayedField', this.value);
     if (Array.isArray(this.value)) {
       return this.value.map((value) => {
         const record = this.store.find(

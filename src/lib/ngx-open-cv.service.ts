@@ -26,6 +26,12 @@ export class NgxOpenCVService {
    * load the OpenCV script
    */
   loadOpenCv() {
+    if (this.cvState.value.loading || this.cvState.value.ready) {
+      if (this.cvState.value.ready) {
+        this.cvState.next(this.newState('ready'));
+      }
+      return;
+    }
     console.log('loading OpenCV.js');
     this.cvState.next(this.newState('loading'));
     // create global module variable

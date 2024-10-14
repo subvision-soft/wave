@@ -1,7 +1,7 @@
 import { HttpClient, provideHttpClient } from '@angular/common/http';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom, isDevMode } from '@angular/core';
 import { routes } from './app.routes';
 import { provideRouter } from '@angular/router';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -45,6 +45,7 @@ import {
   jamSearch,
   jamSignal,
 } from '@ng-icons/jam-icons';
+import { provideServiceWorker } from '@angular/service-worker';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -53,8 +54,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    importProvidersFrom(
-      NgIconsModule.withIcons({
+    importProvidersFrom(NgIconsModule.withIcons({
         iconoirHomeSimpleDoor,
         iconoirCamera,
         iconoirSettings,
@@ -90,17 +90,19 @@ export const appConfig: ApplicationConfig = {
         jamMoreVerticalF,
         jamPlus,
         jamClose,
-      }),
-      TranslateModule.forRoot({
+    }), TranslateModule.forRoot({
         loader: {
-          provide: TranslateLoader,
-          useFactory: HttpLoaderFactory,
-          deps: [HttpClient],
+            provide: TranslateLoader,
+            useFactory: HttpLoaderFactory,
+            deps: [HttpClient],
         },
-      })
-    ),
+    })),
     provideRouter(routes),
     provideAnimations(),
     provideHttpClient(),
-  ],
+    provideServiceWorker('ngsw-worker.js', {
+        enabled: !isDevMode(),
+        registrationStrategy: 'registerWhenStable:30000'
+    })
+],
 };
