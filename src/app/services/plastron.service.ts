@@ -1,15 +1,17 @@
-import { Injectable } from '@angular/core';
-import { LogService } from './log.service';
-import { Zone } from '../models/zone';
-import { Impact } from '../models/impact';
-import { OpencvImshowService } from './opencv-imshow.service';
+import {Injectable} from '@angular/core';
+import {LogService} from './log.service';
+import {Zone} from '../models/zone';
+import {Impact} from '../models/impact';
+import {OpencvImshowService} from './opencv-imshow.service';
 
 class PointCv {
-  constructor(public x: number = -1, public y: number = -1) {}
+  constructor(public x: number = -1, public y: number = -1) {
+  }
 }
 
 export class Cible {
-  constructor(public impacts: Impact[] = [], public image: any = null) {}
+  constructor(public impacts: Impact[] = [], public image: any = null) {
+  }
 }
 
 @Injectable({
@@ -35,7 +37,8 @@ export class PlastronService {
   constructor(
     private logger: LogService,
     private opencvImshowService: OpencvImshowService
-  ) {}
+  ) {
+  }
 
   // UTILS FUNCTIONS ##########
   toRadians = (degrees: number) => {
@@ -184,7 +187,7 @@ export class PlastronService {
           let dy2 = p3.y - p2.y;
           let angle = Math.abs(
             (Math.atan2(dx1 * dy2 - dy1 * dx2, dx1 * dx2 + dy1 * dy2) * 180) /
-              Math.PI
+            Math.PI
           );
           angles.push(angle);
         }
@@ -269,41 +272,16 @@ export class PlastronService {
   getSheetCoordinates(mat: any) {
     // Enhance image for edge detection
     this.opencvImshowService.showImage(mat, 'original', 'original');
-    const clone = mat.clone();
-    this.cv.resize(
-      clone,
-      clone,
-      new this.cv.Size(
-        this.PICTURE_SIZE_SHEET_DETECTION,
-        this.PICTURE_SIZE_SHEET_DETECTION
-      )
-    );
-    const enhancedImage = this.enhancedImageForEdgeDetection(clone, 5);
-    this.cv.bitwise_not(enhancedImage, enhancedImage);
-    //Get edges and dilate them
-    let kernelSize = this.PICTURE_SIZE_SHEET_DETECTION / 200;
-    let kernel = new this.cv.Mat.ones(kernelSize, kernelSize, this.cv.CV_8UC1);
-    let dilatedEdges = new this.cv.Mat();
-    this.cv.dilate(
-      this.getEdges(enhancedImage, 5),
-      dilatedEdges,
-      kernel,
-      new this.cv.Point(-1, -1),
-      1
-    );
 
-    this.opencvImshowService.showImage(dilatedEdges, 'dilated', 'dilated');
     let contours = new this.cv.MatVector();
     let hierarchy = new this.cv.Mat();
     this.cv.findContours(
-      dilatedEdges,
+      mat,
       contours,
       hierarchy,
       this.cv.RETR_CCOMP,
       this.cv.CHAIN_APPROX_SIMPLE
     );
-    this.cv.drawContours(clone, contours, -1, [255, 0, 255, 255], 1);
-    this.opencvImshowService.showImage(clone, 'contours', 'contours');
     let contoursArray = [];
     for (let i = 0; i < contours.size(); i++) {
       contoursArray.push(contours.get(i));
@@ -314,11 +292,8 @@ export class PlastronService {
     );
     const biggestContour = this.getBiggestValidContour(contoursArray);
 
-    clone.delete();
-    enhancedImage.delete();
     contours.delete();
     hierarchy.delete();
-    dilatedEdges.delete();
 
     if (!biggestContour) {
       return null;
@@ -364,8 +339,8 @@ export class PlastronService {
     let concat = firstHalf.concat(secondHalf);
     concat = this.coordinatesToPercentage(
       concat,
-      this.PICTURE_SIZE_SHEET_DETECTION,
-      this.PICTURE_SIZE_SHEET_DETECTION
+      mat.cols,
+      mat.rows
     );
     console.log(concat);
     biggestContour.delete();
@@ -984,8 +959,8 @@ export class PlastronService {
       let ellipse = hashMapVisuels[zone];
       let center = new this.cv.Point(ellipse.center.x, ellipse.center.y);
       let axes = new this.cv.Size(
-        { ...ellipse.size }.width / 2,
-        { ...ellipse.size }.height / 2
+        {...ellipse.size}.width / 2,
+        {...ellipse.size}.height / 2
       );
       let angle = ellipse.angle;
       let startAngle = 0;
@@ -1005,7 +980,7 @@ export class PlastronService {
         thickness,
         lineType
       );
-      let size = { ...ellipse.size };
+      let size = {...ellipse.size};
       size.width *= 0.2;
       size.height *= 0.2;
       axes = new this.cv.Size(size.width / 2, size.height / 2);
@@ -1021,7 +996,7 @@ export class PlastronService {
         thickness,
         lineType
       );
-      size = { ...ellipse.size };
+      size = {...ellipse.size};
       size.width *= 0.6;
       size.height *= 0.6;
       axes = new this.cv.Size(size.width / 2, size.height / 2);
@@ -1037,7 +1012,7 @@ export class PlastronService {
         thickness,
         lineType
       );
-      size = { ...ellipse.size };
+      size = {...ellipse.size};
       size.width *= 1.4;
       size.height *= 1.4;
       axes = new this.cv.Size(size.width / 2, size.height / 2);
@@ -1053,7 +1028,7 @@ export class PlastronService {
         thickness,
         lineType
       );
-      size = { ...ellipse.size };
+      size = {...ellipse.size};
       size.width *= 1.8;
       size.height *= 1.8;
       axes = new this.cv.Size(size.width / 2, size.height / 2);

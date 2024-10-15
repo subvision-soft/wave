@@ -1,11 +1,8 @@
-import { Component, OnDestroy, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import {
-  OpencvImshowData,
-  OpencvImshowService,
-} from '../../services/opencv-imshow.service';
-import { NgxOpenCVService } from '../../../lib/ngx-open-cv.service';
-import { Subscription } from 'rxjs';
+import {Component, OnDestroy, ViewChild} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {OpencvImshowData, OpencvImshowService,} from '../../services/opencv-imshow.service';
+import {NgxOpenCVService} from '../../../lib/ngx-open-cv.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-opencv-imshow',
@@ -51,9 +48,10 @@ export class OpencvImshowComponent implements OnDestroy {
   addCanvas(data: OpencvImshowData) {
     let image = data.image?.clone();
 
+    const size = new this.cv.Size(300, 300);
     if (this.ids.has(data.id)) {
       console.log('already exists');
-      this.cv.resize(image, image, new this.cv.Size(300, 300));
+      this.cv.resize(image, image, size);
       this.cv.imshow(data.id, image);
       image.delete();
       return;
@@ -72,7 +70,7 @@ export class OpencvImshowComponent implements OnDestroy {
     this.container.nativeElement.appendChild(div);
     const clone = image.clone();
 
-    this.cv.resize(clone, clone, new this.cv.Size(300, 300));
+    this.cv.resize(clone, clone, size);
     this.cv.imshow(canvas.id, clone);
     clone.delete();
   }

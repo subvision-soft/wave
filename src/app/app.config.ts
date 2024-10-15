@@ -26,6 +26,7 @@ import {
   jamMoreVerticalF,
   jamPlus,
   jamSearch,
+  jamSignal,
 } from '@ng-icons/jam-icons';
 import {
   iconoirCamera,
@@ -57,6 +58,7 @@ export const appConfig: ApplicationConfig = {
         iconoirSettings,
         iconoirNavArrowLeft,
         iconoirNavArrowDown,
+
         iconoirDashboardDots,
         iconoirTimer,
         iconoirCheck,
@@ -81,6 +83,7 @@ export const appConfig: ApplicationConfig = {
         jamSearch,
         jamMoreVerticalF,
         jamPlus,
+        jamSignal,
         jamClose,
       }),
       TranslateModule.forRoot({
