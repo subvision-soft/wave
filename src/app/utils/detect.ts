@@ -2,6 +2,7 @@ import {Tensor} from 'onnxruntime-web';
 import {Colors} from './renderBox';
 import {labels} from './labels';
 import {HttpClient} from '@angular/common/http';
+import {EndpointsUtils} from './EndpointsUtils';
 
 const colors = new Colors();
 const numClass = labels.length;
@@ -117,9 +118,7 @@ export const detectImage = async (
   } else {
     const imageData = inputCanvas.toDataURL("image/png").replace(/^data:image\/\w+;base64,/, ""); // Get base64 data from canvas
     return await new Promise((resolve, reject) => {
-      http.post('https://wave-api-6rqq.onrender.com/detect-target', {image_data: imageData}, {
-        withCredentials: true
-      }).subscribe((res) => {
+      http.post(EndpointsUtils.getPathDetectTarget(), {image_data: imageData}).subscribe((res) => {
         resolve(res);
       });
     });

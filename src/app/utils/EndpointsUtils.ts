@@ -1,5 +1,6 @@
-class EndpointsUtils {
+export class EndpointsUtils {
   public static root: string = '';
+  public static api: string = 'http://127.0.0.1:8000';
   public static competitonId: string = '';
 
   getPathCompetitions(id: string) {
@@ -8,7 +9,8 @@ class EndpointsUtils {
       .join('/');
   }
 
-  getPathCurrentCompetition() {}
+  getPathCurrentCompetition() {
+  }
 
   getPathCompetitors(id: string) {
     return [EndpointsUtils.root, 'competitors', id]
@@ -28,6 +30,19 @@ class EndpointsUtils {
       'targets',
       targetId,
     ]
+      .filter((v) => !!v)
+      .join('/');
+  }
+
+
+  public static getPathGenToken() {
+    return [EndpointsUtils.api, 'generate-token']
+      .filter((v) => !!v)
+      .join('/');
+  }
+
+  public static getPathDetectTarget() {
+    return [EndpointsUtils.api, 'detect-target']
       .filter((v) => !!v)
       .join('/');
   }
