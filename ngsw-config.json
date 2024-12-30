@@ -31,6 +31,7 @@
     {
       "name": "api-calls",
       "urls": [
+        "https://corsproxy.io/**",
         "https://wave-api-6rqq.onrender.com/**",
         "/api/**"
       ],
