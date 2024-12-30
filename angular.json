@@ -66,12 +66,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "wave:build:production",
-              "proxyConfig": "src/proxy.conf.json"
+              "buildTarget": "wave:build:production"
             },
             "development": {
-              "buildTarget": "wave:build:development",
-              "proxyConfig": "src/proxy.conf.json"
+              "buildTarget": "wave:build:development"
             }
           },
           "defaultConfiguration": "development"

@@ -26,5 +26,18 @@
         ]
       }
     }
+  ],
+  "dataGroups": [
+    {
+      "name": "api-calls",
+      "urls": [
+        "https://wave-api-6rqq.onrender.com/**"
+      ],
+      "cacheConfig": {
+        "maxSize": 0,
+        "maxAge": "0s",
+        "strategy": "freshness"
+      }
+    }
   ]
 }
