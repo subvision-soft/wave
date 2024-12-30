@@ -1,6 +1,6 @@
 export class EndpointsUtils {
   public static root: string = '';
-  public static api: string = 'http://127.0.0.1:8000';
+  public static api: string = 'https://wave-api-6rqq.onrender.com/generate-token';
   public static competitonId: string = '';
 
   getPathCompetitions(id: string) {
