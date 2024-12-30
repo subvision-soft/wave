@@ -62,7 +62,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.http.get('/api/generate-token').subscribe((res) => {
+    this.http.get('https://wave-api-6rqq.onrender.com/generate-token').subscribe((res) => {
       console.log('token', res);
     })
   }
