@@ -4,7 +4,7 @@ import {provideRouter} from '@angular/router';
 import {routes} from './app.routes';
 import {provideServiceWorker} from '@angular/service-worker';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
-import {HttpClient, provideHttpClient} from '@angular/common/http';
+import {HttpClient, provideHttpClient, withInterceptors} from '@angular/common/http';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {provideAnimations} from '@angular/platform-browser/animations';
 import {
@@ -43,6 +43,7 @@ import {
   iconoirTimer,
 } from '@ng-icons/iconoir';
 import {NgIconsModule} from '@ng-icons/core';
+import {authInterceptor} from '../auth/auth.interceptor';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -86,16 +87,17 @@ export const appConfig: ApplicationConfig = {
         jamSignal,
         jamClose,
       }),
+
       TranslateModule.forRoot({
         loader: {
           provide: TranslateLoader,
           useFactory: HttpLoaderFactory,
           deps: [HttpClient],
         },
-      })
+      }),
     ),
     provideRouter(routes),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([authInterceptor])),
     provideAnimations(),
     provideServiceWorker('ngsw-worker.js', {
       enabled: !isDevMode(),

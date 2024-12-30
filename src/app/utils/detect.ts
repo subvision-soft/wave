@@ -1,6 +1,7 @@
 import {Tensor} from 'onnxruntime-web';
 import {Colors} from './renderBox';
 import {labels} from './labels';
+import {HttpClient} from '@angular/common/http';
 
 const colors = new Colors();
 const numClass = labels.length;
@@ -16,109 +17,113 @@ const numClass = labels.length;
  * @param {Number[]} inputShape model input shape. Normally in YOLO model [batch, channels, width, height]
  */
 export const detectImage = async (
-  image: any,
-  canvas: HTMLCanvasElement,
-  session: any,
-  topk: any,
-  iouThreshold: any,
-  scoreThreshold: any,
-  inputShape: any
-) => {
-  const ctx = canvas.getContext('2d');
-  if (!ctx) return;
-  ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height); // clean canvas
+  image: any, canvas: HTMLCanvasElement, session: any, topk: any, iouThreshold: any, scoreThreshold: any, inputShape: any, http: HttpClient, offlineMode: boolean, inputCanvas: HTMLCanvasElement) => {
+  if (offlineMode) {
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height); // clean canvas
 
-  const [modelWidth, modelHeight] = inputShape.slice(2);
-  const maxSize = Math.max(modelWidth, modelHeight); // max size in input model
-  const [input, xRatio, yRatio] = preprocessing(image, modelWidth, modelHeight); // preprocess frame
+    const [modelWidth, modelHeight] = inputShape.slice(2);
+    const maxSize = Math.max(modelWidth, modelHeight); // max size in input model
+    const [input, xRatio, yRatio] = preprocessing(image, modelWidth, modelHeight); // preprocess frame
 
-  const tensor = new Tensor('float32', input.data32F, inputShape); // to ort.Tensor
-  const config = new Tensor(
-    'float32',
-    new Float32Array([
-      numClass, // num class
-      topk, // topk per class
-      iouThreshold, // iou threshold
-      scoreThreshold, // score threshold
-    ])
-  ); // nms config tensor
-  const start = performance.now();
-  const {output0, output1} = await session.net.run({images: tensor}); // run session and get output layer. out1: detect layer, out2: seg layer
-  const end = performance.now();
-  console.log('Execution time: ' + (end - start) + 'ms');
-
-  const {selected} = await session.nms.run({
-    detection: output0,
-    config: config,
-  }); // perform nms and filter boxes
-
-  let overlay = new Tensor(
-    'uint8',
-    new Uint8Array(modelHeight * modelWidth * 4),
-    [modelHeight, modelWidth, 4]
-  ); // create overlay to draw segmentation object
-
-  // looping through output
-  for (let idx = 0; idx < selected.dims[1]; idx++) {
-    const data = selected.data.slice(
-      idx * selected.dims[2],
-      (idx + 1) * selected.dims[2]
-    ); // get rows
-    let box = data.slice(0, 4); // det boxes
-    const scores = data.slice(4, 4 + numClass); // det classes probability scores
-    const score = Math.max(...scores); // maximum probability scores
-    const label = scores.indexOf(score); // class id of maximum probability scores
-    const color = colors.get(label); // get color
-
-    box = overflowBoxes(
-      [
-        box[0] - 0.5 * box[2], // before upscale x
-        box[1] - 0.5 * box[3], // before upscale y
-        box[2], // before upscale w
-        box[3], // before upscale h
-      ],
-      maxSize
-    ); // keep boxes in maxSize range
-
-    const [x, y, w, h] = overflowBoxes(
-      [
-        Math.floor(box[0] * xRatio), // upscale left
-        Math.floor(box[1] * yRatio), // upscale top
-        Math.floor(box[2] * xRatio), // upscale width
-        Math.floor(box[3] * yRatio), // upscale height
-      ],
-      maxSize
-    ); // upscale boxes
-
-    const mask = new Tensor(
+    const tensor = new Tensor('float32', input.data32F, inputShape); // to ort.Tensor
+    const config = new Tensor(
       'float32',
       new Float32Array([
-        ...box, // original scale box
-        ...data.slice(4 + numClass), // mask data
+        numClass, // num class
+        topk, // topk per class
+        iouThreshold, // iou threshold
+        scoreThreshold, // score threshold
       ])
-    ); // mask input
-    const maskConfig = new Tensor(
-      'float32',
-      new Float32Array([
-        maxSize,
-        x, // upscale x
-        y, // upscale y
-        w, // upscale width
-        h, // upscale height
-        ...(Colors.hexToRgba(color, 120) || []), // color in RGBA
-      ])
-    ); // mask config
-    const {mask_filter} = await session.mask.run({
-      detection: mask,
-      mask: output1,
-      config: maskConfig,
-      overlay: overlay,
-    }); // perform post-process to get mask
+    ); // nms config tensor
+    const start = performance.now();
+    const {output0, output1} = await session.net.run({images: tensor}); // run session and get output layer. out1: detect layer, out2: seg layer
+    const end = performance.now();
+    console.log('Execution time: ' + (end - start) + 'ms');
 
-    overlay = mask_filter; // update overlay with the new one
+    const {selected} = await session.nms.run({
+      detection: output0,
+      config: config,
+    }); // perform nms and filter boxes
+
+    let overlay = new Tensor(
+      'uint8',
+      new Uint8Array(modelHeight * modelWidth * 4),
+      [modelHeight, modelWidth, 4]
+    ); // create overlay to draw segmentation object
+
+    // looping through output
+    for (let idx = 0; idx < selected.dims[1]; idx++) {
+      const data = selected.data.slice(
+        idx * selected.dims[2],
+        (idx + 1) * selected.dims[2]
+      ); // get rows
+      let box = data.slice(0, 4); // det boxes
+      const scores = data.slice(4, 4 + numClass); // det classes probability scores
+      const score = Math.max(...scores); // maximum probability scores
+      const label = scores.indexOf(score); // class id of maximum probability scores
+      const color = colors.get(label); // get color
+
+      box = overflowBoxes(
+        [
+          box[0] - 0.5 * box[2], // before upscale x
+          box[1] - 0.5 * box[3], // before upscale y
+          box[2], // before upscale w
+          box[3], // before upscale h
+        ],
+        maxSize
+      ); // keep boxes in maxSize range
+
+      const [x, y, w, h] = overflowBoxes(
+        [
+          Math.floor(box[0] * xRatio), // upscale left
+          Math.floor(box[1] * yRatio), // upscale top
+          Math.floor(box[2] * xRatio), // upscale width
+          Math.floor(box[3] * yRatio), // upscale height
+        ],
+        maxSize
+      ); // upscale boxes
+
+      const mask = new Tensor(
+        'float32',
+        new Float32Array([
+          ...box, // original scale box
+          ...data.slice(4 + numClass), // mask data
+        ])
+      ); // mask input
+      const maskConfig = new Tensor(
+        'float32',
+        new Float32Array([
+          maxSize,
+          x, // upscale x
+          y, // upscale y
+          w, // upscale width
+          h, // upscale height
+          ...(Colors.hexToRgba(color, 120) || []), // color in RGBA
+        ])
+      ); // mask config
+      const {mask_filter} = await session.mask.run({
+        detection: mask,
+        mask: output1,
+        config: maskConfig,
+        overlay: overlay,
+      }); // perform post-process to get mask
+
+      overlay = mask_filter; // update overlay with the new one
+    }
+    input.delete(); // delete unused Mat
+    return convertOverlayToMask(overlay, modelHeight, modelWidth);
+  } else {
+    const imageData = inputCanvas.toDataURL("image/png").replace(/^data:image\/\w+;base64,/, ""); // Get base64 data from canvas
+    return await new Promise((resolve, reject) => {
+      http.post('/api/detect-target', {image_data: imageData}).subscribe((res) => {
+        resolve(res);
+      });
+    });
+
   }
-  input.delete(); // delete unused Mat
-  return convertOverlayToMask(overlay, modelHeight, modelWidth);
+
 };
 
 

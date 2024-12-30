@@ -1,5 +1,5 @@
 // app.component.ts
-import {AfterViewInit, Component, ElementRef, HostListener, inject, OnDestroy, ViewChild,} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, HostListener, inject, OnDestroy, signal, ViewChild,} from '@angular/core';
 import {env, InferenceSession, Tensor} from 'onnxruntime-web/wasm';
 import {download} from '../../utils/download';
 import {detectImage} from '../../utils/detect';
@@ -9,6 +9,8 @@ import {LoadingComponent} from '../../components/loading/loading.component';
 import {Subscription} from 'rxjs';
 import {OpencvImshowComponent} from '../../components/opencv-imshow/opencv-imshow.component';
 import {PlastronService} from '../../services/plastron.service';
+import "@tensorflow/tfjs-backend-webgl";
+import {HttpClient} from '@angular/common/http'; // set backend to webgl
 
 @Component({
   selector: 'app-camera-preview',
@@ -25,11 +27,12 @@ export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
   @ViewChild('inputCanvasRef') inputCanvasRef!: ElementRef<HTMLCanvasElement>;
   private openCvService: NgxOpenCVService = inject(NgxOpenCVService);
 
-  private plastronService: PlastronService = inject(PlastronService);
+  private http: HttpClient = inject(HttpClient);
 
-  get coordinatesPercent(): any {
-    return this._coordinatesPercent;
-  }
+
+  private offlineMode = signal(false);
+
+  private plastronService: PlastronService = inject(PlastronService);
 
   set coordinatesPercent(value: any) {
     this._coordinatesPercent = value;
@@ -100,21 +103,30 @@ export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
   }
 
   constructor() {
-    this.openCvService.loadOpenCv();
-    this.openCVState = this.openCvService.cvState.subscribe((state) => {
-      if (state.ready) {
-        this.openCVState?.unsubscribe();
-        env.wasm.wasmPaths = 'https://cdn.jsdelivr.net/npm/onnxruntime-web@1.19.2/dist/';
-        this.loadModel().then(async () => {
-          await this.startCamera();
-        });
-      }
-    });
+
+    if (this.offlineMode()) {
+      this.openCvService.loadOpenCv();
+      this.openCVState = this.openCvService.cvState.subscribe((state) => {
+        if (state.ready) {
+          this.openCVState?.unsubscribe();
+          env.wasm.wasmPaths = 'https://cdn.jsdelivr.net/npm/onnxruntime-web@1.19.2/dist/';
+          this.loadModel().then(async () => {
+            await this.startCamera();
+          });
+        }
+      });
+    } else {
+      this.startCamera();
+    }
+
   }
 
   async startCamera(): Promise<void> {
     this.loading = {text: 'Starting Camera...', progress: null};
     let input_canvas_ctx: CanvasRenderingContext2D | null;
+
+    let maxFps = 5;
+
     // capture frame loop
     const capture_frame_continuous = async () => {
       if (!this.continuous || this.loading) return;
@@ -131,22 +143,38 @@ export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
       this.width = frame_mat.cols;
       this.height = frame_mat.rows;
       const start = performance.now();
-      detectImage(
+
+
+      await detectImage(
         frame_mat,
         this.canvasRef.nativeElement,
         this.session,
         this.topk,
         this.iouThreshold,
         this.scoreThreshold,
-        this.modelInputShape
-      ).then((mask) => {
+        this.modelInputShape,
+        this.http,
+        this.offlineMode(),
+        this.inputCanvasRef.nativeElement
+      ).then((result) => {
         const end = performance.now();
-        console.log('Execution time: ' + (end - start) + 'ms');
-        this.coordinates = this.plastronService.getSheetCoordinates(mask);
-        console.log('Execution time: ' + (end - start) + 'ms');
-        this.coordinatesToPercent(this.coordinates);
-        mask.delete();
-        requestAnimationFrame(capture_frame_continuous);
+
+        if (this.offlineMode()) {
+          console.log('Execution time: ' + (end - start) + 'ms');
+          this.coordinates = this.plastronService.getSheetCoordinates(result);
+          console.log('Execution time: ' + (end - start) + 'ms');
+          this.coordinatesToPercent(this.coordinates);
+          result.delete();
+        } else {
+          this.coordinates = result?.map((res: any) => {
+            return {x: res[0], y: res[1]};
+          });
+          this.coordinatesToPercent(this.coordinates);
+        }
+
+        let delay = 1000 / maxFps - (performance.now() - start);
+        if (delay < 0) delay = 0;
+        setTimeout(() => requestAnimationFrame(capture_frame_continuous), delay);
       }); // detect
     };
 
@@ -170,42 +198,44 @@ export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
   }
 
   async loadModel(): Promise<void> {
-    try {
-      const baseModelURL = `${window.location.origin}/assets/models`;
-      const options: InferenceSession.SessionOptions = {
-        executionProviders: ['wasm'],
-      };
-      const arrBufYolo = await download(
-        `${baseModelURL}/yolov8n-tsc-seg.onnx`,
-        ['Loading YOLO model', this.setLoading.bind(this)]
-      );
-      this.setLoading({text: 'Preheating YOLO model...', progress: null});
-      const yolov8 = await InferenceSession.create(arrBufYolo, options);
-      const arrBufNMS = await download(`${baseModelURL}/nms-yolov8.onnx`, [
-        'Loading NMS model',
-        this.setLoading.bind(this),
-      ]);
+    if (!this.offlineMode()) {
+      try {
+        const baseModelURL = `${window.location.origin}/assets/models`;
+        const options: InferenceSession.SessionOptions = {
+          executionProviders: ['wasm'],
+        };
+        const arrBufYolo = await download(
+          `${baseModelURL}/yolov8n-tsc-seg.onnx`,
+          ['Loading YOLO model', this.setLoading.bind(this)]
+        );
+        this.setLoading({text: 'Preheating YOLO model...', progress: null});
+        const yolov8 = await InferenceSession.create(arrBufYolo, options);
+        const arrBufNMS = await download(`${baseModelURL}/nms-yolov8.onnx`, [
+          'Loading NMS model',
+          this.setLoading.bind(this),
+        ]);
 
-      const nms = await InferenceSession.create(arrBufNMS, options);
-      const arrBufMask = await download(
-        `${baseModelURL}/mask-yolov8-seg.onnx`,
-        ['Loading Mask model', this.setLoading.bind(this)]
-      );
-      const mask = await InferenceSession.create(arrBufMask, options);
+        const nms = await InferenceSession.create(arrBufNMS, options);
+        const arrBufMask = await download(
+          `${baseModelURL}/mask-yolov8-seg.onnx`,
+          ['Loading Mask model', this.setLoading.bind(this)]
+        );
+        const mask = await InferenceSession.create(arrBufMask, options);
 
-      this.setLoading({text: 'Warming up model...', progress: null});
-      const tensor = new Tensor(
-        'float32',
-        new Float32Array(this.modelInputShape.reduce((a, b) => a * b)),
-        this.modelInputShape
-      );
-      await yolov8.run({images: tensor});
-      this.session = {net: yolov8, nms: nms, mask: mask};
-      this.setLoading(null);
-    } catch (error) {
-      console.error(error);
-      this.setLoading(null);
+        this.setLoading({text: 'Warming up model...', progress: null});
+        const tensor = new Tensor(
+          'float32',
+          new Float32Array(this.modelInputShape.reduce((a, b) => a * b)),
+          this.modelInputShape
+        );
+        await yolov8.run({images: tensor});
+        this.session = {net: yolov8, nms: nms, mask: mask};
+      } catch (error) {
+        console.error(error);
+      }
     }
+    this.setLoading(null);
+
   }
 
   setLoading(loading: { text: string; progress: number | null } | null): void {

@@ -1,0 +1,9 @@
+{
+  "/api": {
+    "target": "https://wave-api-6rqq.onrender.com",
+    "secure": false,
+    "pathRewrite": {
+      "^/api": ""
+    }
+  }
+}
