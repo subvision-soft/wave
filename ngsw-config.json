@@ -31,7 +31,8 @@
     {
       "name": "api-calls",
       "urls": [
-        "https://wave-api-6rqq.onrender.com/**"
+        "https://wave-api-6rqq.onrender.com/**",
+        "/api/**"
       ],
       "cacheConfig": {
         "maxSize": 0,

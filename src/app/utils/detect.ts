@@ -117,7 +117,7 @@ export const detectImage = async (
   } else {
     const imageData = inputCanvas.toDataURL("image/png").replace(/^data:image\/\w+;base64,/, ""); // Get base64 data from canvas
     return await new Promise((resolve, reject) => {
-      http.post('https://wave-api-6rqq.onrender.com/detect-target', {image_data: imageData}).subscribe((res) => {
+      http.post('api/detect-target', {image_data: imageData}).subscribe((res) => {
         resolve(res);
       });
     });

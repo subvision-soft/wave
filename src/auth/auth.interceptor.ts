@@ -7,7 +7,7 @@ export function authInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn):
   return next(req).pipe(
     catchError((error) => {
       if (error.status === 401) {
-        inject(HttpClient).get('https://wave-api-6rqq.onrender.com/generate-token').pipe(
+        inject(HttpClient).get('api/generate-token').pipe(
           switchMap(() => {
             return next(req);
           })

@@ -104,24 +104,20 @@ export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
 
   constructor() {
 
-    if (this.offlineMode()) {
-      this.openCvService.loadOpenCv();
-      this.openCVState = this.openCvService.cvState.subscribe((state) => {
-        if (state.ready) {
-          this.openCVState?.unsubscribe();
-          env.wasm.wasmPaths = 'https://cdn.jsdelivr.net/npm/onnxruntime-web@1.19.2/dist/';
-          this.loadModel().then(async () => {
-            await this.startCamera();
-          });
-        }
-      });
-    } else {
-      this.startCamera();
-    }
-
+    this.openCvService.loadOpenCv();
+    this.openCVState = this.openCvService.cvState.subscribe((state) => {
+      if (state.ready) {
+        this.openCVState?.unsubscribe();
+        env.wasm.wasmPaths = 'https://cdn.jsdelivr.net/npm/onnxruntime-web@1.19.2/dist/';
+        this.loadModel().then(async () => {
+          await this.startCamera();
+        });
+      }
+    });
   }
 
   async startCamera(): Promise<void> {
+    console.log('Starting Camera...');
     this.loading = {text: 'Starting Camera...', progress: null};
     let input_canvas_ctx: CanvasRenderingContext2D | null;
 
@@ -194,11 +190,12 @@ export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
     // start frame capture
     this.continuous = true;
     this.loading = null;
-    capture_frame_continuous();
+    this.setLoading(null);
+    await capture_frame_continuous();
   }
 
   async loadModel(): Promise<void> {
-    if (!this.offlineMode()) {
+    if (this.offlineMode()) {
       try {
         const baseModelURL = `${window.location.origin}/assets/models`;
         const options: InferenceSession.SessionOptions = {
@@ -230,11 +227,14 @@ export class CameraPreviewComponent implements AfterViewInit, OnDestroy {
         );
         await yolov8.run({images: tensor});
         this.session = {net: yolov8, nms: nms, mask: mask};
+        this.setLoading(null);
+
       } catch (error) {
         console.error(error);
+        this.setLoading(null);
+
       }
     }
-    this.setLoading(null);
 
   }
 
