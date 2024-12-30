@@ -67,7 +67,7 @@
           "configurations": {
             "production": {
               "buildTarget": "wave:build:production",
-              "proxyConfig": "src/proxy.conf.prod.json"
+              "proxyConfig": "src/proxy.conf.json"
             },
             "development": {
               "buildTarget": "wave:build:development",
