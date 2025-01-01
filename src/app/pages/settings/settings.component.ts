@@ -1,14 +1,14 @@
-import { Component } from '@angular/core';
-import { Parameter } from '../../models/parameter';
-import { ParameterType } from '../../models/parameter-type';
-import { ParametersService } from '../../services/parameters.service';
-import { FilesService } from '../../services/files.service';
-import { HeaderComponent } from '../../components/header/header.component';
-import { SearchComponent } from '../../components/search/search.component';
-import { InputComponent } from '../../components/input/input.component';
-import { NgForOf, NgIf } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
-import { SelectComponent } from '../../components/select/select.component';
+import {Component} from '@angular/core';
+import {Parameter} from '../../models/parameter';
+import {ParameterType} from '../../models/parameter-type';
+import {ParametersService} from '../../services/parameters.service';
+import {FilesService} from '../../services/files.service';
+import {HeaderComponent} from '../../components/header/header.component';
+import {SearchComponent} from '../../components/search/search.component';
+import {InputComponent} from '../../components/input/input.component';
+import {NgForOf, NgIf} from '@angular/common';
+import {TranslateModule} from '@ngx-translate/core';
+import {SelectComponent} from '../../components/select/select.component';
 
 class ParameterGroup {
   label: string = '';
@@ -71,19 +71,19 @@ export class SettingsComponent {
           {
             id: 'COULEUR_PRINCIPALE',
             label: 'SETTINGS.APPEARANCE.FIRST_COLOR',
-            value: this.parametersService.get('COULEUR_PRINCIPALE').value,
+            value: ParametersService.get('COULEUR_PRINCIPALE').value,
             type: 'color',
           },
           {
             id: 'COULEUR_SECONDAIRE',
             label: 'SETTINGS.APPEARANCE.SECOND_COLOR',
-            value: this.parametersService.get('COULEUR_SECONDAIRE').value,
+            value: ParametersService.get('COULEUR_SECONDAIRE').value,
             type: 'color',
           },
           {
             id: 'RAYON_BORDURES',
             label: 'SETTINGS.APPEARANCE.BORDER_RADIUS',
-            value: this.parametersService.get('RAYON_BORDURES').value,
+            value: ParametersService.get('RAYON_BORDURES').value,
             type: 'number',
             min: 0,
             max: 40,
@@ -91,7 +91,7 @@ export class SettingsComponent {
           {
             id: 'THEME_SOMBRE',
             label: 'SETTINGS.APPEARANCE.THEME_DARK',
-            value: this.parametersService.get('THEME_SOMBRE').value,
+            value: ParametersService.get('THEME_SOMBRE').value,
             type: 'checkbox',
           },
         ],
@@ -102,19 +102,24 @@ export class SettingsComponent {
           {
             id: 'URL_API',
             label: 'URL API',
-            value: this.parametersService.get('URL_API').value,
+            value: ParametersService.get('URL_API').value,
+            type: 'text',
+          }, {
+            id: 'URL_API2',
+            label: 'URL API VISION',
+            value: ParametersService.get('URL_API2')?.value,
             type: 'text',
           },
           {
             id: 'LANGUE',
             label: 'Langue',
-            value: this.parametersService.get('LANGUE').value,
+            value: ParametersService.get('LANGUE').value,
             type: 'select',
             store: [
-              { id: 'fr', label: 'Français' },
-              { id: 'en', label: 'English' },
-              { id: 'es', label: 'Español' },
-              { id: 'it', label: 'Italiano' },
+              {id: 'fr', label: 'Français'},
+              {id: 'en', label: 'English'},
+              {id: 'es', label: 'Español'},
+              {id: 'it', label: 'Italiano'},
             ],
           },
         ],
@@ -126,7 +131,7 @@ export class SettingsComponent {
     private parametersService: ParametersService,
     private filesService: FilesService
   ) {
-    console.log(this.parametersService.get('LANGUE').value);
+    console.log(ParametersService.get('LANGUE').value);
     this.filesService.clearTarget();
     this.filesService.clearSession();
     this.parametersService.loaded.subscribe((loaded: boolean) => {

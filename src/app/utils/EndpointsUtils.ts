@@ -1,6 +1,13 @@
+import {Injectable} from '@angular/core';
+import {ParametersService} from '../services/parameters.service';
+
+@Injectable({
+    providedIn: 'root'
+  }
+)
 export class EndpointsUtils {
   public static root: string = '';
-  public static api: string = 'https://wave-api-6rqq.onrender.com';
+  public static api: string = 'http://127.0.0.1:8000';
   public static competitonId: string = '';
 
   getPathCompetitions(id: string) {
@@ -36,13 +43,19 @@ export class EndpointsUtils {
 
 
   public static getPathGenToken() {
-    return [EndpointsUtils.api, 'generate-token']
+    return [ParametersService.get("URL_API2").value, 'generate-token']
       .filter((v) => !!v)
       .join('/');
   }
 
   public static getPathDetectTarget() {
-    return [EndpointsUtils.api, 'detect-target']
+    return [ParametersService.get("URL_API2").value, 'detect-target']
+      .filter((v) => !!v)
+      .join('/');
+  }
+
+  public static getPathTargetScore() {
+    return [ParametersService.get("URL_API2").value, 'target-score']
       .filter((v) => !!v)
       .join('/');
   }

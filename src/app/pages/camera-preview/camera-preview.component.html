@@ -1,29 +1,25 @@
 <!--webcam video-->
 <div class="camera-preview-container" #cameraPreview>
-  <div class="canvas"
-       [style.aspect-ratio]="width +'/'+ height"
-       [style.width]="parentWidth/parentHeight > width/height ? '100%' : 'auto'"
-       [style.height]="parentWidth/parentHeight > width/height ? 'auto' : '100%'"
+  <div class="canvas">
+    <svg [style.--opacity]="coordinates() ? 1 : 0"
+         [style.aspect-ratio]="aspectRatio()"
 
-  >
-    <svg [style.--opacity]="coordinates ? 0.5 : 0"
-         #svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
-      <path #path d="M0,0 0,100 50,50 100,100 100,0" vector-effect="non-scaling-stroke"/>
+         #svg [attr.viewBox]="viewBox()" preserveAspectRatio="xMidYMid slice">
+      <path [attr.d]="path()" vector-effect="non-scaling-stroke"/>
     </svg>
     <canvas
       #inputCanvasRef
       hidden
     ></canvas>
-
     <video width="4096" height="4096" #videoRef autoplay playsinline></video>
-
-    <canvas #canvasRef id="canvas" width="4096" height="4096"></canvas>
     <canvas id="imshow" [width]="modelInputShape[2]" [height]="modelInputShape[3]"></canvas>
   </div>
   <app-loading *ngIf="loading" [loading]="!!loading">
     <p>{{ loading.progress ? loading.text + ' - ' + loading.progress + '%' : loading.text }}</p>
   </app-loading>
   <div id="cameraPreview"></div>
+  <app-capture-button class="capture"
+                      [percent]=" numberOfValidCoordinates()/CORRECT_COORDINATES_BEFORE_PROCESS *100"></app-capture-button>
 </div>
 <!--<app-opencv-imshow></app-opencv-imshow>-->
 

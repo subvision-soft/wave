@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { Directory, Filesystem } from '@capacitor/filesystem';
-import { ToastService, ToastTypes } from './toast.service';
-import { TranslateService } from '@ngx-translate/core';
-import { BehaviorSubject } from 'rxjs';
-import { ServerService } from './server.service';
+import {Injectable} from '@angular/core';
+import {Directory, Filesystem} from '@capacitor/filesystem';
+import {ToastService, ToastTypes} from './toast.service';
+import {TranslateService} from '@ngx-translate/core';
+import {BehaviorSubject} from 'rxjs';
+import {ServerService} from './server.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,15 +12,15 @@ export class ParametersService {
   public loaded: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   get parameters(): any {
-    return this._parameters;
+    return ParametersService._parameters;
   }
 
   set parameters(value: any) {
-    this._parameters = value;
-    const parameters = Object.keys(this._parameters).map((key) => {
+    ParametersService._parameters = value;
+    const parameters = Object.keys(ParametersService._parameters).map((key) => {
       return {
         key: key,
-        value: this._parameters[key].value,
+        value: ParametersService._parameters[key].value,
       };
     });
 
@@ -39,11 +39,15 @@ export class ParametersService {
     });
   }
 
-  private _parameters: any = {
+  private static _parameters: any = {
     URL_API: {
       value: '',
       update: function (value: any, scope: any) {
         scope.serverService.connect(value);
+      },
+    }, URL_API2: {
+      value: '',
+      update: function (value: any, scope: any) {
       },
     },
     COULEUR_PRINCIPALE: {
@@ -83,7 +87,8 @@ export class ParametersService {
     },
     EMPLACEMENT_DONNEES: {
       value: '/subapp/data',
-      update: function (value: any) {},
+      update: function (value: any) {
+      },
     },
     THEME_SOMBRE: {
       value: 'false',
@@ -101,7 +106,8 @@ export class ParametersService {
     },
     LANGUE: {
       value: 'fr',
-      update: function (value: any) {},
+      update: function (value: any) {
+      },
     },
   };
 
@@ -110,7 +116,7 @@ export class ParametersService {
     private translate: TranslateService,
     private serverService: ServerService
   ) {
-    this._parameters.LANGUE.update = (value: any) => {
+    ParametersService._parameters.LANGUE.update = (value: any) => {
       this.translate.use(value);
     };
     Filesystem.readFile({
@@ -125,45 +131,45 @@ export class ParametersService {
           parameters = JSON.parse(await result.data.text());
         }
         for (const p of parameters) {
-          this._parameters[p.key].value = p.value;
-          if (this._parameters[p.key].update) {
-            this._parameters[p.key].update(this._parameters[p.key].value, this);
+          ParametersService._parameters[p.key].value = p.value;
+          if (ParametersService._parameters[p.key].update) {
+            ParametersService._parameters[p.key].update(ParametersService._parameters[p.key].value, this);
           }
         }
         this.loaded.next(true);
       })
       .catch(() => {
-        this.parameters = this._parameters;
+        this.parameters = ParametersService._parameters;
       });
   }
 
-  get(key: string): any {
-    return this._parameters[key];
+  static get(key: string): any {
+    return ParametersService._parameters[key];
   }
 
   set(key: string | any, value?: any): void {
     let updateFile = false;
     if (typeof key === 'object') {
       for (const k of Object.keys(key)) {
-        if (this._parameters[k].value !== key[k]) {
+        if (ParametersService._parameters[k].value !== key[k]) {
           updateFile = true;
         }
-        this._parameters[k].value = key[k];
-        if (this._parameters[k].update) {
-          this._parameters[k].update(this._parameters[k].value, this);
+        ParametersService._parameters[k].value = key[k];
+        if (ParametersService._parameters[k].update) {
+          ParametersService._parameters[k].update(ParametersService._parameters[k].value, this);
         }
       }
     } else {
-      if (this._parameters[key].value !== value) {
+      if (ParametersService._parameters[key].value !== value) {
         updateFile = true;
       }
-      this._parameters[key].value = value;
-      if (this._parameters[key].update) {
-        this._parameters[key].update(this._parameters[key].value, this);
+      ParametersService._parameters[key].value = value;
+      if (ParametersService._parameters[key].update) {
+        ParametersService._parameters[key].update(ParametersService._parameters[key].value, this);
       }
     }
     if (updateFile) {
-      this.parameters = this._parameters;
+      this.parameters = ParametersService._parameters;
     }
   }
 }
