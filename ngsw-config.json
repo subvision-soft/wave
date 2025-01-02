@@ -35,9 +35,7 @@
         "https://everyorigin.jwvbremen.nl/**",
         "https://wave-api-6rqq.onrender.com/**",
         "/api/**",
-        "**/generate-token/**",
-        "**/detect-target/**",
-        "**/target-score/**"
+        "/**"
       ],
       "cacheConfig": {
         "maxSize": 0,
