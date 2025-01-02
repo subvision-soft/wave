@@ -23,7 +23,7 @@ type Coordinates = {
   imports: [NgIf, LoadingComponent, OpencvImshowComponent, CaptureButton],
 })
 export class CameraPreviewComponent implements OnDestroy {
-  private static readonly MAX_FPS = 5;
+  private static readonly MAX_FPS = 30;
   protected readonly CORRECT_COORDINATES_BEFORE_PROCESS = 10;
   private static readonly PREPROCESSING_SIZE = 500;
   @ViewChild('videoRef') videoRef!: ElementRef;

@@ -5,7 +5,8 @@
          [style.aspect-ratio]="aspectRatio()"
 
          #svg [attr.viewBox]="viewBox()" preserveAspectRatio="xMidYMid slice">
-      <path [attr.d]="path()" vector-effect="non-scaling-stroke"/>
+      <path [class.valid]="numberOfValidCoordinates()>=CORRECT_COORDINATES_BEFORE_PROCESS" [attr.d]="path()"
+            vector-effect="non-scaling-stroke"/>
     </svg>
     <canvas
       #inputCanvasRef

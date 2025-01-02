@@ -72,6 +72,11 @@
 
         //animate stroke offset
         animation: dash 1.5s linear infinite;
+
+        &.valid {
+          fill: color-mix(in srgb, #81E6A9, transparent 70%);
+          stroke: #569FF5;
+        }
       }
     }
 
