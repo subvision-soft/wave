@@ -1,4 +1,4 @@
-import {Component, effect, ElementRef, input, ViewChild} from '@angular/core';
+import {Component, effect, ElementRef, HostBinding, input, ViewChild} from '@angular/core';
 import {RippleDirective} from '../../directives/ripple.directive';
 
 @Component({
@@ -14,6 +14,8 @@ export class CaptureButton {
 
   @ViewChild('groupPath') groupPath: ElementRef;
 
+  @HostBinding('class.clickable') clickable = false;
+
 
   percentPrev = 0;
   percent = input<number>(0);
@@ -25,6 +27,7 @@ export class CaptureButton {
 
   constructor() {
     effect(() => {
+      this.clickable = this.percent() >= 100;
 
       let paths = this.groupPath.nativeElement.querySelectorAll('path.line');
       if (this.percentPrev !== 0 && this.percent() === 0) {

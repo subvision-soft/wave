@@ -1,0 +1,82 @@
+
+:host {
+  cursor: pointer;
+  pointer-events: none;
+
+  &.clickable {
+    pointer-events: auto;
+
+    circle {
+      opacity: 1;
+    }
+
+    &:active {
+      circle {
+        fill: #fff;
+      }
+
+      .line {
+        stroke: #6FC0A6
+      }
+    }
+  }
+
+  .line {
+    --length: 169.67px;
+    fill: none;
+    stroke: #F5A569;
+    stroke-width: 4;
+    stroke-dashoffset: -moz-calc(var(--length) * (1 - var(--percent) / 100));
+    stroke-dashoffset: calc(var(--length) * (1 - var(--percent) / 100));
+    stroke-dasharray: var(--length);
+    stroke-linecap: round;
+    transition: var(--transition-slow);
+  }
+
+
+  circle {
+    opacity: 0;
+    transition: var(--transition-slow);
+  }
+
+
+  .cls-3 {
+    stroke: #E6E781;
+    stroke-width: 5;
+  }
+
+  .cls-4 {
+    stroke: #6FC0A6;
+    stroke-width: 6;
+
+  }
+
+  .cls-5 {
+    stroke: #3B7DC0;
+    stroke-width: 7;
+
+  }
+
+  .cls-6 {
+    stroke: #fff;
+    stroke-width: 8;
+
+  }
+
+  .cls-1 {
+    fill: none;
+    stroke: #ffffff;
+    opacity: 0.2;
+    stroke-width: 4;
+  }
+
+
+  @keyframes dash {
+    from {
+      stroke-dashoffset: var(--length);
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+}

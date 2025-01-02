@@ -19,7 +19,7 @@
     <p>{{ loading.progress ? loading.text + ' - ' + loading.progress + '%' : loading.text }}</p>
   </app-loading>
   <div id="cameraPreview"></div>
-  <app-capture-button class="capture"
+  <app-capture-button (click)="capture()" class="capture"
                       [percent]=" numberOfValidCoordinates()/CORRECT_COORDINATES_BEFORE_PROCESS *100"></app-capture-button>
 </div>
 <!--<app-opencv-imshow></app-opencv-imshow>-->

@@ -7,7 +7,8 @@ import {OpencvImshowComponent} from '../../components/opencv-imshow/opencv-imsho
 import "@tensorflow/tfjs-backend-webgl";
 import {HttpClient} from '@angular/common/http';
 import {EndpointsUtils} from '../../utils/EndpointsUtils';
-import {CaptureButton} from '../../components/loader/capture-button.component'; // set backend to webgl
+import {CaptureButton} from '../../components/capture-button/capture-button.component';
+import {Router} from '@angular/router'; // set backend to webgl
 
 
 type Coordinates = {
@@ -23,13 +24,16 @@ type Coordinates = {
   imports: [NgIf, LoadingComponent, OpencvImshowComponent, CaptureButton],
 })
 export class CameraPreviewComponent implements OnDestroy {
-  private static readonly MAX_FPS = 30;
+  private static readonly MAX_FPS = 5;
   protected readonly CORRECT_COORDINATES_BEFORE_PROCESS = 10;
   private static readonly PREPROCESSING_SIZE = 500;
   @ViewChild('videoRef') videoRef!: ElementRef;
   @ViewChild('inputCanvasRef') inputCanvasRef!: ElementRef<HTMLCanvasElement>;
   @ViewChild('svg') svg: ElementRef | undefined;
   private input_canvas_ctx: CanvasRenderingContext2D | null;
+
+
+  private readonly router: Router = inject(Router);
 
 
   protected videoWidth = signal<number>(0);
@@ -83,8 +87,8 @@ export class CameraPreviewComponent implements OnDestroy {
 
   getImageBase64(fullSize: boolean = false): string {
 
-    this.inputCanvasRef.nativeElement.width = fullSize ? this.videoRef.nativeElement.width : CameraPreviewComponent.PREPROCESSING_SIZE;
-    this.inputCanvasRef.nativeElement.height = fullSize ? this.videoRef.nativeElement.height : CameraPreviewComponent.PREPROCESSING_SIZE;
+    this.inputCanvasRef.nativeElement.width = fullSize ? this.videoRef.nativeElement.videoWidth : CameraPreviewComponent.PREPROCESSING_SIZE;
+    this.inputCanvasRef.nativeElement.height = fullSize ? this.videoRef.nativeElement.videoHeight : CameraPreviewComponent.PREPROCESSING_SIZE;
     this.input_canvas_ctx?.drawImage(this.videoRef.nativeElement, 0, 0, this.inputCanvasRef.nativeElement.width, this.inputCanvasRef.nativeElement.height);
     return this.inputCanvasRef.nativeElement.toDataURL('image/jpeg').replace('data:image/jpeg;base64,', '');
   }
@@ -163,13 +167,13 @@ export class CameraPreviewComponent implements OnDestroy {
   async capture(): Promise<void> {
     if (this.CORRECT_COORDINATES_BEFORE_PROCESS <= this.numberOfValidCoordinates()) {
       // this.numberOfValidCoordinates.set(0);
+      const imageBase64 = this.getImageBase64(true);
+      console.log('Image Base64:', imageBase64);
       const data = await lastValueFrom(this.http.post(EndpointsUtils.getPathTargetScore(), {
-        image_data: this.getImageBase64(true),
+        image_data: imageBase64,
       }));
 
-      // @ts-ignore
-      console.log(data[0]);
-
+      this.router.navigate(['/camera/result'], {state: {data}});
     }
 
   }

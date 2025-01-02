@@ -1,42 +1,35 @@
-import {
-  Component,
-  EventEmitter,
-  OnInit,
-  Output,
-  Pipe,
-  PipeTransform,
-} from '@angular/core';
-import { PlastronService } from '../../services/plastron.service';
-import { map, pluck } from 'rxjs';
-import { SegmentedButtonItem } from '../../components/segmented-button/segmented-button.component';
-import { Impact } from '../../models/impact';
-import { Event } from '../../models/event';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ToastService, ToastTypes } from '../../services/toast.service';
-import { Target } from '../../models/target';
-import { Action } from '../../models/action';
-import { FilesService } from '../../services/files.service';
-import { AppSettings } from '../../utils/AppSettings';
-import { User } from '../../models/user';
-import { ServerService } from '../../services/server.service';
-import { Category } from '../../models/category';
-import { StageModel } from '../../models/stage.model';
-import { InputComponent } from '../../components/input/input.component';
-import { SelectComponent } from '../../components/select/select.component';
-import { ChronoPickerComponent } from '../../components/chrono-picker/chrono-picker.component';
-import { MessageBoxComponent } from '../../components/message-box/message-box.component';
-import { SwiperItemComponent } from '../../components/swiper-item/swiper-item.component';
-import { TargetPreviewComponent } from '../../components/target-preview/target-preview.component';
-import { SpinnerComponent } from '../../components/spinner/spinner.component';
-import { ResultsPreviewComponent } from '../../components/results-preview/results-preview.component';
-import { SwiperComponent } from '../../components/swiper/swiper.component';
-import { TotalPreviewComponent } from '../../components/total-preview/total-preview.component';
-import { TagComponent } from '../../components/tag/tag.component';
-import { HeaderComponent } from '../../components/header/header.component';
-import { TranslateModule } from '@ngx-translate/core';
-import { NgIf } from '@angular/common';
+import {Component, EventEmitter, OnInit, Output, Pipe, PipeTransform,} from '@angular/core';
+import {PlastronService} from '../../services/plastron.service';
+import {map, pluck} from 'rxjs';
+import {SegmentedButtonItem} from '../../components/segmented-button/segmented-button.component';
+import {Impact} from '../../models/impact';
+import {Event} from '../../models/event';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ToastService, ToastTypes} from '../../services/toast.service';
+import {Target} from '../../models/target';
+import {Action} from '../../models/action';
+import {FilesService} from '../../services/files.service';
+import {AppSettings} from '../../utils/AppSettings';
+import {User} from '../../models/user';
+import {ServerService} from '../../services/server.service';
+import {Category} from '../../models/category';
+import {StageModel} from '../../models/stage.model';
+import {InputComponent} from '../../components/input/input.component';
+import {SelectComponent} from '../../components/select/select.component';
+import {ChronoPickerComponent} from '../../components/chrono-picker/chrono-picker.component';
+import {MessageBoxComponent} from '../../components/message-box/message-box.component';
+import {SwiperItemComponent} from '../../components/swiper-item/swiper-item.component';
+import {TargetPreviewComponent} from '../../components/target-preview/target-preview.component';
+import {SpinnerComponent} from '../../components/spinner/spinner.component';
+import {ResultsPreviewComponent} from '../../components/results-preview/results-preview.component';
+import {SwiperComponent} from '../../components/swiper/swiper.component';
+import {TotalPreviewComponent} from '../../components/total-preview/total-preview.component';
+import {TagComponent} from '../../components/tag/tag.component';
+import {HeaderComponent} from '../../components/header/header.component';
+import {TranslateModule} from '@ngx-translate/core';
+import {NgIf} from '@angular/common';
 
-@Pipe({ standalone: true, name: 'pluck' })
+@Pipe({standalone: true, name: 'pluck'})
 export class PluckPipe implements PipeTransform {
   transform(value: any[], key: string): any {
     return value.map((value) => {
@@ -312,14 +305,23 @@ export class ResultComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('ResultComponent.ngOnInit');
     this.canvas = document.getElementById('canvas');
     this.activatedRoute.paramMap
       .pipe(map(() => window.history.state))
       .subscribe((res) => {
-        if (!!res.target) {
-          this.target = res.target;
-
+        if (!!res.data) {
+          this.target = {
+            ...this.target,
+            image: res.data.image,
+            impacts: res.data.impacts,
+            total: res.data.impacts
+              .map((impact: any) => impact.score)
+              .reduce((a: number, b: number) => a + b, 0),
+            date: new Date(),
+            time: 0,
+            event: Event.PRECISION,
+            user: '',
+          };
           this.editable = false;
           const img = new Image();
           img.onload = () => {
@@ -327,58 +329,16 @@ export class ResultComponent implements OnInit {
           };
           img.src = this.target.image;
         } else {
-          this.frame = this.plastronService.getFrame();
-          if (!this.frame) {
-            console.error('No frame found');
-            this.toastService.initiate({
-              title: 'Erreur',
-              content:
-                "Une erreur est survenue lors de l'analyse du plastron, vérifiez que la photo est bien cadrée et que le plastron est bien visible. Evitez les reflets et les ombres.",
-              type: ToastTypes.ERROR,
-              show: true,
-              duration: 3000,
-            });
-            this.router.navigate(['/camera']);
-            return;
-          }
-          const cv = (window as any).cv;
-          try {
-            const cible = this.plastronService.process();
-            const canvas = document.getElementById('canvas');
-            cv.imshow(canvas, cible.image);
+          this.toastService.initiate({
+            title: 'Erreur',
+            content:
+              "Une erreur est survenue lors de l'analyse du plastron, vérifiez que la photo est bien cadrée et que le plastron est bien visible. Evitez les reflets et les ombres.",
+            type: ToastTypes.ERROR,
+            show: true,
+            duration: 3000,
+          });
+          this.router.navigate(['/camera']);
 
-            // @ts-ignore
-            const base64 = canvas.toDataURL('image/jpeg', 1.0);
-            this.target = {
-              ...this.target,
-              image: base64,
-              impacts: cible.impacts,
-              total: cible.impacts
-                .map((impact: any) => impact.score)
-                .reduce((a: number, b: number) => a + b, 0),
-              date: new Date(),
-              time: 0,
-              event: Event.PRECISION,
-              user: '',
-            };
-            this.impacts = cible.impacts;
-            this.total = cible.impacts
-              .map((impact: any) => impact.score)
-              .reduce((a: number, b: number) => a + b, 0);
-            cible.image.delete();
-          } catch (error) {
-            this.toastService.initiate({
-              title: "Erreur lors de l'analyse de la cible",
-              content:
-                'Vérifiez que la photo est bien cadrée et que la cible est bien visible. Evitez les reflets et les ombres.',
-              type: ToastTypes.ERROR,
-              show: true,
-              duration: 4000,
-            });
-            // this.router.navigate(['/camera']);
-            console.log('Error while processing image', JSON.stringify(error));
-            console.error(error);
-          }
         }
       });
   }
