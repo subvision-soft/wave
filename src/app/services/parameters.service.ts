@@ -48,7 +48,7 @@ export class ParametersService {
         scope.serverService.connect(value);
       },
     }, URL_API2: {
-      value: '',
+      value: 'https://wave-api-6rqq.onrender.com',
       update: function (value: any, scope: any) {
       },
     },
