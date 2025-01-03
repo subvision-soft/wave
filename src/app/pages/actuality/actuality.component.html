@@ -7,5 +7,5 @@
     <p>{{ actuality()?.date | date:'shortDate' }}</p>
   </div>
   <img [src]="actuality()?.illustration">
-  <p>{{ actuality()?.description }}</p>
+  <p [innerHTML]="actuality()?.description"></p>
 </div>
