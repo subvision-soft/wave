@@ -1,23 +1,27 @@
 <app-header [showMenu]="false" [showBack]="false">
   <app-logo [size]="40"/>
 </app-header>
+
+<h1>{{ 'HOME.TECHNICAL_INFORMATIONS' | translate }}</h1>
+<div class="informations">
+  <a href="https://github.com/wave-soft" target="_blank" waveButton [icon]="iconoirGithub"></a>
+</div>
 <h1 class="titre">{{ 'HOME.ACTUALITIES' | translate }}</h1>
 <div class="actualites">
-  <div ripple [class]="{actualite:true,gradient:actualites.length !== 0}" *ngFor="let actualite of actualites"
+  <div [class]="{actualite:true,gradient:actualites.length !== 0}" *ngFor="let actualite of actualites"
        [style]="{
-    'background-image': 'url(' + getMediaSource(actualite) + ')'
+    'background-image': 'url(' + actualite.illustration + ')'
   }" (click)="openActualite(actualite)">
     <h1>{{ actualite.title }}</h1>
-    <p>{{ toLocalDate(actualite.pubDate) }}</p>
+    <p>{{ toLocalDate(actualite.date) }}</p>
   </div>
-  <div *ngIf="actualites.length == 0" class="actualite" ripple>
+  <div *ngIf="actualites.length == 0" class="actualite">
     <app-loading [loading]="actualitesLoading"></app-loading>
 
     <app-empty-text *ngIf="!actualitesLoading" text="{{'HOME.NO_ACTUALITY'| translate}}"></app-empty-text>
   </div>
 </div>
 <ng-container *ngIf="AppSettings.ENABLE_LOCAL_SAVE">
-
   <div class="titre-sessions">
     <h1>{{ 'HOME.RECENTLY_OPENED' | translate }}</h1>
     <app-tag ripple *ngIf="seances.length != 0" class="button"
@@ -30,4 +34,5 @@
     <app-empty-text *ngIf="seances.length == 0" text="{{'HOME.NO_SESSION'|translate}}"></app-empty-text>
   </div>
 </ng-container>
+
 

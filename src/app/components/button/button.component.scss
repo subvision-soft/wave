@@ -1,15 +1,16 @@
 :host {
-  background: var(--color-secondary-lighter-5);
-  padding: calc(var(--padding-sm) / 3) var(--padding-sm);
+  background: var(--color-primary-lighter-5);
+  padding: var(--padding-sm) var(--padding-sm);
   border-radius: var(--border-radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
   min-width: fit-content;
+  border: none;
+  color: var(--color-dark1-1);
 
   span {
     font-weight: var(--font-weight-bold);
     font-size: var(--font-size-sm);
-    color: var(--color-dark1-1);
   }
 }

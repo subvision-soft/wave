@@ -59,4 +59,10 @@ export class EndpointsUtils {
       .filter((v) => !!v)
       .join('/');
   }
+
+  public static getPathNews() {
+    return [ParametersService.get("URL_API2").value, 'news']
+      .filter((v) => !!v)
+      .join('/');
+  }
 }

@@ -1,4 +1,4 @@
-import {Component, HostBinding, isDevMode, OnInit} from '@angular/core';
+import {Component, computed, HostBinding, isDevMode, signal} from '@angular/core';
 import {fadeAnimation} from './utils/animations';
 import {TranslateService} from '@ngx-translate/core';
 import {ParametersService} from './services/parameters.service';
@@ -7,6 +7,9 @@ import {AppSettings} from './utils/AppSettings';
 import {ToastComponent} from './components/toast/toast.component';
 import {TabBarComponent} from './components/tab-bar/tab-bar.component';
 import {HttpClient} from '@angular/common/http';
+import {SplashScreenComponent} from './components/splash-screen/splash-screen.component';
+import {NgIf} from '@angular/common';
+import {EndpointsUtils} from './utils/EndpointsUtils';
 
 @Component({
   selector: 'app-root',
@@ -15,14 +18,21 @@ import {HttpClient} from '@angular/common/http';
   animations: [fadeAnimation],
   standalone: true,
   providers: [TranslateService],
-  imports: [RouterOutlet, ToastComponent, TabBarComponent],
+  imports: [RouterOutlet, ToastComponent, TabBarComponent, SplashScreenComponent, NgIf],
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = 'wave';
   @HostBinding('style.background-color') backgroundColor: string =
     'var(--color-background-1)';
   tabs: any[] = [];
   cssVariables: string = '';
+  settingsLoaded = signal(false);
+  visionTokenRetrieved = signal(false);
+
+  showSplashScreen = computed(() => {
+      return !this.settingsLoaded() || !this.visionTokenRetrieved();
+    }
+  );
 
   constructor(
     private translate: TranslateService,
@@ -30,6 +40,19 @@ export class AppComponent implements OnInit {
     private router: Router,
     private http: HttpClient
   ) {
+    this.parametersService.loaded.subscribe((loaded: boolean) => {
+      this.settingsLoaded.set(loaded);
+      if (loaded) {
+        this.http.get(EndpointsUtils.getPathGenToken()).subscribe((res: any) => {
+            localStorage.setItem('token', res?.token);
+            this.visionTokenRetrieved.set(true);
+          }
+        )
+      }
+
+    });
+
+
     router.events.subscribe((ev) => {
       if (ev instanceof NavigationEnd) {
         if (ev.urlAfterRedirects.includes('camera/preview')) {
@@ -59,11 +82,5 @@ export class AppComponent implements OnInit {
         : undefined,
       {icon: 'jamCogF', label: 'Paramètres', link: '/settings'},
     ].filter((tab) => !!tab);
-  }
-
-  ngOnInit(): void {
-    // this.http.get(EndpointsUtils.getPathGenToken()).subscribe((res: any) => {
-    //   localStorage.setItem('token', res?.token);
-    // })
   }
 }

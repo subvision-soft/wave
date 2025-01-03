@@ -13,6 +13,11 @@ import {LoadingComponent} from '../../components/loading/loading.component';
 import {NgForOf, NgIf} from '@angular/common';
 import {LogoComponent} from '../../components/logo/logo.component';
 import {HeaderComponent} from '../../components/header/header.component';
+import {HttpClient} from '@angular/common/http';
+import {EndpointsUtils} from '../../utils/EndpointsUtils';
+import {NgIcon} from '@ng-icons/core';
+import {iconoirGithub} from '@ng-icons/iconoir';
+import {ButtonComponent} from '../../components/button/button.component';
 
 @Component({
   selector: 'app-home',
@@ -31,6 +36,8 @@ import {HeaderComponent} from '../../components/header/header.component';
     HeaderComponent,
     RouterLink,
     NgForOf,
+    NgIcon,
+    ButtonComponent,
   ],
 })
 export class HomeComponent {
@@ -56,15 +63,11 @@ export class HomeComponent {
     private historyService: HistoryService,
     private router: Router,
     private filesService: FilesService,
-    private rssParserService: RSSParserService
+    private rssParserService: RSSParserService,
+    private httpClient: HttpClient
   ) {
-    this.rssParserService.parseURL(this._url).subscribe(
-      (data) => {
+    this.httpClient.get(EndpointsUtils.getPathNews()).subscribe((data: any) => {
         this.actualites = data;
-      },
-      undefined,
-      () => {
-        this.actualitesLoading = false;
       }
     );
     filesService.clearTarget();
@@ -99,4 +102,5 @@ export class HomeComponent {
   }
 
   protected readonly AppSettings = AppSettings;
+  protected readonly iconoirGithub = iconoirGithub;
 }

@@ -11,6 +11,7 @@ import {ServerService} from './server.service';
 export class ParametersService {
   public loaded: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
+
   get parameters(): any {
     return ParametersService._parameters;
   }

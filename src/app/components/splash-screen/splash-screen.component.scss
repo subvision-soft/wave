@@ -1,0 +1,27 @@
+:host {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  height: 100%;
+  width: 100%;
+
+  justify-content: center;
+  align-items: center;
+  background-color: var(--theme-color-1);
+  visibility: hidden;
+  opacity: 0;
+  transition: var(--transition);
+  display: flex;
+
+  &.loading {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  img {
+    width: 50%;
+    height: 50%;
+    object-fit: contain;
+  }
+}
