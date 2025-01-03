@@ -4,6 +4,7 @@ import {ToastService, ToastTypes} from './toast.service';
 import {TranslateService} from '@ngx-translate/core';
 import {BehaviorSubject} from 'rxjs';
 import {ServerService} from './server.service';
+import {LocaleService} from './locale.service';
 
 @Injectable({
   providedIn: 'root',
@@ -115,10 +116,14 @@ export class ParametersService {
   constructor(
     private toastService: ToastService,
     private translate: TranslateService,
-    private serverService: ServerService
+    private serverService: ServerService,
+    private localeService: LocaleService
   ) {
     ParametersService._parameters.LANGUE.update = (value: any) => {
       this.translate.use(value);
+      if (localeService.locale !== value) {
+        localeService.setLocale(value);
+      }
     };
     Filesystem.readFile({
       path: 'parameters.json',

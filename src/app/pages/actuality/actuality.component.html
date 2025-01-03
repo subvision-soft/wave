@@ -1,0 +1,11 @@
+<app-header [showMenu]="false">
+  <app-logo [size]="40"/>
+</app-header>
+<div class="information">
+  <div class="title">
+    <h1>{{ actuality()?.title }}</h1>
+    <p>{{ actuality()?.date | date:'shortDate' }}</p>
+  </div>
+  <img [src]="actuality()?.illustration">
+  <p>{{ actuality()?.description }}</p>
+</div>

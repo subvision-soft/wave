@@ -1,4 +1,11 @@
-import {ApplicationConfig, importProvidersFrom, isDevMode, provideZoneChangeDetection} from '@angular/core';
+import {
+  APP_INITIALIZER,
+  ApplicationConfig,
+  importProvidersFrom,
+  isDevMode,
+  LOCALE_ID,
+  provideZoneChangeDetection
+} from '@angular/core';
 import {provideRouter} from '@angular/router';
 
 import {routes} from './app.routes';
@@ -44,14 +51,43 @@ import {
 } from '@ng-icons/iconoir';
 import {NgIconsModule} from '@ng-icons/core';
 import {authInterceptor} from '../auth/auth.interceptor';
+import {registerLocaleData} from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+import localeEn from '@angular/common/locales/en';
+
+import localeIt from '@angular/common/locales/it';
+import localeEs from '@angular/common/locales/es';
+import {LocaleService} from './services/locale.service';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
 }
 
+registerLocaleData(localeFr)
+registerLocaleData(localeEn)
+registerLocaleData(localeIt)
+registerLocaleData(localeEs)
+
+export function localeFactory(localeService: LocaleService): string {
+  return localeService.locale; // Directly return the string, not an Observable
+}
+
+
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({eventCoalescing: true}),
+  providers: [
+    provideZoneChangeDetection({eventCoalescing: true}),
+    {
+      provide: LOCALE_ID,
+      useFactory: localeFactory,
+      deps: [LocaleService] // Ensure it depends on LocaleService
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (localeService: LocaleService) => () => localeService.locale,
+      deps: [LocaleService],
+      multi: true
+    },
     importProvidersFrom(
       NgIconsModule.withIcons({
         iconoirHomeSimpleDoor,
@@ -87,6 +123,7 @@ export const appConfig: ApplicationConfig = {
         jamSignal,
         jamClose,
       }),
+
 
       TranslateModule.forRoot({
         loader: {

@@ -10,7 +10,7 @@ import {EmptyTextComponent} from '../../components/empty-text/empty-text.compone
 import {TranslateModule} from '@ngx-translate/core';
 import {RippleDirective} from '../../directives/ripple.directive';
 import {LoadingComponent} from '../../components/loading/loading.component';
-import {NgForOf, NgIf} from '@angular/common';
+import {DatePipe, NgForOf, NgIf} from '@angular/common';
 import {LogoComponent} from '../../components/logo/logo.component';
 import {HeaderComponent} from '../../components/header/header.component';
 import {HttpClient} from '@angular/common/http';
@@ -18,6 +18,7 @@ import {EndpointsUtils} from '../../utils/EndpointsUtils';
 import {NgIcon} from '@ng-icons/core';
 import {iconoirGithub} from '@ng-icons/iconoir';
 import {ButtonComponent} from '../../components/button/button.component';
+import {Actuality} from '../../models/actuality';
 
 @Component({
   selector: 'app-home',
@@ -38,6 +39,7 @@ import {ButtonComponent} from '../../components/button/button.component';
     NgForOf,
     NgIcon,
     ButtonComponent,
+    DatePipe,
   ],
 })
 export class HomeComponent {
@@ -46,12 +48,12 @@ export class HomeComponent {
 
   actualitesLoading: boolean = true;
 
-  actualites: any[] = [];
+  actualites: Actuality[] = [];
 
   private readonly _url =
     'https://createfeed.fivefilters.org/extract.php?url=https%3A%2F%2Ftirsub.ffessm.fr%2F&item=.commissionpage-news-slider-slide&item_title=.commissionpage-news-slider-slide-caption-title&item_date=.post-date&item_date_format=d%2Fm%2FY+H%3Ai&item_image=.commissionpage-news-slider-slide-image%3Eimg&max=5&order=document&guid=0';
 
-  toLocalDate(date: string) {
+  toLocalDate(date: Date) {
     return new Date(date).toLocaleDateString('fr');
   }
 
@@ -97,8 +99,10 @@ export class HomeComponent {
 
   protected readonly console = console;
 
-  openActualite(actualite: any) {
-    window.open(actualite.link[0], '_blank');
+  openActualite(actualite: Actuality) {
+    this.router.navigate(['/actuality'], {
+      state: actualite
+    });
   }
 
   protected readonly AppSettings = AppSettings;

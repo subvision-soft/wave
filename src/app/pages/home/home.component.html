@@ -8,12 +8,12 @@
 </div>
 <h1 class="titre">{{ 'HOME.ACTUALITIES' | translate }}</h1>
 <div class="actualites">
-  <div [class]="{actualite:true,gradient:actualites.length !== 0}" *ngFor="let actualite of actualites"
+  <div ripple [class]="{actualite:true,gradient:actualites.length !== 0}" *ngFor="let actualite of actualites"
        [style]="{
     'background-image': 'url(' + actualite.illustration + ')'
   }" (click)="openActualite(actualite)">
     <h1>{{ actualite.title }}</h1>
-    <p>{{ toLocalDate(actualite.date) }}</p>
+    <p>{{ actualite.date| date:'shortDate' }}</p>
   </div>
   <div *ngIf="actualites.length == 0" class="actualite">
     <app-loading [loading]="actualitesLoading"></app-loading>

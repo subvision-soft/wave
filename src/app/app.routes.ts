@@ -1,4 +1,4 @@
-import { Routes } from '@angular/router';
+import {Routes} from '@angular/router';
 import {HomeComponent} from './pages/home/home.component';
 import {CameraPreviewComponent} from './pages/camera-preview/camera-preview.component';
 import {ResultComponent} from './pages/result/result.component';
@@ -12,6 +12,7 @@ import {UserComponent} from './pages/user/user.component';
 import {TargetsComponent} from './pages/targets/targets.component';
 import {TeamsComponent} from './pages/teams/teams.component';
 import {ScanServerComponent} from './pages/scan-server/scan-server.component';
+import {ActualityComponent} from './pages/actuality/actuality.component';
 
 
 export const routes: Routes = [
@@ -20,6 +21,10 @@ export const routes: Routes = [
     component: HomeComponent,
   },
 
+  {
+    path: 'actuality',
+    component: ActualityComponent,
+  },
   {
     path: 'camera',
     children: [
@@ -31,7 +36,7 @@ export const routes: Routes = [
       {
         path: 'preview',
         component: CameraPreviewComponent,
-        data: { transparentBackground: true },
+        data: {transparentBackground: true},
       },
       {
         path: 'result',

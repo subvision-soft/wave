@@ -51,6 +51,11 @@
   max-height: 100%;
 }
 
+html {
+  background: var(--color-background-2);
+}
+
+
 .firstLetterUpperCase {
   &:first-letter {
     text-transform: uppercase;
@@ -60,6 +65,12 @@
 }
 
 :root {
+  --safe-area-inset-top: env(safe-area-inset-top, 5px);
+  --safe-area-inset-right: env(safe-area-inset-right, 5px);
+  --safe-area-inset-bottom: env(safe-area-inset-bottom, 5px);
+  --safe-area-inset-left: env(safe-area-inset-left, 5px);
+
+
   --color-primary: #51b6d5;
   --color-secondary: #ebcc7d;
   --color-indicator-1: #ff2e2e;
