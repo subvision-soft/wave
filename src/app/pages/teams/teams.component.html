@@ -11,7 +11,7 @@
 </app-header>
 <div class="content">
   <app-search [(value)]="searchValue" placeholder="Rechercher un équipe"></app-search>
-  <app-add-button (click)="openCreateTeam = true" *ngIf="!searchValue"
+  <app-add-button (click)="createTeam()" *ngIf="!searchValue"
                   label="Ajouter un équipe"></app-add-button>
 
   <div class="teams">

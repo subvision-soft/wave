@@ -46,9 +46,7 @@ export class TeamsComponent {
       }
     ),
     new Action('Ajouter une équipe', undefined, () => {
-      this.openCreateTeam = true;
-      this.create = true;
-      this.newTeam = this.defaultTeam;
+      this.createTeam();
     }),
   ];
   timeoutLongPress: Date = new Date();
@@ -92,8 +90,8 @@ export class TeamsComponent {
   };
 
   constructor(
-    private filesService: FilesService,
-    private userLastnameFirstChar: UserLastnameFirstCharPipe
+    private readonly filesService: FilesService,
+    private readonly userLastnameFirstChar: UserLastnameFirstCharPipe
   ) {
     this.session = this.filesService.session || this.session;
     this.storeUsers = this.session.users.map((user) => {
@@ -108,19 +106,18 @@ export class TeamsComponent {
 
   storeUsers: any[] = [];
 
-  defaultTeam: Team = {
+  newTeam: Team = {
     id: 1,
     name: '',
     users: [],
   };
-  newTeam: Team = this.defaultTeam;
 
   createTeamCallback(event: any) {
     if (event.btn === 'ok') {
       if (this.create) {
         this.newTeam.id = this.session.teams.length;
       } else {
-        this.session.teams.filter(team => team.id !== this.newTeam.id);
+        this.session.teams = this.session.teams.filter(team => team.id !== this.newTeam.id);
       }
       this.session.teams.push({...this.newTeam});
       this.filesService.session = this.session;
@@ -158,5 +155,15 @@ export class TeamsComponent {
 
   parseDate(dateString: string): Date {
     return new Date(dateString);
+  }
+
+  createTeam(): void {
+    this.openCreateTeam = true;
+    this.create = true;
+    this.newTeam = {
+      id: 1,
+      name: '',
+      users: [],
+    };
   }
 }
