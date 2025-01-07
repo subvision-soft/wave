@@ -29,6 +29,9 @@ export class UsersComponent {
       'Supprimer le tireur',
       undefined,
       () => {
+        if (!confirm("Etes vous sur de vouloir supprimer \"" + this.selectedUsers[0].firstname + " "+this.selectedUsers[0].lastname+"\" ?")) {
+          return;
+        }
         this.session.users = this.session.users.filter(
           (user) => !this.selectedUsers.includes(user)
         );
@@ -53,9 +56,7 @@ export class UsersComponent {
       }
     ),
     new Action('Ajouter un tireur', undefined, () => {
-      this.openCreateUser = true;
-      this.create = true;
-      this.newUser = this.defaultUser
+      this.createUserButton();
     }),
   ];
   timeoutLongPress: Date = new Date();
@@ -99,15 +100,13 @@ export class UsersComponent {
     { id: Category.MASTER, label: 'Master' },
   ];
 
-  defaultUser: User = {
+  newUser: User = {
     id: '',
     firstname: '',
     lastname: '',
     category: Category.SENIOR,
     targets: [],
-  }
-
-  newUser: User = this.defaultUser;
+  };
 
   createUserCallback(event: any) {
     if (event.btn === 'ok') {
@@ -174,5 +173,17 @@ export class UsersComponent {
 
   parseDate(dateString: string): Date {
     return new Date(dateString);
+  }
+
+  createUserButton() {
+    this.openCreateUser = true;
+    this.create = true;
+    this.newUser = {
+      id: '',
+      firstname: '',
+      lastname: '',
+      category: Category.SENIOR,
+      targets: [],
+    };
   }
 }
