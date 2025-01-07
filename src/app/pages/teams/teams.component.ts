@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
-import { Action } from '../../models/action';
-import { Team } from '../../models/team';
-import { Session } from '../../models/session';
-import { Category } from '../../models/category';
-import { FilesService } from '../../services/files.service';
-import { UserLastnameFirstCharPipe } from '../../pipes/UserLastnameFirstCharPipe';
+import {Component} from '@angular/core';
+import {Action} from '../../models/action';
+import {Team} from '../../models/team';
+import {Session} from '../../models/session';
+import {Category} from '../../models/category';
+import {FilesService} from '../../services/files.service';
+import {UserLastnameFirstCharPipe} from '../../pipes/UserLastnameFirstCharPipe';
 
 @Component({
   selector: 'app-teams',
@@ -14,11 +14,15 @@ import { UserLastnameFirstCharPipe } from '../../pipes/UserLastnameFirstCharPipe
 export class TeamsComponent {
   searchValue = '';
   openCreateTeam = false;
+  create: boolean = true;
   menuActions = [
     new Action(
-      'Supprimer le tireur',
+      'Supprimer l\'équipe',
       undefined,
       () => {
+        if (!confirm("Etes vous sur de vouloir supprimer l'équipe \"" + this.selectedTeams[0].name + "\"")) {
+          return;
+        }
         this.session.teams = this.session.teams.filter(
           (team) => !this.selectedTeams.includes(team)
         );
@@ -29,17 +33,22 @@ export class TeamsComponent {
       () => this.selectedTeams.length > 0
     ),
     new Action(
-      'Modifier le tireur',
-      undefined,
-      (self) => {},
+      'Modifier l\'équipe',
       undefined,
       () => {
-        console.log(this.selectedTeams);
+        this.openCreateTeam = true;
+        this.newTeam = this.selectedTeams[0];
+        this.create = false;
+      },
+      undefined,
+      () => {
         return this.selectedTeams.length == 1;
       }
     ),
-    new Action('Ajouter un tireur', undefined, (self) => {
+    new Action('Ajouter une équipe', undefined, () => {
       this.openCreateTeam = true;
+      this.create = true;
+      this.newTeam = this.defaultTeam;
     }),
   ];
   timeoutLongPress: Date = new Date();
@@ -75,6 +84,7 @@ export class TeamsComponent {
     ],
     teams: [
       {
+        id: 1,
         name: 'Equipe 1',
         users: ['592', '1092'],
       },
@@ -98,15 +108,21 @@ export class TeamsComponent {
 
   storeUsers: any[] = [];
 
-  newTeam: Team = {
+  defaultTeam: Team = {
+    id: 1,
     name: '',
     users: [],
   };
+  newTeam: Team = this.defaultTeam;
 
   createTeamCallback(event: any) {
     if (event.btn === 'ok') {
-      console.log(this.newTeam);
-      this.session.teams.push({ ...this.newTeam });
+      if (this.create) {
+        this.newTeam.id = this.session.teams.length;
+      } else {
+        this.session.teams.filter(team => team.id !== this.newTeam.id);
+      }
+      this.session.teams.push({...this.newTeam});
       this.filesService.session = this.session;
     }
   }
