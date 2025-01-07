@@ -87,7 +87,7 @@ export class UsersComponent {
   };
   private _target: Target | undefined;
 
-  constructor(private filesService: FilesService, private router: Router) {
+  constructor(private readonly filesService: FilesService, private readonly router: Router) {
     this.session = this.filesService.session || this.session;
     this._target = this.filesService.target;
   }
