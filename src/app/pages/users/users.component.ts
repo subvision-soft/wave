@@ -21,6 +21,7 @@ export class UsersComponent {
     return this._target;
   }
 
+  create: boolean = true;
   searchValue = '';
   openCreateUser = false;
   menuActions = [
@@ -40,15 +41,21 @@ export class UsersComponent {
     new Action(
       'Modifier le tireur',
       undefined,
-      (self) => {},
+      () => {
+        this.openCreateUser = true;
+        this.newUser = this.selectedUsers[0];
+        this.create = false;
+      },
       undefined,
       () => {
         console.log(this.selectedUsers);
         return this.selectedUsers.length == 1;
       }
     ),
-    new Action('Ajouter un tireur', undefined, (self) => {
+    new Action('Ajouter un tireur', undefined, () => {
       this.openCreateUser = true;
+      this.create = true;
+      this.newUser = this.defaultUser
     }),
   ];
   timeoutLongPress: Date = new Date();
@@ -92,18 +99,22 @@ export class UsersComponent {
     { id: Category.MASTER, label: 'Master' },
   ];
 
-  newUser: User = {
+  defaultUser: User = {
     id: '',
     firstname: '',
     lastname: '',
     category: Category.SENIOR,
     targets: [],
-  };
+  }
+
+  newUser: User = this.defaultUser;
 
   createUserCallback(event: any) {
     if (event.btn === 'ok') {
+      this.session.users = this.session.users.filter(user => user.id !== this.newUser.id);
       this.session.users.push({ ...this.newUser });
       this.filesService.session = this.session;
+      this.selectedUsers = [];
     }
   }
 
