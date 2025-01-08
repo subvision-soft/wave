@@ -92,6 +92,22 @@ export class FilesService {
     return files;
   }
 
+  async fileExists(fileName: string): Promise<boolean> {
+    try {
+      await Filesystem.stat({
+        path: fileName,
+        directory: Directory.Documents,
+      });
+      return true;
+    } catch (error) {
+      if ((error as any).message.includes('does not exist')) {
+        return false;
+      }
+      console.error('Error checking if file exists:', error);
+      throw error;
+    }
+  }
+
   async writeFile(
     path: string,
     content: string,

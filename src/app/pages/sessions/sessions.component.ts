@@ -1,29 +1,26 @@
-import { Component } from '@angular/core';
-import { FilesService } from '../../services/files.service';
-import { Directory, FileInfo, Filesystem } from '@capacitor/filesystem';
-import { animate, style, transition, trigger } from '@angular/animations';
-import { Action } from '../../models/action';
-import { Session } from '../../models/session';
-import { Router } from '@angular/router';
-import { ToastService, ToastTypes } from '../../services/toast.service';
-import { Target } from '../../models/target';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { HeaderComponent } from '../../components/header/header.component';
-import { SearchComponent } from '../../components/search/search.component';
-import { AddButtonComponent } from '../../components/add-button/add-button.component';
-import { TagComponent } from '../../components/tag/tag.component';
-import { SessionItemComponent } from '../../components/session-item/session-item.component';
-import { EmptyTextComponent } from '../../components/empty-text/empty-text.component';
-import { LongPressDirective } from '../../directives/long-press.directive';
-import { DatePipe, NgForOf, NgIf } from '@angular/common';
-import { RippleDirective } from '../../directives/ripple.directive';
-import { MessageBoxComponent } from '../../components/message-box/message-box.component';
-import { InputComponent } from '../../components/input/input.component';
-
-interface File {
-  active: boolean;
-  file: FileInfo;
-}
+import {Component} from '@angular/core';
+import {FilesService} from '../../services/files.service';
+import {Directory, FileInfo, Filesystem} from '@capacitor/filesystem';
+import {animate, style, transition, trigger} from '@angular/animations';
+import {Action} from '../../models/action';
+import {Session} from '../../models/session';
+import {Router} from '@angular/router';
+import {ToastService, ToastTypes} from '../../services/toast.service';
+import {Target} from '../../models/target';
+import {TranslateModule, TranslateService} from '@ngx-translate/core';
+import {HeaderComponent} from '../../components/header/header.component';
+import {SearchComponent} from '../../components/search/search.component';
+import {AddButtonComponent} from '../../components/add-button/add-button.component';
+import {TagComponent} from '../../components/tag/tag.component';
+import {SessionItemComponent} from '../../components/session-item/session-item.component';
+import {EmptyTextComponent} from '../../components/empty-text/empty-text.component';
+import {LongPressDirective} from '../../directives/long-press.directive';
+import {DatePipe, NgForOf, NgIf} from '@angular/common';
+import {RippleDirective} from '../../directives/ripple.directive';
+import {MessageBoxComponent} from '../../components/message-box/message-box.component';
+import {InputComponent} from '../../components/input/input.component';
+import {SessionService} from '../../services/session.service';
+import {File} from '../../models/file';
 
 @Component({
   selector: 'app-sessions',
@@ -32,12 +29,12 @@ interface File {
   animations: [
     trigger('enterAnimation', [
       transition(':enter', [
-        style({ opacity: 0 }),
-        animate('300ms', style({ opacity: 1 })),
+        style({opacity: 0}),
+        animate('300ms', style({opacity: 1})),
       ]),
       transition(':leave', [
-        style({ opacity: 1 }),
-        animate('300ms', style({ opacity: 0 })),
+        style({opacity: 1}),
+        animate('300ms', style({opacity: 0})),
       ]),
     ]),
   ],
@@ -150,42 +147,16 @@ export class SessionsComponent {
         'SESSIONS.MENU.DELETE.TITLE',
         '',
         () => {
+          if (!confirm('Etes vous sur de vouloir supprimer la selection ?')) {
+            return;
+          }
           const sessionsToDelete = this._sessions.filter(
             (session) => session.active
           );
-          new Promise(async (resolve, reject) => {
-            for (const session of sessionsToDelete) {
-              try {
-                await Filesystem.deleteFile({
-                  path: this.path + '/' + session.file.name,
-                  directory: Directory.Documents,
-                });
-              } catch (error) {
-                reject(error);
-              }
-            }
-            resolve(true);
+          this.sessionService.remove(sessionsToDelete).then(() => {
+            this.openPath();
+            this.initializeMenuActions();
           })
-            .then(() => {
-              this.openPath();
-              this.initializeMenuActions();
-              this.toastService.initiate({
-                title: 'SESSIONS.MENU.DELETE.TOAST.SUCCESS.TITLE',
-                content: 'SESSIONS.MENU.DELETE.TOAST.SUCCESS.MESSAGE',
-                type: ToastTypes.SUCCESS,
-                show: true,
-                duration: 2000,
-              });
-            })
-            .catch(() => {
-              this.toastService.initiate({
-                title: 'SESSIONS.MENU.DELETE.TOAST.ERROR.TITLE',
-                content: 'SESSIONS.MENU.DELETE.TOAST.ERROR.MESSAGE',
-                type: ToastTypes.ERROR,
-                show: true,
-                duration: 2000,
-              });
-            });
         },
         undefined,
         () => {
@@ -206,7 +177,8 @@ export class SessionsComponent {
       new Action(
         'SESSIONS.MENU.ORDER_BY.TITLE',
         '',
-        () => {},
+        () => {
+        },
         this.sortActions
       ),
     ];
@@ -247,7 +219,8 @@ export class SessionsComponent {
     private filesService: FilesService,
     private router: Router,
     private toastService: ToastService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private readonly sessionService: SessionService,
   ) {
     this.openPath();
     this.initializeMenuActions();
@@ -413,7 +386,8 @@ export class SessionsComponent {
             duration: 2000,
           });
         })
-        .catch(() => {
+        .catch((e) => {
+          console.error(e)
           this.toastService.initiate({
             title: 'SESSIONS.MESSAGES_BOX.NEW_FOLDER.TOAST.ERROR.TITLE',
             content: 'SESSIONS.MESSAGES_BOX.NEW_FOLDER.TOAST.ERROR.MESSAGE',
@@ -430,13 +404,16 @@ export class SessionsComponent {
   }
 
   async createSessionCallback(event: any) {
-    if (event.btn === 'ok') {
+    if (event.btn === 'ok' && this.isRequired(this.newSession.title) && this.isValidDate(this.newSession.date)) {
+      let path = this.path + '/' + this.newSession.title.replace(/[^a-zA-Z0-9]/g, '') + '.subapp';
+
+      if (await this.filesService.fileExists(path)) {
+        path = path.replace('.subapp', Math.random().toString(16).slice(2) + '.subapp')
+      }
+
       this.filesService
         .writeFile(
-          this.path +
-            '/' +
-            this.newSession.title.replace(/[^a-zA-Z0-9]/g, '') +
-            '.subapp',
+          path,
           JSON.stringify(this.newSession)
         )
         .then(() => {
@@ -469,6 +446,7 @@ export class SessionsComponent {
             duration: 2000,
           });
         });
+      this.openCreateSession = false;
     }
   }
 
@@ -482,6 +460,16 @@ export class SessionsComponent {
         };
       });
     });
+  }
+
+  isRequired(field: any): boolean {
+    return field !== undefined && field !== null && field !== '';
+  }
+
+  isValidDate(inputDate: Date) {
+    const date = new Date();
+    date.setDate(date.getDate() - 1);
+    return inputDate > date;
   }
 
   protected readonly console = console;
