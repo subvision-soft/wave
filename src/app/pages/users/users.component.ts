@@ -46,6 +46,7 @@ export class UsersComponent {
     return this._target;
   }
 
+  create: boolean = true;
   searchValue = '';
   openCreateUser = false;
   menuActions = [
@@ -53,6 +54,9 @@ export class UsersComponent {
       'Supprimer le tireur',
       undefined,
       () => {
+        if (!confirm("Etes vous sur de vouloir supprimer \"" + this.selectedUsers[0].firstname + " "+this.selectedUsers[0].lastname+"\" ?")) {
+          return;
+        }
         this.session.users = this.session.users.filter(
           (user) => !this.selectedUsers.includes(user)
         );
@@ -65,15 +69,19 @@ export class UsersComponent {
     new Action(
       'Modifier le tireur',
       undefined,
-      (self) => {},
+      () => {
+        this.openCreateUser = true;
+        this.newUser = this.selectedUsers[0];
+        this.create = false;
+      },
       undefined,
       () => {
         console.log(this.selectedUsers);
         return this.selectedUsers.length == 1;
       }
     ),
-    new Action('Ajouter un tireur', undefined, (self) => {
-      this.openCreateUser = true;
+    new Action('Ajouter un tireur', undefined, () => {
+      this.createUserButton();
     }),
   ];
   timeoutLongPress: Date = new Date();
@@ -104,7 +112,7 @@ export class UsersComponent {
   };
   private _target: Target | undefined;
 
-  constructor(private filesService: FilesService, private router: Router) {
+  constructor(private readonly filesService: FilesService, private readonly router: Router) {
     this.session = this.filesService.session || this.session;
     this._target = this.filesService.target;
   }
@@ -127,8 +135,10 @@ export class UsersComponent {
 
   createUserCallback(event: any) {
     if (event.btn === 'ok') {
+      this.session.users = this.session.users.filter(user => user.id !== this.newUser.id);
       this.session.users.push({ ...this.newUser });
       this.filesService.session = this.session;
+      this.selectedUsers = [];
     }
   }
 
@@ -188,5 +198,17 @@ export class UsersComponent {
 
   parseDate(dateString: string): Date {
     return new Date(dateString);
+  }
+
+  createUserButton() {
+    this.openCreateUser = true;
+    this.create = true;
+    this.newUser = {
+      id: '',
+      firstname: '',
+      lastname: '',
+      category: Category.SENIOR,
+      targets: [],
+    };
   }
 }

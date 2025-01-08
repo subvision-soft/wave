@@ -1,14 +1,16 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {Component, EventEmitter, Input, isDevMode, Output} from '@angular/core';
 import { iconoirHome } from '@ng-icons/iconoir';
 import { Router } from '@angular/router';
 import { TabBarButtonComponent } from '../tab-bar-button/tab-bar-button.component';
 import { NgForOf } from '@angular/common';
+import {ParametersService} from '../../services/parameters.service';
 
 class Tab {
   active?: boolean = false;
   link: string = '';
   label: string = '';
   icon: string = '';
+  hidden: boolean = false;
 }
 
 @Component({
@@ -19,7 +21,13 @@ class Tab {
   imports: [TabBarButtonComponent, NgForOf],
 })
 export class TabBarComponent {
-  @Input() tabs: Tab[] = [];
+  tabs: Tab[] = [
+    {icon: 'jamJoystick', label: 'Playground', link: '/playground', hidden: !isDevMode()},
+    {icon: 'jamHomeF', label: 'Accueil', link: '/home', hidden: false},
+    {icon: 'jamCameraF', label: 'Caméra', link: '/camera', hidden: false},
+    {icon: 'jamFolderF', label: 'Sessions', link: '/sessions', hidden: !ParametersService.isLocalSave()},
+    {icon: 'jamCogF', label: 'Paramètres', link: '/settings', hidden: false},
+  ];
   @Output() select = new EventEmitter<Tab>();
 
   protected readonly iconoirHome = iconoirHome;
@@ -28,6 +36,10 @@ export class TabBarComponent {
     router.events.subscribe((val) => {
       this.updateActive();
     });
+  }
+
+  getTabs(): Tab[] {
+    return this.tabs.filter(tab => !tab.hidden);
   }
 
   private updateActive() {

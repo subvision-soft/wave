@@ -85,28 +85,37 @@ export class SettingsComponent {
         type: 'number',
         min: 0,
         max: 40,
-      }, {
+      },
+        {
         id: 'THEME_SOMBRE',
         label: 'SETTINGS.APPEARANCE.THEME_DARK',
         value: ParametersService.get('THEME_SOMBRE').value,
         type: 'checkbox',
-      },],
+      },
+
+      ],
     }, {
-      label: 'SETTINGS.OTHERS.TITLE', parameters: [{
-        id: 'URL_API', label: 'URL API', value: ParametersService.get('URL_API').value, type: 'text',
-      }, {
-        id: 'URL_API2', label: 'URL API VISION', value: ParametersService.get('URL_API2')?.value, type: 'text',
-      }, {
-        id: 'LANGUE', label: 'Langue', value: ParametersService.get('LANGUE').value, type: 'select', store: [{
-          id: 'fr-FR', label: 'Français'
-        }, {
-          id: 'en-UK', label: 'English'
-        }, {
-          id: 'es-ES', label: 'Español'
-        }, {
-          id: 'it-IT', label: 'Italiano'
+      label: 'SETTINGS.OTHERS.TITLE', parameters: [
+        {
+          id: 'LOCAL', label: 'Local save', value: ParametersService.get('LOCAL').value, type: 'checkbox',
+        },
+        {
+          id: 'URL_API', label: 'URL API', value: ParametersService.get('URL_API').value, type: 'text',
+        },
+        {
+          id: 'URL_API2', label: 'URL API VISION', value: ParametersService.get('URL_API2')?.value, type: 'text',
+        },
+        {
+          id: 'LANGUE', label: 'Langue', value: ParametersService.get('LANGUE').value, type: 'select', store: [{
+            id: 'fr-FR', label: 'Français'
+          }, {
+            id: 'en-UK', label: 'English'
+          }, {
+            id: 'es-ES', label: 'Español'
+          }, {
+            id: 'it-IT', label: 'Italiano'
+          },],
         },],
-      },],
     },];
   }
 }

@@ -9,7 +9,6 @@ import {ToastService, ToastTypes} from '../../services/toast.service';
 import {Target} from '../../models/target';
 import {Action} from '../../models/action';
 import {FilesService} from '../../services/files.service';
-import {AppSettings} from '../../utils/AppSettings';
 import {User} from '../../models/user';
 import {ServerService} from '../../services/server.service';
 import {Category} from '../../models/category';
@@ -28,6 +27,7 @@ import {TagComponent} from '../../components/tag/tag.component';
 import {HeaderComponent} from '../../components/header/header.component';
 import {TranslateModule} from '@ngx-translate/core';
 import {NgIf} from '@angular/common';
+import {ParametersService} from '../../services/parameters.service';
 
 @Pipe({standalone: true, name: 'pluck'})
 export class PluckPipe implements PipeTransform {
@@ -66,7 +66,7 @@ export class ResultComponent implements OnInit {
   menuActions: Action[] = [
     new Action('Enregistrer', undefined, () => {
       this.filesService.target = this.target;
-      if (AppSettings.ENABLE_LOCAL_SAVE) {
+      if (ParametersService.isLocalSave()) {
         this.router.navigate(['/sessions']);
       } else {
         this.openSaveForm = true;
@@ -345,7 +345,7 @@ export class ResultComponent implements OnInit {
 
   save() {
     this.saving = true;
-    if (!AppSettings.ENABLE_LOCAL_SAVE) {
+    if (!ParametersService.isLocalSave()) {
       console.log('Saving to server', this.uploadTarget);
       this.serverService.postTarget(this.uploadTarget).then((res) => {
         if (res.ok) {

@@ -11,7 +11,7 @@
 <div *ngIf="!showMenu" class="header-item">
 
 </div>
-<app-server-connect class="header-item server"></app-server-connect>
+<app-server-connect *ngIf="!ParametersService.isLocalSave()" class="header-item server"></app-server-connect>
 
 <ng-container #menuButton>
   <div *ngIf="showMenu" class="header-item menu">

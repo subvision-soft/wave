@@ -39,11 +39,15 @@ import {HeaderComponent} from '../../components/header/header.component';
 export class TeamsComponent {
   searchValue = '';
   openCreateTeam = false;
+  create: boolean = true;
   menuActions = [
     new Action(
-      'Supprimer le tireur',
+      'Supprimer l\'équipe',
       undefined,
       () => {
+        if (!confirm("Etes vous sur de vouloir supprimer l'équipe \"" + this.selectedTeams[0].name + "\"")) {
+          return;
+        }
         this.session.teams = this.session.teams.filter(
           (team) => !this.selectedTeams.includes(team)
         );
@@ -54,17 +58,20 @@ export class TeamsComponent {
       () => this.selectedTeams.length > 0
     ),
     new Action(
-      'Modifier le tireur',
+      'Modifier l\'équipe',
       undefined,
-      (self) => {
+      () => {
+        this.openCreateTeam = true;
+        this.newTeam = this.selectedTeams[0];
+        this.create = false;
       },
       undefined,
       () => {
         return this.selectedTeams.length == 1;
       }
     ),
-    new Action('Ajouter un tireur', undefined, (self) => {
-      this.openCreateTeam = true;
+    new Action('Ajouter une équipe', undefined, () => {
+      this.createTeam();
     }),
   ];
   timeoutLongPress: Date = new Date();
@@ -100,6 +107,7 @@ export class TeamsComponent {
     ],
     teams: [
       {
+        id: 1,
         name: 'Equipe 1',
         users: ['592', '1092'],
       },
@@ -107,8 +115,8 @@ export class TeamsComponent {
   };
 
   constructor(
-    private filesService: FilesService,
-    private userLastnameFirstChar: UserLastnameFirstCharPipe
+    private readonly filesService: FilesService,
+    private readonly userLastnameFirstChar: UserLastnameFirstCharPipe
   ) {
     this.session = this.filesService.session || this.session;
     this.storeUsers = this.session.users.map((user) => {
@@ -124,12 +132,18 @@ export class TeamsComponent {
   storeUsers: any[] = [];
 
   newTeam: Team = {
+    id: 1,
     name: '',
     users: [],
   };
 
   createTeamCallback(event: any) {
     if (event.btn === 'ok') {
+      if (this.create) {
+        this.newTeam.id = this.session.teams.length;
+      } else {
+        this.session.teams = this.session.teams.filter(team => team.id !== this.newTeam.id);
+      }
       this.session.teams.push({...this.newTeam});
       this.filesService.session = this.session;
     }
@@ -166,5 +180,15 @@ export class TeamsComponent {
 
   parseDate(dateString: string): Date {
     return new Date(dateString);
+  }
+
+  createTeam(): void {
+    this.openCreateTeam = true;
+    this.create = true;
+    this.newTeam = {
+      id: 1,
+      name: '',
+      users: [],
+    };
   }
 }

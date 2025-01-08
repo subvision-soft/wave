@@ -12,6 +12,9 @@ import {LocaleService} from './locale.service';
 export class ParametersService {
   public loaded: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
+  public static readonly langs: string[] = ['en-UK', 'fr-FR', 'es-ES', 'it-IT']
+
+  private toUpdate: string[] = [];
 
   get parameters(): any {
     return ParametersService._parameters;
@@ -25,12 +28,12 @@ export class ParametersService {
         value: ParametersService._parameters[key].value,
       };
     });
-
     Filesystem.writeFile({
       path: 'parameters.json',
       data: btoa(JSON.stringify(parameters)),
       directory: Directory.Data,
     }).then(() => {
+      this.reload();
       this.toastService.initiate({
         title: 'SETTINGS.TOASTS.SAVED_SUCCESS.TITLE',
         content: 'SETTINGS.TOASTS.SAVED_SUCCESS.MESSAGE',
@@ -48,7 +51,7 @@ export class ParametersService {
         scope.serverService.connect(value);
       },
     }, URL_API2: {
-      value: 'https://wave-api-6rqq.onrender.com',
+      value: 'https://wave.crobix.ovh',
       update: function (value: any, scope: any) {
       },
     },
@@ -107,10 +110,16 @@ export class ParametersService {
       },
     },
     LANGUE: {
-      value: 'fr',
+      value: null,
       update: function (value: any) {
       },
     },
+    LOCAL: {
+      value: 'true',
+      update: function (value: any) {
+        location.reload();
+      }
+    }
   };
 
   constructor(
@@ -121,7 +130,7 @@ export class ParametersService {
   ) {
     ParametersService._parameters.LANGUE.update = (value: any) => {
       this.translate.use(value);
-      if (localeService.locale !== value) {
+      if (value && localeService.locale !== value) {
         localeService.setLocale(value);
       }
     };
@@ -130,18 +139,21 @@ export class ParametersService {
       directory: Directory.Data,
     })
       .then(async (result) => {
-        let parameters: any[];
-        if (typeof result.data === 'string') {
-          parameters = JSON.parse(atob(result.data));
-        } else {
-          parameters = JSON.parse(await result.data.text());
-        }
-        for (const p of parameters) {
-          ParametersService._parameters[p.key].value = p.value;
-          if (ParametersService._parameters[p.key].update) {
-            ParametersService._parameters[p.key].update(ParametersService._parameters[p.key].value, this);
+        const parameters: any[] = typeof result.data === 'string' ? JSON.parse(atob(result.data)) : JSON.parse(await result.data.text());
+
+        for (const parameter of parameters) {
+          ParametersService._parameters[parameter.key].value = parameter.value;
+          if (parameter.key !== 'LOCAL') {
+            this.toUpdate.push(parameter.key);
           }
         }
+
+        if (ParametersService._parameters['LANGUE'].value === null) {
+          const browserLang = translate.getBrowserLang() || 'fr-FR';
+          ParametersService._parameters['LANGUE'].value = ParametersService.langs.includes(browserLang) ? browserLang : 'fr-FR';
+        }
+
+        this.reload()
         this.loaded.next(true);
       })
       .catch(() => {
@@ -153,29 +165,37 @@ export class ParametersService {
     return ParametersService._parameters[key];
   }
 
-  set(key: string | any, value?: any): void {
-    let updateFile = false;
+  static isLocalSave(): boolean {
+    return ParametersService.get('LOCAL').value === 'true';
+  }
+
+  set(key: string | any, value?: any, isObject: boolean = false): void {
     if (typeof key === 'object') {
       for (const k of Object.keys(key)) {
-        if (ParametersService._parameters[k].value !== key[k]) {
-          updateFile = true;
-        }
-        ParametersService._parameters[k].value = key[k];
-        if (ParametersService._parameters[k].update) {
-          ParametersService._parameters[k].update(ParametersService._parameters[k].value, this);
-        }
+        this.set(k, key[k], true);
       }
-    } else {
-      if (ParametersService._parameters[key].value !== value) {
-        updateFile = true;
-      }
-      ParametersService._parameters[key].value = value;
-      if (ParametersService._parameters[key].update) {
-        ParametersService._parameters[key].update(ParametersService._parameters[key].value, this);
-      }
+      this.parameters = ParametersService._parameters;
+      return;
     }
-    if (updateFile) {
+
+    if (ParametersService._parameters[key].value === value) {
+      return;
+    }
+
+    ParametersService._parameters[key].value = value;
+    this.toUpdate.push(key)
+
+    if (!isObject) {
       this.parameters = ParametersService._parameters;
     }
+  }
+
+  reload() {
+    for (const p of this.toUpdate) {
+      if (ParametersService._parameters[p].update) {
+        ParametersService._parameters[p].update(ParametersService._parameters[p].value, this);
+      }
+    }
+    this.toUpdate = [];
   }
 }

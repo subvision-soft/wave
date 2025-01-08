@@ -11,7 +11,7 @@
 </app-header>
 <div class="content">
   <app-search [(value)]="searchValue" placeholder="Rechercher un tireur"></app-search>
-  <app-add-button (click)="openCreateUser = true" *ngIf="!searchValue"
+  <app-add-button (click)="createUserButton()" *ngIf="!searchValue"
                   label="Ajouter un tireur"></app-add-button>
 
   <div class="users">
@@ -36,7 +36,7 @@
                  type="okcancel">
   <app-input [(value)]="newUser.firstname" label="Prénom"></app-input>
   <app-input [(value)]="newUser.lastname" label="Nom"></app-input>
-  <app-input type="number" [(value)]="newUser.id" label="Numéro"></app-input>
+  <app-input type="number" [(value)]="newUser.id" label="Numéro" [disabled]="!create"></app-input>
   <app-select label="Catégorie" [compact]="true" [store]="storeCategories" [(value)]="newUser.category"></app-select>
 </app-message-box>
 

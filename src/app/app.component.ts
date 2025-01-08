@@ -3,12 +3,10 @@ import {fadeAnimation} from './utils/animations';
 import {TranslateService} from '@ngx-translate/core';
 import {ParametersService} from './services/parameters.service';
 import {NavigationEnd, Router, RouterOutlet} from '@angular/router';
-import {AppSettings} from './utils/AppSettings';
 import {ToastComponent} from './components/toast/toast.component';
 import {TabBarComponent} from './components/tab-bar/tab-bar.component';
 import {HttpClient} from '@angular/common/http';
 import {SplashScreenComponent} from './components/splash-screen/splash-screen.component';
-import {NgIf} from '@angular/common';
 import {EndpointsUtils} from './utils/EndpointsUtils';
 import {ContainerComponent} from './components/container/container.component';
 
@@ -19,7 +17,7 @@ import {ContainerComponent} from './components/container/container.component';
   animations: [fadeAnimation],
   standalone: true,
   providers: [TranslateService],
-  imports: [RouterOutlet, ToastComponent, TabBarComponent, SplashScreenComponent, NgIf, ContainerComponent],
+  imports: [RouterOutlet, ToastComponent, TabBarComponent, SplashScreenComponent, ContainerComponent],
 })
 export class AppComponent {
   title = 'wave';
@@ -49,10 +47,11 @@ export class AppComponent {
             this.visionTokenRetrieved.set(true);
           }
         )
+        this.translate.addLangs(ParametersService.langs);
+        this.translate.setDefaultLang('fr-FR');
+        this.translate.use(ParametersService.get('LANGUE').value);
       }
-
     });
-
 
     router.events.subscribe((ev) => {
       if (ev instanceof NavigationEnd) {
@@ -63,25 +62,5 @@ export class AppComponent {
         }
       }
     });
-    this.initTabs();
-    let langs = ['en-UK', 'fr-FR', 'es-ES', 'it-IT'];
-    this.translate.addLangs(langs);
-    this.translate.setDefaultLang('fr-FR');
-    const browserLang = translate.getBrowserLang() || 'fr-FR';
-    this.translate.use(langs.includes(browserLang) ? browserLang : 'fr-FR');
-  }
-
-  initTabs() {
-    this.tabs = [
-      isDevMode()
-        ? {icon: 'jamJoystick', label: 'Playground', link: '/playground'}
-        : undefined,
-      {icon: 'jamHomeF', label: 'Accueil', link: '/home'},
-      {icon: 'jamCameraF', label: 'Caméra', link: '/camera'},
-      AppSettings.ENABLE_LOCAL_SAVE
-        ? {icon: 'jamFolderF', label: 'Sessions', link: '/sessions'}
-        : undefined,
-      {icon: 'jamCogF', label: 'Paramètres', link: '/settings'},
-    ].filter((tab) => !!tab);
   }
 }

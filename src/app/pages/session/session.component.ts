@@ -5,7 +5,7 @@ import { Session } from '../../models/session';
 import { FilesService } from '../../services/files.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgIcon } from '@ng-icons/core';
-import { DatePipe, NgPlural } from '@angular/common';
+import {DatePipe, NgPlural, NgPluralCase} from '@angular/common';
 import { RippleDirective } from '../../directives/ripple.directive';
 import { HeaderComponent } from '../../components/header/header.component';
 
@@ -22,6 +22,7 @@ import { HeaderComponent } from '../../components/header/header.component';
     RouterLink,
     DatePipe,
     HeaderComponent,
+    NgPluralCase
   ],
 })
 export class SessionComponent implements OnInit {
