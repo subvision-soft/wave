@@ -75,13 +75,12 @@ export class HomeComponent {
   }
 
   get seances(): string[] {
-    let map = this.historyService.history
-      ?.sort((a, b) => {
+    return this.historyService.history
+      .sort((a, b) => {
         return new Date(b.date).getTime() - new Date(a.date).getTime();
       })
-      .map((history) => history.url);
-    map = map?.slice(0, 6);
-    return map;
+      .map((history) => history.url)
+      .slice(0, 6);
   }
 
 
