@@ -6,7 +6,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { NgForOf, NgIf } from '@angular/common';
+import {NgForOf, NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-number-spinner',
@@ -54,7 +54,7 @@ export class NumberSpinnerComponent {
   set max(max: number) {
     this._max = max;
     this.values = Array.from(
-      { length: (this._max - this._min + 1) / this.step },
+      {length: (this._max - this._min + 1) / this.step},
       (v, k) => k * this.step
     );
   }
@@ -63,14 +63,14 @@ export class NumberSpinnerComponent {
   set min(min: number) {
     this._min = min;
     this.values = Array.from(
-      { length: (this._max - this._min + 1) / this.step },
+      {length: (this._max - this._min + 1) / this.step},
       (v, k) => k * this.step
     );
   }
 
   constructor() {
     this.values = Array.from(
-      { length: (this._max - this._min + 1) / this.step },
+      {length: (this._max - this._min + 1) / this.step},
       (v, k) => k * this.step
     );
   }
@@ -104,22 +104,23 @@ export class NumberSpinnerComponent {
           [scope._min, scope._max].includes(scope._value)
         ) {
           resolve(true);
-        } else {
-          if (speed > 0) {
-            scope._value = scope._value - 1;
-
-            speed = speed - 1;
-          } else {
-            scope._value = scope._value + 1;
-            speed = speed + 1;
-          }
-          scope.valueChange.emit(scope._value);
-
-          setTimeout(async () => {
-            await momentum(speed);
-            resolve(true);
-          }, 200 / Math.abs(speed));
+          return;
         }
+
+        if (speed > 0) {
+          scope._value = scope._value - 1;
+
+          speed = speed - 1;
+        } else {
+          scope._value = scope._value + 1;
+          speed = speed + 1;
+        }
+        scope.valueChange.emit(scope._value);
+
+        setTimeout(async () => {
+          await momentum(speed);
+          resolve(true);
+        }, 200 / Math.abs(speed));
       });
     }
 
@@ -132,31 +133,34 @@ export class NumberSpinnerComponent {
     if (event.type === 'touchmove') {
       event.clientY = event.touches[0].clientY;
     }
-    if (this.dragging) {
-      this.speed =
-        (event.clientY - this.lastPositionY) /
-        (new Date().getTime() - this.lastPositionYDate.getTime());
-      this.lastPositionY = event.clientY;
-      this.lastPositionYDate = new Date();
-      if (!isFinite(this.speed)) {
-        this.speed = 0;
-      }
-      const offsetHeight = this.container?.nativeElement.offsetHeight / 3;
-      const indexAdd = (event.clientY - this.startY) / offsetHeight;
-      let index = indexAdd + this.currentValue * -1;
-      if (index * -1 < 0) {
-        index = 0;
-      }
-      if (index * -1 > this.values.length - 1) {
-        index = (this.values.length - 1) * -1;
-      }
-      index = Math.round(index);
 
-      if (this._value !== index * -1) {
-        this._value = index * -1;
-        this.valueChange.emit(this._value);
-        navigator.vibrate(200);
-      }
+    if (!this.dragging) {
+      return;
+    }
+
+    this.speed =
+      (event.clientY - this.lastPositionY) /
+      (new Date().getTime() - this.lastPositionYDate.getTime());
+    this.lastPositionY = event.clientY;
+    this.lastPositionYDate = new Date();
+    if (!isFinite(this.speed)) {
+      this.speed = 0;
+    }
+    const offsetHeight = this.container?.nativeElement.offsetHeight / 3;
+    const indexAdd = (event.clientY - this.startY) / offsetHeight;
+    let index = indexAdd + this.currentValue * -1;
+    if (index * -1 < 0) {
+      index = 0;
+    }
+    if (index * -1 > this.values.length - 1) {
+      index = (this.values.length - 1) * -1;
+    }
+    index = Math.round(index);
+
+    if (this._value !== index * -1) {
+      this._value = index * -1;
+      this.valueChange.emit(this._value);
+      navigator.vibrate(200);
     }
   }
 }

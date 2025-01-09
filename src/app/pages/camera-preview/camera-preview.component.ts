@@ -53,7 +53,7 @@ export class CameraPreviewComponent implements OnDestroy {
   image: string | null = null;
   coordinates = signal<Coordinates[]>([]);
   coordinatesPercent = computed<Coordinates[]>(() => {
-    return this.coordinates()?.map((coordinate: any) => {
+    return this.coordinates().map((coordinate: any): Coordinates => {
       return {
         x: coordinate.x * 100, y: coordinate.y * 100,
       };
@@ -65,11 +65,11 @@ export class CameraPreviewComponent implements OnDestroy {
   // Configs
   modelInputShape = [1, 3, 640, 640];
   protected path = computed<string>(() => {
-    let result = '';
     if (!this.coordinates()) {
       return '';
     }
 
+    let result = '';
     for (const coordinate of this.coordinates()) {
       result += `${this.videoWidth() * coordinate.x},${this.videoHeight() * coordinate.y} `;
     }
@@ -126,7 +126,7 @@ export class CameraPreviewComponent implements OnDestroy {
         image_data: await this.getImageBase64(),
       }));
       const lastCoordinates = this.coordinates();
-      this.coordinates.set(coordinates?.map((coordinate: number[]) => {
+      this.coordinates.set(coordinates.map((coordinate: number[]): Coordinates => {
         return {
           x: coordinate[0], y: coordinate[1],
         };

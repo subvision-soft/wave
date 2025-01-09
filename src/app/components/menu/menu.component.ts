@@ -31,9 +31,10 @@ export class MenuComponent {
     if (!value) {
       return;
     }
-    var curleft = 0;
-    var curtop = 0;
+
     if (value.offsetParent) {
+      let curleft = 0;
+      let curtop = 0;
       do {
         curleft += value.offsetLeft;
         curtop += value.offsetTop;

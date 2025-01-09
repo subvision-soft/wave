@@ -44,18 +44,18 @@ export class TotalPreviewComponent {
   }
 
   get total(): number {
-    if (this.tirsValides.length === 0) return 0;
+    const tirsValides = this.tirsValides;
+    if (tirsValides.length === 0) return 0;
     if (this.precision) {
-      const number1 = this.tirsValides;
-      return number1.reduce((acc, impact) => acc + impact.score, 0);
+      return tirsValides.reduce((acc, impact) => acc + impact.score, 0);
     } else if (this.biathlon) {
       const number =
-        (this.tirsValides.reduce((acc, impact) => acc + impact.score, 0) -
+        (tirsValides.reduce((acc, impact) => acc + impact.score, 0) -
           this.time * 2) *
         3;
       return number > 0 ? number : 0;
     } else if (this.superBiathlon) {
-      const contrats = this.tirsValides.filter(
+      const contrats = tirsValides.filter(
         (impact) => impact.score >= 471
       ).length;
       const capitalPoints = 5000;
@@ -66,8 +66,7 @@ export class TotalPreviewComponent {
         return number > 0 ? number : 0;
       }
     } else if (this.saisieLibre) {
-      const number1 = this.tirsValides;
-      return number1.reduce((acc, impact) => acc + impact.score, 0);
+      return tirsValides.reduce((acc, impact) => acc + impact.score, 0);
     }
     return 0;
   }

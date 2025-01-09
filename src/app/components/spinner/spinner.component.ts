@@ -6,7 +6,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { NgForOf, NgIf } from '@angular/common';
+import {NgForOf, NgIf} from '@angular/common';
 
 @Component({
   selector: 'app-spinner',
@@ -41,7 +41,8 @@ export class SpinnerComponent {
     return this._value;
   }
 
-  constructor() {}
+  constructor() {
+  }
 
   onMouseDown(event: any): void {
     if (event.type === 'touchstart') {
@@ -100,31 +101,34 @@ export class SpinnerComponent {
     if (event.type === 'touchmove') {
       event.clientX = event.touches[0].clientX;
     }
-    if (this.dragging) {
-      this.speed =
-        (event.clientX - this.lastPositionX) /
-        (new Date().getTime() - this.lastPositionXDate.getTime());
-      this.lastPositionX = event.clientX;
-      this.lastPositionXDate = new Date();
-      if (!isFinite(this.speed)) {
-        this.speed = 0;
-      }
-      const offsetWidth = this.container?.nativeElement.offsetWidth / 3;
-      const indexAdd = (event.clientX - this.startX) / offsetWidth;
-      let index = indexAdd + this.currentValue * -1;
-      if (index * -1 < 0) {
-        index = 0;
-      }
-      if (index * -1 > this.values.length - 1) {
-        index = (this.values.length - 1) * -1;
-      }
-      index = Math.round(index);
 
-      if (this._value !== index * -1) {
-        this._value = index * -1;
-        this.valueChange.emit(this._value);
-        // navigator.vibrate(200);
-      }
+    if (!this.dragging) {
+      return;
+    }
+
+    this.speed =
+      (event.clientX - this.lastPositionX) /
+      (new Date().getTime() - this.lastPositionXDate.getTime());
+    this.lastPositionX = event.clientX;
+    this.lastPositionXDate = new Date();
+    if (!isFinite(this.speed)) {
+      this.speed = 0;
+    }
+    const offsetWidth = this.container?.nativeElement.offsetWidth / 3;
+    const indexAdd = (event.clientX - this.startX) / offsetWidth;
+    let index = indexAdd + this.currentValue * -1;
+    if (index * -1 < 0) {
+      index = 0;
+    }
+    if (index * -1 > this.values.length - 1) {
+      index = (this.values.length - 1) * -1;
+    }
+    index = Math.round(index);
+
+    if (this._value !== index * -1) {
+      this._value = index * -1;
+      this.valueChange.emit(this._value);
+      // navigator.vibrate(200);
     }
   }
 }

@@ -6,9 +6,9 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { animate, style, transition, trigger } from '@angular/animations';
-import { InputComponent } from '../input/input.component';
-import { NgIf } from '@angular/common';
+import {animate, style, transition, trigger} from '@angular/animations';
+import {InputComponent} from '../input/input.component';
+import {NgIf} from '@angular/common';
 
 interface Callback {
   btn: 'ok' | 'cancel';
@@ -26,10 +26,10 @@ interface Callback {
           opacity: 0,
           transform: 'translate(0, calc(100% + var(--padding)))',
         }),
-        animate('200ms', style({ opacity: 1, transform: 'translate(0)' })),
+        animate('200ms', style({opacity: 1, transform: 'translate(0)'})),
       ]),
       transition(':leave', [
-        style({ opacity: 1, transform: 'translate(0)' }),
+        style({opacity: 1, transform: 'translate(0)'}),
         animate(
           '200ms',
           style({
@@ -94,8 +94,6 @@ export class MessageBoxComponent {
     }
     this.close();
   }
-
-  constructor() {}
 
   close() {
     this._open = false;

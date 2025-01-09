@@ -66,9 +66,9 @@ export class SelectComponent {
   isSelected(record: any) {
     if (Array.isArray(this.value)) {
       return this.value.includes(record[this.valueField]);
-    } else {
-      return record[this.valueField] === this.value;
     }
+
+    return record[this.valueField] === this.value;
   }
 
   open: boolean = false;
