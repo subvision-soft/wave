@@ -3,12 +3,12 @@ import {Component, computed, ElementRef, inject, OnDestroy, signal, ViewChild,} 
 import {NgIf} from '@angular/common';
 import {LoadingComponent} from '../../components/loading/loading.component';
 import {lastValueFrom, Subscription} from 'rxjs';
-import {OpencvImshowComponent} from '../../components/opencv-imshow/opencv-imshow.component';
 import "@tensorflow/tfjs-backend-webgl";
 import {HttpClient} from '@angular/common/http';
 import {EndpointsUtils} from '../../utils/EndpointsUtils';
 import {CaptureButton} from '../../components/capture-button/capture-button.component';
-import {Router} from '@angular/router'; // set backend to webgl
+import {Router} from '@angular/router';
+import {compressImage, getImageSize} from '../../utils/image'; // set backend to webgl
 
 
 type Coordinates = {
@@ -21,7 +21,7 @@ type Coordinates = {
   templateUrl: './camera-preview.component.html',
   styleUrls: ['./camera-preview.component.scss'],
   standalone: true,
-  imports: [NgIf, LoadingComponent, OpencvImshowComponent, CaptureButton],
+  imports: [NgIf, LoadingComponent, CaptureButton],
 })
 export class CameraPreviewComponent implements OnDestroy {
   private static readonly MAX_FPS = 5;
@@ -73,6 +73,11 @@ export class CameraPreviewComponent implements OnDestroy {
     for (const coordinate of this.coordinates()) {
       result += `${this.videoWidth() * coordinate.x},${this.videoHeight() * coordinate.y} `;
     }
+
+    if (result.length < 2) {
+      return '';
+    }
+
     return `M ${result.slice(0, -1)} Z`;
   });
   private readonly http: HttpClient = inject(HttpClient);
@@ -85,12 +90,26 @@ export class CameraPreviewComponent implements OnDestroy {
   }
 
 
-  getImageBase64(fullSize: boolean = false): string {
-
+  async getImageBase64(fullSize: boolean = false): Promise<string> {
     this.inputCanvasRef.nativeElement.width = fullSize ? this.videoRef.nativeElement.videoWidth : CameraPreviewComponent.PREPROCESSING_SIZE;
     this.inputCanvasRef.nativeElement.height = fullSize ? this.videoRef.nativeElement.videoHeight : CameraPreviewComponent.PREPROCESSING_SIZE;
     this.input_canvas_ctx?.drawImage(this.videoRef.nativeElement, 0, 0, this.inputCanvasRef.nativeElement.width, this.inputCanvasRef.nativeElement.height);
-    return this.inputCanvasRef.nativeElement.toDataURL('image/jpeg').replace('data:image/jpeg;base64,', '');
+    let base64Image = this.inputCanvasRef.nativeElement.toDataURL('image/jpeg');
+
+    if (fullSize) {
+      let imageSize = getImageSize(base64Image);
+      while (imageSize > 50000) {
+        const beforeSize = imageSize;
+        base64Image = await compressImage(base64Image);
+        imageSize = getImageSize(base64Image);
+
+        if (beforeSize === imageSize) {
+          break;
+        }
+      }
+    }
+
+    return base64Image.replace('data:image/jpeg;base64,', '');
   }
 
 
@@ -104,7 +123,7 @@ export class CameraPreviewComponent implements OnDestroy {
       this.videoHeight.set(this.videoRef.nativeElement.videoHeight);
       if (!this.continuous || this.loading) return;
       const coordinates: number[][] = await lastValueFrom(this.http.post<number[][]>(EndpointsUtils.getPathDetectTarget(), {
-        image_data: this.getImageBase64(),
+        image_data: await this.getImageBase64(),
       }));
       const lastCoordinates = this.coordinates();
       this.coordinates.set(coordinates?.map((coordinate: number[]) => {
@@ -142,8 +161,6 @@ export class CameraPreviewComponent implements OnDestroy {
       setTimeout(() => {
         requestAnimationFrame(capture_frame_continuous)
       }, 1000 / CameraPreviewComponent.MAX_FPS - (end - start));
-
-      ;
     };
 
     // get user media
@@ -167,7 +184,7 @@ export class CameraPreviewComponent implements OnDestroy {
   async capture(): Promise<void> {
     if (this.CORRECT_COORDINATES_BEFORE_PROCESS <= this.numberOfValidCoordinates()) {
       // this.numberOfValidCoordinates.set(0);
-      const imageBase64 = this.getImageBase64(true);
+      const imageBase64 = await this.getImageBase64(true);
       console.log('Image Base64:', imageBase64);
       const data = await lastValueFrom(this.http.post(EndpointsUtils.getPathTargetScore(), {
         image_data: imageBase64,
