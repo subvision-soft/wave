@@ -157,6 +157,7 @@ export class ParametersService {
         this.loaded.next(true);
       })
       .catch(() => {
+        this.loaded.next(true);
         this.parameters = ParametersService._parameters;
       });
   }
