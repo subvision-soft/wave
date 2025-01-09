@@ -66,7 +66,7 @@ export class SpinnerComponent {
     const scope = this;
 
     function momentum(speed: number) {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve) => {
         if (
           time < new Date().getTime() ||
           speed === 0 ||

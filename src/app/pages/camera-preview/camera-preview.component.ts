@@ -122,15 +122,17 @@ export class CameraPreviewComponent implements OnDestroy {
       this.videoWidth.set(this.videoRef.nativeElement.videoWidth);
       this.videoHeight.set(this.videoRef.nativeElement.videoHeight);
       if (!this.continuous || this.loading) return;
-      const coordinates: number[][] = await lastValueFrom(this.http.post<number[][]>(EndpointsUtils.getPathDetectTarget(), {
+      const coordinates: number[][] | null = await lastValueFrom(this.http.post<number[][]>(EndpointsUtils.getPathDetectTarget(), {
         image_data: await this.getImageBase64(),
       }));
       const lastCoordinates = this.coordinates();
-      this.coordinates.set(coordinates.map((coordinate: number[]): Coordinates => {
-        return {
-          x: coordinate[0], y: coordinate[1],
-        };
-      }));
+      if (coordinates) {
+        this.coordinates.set(coordinates.map((coordinate: number[]): Coordinates => {
+          return {
+            x: coordinate[0], y: coordinate[1],
+          };
+        }));
+      }
       this.numberOfValidCoordinates.update((value) => {
         if (this.coordinates()?.length && lastCoordinates?.length) {
           const currentCoordinates = this.coordinates();

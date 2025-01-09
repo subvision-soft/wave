@@ -1,5 +1,4 @@
 import {Component, HostBinding, input} from '@angular/core';
-import {LoadingComponent} from '../loading/loading.component';
 
 @Component({
   selector: 'app-splash-screen',
