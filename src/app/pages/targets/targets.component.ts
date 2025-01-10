@@ -11,7 +11,8 @@ import { HeaderComponent } from '../../components/header/header.component';
 import { SegmentedButtonComponent } from '../../components/segmented-button/segmented-button.component';
 import { ListTargetsComponent } from '../../components/list-targets/list-targets.component';
 import { TranslateModule } from '@ngx-translate/core';
-import { DatePipe } from '@angular/common';
+import {DatePipe, NgIf} from '@angular/common';
+import {Target} from '../../models/target';
 
 @Component({
   selector: 'app-targets',
@@ -38,18 +39,15 @@ import { DatePipe } from '@angular/common';
     ListTargetsComponent,
     TranslateModule,
     DatePipe,
+    NgIf,
   ],
 })
 export class TargetsComponent {
   searchValue = '';
-  openCreateTarget = false;
 
   get targets() {
-    return this.session.users
-      .flatMap((user) => {
-        return user.targets || [];
-      })
-      .filter((target) => {
+    return this.session.targets
+      .filter((target: Target) => {
         if (!this.eventFilter) return true;
         return target.event === this.eventFilter;
       });
@@ -106,33 +104,36 @@ export class TargetsComponent {
     date: new Date(),
     users: [
       {
-        id: '1',
+        id: 1,
+        label: '',
         firstname: 'User',
         lastname: '1',
         category: Category.SENIOR,
-        targets: [
-          {
-            impacts: [],
-            event: Event.SUPER_BIATHLON,
-            total: 0,
-            time: 0,
-            date: new Date(),
-            user: '1',
-            image: '',
-            shotsTooCloseCount: 0,
-            badArrowExtractionsCount: 0,
-            targetSheetNotTouchedCount: 0,
-            departureSteal: false,
-            armedBeforeCountdown: false,
-            timeRanOut: false,
-          },
-        ],
       },
     ],
     teams: [],
+    targets: [
+      {
+        impacts: [],
+        event: Event.SUPER_BIATHLON,
+        total: 0,
+        time: 0,
+        date: new Date(),
+        user: 1,
+        image: '',
+        shotsTooCloseCount: 0,
+        badArrowExtractionsCount: 0,
+        targetSheetNotTouchedCount: 0,
+        departureSteal: false,
+        armedBeforeCountdown: false,
+        timeRanOut: false,
+      },
+    ],
+    path: '',
+    size: 0
   };
 
-  constructor(private filesService: FilesService, private router: Router) {
+  constructor(private filesService: FilesService, private readonly router: Router) {
     this.session = this.filesService.session || this.session;
   }
 
@@ -146,5 +147,9 @@ export class TargetsComponent {
 
   parseDate(dateString: string): Date {
     return new Date(dateString);
+  }
+
+  openCamera() {
+    this.router.navigate(['/camera/preview']);
   }
 }

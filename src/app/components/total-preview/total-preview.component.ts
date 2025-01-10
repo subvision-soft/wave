@@ -1,6 +1,6 @@
-import { Component, Input } from '@angular/core';
-import { Impact } from '../../models/impact';
-import { Event } from '../../models/event';
+import {Component, Input} from '@angular/core';
+import {Impact} from '../../models/impact';
+import {Event} from '../../models/event';
 
 @Component({
   selector: 'app-total-preview',
@@ -18,7 +18,7 @@ export class TotalPreviewComponent {
     this._impacts = [];
     for (let i = 0; i < impacts.length; i++) {
       for (let j = 0; j < impacts[i].amount; j++) {
-        this._impacts.push({ ...impacts[i] });
+        this._impacts.push({...impacts[i]});
       }
     }
   }
@@ -89,6 +89,10 @@ export class TotalPreviewComponent {
       impacts = [];
       //On garde les 2 meilleurs impacts de chaque visuels
       Object.keys(zones).map((zone) => {
+        if (!Array.isArray(zones[zone])) {
+          return
+        }
+
         impacts.push(
           ...zones[zone]
             .sort((a: Impact, b: Impact) => b.score - a.score)
@@ -109,6 +113,10 @@ export class TotalPreviewComponent {
       impacts = [];
       //On garde le meilleur impact de chaque visuels
       Object.keys(zones).map((zone) => {
+        if (!Array.isArray(zones[zone])) {
+          return
+        }
+
         impacts.push(
           ...zones[zone]
             .sort((a: Impact, b: Impact) => b.score - a.score)

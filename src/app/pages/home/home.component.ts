@@ -70,7 +70,6 @@ export class HomeComponent {
         this.actualites = data;
       }
     );
-    filesService.clearTarget();
     filesService.clearSession();
   }
 

@@ -132,32 +132,32 @@ export class CameraPreviewComponent implements OnDestroy {
             x: coordinate[0], y: coordinate[1],
           };
         }));
-      }
-      this.numberOfValidCoordinates.update((value) => {
-        if (this.coordinates()?.length && lastCoordinates?.length) {
-          const currentCoordinates = this.coordinates();
-          const lastCentroid = lastCoordinates.reduce((acc, coordinate) => {
-              return {x: acc.x + coordinate.x, y: acc.y + coordinate.y};
+
+        this.numberOfValidCoordinates.update((value) => {
+          if (this.coordinates()?.length && lastCoordinates?.length) {
+            const currentCoordinates = this.coordinates();
+            const lastCentroid = lastCoordinates.reduce((acc, coordinate) => {
+                return {x: acc.x + coordinate.x, y: acc.y + coordinate.y};
+              }
+              , {x: 0, y: 0});
+            lastCentroid.x /= currentCoordinates.length;
+            lastCentroid.y /= currentCoordinates.length;
+            const currentCentroid = currentCoordinates.reduce((acc, coordinate) => {
+                return {x: acc.x + coordinate.x, y: acc.y + coordinate.y};
+              }
+              , {x: 0, y: 0});
+            currentCentroid.x /= coordinates.length;
+            currentCentroid.y /= coordinates.length;
+            const distance = Math.sqrt(Math.pow(currentCentroid.x - lastCentroid.x, 2) + Math.pow(currentCentroid.y - lastCentroid.y, 2));
+            if (Math.abs(distance) > 0.1) {
+              return 0;
             }
-            , {x: 0, y: 0});
-          lastCentroid.x /= currentCoordinates.length;
-          lastCentroid.y /= currentCoordinates.length;
-          const currentCentroid = currentCoordinates.reduce((acc, coordinate) => {
-              return {x: acc.x + coordinate.x, y: acc.y + coordinate.y};
-            }
-            , {x: 0, y: 0});
-          currentCentroid.x /= coordinates.length;
-          currentCentroid.y /= coordinates.length;
-          const distance = Math.sqrt(Math.pow(currentCentroid.x - lastCentroid.x, 2) + Math.pow(currentCentroid.y - lastCentroid.y, 2));
-          if (Math.abs(distance) > 0.1) {
-            return 0;
           }
-        }
 
 
-        return this.coordinates()?.length ? Math.min(value + 1, this.CORRECT_COORDINATES_BEFORE_PROCESS) : 0;
-      });
-
+          return this.coordinates()?.length ? Math.min(value + 1, this.CORRECT_COORDINATES_BEFORE_PROCESS) : 0;
+        });
+      }
 
       const end = performance.now();
       setTimeout(() => {
@@ -192,7 +192,12 @@ export class CameraPreviewComponent implements OnDestroy {
         image_data: imageBase64,
       }));
 
-      this.router.navigate(['/camera/result'], {state: {data}});
+      this.router.navigate(['/camera/result'], {
+          state: {
+            data: data, edit: true
+          }
+        }
+      );
     }
 
   }

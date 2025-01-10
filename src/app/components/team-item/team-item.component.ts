@@ -33,7 +33,7 @@ export class TeamItemComponent {
 
   get users(): User[] {
     return (
-      this.session?.users.filter((user) =>
+      this.session?.users.filter((user: User) =>
         this.team?.users.includes(user.id)
       ) || []
     );

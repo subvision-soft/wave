@@ -5,15 +5,17 @@ import {Category} from '../../models/category';
 import {Router} from '@angular/router';
 import {SearchComponent} from '../../components/search/search.component';
 import {HeaderComponent} from '../../components/header/header.component';
-import {NgForOf, NgIf} from '@angular/common';
+import {DatePipe, NgForOf, NgIf} from '@angular/common';
 import {AddButtonComponent} from '../../components/add-button/add-button.component';
 import {EmptyTextComponent} from '../../components/empty-text/empty-text.component';
 import {UserItemComponent} from '../../components/user-item/user-item.component';
 import {LongPressDirective} from '../../directives/long-press.directive';
 import {MessageBoxComponent} from '../../components/message-box/message-box.component';
-import {InputComponent} from '../../components/input/input.component';
-import {SelectComponent} from '../../components/select/select.component';
 import {UserService} from '../../services/user.services';
+import {FilesService} from '../../services/files.service';
+import {Session} from '../../models/session';
+import {Team} from '../../models/team';
+import {SelectComponent} from '../../components/select/select.component';
 
 @Component({
   selector: 'app-users',
@@ -30,12 +32,12 @@ import {UserService} from '../../services/user.services';
     LongPressDirective,
     NgForOf,
     MessageBoxComponent,
-    InputComponent,
     SelectComponent,
+    DatePipe,
+
   ],
 })
-export class UsersComponent {
-  create: boolean = true;
+export class UsersSessionComponent {
   searchValue = '';
   openCreateUser = false;
   menuActions = [
@@ -47,25 +49,13 @@ export class UsersComponent {
           return;
         }
         for (const selectedUser of this.selectedUsers) {
-          this.userService.delete(selectedUser.id)
+          this.session.users = this.session.users.filter(user => user.id !== selectedUser.id)
         }
+        this.filesService.updateSession()
         this.selectedUsers = [];
       },
       undefined,
       () => this.selectedUsers.length > 0
-    ),
-    new Action(
-      'Modifier le tireur',
-      undefined,
-      () => {
-        this.openCreateUser = true;
-        this.newUser = this.selectedUsers[0];
-        this.create = false;
-      },
-      undefined,
-      () => {
-        return this.selectedUsers.length == 1;
-      }
     ),
     new Action('Ajouter un tireur', undefined, () => {
       this.createUserButton();
@@ -74,17 +64,21 @@ export class UsersComponent {
   timeoutLongPress: Date = new Date();
 
   selectedUsers: User[] = [];
+  session: Session;
+  userToAdd: number[];
 
-  constructor(private readonly router: Router, private readonly userService: UserService) {
+  constructor(private readonly filesService: FilesService, private readonly router: Router, private readonly userService: UserService) {
+    this.session = this.filesService.session || new class implements Session {
+      date: Date;
+      description: string;
+      teams: Team[];
+      title: string;
+      users: User[] = [];
+      targets = [];
+      path: '';
+      size: 0
+    }
   }
-
-  storeCategories = [
-    {id: Category.MINIME, label: 'Minime'},
-    {id: Category.CADET, label: 'Cadet'},
-    {id: Category.JUNIOR, label: 'Junior'},
-    {id: Category.SENIOR, label: 'Sénior'},
-    {id: Category.MASTER, label: 'Master'},
-  ];
 
   newUser: User = {
     id: 0,
@@ -95,19 +89,21 @@ export class UsersComponent {
   };
 
   createUserCallback(event: any) {
-    if (event.btn === 'ok' && this.isRequired(this.newUser.id) && this.isRequired(this.newUser.firstname) && this.isRequired(this.newUser.lastname) && (!this.create || (this.create && !this.alreadyExist()))) {
-      if(this.create) {
-        this.userService.create(this.newUser);
-      } else {
-        this.userService.update(this.newUser);
-      }
+    if (event.btn === 'ok') {
+      this.userToAdd.forEach((userId) => {
+        const user = this.userService.get(userId);
+        if (user) {
+          this.session.users.push(user);
+        }
+      })
+      this.filesService.updateSession()
       this.selectedUsers = [];
       this.openCreateUser = false;
     }
   }
 
   get users(): User[] {
-    return this.userService.all().filter((user: User) => {
+    return this.session.users.filter((user: User) => {
       return this.searchValue === '' || user.id === Number(this.searchValue) || user.firstname.startsWith(this.searchValue) || user.lastname.startsWith(this.searchValue);
     });
   }
@@ -131,29 +127,18 @@ export class UsersComponent {
         this.selectedUsers.push(user);
       }
     } else {
+      console.log('click')
       this.router.navigate(['/sessions/user'], {
-        state: {user},
+        state: {user, session: this.session},
       });
     }
   }
 
   createUserButton() {
     this.openCreateUser = true;
-    this.create = true;
-    this.newUser = {
-      id: 0,
-      label: '',
-      firstname: '',
-      lastname: '',
-      category: Category.SENIOR,
-    };
   }
 
-  isRequired(field: any): boolean {
-    return field !== undefined && field !== null && field !== '';
-  }
-
-  alreadyExist(): boolean {
-    return this.userService.exists(this.newUser.id);
+  usersSelect(): any[] {
+    return this.userService.all().filter((user) => this.session.users.findIndex((u: User) => u.id === user.id) === -1);
   }
 }

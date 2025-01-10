@@ -1,8 +1,12 @@
 <app-header [showBack]="true" [showMenu]="true" [actions]="menuActions">
   <div class="header-content">
     <h1>
-      {{'Tireurs'}}
+      {{'Compétiteurs'}}
     </h1>
+    <p>
+      <span class="title">{{session.title}}</span>
+      <span class="date">({{session.date | date:'dd/MM/yyyy'}})</span>
+    </p>
   </div>
 </app-header>
 <div class="content">
@@ -30,21 +34,7 @@
                  [(open)]="openCreateUser"
                  (callback)="createUserCallback($event)"
                  type="okcancel">
-  <app-input [(value)]="newUser.firstname" label="Prénom"></app-input>
-  <div class="error" *ngIf="!isRequired(newUser.firstname)">
-    Ne doit pas être vide
-  </div>
-  <app-input [(value)]="newUser.lastname" label="Nom"></app-input>
-  <div class="error" *ngIf="!isRequired(newUser.lastname)">
-    Ne doit pas être vide
-  </div>
-  <app-input type="number" [(value)]="newUser.id" label="Numéro" [disabled]="!create"></app-input>
-  <div class="error" *ngIf="create && !isRequired(newUser.id)">
-    Ne doit pas être vide
-  </div>
-  <div class="error" *ngIf="create && alreadyExist()">
-    Existe déjà
-  </div>
-  <app-select label="Catégorie" [compact]="true" [store]="storeCategories" [(value)]="newUser.category"></app-select>
+  <app-select displayField="label" [label]="'Compétiteur'" [compact]="true" [store]="usersSelect()"
+              [(value)]="userToAdd" [multiple]="true"></app-select>
 </app-message-box>
 

@@ -11,16 +11,10 @@
 </app-header>
 <div class="content">
   <app-search [(value)]="searchValue" placeholder="{{'TARGETS.SEARCH' | translate}}"></app-search>
-  <app-add-button [@enterAnimation] (click)="openCreateTarget = true" *ngIf="!searchValue"
+  <app-add-button [@enterAnimation] (click)="openCamera()" *ngIf="!searchValue"
                   label="{{'TARGETS.ADD_TARGET' | translate}}"></app-add-button>
 
   <app-segmented-button [items]="segmentedButtonItems" [(selected)]="selectedSegmentedButton"></app-segmented-button>
   <app-list-targets [users]="session.users" [targets]="targets"
                     [(selectedTargets)]="selectedTargets"></app-list-targets>
 </div>
-
-<!--<app-message-box [message]="'Entrer le nom du dossier'" [title]="'Créer un nouveau dossier'"-->
-<!--                 [(open)]="openCreateFolderPrompt" (callback)="messageBoxCallback($event)"-->
-<!--                 type="prompt"></app-message-box>-->
-
-

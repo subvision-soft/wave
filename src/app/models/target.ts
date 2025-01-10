@@ -7,7 +7,7 @@ export interface Target {
   total: number;
   time: number;
   date: Date;
-  user: string;
+  user: number;
   image: string;
   stage?: string;
   shotsTooCloseCount: number;

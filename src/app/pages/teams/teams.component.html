@@ -34,6 +34,9 @@
                  (callback)="createTeamCallback($event)"
                  type="okcancel">
   <app-input [(value)]="newTeam.name" label="Nom"></app-input>
+  <div class="error" *ngIf="!isRequired(newTeam.name)">
+    Ne doit pas être vide
+  </div>
   <app-select [multiple]="true" placeholder="Aucun tireur sélectionné" [label]="'Tireurs'" [store]="storeUsers"
               [(value)]="newTeam.users"
               [compact]="true"></app-select>

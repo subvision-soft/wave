@@ -57,7 +57,7 @@ export class ListTargetsComponent {
     this._selectedTargets.push(target);
   }
 
-  getUserById(competitorId: string) {
+  getUserById(competitorId: number) {
     return this.users.find((u) => u.id === competitorId);
   }
 
@@ -78,9 +78,10 @@ export class ListTargetsComponent {
       return;
     }
 
+    console.log(target)
     // Ouvrir page target
     this._router.navigate(['/camera/result'], {
-      state: {target},
+      state: {data: target, edit: false},
     });
   }
 }

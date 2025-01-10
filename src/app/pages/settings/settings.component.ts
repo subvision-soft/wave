@@ -29,9 +29,8 @@ export class SettingsComponent {
 
   constructor(private parametersService: ParametersService, private filesService: FilesService) {
     console.log(ParametersService.get('LANGUE').value);
-    this.filesService.clearTarget();
     this.filesService.clearSession();
-    this.parametersService.loaded.subscribe((loaded: boolean) => {
+    this.parametersService.loaded.subscribe(() => {
       this.initSettings();
     });
   }

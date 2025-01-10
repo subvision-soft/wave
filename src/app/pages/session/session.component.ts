@@ -8,6 +8,7 @@ import {NgIcon} from '@ng-icons/core';
 import {DatePipe, NgPlural, NgPluralCase} from '@angular/common';
 import {RippleDirective} from '../../directives/ripple.directive';
 import {HeaderComponent} from '../../components/header/header.component';
+import {Target} from '../../models/target';
 
 @Component({
   selector: 'app-session',
@@ -32,6 +33,9 @@ export class SessionComponent implements OnInit {
     title: '',
     users: [],
     teams: [],
+    targets: [],
+    path: '',
+    size: 0
   };
 
   menuActions = [
@@ -39,10 +43,8 @@ export class SessionComponent implements OnInit {
     new Action('Modifier', undefined, () => {}),
   ];
 
-  get targets() {
-    return this.session.users.flatMap((user) => {
-      return user.targets || [];
-    });
+  get targets(): Target[] {
+    return this.session.targets;
   }
 
   constructor(
@@ -54,7 +56,6 @@ export class SessionComponent implements OnInit {
     const url = this.route.snapshot.queryParams['url'];
     if (url) {
       this.filesService.openFileByUrl(url, true).then((result) => {
-        this.filesService.path = url;
         this.filesService.loadSession(result);
         this.session = result;
       });

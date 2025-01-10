@@ -87,12 +87,21 @@ export class MessageBoxComponent {
         value: this.promptValue,
       });
       this.promptValue = '';
-    } else {
-      this.callback.emit({
-        btn,
-      });
+      this.close();
+      return;
     }
-    this.close();
+
+    if (btn === 'cancel') {
+      this.close();
+      return;
+    }
+
+    this.callback.emit({
+      btn,
+    });
+  }
+
+  constructor() {
   }
 
   close() {

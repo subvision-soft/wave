@@ -1111,6 +1111,7 @@ export class PlastronService {
         2
       );
       let impactDTO = {
+        id: result.impacts.length,
         zone: closestZone as Zone,
         score: points,
         angle: this.toDegrees(radAngle) + 180,

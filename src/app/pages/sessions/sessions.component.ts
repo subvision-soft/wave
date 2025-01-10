@@ -63,6 +63,9 @@ export class SessionsComponent {
     title: '',
     users: [],
     teams: [],
+    targets: [],
+    path: '',
+    size: 0
   };
 
   get sortActions(): Action[] {
@@ -225,7 +228,6 @@ export class SessionsComponent {
     this.openPath();
     this.initializeMenuActions();
     this.filesService.clearSession();
-    this.target = this.filesService.target;
   }
 
   private _sort: 'name' | 'date' | 'size' | 'type' | undefined = 'name';
@@ -321,14 +323,12 @@ export class SessionsComponent {
       if (this.target) {
         this.filesService.openFileByUrl(file.uri, true).then((result) => {
           this.filesService.loadSession(result);
-          this.filesService.path = file.uri;
           this.router.navigate(['/sessions/users']).then((r) => console.log(r));
           return;
         });
       } else {
         this.filesService.openFileByUrl(file.uri, true).then((result) => {
           this.filesService.loadSession(result);
-          this.filesService.path = file.uri;
           this.router.navigate(['/sessions/session'], {
             queryParams: {
               url: file.uri,
@@ -411,6 +411,7 @@ export class SessionsComponent {
         path = path.replace('.subapp', Math.random().toString(16).slice(2) + '.subapp')
       }
 
+      this.newSession.path = path;
       this.filesService
         .writeFile(
           path,
@@ -434,6 +435,9 @@ export class SessionsComponent {
             title: '',
             users: [],
             teams: [],
+            targets: [],
+            path: '',
+            size: 0
           };
         })
         .catch(() => {

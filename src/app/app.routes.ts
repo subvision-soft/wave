@@ -13,6 +13,7 @@ import {TargetsComponent} from './pages/targets/targets.component';
 import {TeamsComponent} from './pages/teams/teams.component';
 import {ScanServerComponent} from './pages/scan-server/scan-server.component';
 import {ActualityComponent} from './pages/actuality/actuality.component';
+import {UsersSessionComponent} from './pages/users-session/users.component';
 
 
 export const routes: Routes = [
@@ -67,6 +68,10 @@ export const routes: Routes = [
     component: SettingsComponent,
   },
   {
+    path: 'users',
+    component: UsersComponent,
+  },
+  {
     path: 'sessions',
     children: [
       {
@@ -79,7 +84,7 @@ export const routes: Routes = [
       },
       {
         path: 'users',
-        component: UsersComponent,
+        component: UsersSessionComponent,
       },
       {
         path: 'user',
