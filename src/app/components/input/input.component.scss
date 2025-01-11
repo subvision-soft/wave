@@ -123,8 +123,8 @@
 
       input:checked:after {
         background: var(--color-background-1);
-        left: calc(100% - var(--toggle-button-padding));
-        transform: translate(-100%, 0);
+        left: calc(0% - var(--toggle-button-padding));
+        transform: translate(100%, 0);
       }
 
       //.toggle {

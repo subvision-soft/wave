@@ -7,6 +7,7 @@ import { TagComponent } from '../../components/tag/tag.component';
 import { HeaderComponent } from '../../components/header/header.component';
 import { AddButtonComponent } from '../../components/add-button/add-button.component';
 import { ListTargetsComponent } from '../../components/list-targets/list-targets.component';
+import {Target} from '../../models/target';
 
 @Component({
   selector: 'app-user',
@@ -24,6 +25,8 @@ import { ListTargetsComponent } from '../../components/list-targets/list-targets
 export class UserComponent {
   protected user: User | undefined;
 
+  protected targets: Target[] = [];
+
   constructor(
     private _activatedRoute: ActivatedRoute,
     private _location: Location
@@ -31,7 +34,8 @@ export class UserComponent {
     this._activatedRoute.paramMap
       .pipe(map(() => window.history.state))
       .subscribe((res) => {
-        if (res.user) {
+        if (res.session) {
+          this.targets = res.session.targets.filter((target: Target) => target.user === res.user.id);
           this.user = res.user;
         } else {
           this._location.back();

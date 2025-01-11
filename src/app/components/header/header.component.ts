@@ -11,6 +11,7 @@ import { Action } from '../../models/action';
 import { IconButtonComponent } from '../icon-button/icon-button.component';
 import { ServerConnectComponent } from '../server-connect/server-connect.component';
 import { MenuComponent } from '../menu/menu.component';
+import {ParametersService} from '../../services/parameters.service';
 
 @Component({
   selector: 'app-header',
@@ -71,4 +72,6 @@ export class HeaderComponent {
       this.menuClose.emit();
     }
   }
+
+  protected readonly ParametersService = ParametersService;
 }

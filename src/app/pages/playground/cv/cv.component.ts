@@ -6,13 +6,12 @@ import {NgxOpenCVService} from '../../../../lib/ngx-open-cv.service';
 import {Router} from '@angular/router';
 import {PlastronService} from '../../../services/plastron.service';
 import {FilesService} from '../../../services/files.service';
-import {RippleDirective} from '../../../directives/ripple.directive';
 import {CameraPreview} from '@capacitor-community/camera-preview';
 
 @Component({
   selector: 'app-cv',
   standalone: true,
-  imports: [CommonModule, OpencvImshowComponent, RippleDirective],
+  imports: [CommonModule, OpencvImshowComponent],
   templateUrl: './cv.component.html',
   styleUrl: './cv.component.scss',
 })
@@ -137,7 +136,6 @@ export class CvComponent {
     private plastronService: PlastronService,
     private filesService: FilesService
   ) {
-    this.filesService.clearTarget();
     this.filesService.clearSession();
     CameraPreview.start({
       parent: 'cameraPreview',

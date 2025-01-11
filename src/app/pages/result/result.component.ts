@@ -9,7 +9,6 @@ import {ToastService, ToastTypes} from '../../services/toast.service';
 import {Target} from '../../models/target';
 import {Action} from '../../models/action';
 import {FilesService} from '../../services/files.service';
-import {AppSettings} from '../../utils/AppSettings';
 import {User} from '../../models/user';
 import {ServerService} from '../../services/server.service';
 import {Category} from '../../models/category';
@@ -28,6 +27,8 @@ import {TagComponent} from '../../components/tag/tag.component';
 import {HeaderComponent} from '../../components/header/header.component';
 import {TranslateModule} from '@ngx-translate/core';
 import {NgIf} from '@angular/common';
+import {ParametersService} from '../../services/parameters.service';
+import {Session} from '../../models/session';
 
 @Pipe({standalone: true, name: 'pluck'})
 export class PluckPipe implements PipeTransform {
@@ -65,19 +66,13 @@ export class PluckPipe implements PipeTransform {
 export class ResultComponent implements OnInit {
   menuActions: Action[] = [
     new Action('Enregistrer', undefined, () => {
-      this.filesService.target = this.target;
-      if (AppSettings.ENABLE_LOCAL_SAVE) {
-        this.router.navigate(['/sessions']);
-      } else {
-        this.openSaveForm = true;
-      }
+      this.openSaveForm = true;
     }),
   ];
 
   openSaveForm: boolean = false;
 
   get epreuve(): Event {
-    console.log('Getting epreuve', this.target.event);
     return this.target.event;
   }
 
@@ -199,7 +194,7 @@ export class ResultComponent implements OnInit {
     date: new Date(),
     time: 0,
     event: Event.PRECISION,
-    user: '',
+    user: 0,
     shotsTooCloseCount: 0,
     badArrowExtractionsCount: 0,
     targetSheetNotTouchedCount: 0,
@@ -213,17 +208,8 @@ export class ResultComponent implements OnInit {
     return this.epreuve === Event.PRECISION;
   }
 
-  get impacts(): any[] {
+  get impacts(): Impact[] {
     return [...this.target.impacts];
-  }
-
-  set impacts(value: any[]) {
-    this.target.impacts = [
-      ...value.map((impact) => ({
-        ...impact,
-        amount: impact.amount !== 0 ? impact.amount : 1,
-      })),
-    ];
   }
 
   get biathlon(): boolean {
@@ -246,6 +232,8 @@ export class ResultComponent implements OnInit {
     }),
   ];
 
+  sessions: Session[] = [];
+
   constructor(
     private plastronService: PlastronService,
     private router: Router,
@@ -253,20 +241,19 @@ export class ResultComponent implements OnInit {
     private filesService: FilesService,
     public activatedRoute: ActivatedRoute,
     private serverService: ServerService,
-    private server: ServerService
+    private server: ServerService,
+    private fileService: FilesService,
   ) {
-    if (server.isConnected()) {
-      this.loadCompetitors();
-      this.loadStages();
-      this.loadEvents();
-    }
-  }
+    this.loadCompetitors();
+    this.loadStages();
 
-  get competitorsStore(): any[] {
-    return this.competitors?.map((competitor) => ({
-      label: `${competitor.id} - ${competitor.firstname} ${competitor.lastname}`,
-      id: competitor.id,
-    }));
+    console.log(this.stageStore)
+
+    if (server.isConnected()) {
+      this.loadEvents();
+    } else {
+      this.loadSessions();
+    }
   }
 
   loadEvents() {
@@ -281,27 +268,30 @@ export class ResultComponent implements OnInit {
   }
 
   loadCompetitors() {
-    this.serverService
-      .getCompetitors(this.target.event, this.target.stage)
-      .then((competitors) => {
-        this.competitors = competitors.map((competitor) => {
-          return {
-            id: competitor.id.toString(),
-            firstname: competitor.firstName,
-            lastname: competitor.lastName,
-            category: Category[competitor.category as keyof typeof Category],
-            targets: [],
-          };
+    if (this.server.isConnected()) {
+      this.serverService
+        .getCompetitors(this.target.event, this.target.stage)
+        .then((competitors) => {
+          this.competitors = competitors.map((competitor) => {
+            return {
+              id: competitor.id,
+              label: `${competitor.id} - ${competitor.firstName} ${competitor.lastName}`,
+              firstname: competitor.firstName,
+              lastname: competitor.lastName,
+              category: Category[competitor.category as keyof typeof Category],
+            };
+          });
+          if (
+            this.selectedCompetitor &&
+            !this.competitors.find(
+              (competitor) => competitor.id === this.selectedCompetitor
+            )
+          ) {
+            this.selectedCompetitor = undefined;
+          }
         });
-        if (
-          this.selectedCompetitor &&
-          !this.competitors.find(
-            (competitor) => competitor.id === this.selectedCompetitor
-          )
-        ) {
-          this.selectedCompetitor = undefined;
-        }
-      });
+      return;
+    }
   }
 
   ngOnInit(): void {
@@ -309,20 +299,25 @@ export class ResultComponent implements OnInit {
     this.activatedRoute.paramMap
       .pipe(map(() => window.history.state))
       .subscribe((res) => {
+        this.editable = res.edit
         if (!!res.data) {
           this.target = {
             ...this.target,
             image: res.data.image,
-            impacts: res.data.impacts,
+            impacts: res.data.impacts.map((impact: Impact, index: number) => {
+              impact.amount = impact.amount !== 0 ? impact.amount : 1;
+              impact.id = index
+
+              return impact;
+            }),
             total: res.data.impacts
               .map((impact: any) => impact.score)
               .reduce((a: number, b: number) => a + b, 0),
             date: new Date(),
             time: 0,
             event: Event.PRECISION,
-            user: '',
+            user: 0,
           };
-          this.editable = false;
           const img = new Image();
           img.onload = () => {
             this.canvas.getContext('2d').drawImage(img, 0, 0, 1000, 1000);
@@ -345,7 +340,7 @@ export class ResultComponent implements OnInit {
 
   save() {
     this.saving = true;
-    if (!AppSettings.ENABLE_LOCAL_SAVE) {
+    if (!ParametersService.isLocalSave()) {
       console.log('Saving to server', this.uploadTarget);
       this.serverService.postTarget(this.uploadTarget).then((res) => {
         if (res.ok) {
@@ -370,7 +365,15 @@ export class ResultComponent implements OnInit {
           this.saving = false;
         }
       });
+      return;
     }
+
+    this.target.user = this.selectedCompetitor || 0
+    this.selectedSession.targets.push(this.target);
+    this.fileService.loadSession(this.selectedSession);
+    this.fileService.updateSession();
+    this.router.navigate(['/camera']);
+
   }
 
   get uploadTarget(): any {
@@ -398,18 +401,60 @@ export class ResultComponent implements OnInit {
 
   protected readonly pluck = pluck;
   competitors: User[] = [];
-  selectedCompetitor?: string;
+  selectedCompetitor?: number;
+  selectedSessionId: string;
+  selectedSession: Session;
 
   get showChrono() {
-    console.log(this.superBiathlon || this.biathlon);
     return (this.superBiathlon || this.biathlon) && !this.saving;
   }
 
   protected readonly Event = Event;
 
-  private loadStages() {
+  private loadStages(): void {
+    if (ParametersService.isLocalSave()) {
+      this.stageStore = [
+        {
+          value: 'qualification',
+          label: 'Qualification',
+        },
+        {
+          value: 'quart',
+          label: 'Quart',
+        },
+        {
+          value: 'demi',
+          label: 'Demi',
+        },
+        {
+          value: 'finale',
+          label: 'Finale',
+        }
+      ];
+      return
+    }
+
     this.serverService.getStages().then((stages) => {
       this.stageStore = stages;
     });
   }
+
+  async loadSessions(): Promise<void> {
+    this.sessions = await this.fileService.getAllSessions()
+    this.competitors = this.sessions.at(0)?.users || []
+  }
+
+  changeSession() {
+    if (!ParametersService.isLocalSave()) {
+      return
+    }
+
+    const newSessionIdx = this.sessions.findIndex((session: Session) => session.title === this.selectedSessionId);
+
+    this.selectedSession = this.sessions[newSessionIdx];
+
+    this.competitors = this.selectedSession.users || [];
+  }
+
+  protected readonly ParametersService = ParametersService;
 }

@@ -1,10 +1,9 @@
-import { Category } from './category';
-import { Target } from './target';
+import {Category} from './category';
 
 export interface User {
-  id: string;
+  id: number;
+  label: string;
   firstname: string;
   lastname: string;
   category: Category;
-  targets: Target[];
 }

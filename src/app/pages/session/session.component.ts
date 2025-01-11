@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { Action } from '../../models/action';
-import { ActivatedRoute, RouterLink } from '@angular/router';
-import { Session } from '../../models/session';
-import { FilesService } from '../../services/files.service';
-import { TranslateModule } from '@ngx-translate/core';
-import { NgIcon } from '@ng-icons/core';
-import { DatePipe, NgPlural } from '@angular/common';
-import { RippleDirective } from '../../directives/ripple.directive';
-import { HeaderComponent } from '../../components/header/header.component';
+import {Component, OnInit} from '@angular/core';
+import {Action} from '../../models/action';
+import {ActivatedRoute, RouterLink} from '@angular/router';
+import {Session} from '../../models/session';
+import {FilesService} from '../../services/files.service';
+import {TranslateModule} from '@ngx-translate/core';
+import {NgIcon} from '@ng-icons/core';
+import {DatePipe, NgPlural, NgPluralCase} from '@angular/common';
+import {RippleDirective} from '../../directives/ripple.directive';
+import {HeaderComponent} from '../../components/header/header.component';
+import {Target} from '../../models/target';
 
 @Component({
   selector: 'app-session',
@@ -22,6 +23,7 @@ import { HeaderComponent } from '../../components/header/header.component';
     RouterLink,
     DatePipe,
     HeaderComponent,
+    NgPluralCase
   ],
 })
 export class SessionComponent implements OnInit {
@@ -31,6 +33,9 @@ export class SessionComponent implements OnInit {
     title: '',
     users: [],
     teams: [],
+    targets: [],
+    path: '',
+    size: 0
   };
 
   menuActions = [
@@ -38,10 +43,8 @@ export class SessionComponent implements OnInit {
     new Action('Modifier', undefined, () => {}),
   ];
 
-  get targets() {
-    return this.session.users.flatMap((user) => {
-      return user.targets || [];
-    });
+  get targets(): Target[] {
+    return this.session.targets;
   }
 
   constructor(
@@ -53,7 +56,6 @@ export class SessionComponent implements OnInit {
     const url = this.route.snapshot.queryParams['url'];
     if (url) {
       this.filesService.openFileByUrl(url, true).then((result) => {
-        this.filesService.path = url;
         this.filesService.loadSession(result);
         this.session = result;
       });

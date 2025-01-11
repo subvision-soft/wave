@@ -46,6 +46,11 @@ export class HistoryService {
     this.saveHistory();
   }
 
+  removeHistory(url: string) {
+    this._cacheHistory = this._cacheHistory.filter((history) => history.url !== url);
+    this.saveHistory();
+  }
+
   saveHistory() {
     console.log(this._cacheHistory);
     Filesystem.writeFile({

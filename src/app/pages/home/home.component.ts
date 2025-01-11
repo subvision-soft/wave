@@ -3,7 +3,6 @@ import {FilesService} from '../../services/files.service';
 import {HistoryService} from '../../services/history.service';
 import {Router, RouterLink} from '@angular/router';
 import {RSSParserService} from '../../services/rss-parser.service';
-import {AppSettings} from '../../utils/AppSettings';
 import {TagComponent} from '../../components/tag/tag.component';
 import {SessionItemComponent} from '../../components/session-item/session-item.component';
 import {EmptyTextComponent} from '../../components/empty-text/empty-text.component';
@@ -15,10 +14,10 @@ import {LogoComponent} from '../../components/logo/logo.component';
 import {HeaderComponent} from '../../components/header/header.component';
 import {HttpClient} from '@angular/common/http';
 import {EndpointsUtils} from '../../utils/EndpointsUtils';
-import {NgIcon} from '@ng-icons/core';
 import {iconoirGithub} from '@ng-icons/iconoir';
 import {ButtonComponent} from '../../components/button/button.component';
 import {Actuality} from '../../models/actuality';
+import {ParametersService} from '../../services/parameters.service';
 
 @Component({
   selector: 'app-home',
@@ -37,7 +36,6 @@ import {Actuality} from '../../models/actuality';
     HeaderComponent,
     RouterLink,
     NgForOf,
-    NgIcon,
     ButtonComponent,
     DatePipe,
   ],
@@ -72,18 +70,16 @@ export class HomeComponent {
         this.actualites = data;
       }
     );
-    filesService.clearTarget();
     filesService.clearSession();
   }
 
   get seances(): string[] {
-    let map = this.historyService.history
-      ?.sort((a, b) => {
+    return this.historyService.history
+      .sort((a, b) => {
         return new Date(b.date).getTime() - new Date(a.date).getTime();
       })
-      .map((history) => history.url);
-    map = map?.slice(0, 6);
-    return map;
+      .map((history) => history.url)
+      .slice(0, 6);
   }
 
 
@@ -105,6 +101,6 @@ export class HomeComponent {
     });
   }
 
-  protected readonly AppSettings = AppSettings;
+  protected readonly ParametersService = ParametersService;
   protected readonly iconoirGithub = iconoirGithub;
 }

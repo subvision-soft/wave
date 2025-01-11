@@ -9,6 +9,7 @@
   <div *ngIf="session" class="infos">
     <h1>{{session.title}}</h1>
     <p>{{session.date | date:'dd/MM/yyyy'}}</p>
+    <p>{{session.size.toFixed(1)}}Mo</p>
   </div>
   <div *ngIf="url" class="fileInfos">
     <span>{{url}}</span>

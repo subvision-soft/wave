@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { Directory, FileInfo, Filesystem } from '@capacitor/filesystem';
-import { Session } from '../models/session';
-import { HistoryService } from './history.service';
-import { Target } from '../models/target';
-import { ToastService, ToastTypes } from './toast.service';
+import {Injectable} from '@angular/core';
+import {Directory, FileInfo, Filesystem} from '@capacitor/filesystem';
+import {Session} from '../models/session';
+import {HistoryService} from './history.service';
+import {ToastService, ToastTypes} from './toast.service';
+import {getSize} from '../utils/storage';
 
 @Injectable({
   providedIn: 'root',
@@ -12,13 +12,10 @@ export class FilesService {
   constructor(
     private historyService: HistoryService,
     private toastService: ToastService
-  ) {}
+  ) {
+  }
 
   private _session?: Session = undefined;
-
-  private _target?: Target = undefined;
-
-  public path: string = '';
 
   get session(): Session | undefined {
     return this._session;
@@ -37,23 +34,15 @@ export class FilesService {
 
   clearSession() {
     this._session = undefined;
-    this.path = '';
-  }
-
-  get target(): Target | undefined {
-    return this._target;
-  }
-
-  set target(target: Target | undefined) {
-    this._target = target;
-  }
-
-  clearTarget() {
-    this._target = undefined;
   }
 
   async updateSession() {
-    await this.writeFile(this.path, JSON.stringify(this.session), true);
+    if (this.session) {
+      this.session.size = getSize(JSON.stringify(this.session));
+      console.log("session size: ", this.session);
+    }
+
+    await this.writeFile(this.session?.path, JSON.stringify(this.session));
     this.toastService.initiate({
       title: 'Sauvegarde réussie',
       type: ToastTypes.SUCCESS,
@@ -63,7 +52,11 @@ export class FilesService {
     });
   }
 
-  async loadFiles(path: string, files: FileInfo[] = []) {
+  async loadFiles(path: string, files: FileInfo[] = []): Promise<FileInfo[]> {
+    if (path.includes('app_dump')) {
+      return [];
+    }
+
     const result = await Filesystem.readdir({
       path: path,
       directory: Directory.Documents,
@@ -78,7 +71,11 @@ export class FilesService {
     return files;
   }
 
-  async loadDirectory(path: string, files: FileInfo[] = []) {
+  async loadDirectory(path: string, files: FileInfo[] = []): Promise<FileInfo[]> {
+    if (path.includes('app_dump')) {
+      return [];
+    }
+
     const result = await Filesystem.readdir({
       path: path,
       directory: Directory.Documents,
@@ -92,19 +89,41 @@ export class FilesService {
     return files;
   }
 
+  async fileExists(fileName: string): Promise<boolean> {
+    try {
+      await Filesystem.stat({
+        path: fileName,
+        directory: Directory.Documents,
+      });
+      return true;
+    } catch (error) {
+      if ((error as any).message.includes('does not exist')) {
+        return false;
+      }
+      console.error('Error checking if file exists:', error);
+      throw error;
+    }
+  }
+
   async writeFile(
-    path: string,
+    path: string | undefined,
     content: string,
     directoryInPath: boolean = false
   ) {
+    if (path === undefined) {
+      return;
+    }
+    console.log(path, content)
     await Filesystem.writeFile({
       path: path,
       data: btoa(content),
       recursive: true,
       directory: directoryInPath ? undefined : Directory.Documents,
     })
-      .then(() => {})
-      .catch(() => {});
+      .then(() => {
+      })
+      .catch(() => {
+      });
   }
 
   async openFileByFile(file: FileInfo) {
@@ -133,5 +152,17 @@ export class FilesService {
       path: file.uri,
       directory: Directory.Documents,
     });
+  }
+
+  async getAllSessions(): Promise<Session[]> {
+    const files = await this.loadFiles('');
+
+    const sessions: Session[] = [];
+    for (const file of files) {
+      sessions.push(await this.openFileByFile(file));
+    }
+
+    console.log(sessions)
+    return sessions.sort((sessionA: Session, sessionB) => (new Date(sessionA.date)).getTime() - (new Date(sessionB.date)).getTime());
   }
 }

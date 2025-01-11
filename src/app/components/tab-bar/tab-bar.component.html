@@ -1,5 +1,5 @@
 <app-tab-bar-button
-  *ngFor="let tab of tabs; index as i; first as isFirst"
+  *ngFor="let tab of getTabs(); index as i;"
   [link]="tab.link"
   [icon]="tab.icon"
   [label]="tab.label"

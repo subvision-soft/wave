@@ -34,6 +34,7 @@ import {
   jamPlus,
   jamSearch,
   jamSignal,
+  jamUser,
 } from '@ng-icons/jam-icons';
 import {
   iconoirCamera,
@@ -122,6 +123,7 @@ export const appConfig: ApplicationConfig = {
         jamPlus,
         jamSignal,
         jamClose,
+        jamUser
       }),
 
 

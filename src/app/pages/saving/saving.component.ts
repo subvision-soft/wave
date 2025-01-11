@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Session } from '../../models/session';
-import { FilesService } from '../../services/files.service';
-import { SelectComponent } from '../../components/select/select.component';
-import { HeaderComponent } from '../../components/header/header.component';
+import {Component} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {Session} from '../../models/session';
+import {FilesService} from '../../services/files.service';
+import {SelectComponent} from '../../components/select/select.component';
+import {HeaderComponent} from '../../components/header/header.component';
 
 @Component({
   selector: 'app-saving',
@@ -23,6 +23,9 @@ export class SavingComponent {
     title: '',
     users: [],
     teams: [],
+    targets: [],
+    path: '',
+    size: 0
   };
 
   constructor(
@@ -33,7 +36,6 @@ export class SavingComponent {
     if (url) {
       this.filesService.openFileByUrl(url, true).then((result) => {
         this.filesService.session = result;
-        this.filesService.path = url;
         this._session = result;
       });
     }

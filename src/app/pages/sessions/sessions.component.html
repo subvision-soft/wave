@@ -36,11 +36,17 @@
                  type="okcancel">
     <app-input [(value)]="newSession.title"
                label="{{'SESSIONS.MESSAGES_BOX.NEW_SESSION.INPUTS.TITLE' | translate}}"></app-input>
+    <div class="error" *ngIf="!isRequired(newSession.title)">
+      Ne doit pas être vide
+    </div>
     <app-input [(value)]="newSession.description"
                label="{{'SESSIONS.MESSAGES_BOX.NEW_SESSION.INPUTS.DESCRIPTION' | translate}}"></app-input>
     <app-input [value]="(newSession.date | date:'yyyy-MM-dd' )  || ''"
                (valueChange)="newSession.date = parseDate($event)"
                label="{{'SESSIONS.MESSAGES_BOX.NEW_SESSION.INPUTS.DATE' | translate}}"
                type="date"></app-input>
+    <div class="error" *ngIf="!isValidDate(newSession.date)">
+      La date n'est pas valide
+    </div>
 </app-message-box>
 

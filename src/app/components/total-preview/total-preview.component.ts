@@ -1,6 +1,6 @@
-import { Component, Input } from '@angular/core';
-import { Impact } from '../../models/impact';
-import { Event } from '../../models/event';
+import {Component, Input} from '@angular/core';
+import {Impact} from '../../models/impact';
+import {Event} from '../../models/event';
 
 @Component({
   selector: 'app-total-preview',
@@ -18,7 +18,7 @@ export class TotalPreviewComponent {
     this._impacts = [];
     for (let i = 0; i < impacts.length; i++) {
       for (let j = 0; j < impacts[i].amount; j++) {
-        this._impacts.push({ ...impacts[i] });
+        this._impacts.push({...impacts[i]});
       }
     }
   }
@@ -44,18 +44,18 @@ export class TotalPreviewComponent {
   }
 
   get total(): number {
-    if (this.tirsValides.length === 0) return 0;
+    const tirsValides = this.tirsValides;
+    if (tirsValides.length === 0) return 0;
     if (this.precision) {
-      const number1 = this.tirsValides;
-      return number1.reduce((acc, impact) => acc + impact.score, 0);
+      return tirsValides.reduce((acc, impact) => acc + impact.score, 0);
     } else if (this.biathlon) {
       const number =
-        (this.tirsValides.reduce((acc, impact) => acc + impact.score, 0) -
+        (tirsValides.reduce((acc, impact) => acc + impact.score, 0) -
           this.time * 2) *
         3;
       return number > 0 ? number : 0;
     } else if (this.superBiathlon) {
-      const contrats = this.tirsValides.filter(
+      const contrats = tirsValides.filter(
         (impact) => impact.score >= 471
       ).length;
       const capitalPoints = 5000;
@@ -66,8 +66,7 @@ export class TotalPreviewComponent {
         return number > 0 ? number : 0;
       }
     } else if (this.saisieLibre) {
-      const number1 = this.tirsValides;
-      return number1.reduce((acc, impact) => acc + impact.score, 0);
+      return tirsValides.reduce((acc, impact) => acc + impact.score, 0);
     }
     return 0;
   }
@@ -90,6 +89,10 @@ export class TotalPreviewComponent {
       impacts = [];
       //On garde les 2 meilleurs impacts de chaque visuels
       Object.keys(zones).map((zone) => {
+        if (!Array.isArray(zones[zone])) {
+          return
+        }
+
         impacts.push(
           ...zones[zone]
             .sort((a: Impact, b: Impact) => b.score - a.score)
@@ -110,6 +113,10 @@ export class TotalPreviewComponent {
       impacts = [];
       //On garde le meilleur impact de chaque visuels
       Object.keys(zones).map((zone) => {
+        if (!Array.isArray(zones[zone])) {
+          return
+        }
+
         impacts.push(
           ...zones[zone]
             .sort((a: Impact, b: Impact) => b.score - a.score)
