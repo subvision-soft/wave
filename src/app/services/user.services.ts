@@ -15,7 +15,7 @@ export class UserService {
   constructor(private readonly toastService: ToastService) {
     Filesystem.readFile({
       path: this.path,
-      directory: Directory.Documents,
+      directory: Directory.Data,
     }).then(file => {
       if (typeof file.data === "string") {
         this.users = JSON.parse(atob(file.data));
@@ -87,7 +87,7 @@ export class UserService {
     Filesystem.writeFile({
       path: this.path,
       data: btoa(JSON.stringify(this.users)),
-      directory: Directory.Documents,
+      directory: Directory.Data,
     })
       .then(() => {
         this.toastService.initiate({

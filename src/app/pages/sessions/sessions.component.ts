@@ -367,7 +367,7 @@ export class SessionsComponent {
     if (event.btn === 'ok') {
       Filesystem.mkdir({
         path: this.path + '/' + event.value,
-        directory: Directory.Documents,
+        directory: Directory.Data,
       })
         .then(() => {
           this.filesService.loadDirectory(this.path).then((files) => {

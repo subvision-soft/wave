@@ -59,7 +59,7 @@ export class FilesService {
 
     const result = await Filesystem.readdir({
       path: path,
-      directory: Directory.Documents,
+      directory: Directory.Data,
     });
     for (const file of result.files) {
       if (file.type === 'directory') {
@@ -78,7 +78,7 @@ export class FilesService {
 
     const result = await Filesystem.readdir({
       path: path,
-      directory: Directory.Documents,
+      directory: Directory.Data,
     });
     for (const file of result.files) {
       if (file.type === 'file' && !file.name.endsWith('.subapp')) {
@@ -93,7 +93,7 @@ export class FilesService {
     try {
       await Filesystem.stat({
         path: fileName,
-        directory: Directory.Documents,
+        directory: Directory.Data,
       });
       return true;
     } catch (error) {
@@ -118,7 +118,7 @@ export class FilesService {
       path: path,
       data: btoa(content),
       recursive: true,
-      directory: directoryInPath ? undefined : Directory.Documents,
+      directory: directoryInPath ? undefined : Directory.Data,
     })
       .then(() => {
       })
@@ -150,7 +150,7 @@ export class FilesService {
   async deleteFile(file: FileInfo) {
     await Filesystem.deleteFile({
       path: file.uri,
-      directory: Directory.Documents,
+      directory: Directory.Data,
     });
   }
 
