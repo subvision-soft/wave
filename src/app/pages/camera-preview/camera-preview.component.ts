@@ -8,7 +8,7 @@ import {HttpClient} from '@angular/common/http';
 import {EndpointsUtils} from '../../utils/EndpointsUtils';
 import {CaptureButton} from '../../components/capture-button/capture-button.component';
 import {Router} from '@angular/router';
-import {compressImage, getImageSize} from '../../utils/image'; // set backend to webgl
+import {compressImage} from '../../utils/image'; // set backend to webgl
 
 
 type Coordinates = {
@@ -97,16 +97,7 @@ export class CameraPreviewComponent implements OnDestroy {
     let base64Image = this.inputCanvasRef.nativeElement.toDataURL('image/jpeg');
 
     if (fullSize) {
-      let imageSize = getImageSize(base64Image);
-      while (imageSize > 50000) {
-        const beforeSize = imageSize;
-        base64Image = await compressImage(base64Image);
-        imageSize = getImageSize(base64Image);
-
-        if (beforeSize === imageSize) {
-          break;
-        }
-      }
+        base64Image = await compressImage(this.inputCanvasRef.nativeElement, 'image/jpeg');
     }
 
     return base64Image.replace('data:image/jpeg;base64,', '');
@@ -187,8 +178,7 @@ export class CameraPreviewComponent implements OnDestroy {
     if (this.CORRECT_COORDINATES_BEFORE_PROCESS <= this.numberOfValidCoordinates()) {
       // this.numberOfValidCoordinates.set(0);
       const imageBase64 = await this.getImageBase64(true);
-      console.log('Image Base64:', imageBase64);
-      const data = await lastValueFrom(this.http.post(EndpointsUtils.getPathTargetScore(), {
+      let data = await lastValueFrom(this.http.post(EndpointsUtils.getPathTargetScore(), {
         image_data: imageBase64,
       }));
 

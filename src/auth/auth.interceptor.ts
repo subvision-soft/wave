@@ -12,7 +12,7 @@ export function authInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn):
   return next(req).pipe(
     catchError((error) => {
       if (error.status === 401) {
-        return from(fetch(EndpointsUtils.getPathGenToken())
+        return from(fetch(EndpointsUtils.getPathGenToken(), {redirect: "follow"})
           .then((res) => res.json())
         ).pipe(
           switchMap((res: any) => {

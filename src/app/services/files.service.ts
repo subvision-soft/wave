@@ -72,17 +72,13 @@ export class FilesService {
   }
 
   async loadDirectory(path: string, files: FileInfo[] = []): Promise<FileInfo[]> {
-    if (path.includes('app_dump')) {
-      return [];
-    }
-
     const result = await Filesystem.readdir({
       path: path,
       directory: Directory.Data,
     });
     for (const file of result.files) {
       if (file.type === 'file' && !file.name.endsWith('.subapp')) {
-        break;
+        continue;
       }
       files.push(file);
     }

@@ -42,11 +42,12 @@ export class AppComponent {
     this.parametersService.loaded.subscribe((loaded: boolean) => {
       this.settingsLoaded.set(loaded);
       if (loaded) {
-        this.http.get(EndpointsUtils.getPathGenToken()).subscribe((res: any) => {
+        fetch(EndpointsUtils.getPathGenToken(), {redirect: "follow"})
+          .then((res) => res.json())
+          .then(res => {
             localStorage.setItem('token', res?.token);
             this.visionTokenRetrieved.set(true);
-          }
-        )
+          })
         this.translate.addLangs(ParametersService.langs);
         this.translate.setDefaultLang('fr-FR');
         this.translate.use(ParametersService.get('LANGUE').value);
