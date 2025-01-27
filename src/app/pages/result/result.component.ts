@@ -327,10 +327,6 @@ export class ResultComponent implements OnInit {
             this.canvas.getContext('2d').drawImage(img, 0, 0, 1000, 1000);
           };
           img.src = this.target.image;
-
-          compressImage(drawImageInCanvas(img), 'image/png').then((imageData) => {
-            this.target.image = imageData;
-          })
         } else {
           this.toastService.initiate({
             title: 'Erreur',
