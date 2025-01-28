@@ -97,7 +97,7 @@ export class CameraPreviewComponent implements OnDestroy {
     let base64Image = this.inputCanvasRef.nativeElement.toDataURL('image/jpeg');
 
     if (fullSize) {
-        base64Image = await compressImage(this.inputCanvasRef.nativeElement, 'image/jpeg');
+        base64Image = await compressImage(this.inputCanvasRef.nativeElement) ?? base64Image;
     }
 
     return base64Image.replace('data:image/jpeg;base64,', '');

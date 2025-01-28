@@ -2,6 +2,7 @@
   "name": "wave",
   "version": "0.0.0",
   "scripts": {
+    "postinstall": "cp node_modules/@jsquash/webp/codec/enc/webp_enc_simd.wasm src/",
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
@@ -23,6 +24,7 @@
     "@capacitor-community/camera-preview": "^6.0.0",
     "@capacitor/filesystem": "^6.0.1",
     "@ionic/angular": "^8.3.2",
+    "@jsquash/webp": "^1.4.0",
     "@ng-icons/core": "^29.5.1",
     "@ng-icons/iconoir": "^29.5.1",
     "@ng-icons/jam-icons": "^29.5.1",
@@ -30,7 +32,6 @@
     "@ngx-translate/http-loader": "^8.0.0",
     "@tensorflow/tfjs": "^4.21.0",
     "@zxing/ngx-scanner": "^18.0.1",
-    "browser-image-compression": "^2.0.2",
     "ngx-cookie-service": "^18.0.0",
     "onnxruntime-web": "1.20.0-dev.20240928-1bda91fc57",
     "rxjs": "~7.8.0",

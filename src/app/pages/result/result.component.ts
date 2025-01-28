@@ -29,9 +29,6 @@ import {TranslateModule} from '@ngx-translate/core';
 import {NgIf} from '@angular/common';
 import {ParametersService} from '../../services/parameters.service';
 import {Session} from '../../models/session';
-import {compressImage} from '../../utils/image';
-import imageCompression from 'browser-image-compression';
-import drawImageInCanvas = imageCompression.drawImageInCanvas;
 
 @Pipe({standalone: true, name: 'pluck'})
 export class PluckPipe implements PipeTransform {

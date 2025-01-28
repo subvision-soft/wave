@@ -1,17 +1,24 @@
-import imageCompression from 'browser-image-compression';
+import {encode} from '@jsquash/webp';
 
-export async function compressImage(canvasElement: HTMLCanvasElement, type: string): Promise<string> {
-  const options = {
-    maxSizeMB: 1,
-    alwaysKeepResolution: true,
-    preserveExif: true,
-    useWebWorker: true,
-    fileType: type,
+export async function compressImage(canvasElement: HTMLCanvasElement): Promise<string | null> {
+  const ctx = canvasElement.getContext('2d');
+  if (ctx === null) {
+    return new Promise<null>((resolve, reject) => {
+      resolve(null)
+    })
   }
 
-  const file = await imageCompression(await imageCompression.canvasToFile(canvasElement, type, '', Date.now()), options)
+  return await encode(ctx.getImageData(0, 0, canvasElement.width, canvasElement.height))
+    .then((buffer) => {
+      const uint8Array = new Uint8Array(buffer);
 
-  return await imageCompression.getDataUrlFromFile(file)
+      let binaryString = '';
+      for (const byte of uint8Array) {
+        binaryString += String.fromCharCode(byte);
+      }
+
+      return btoa(binaryString);
+    })
 }
 
 function calculateBase64ByteSize(base64String: string): number {
