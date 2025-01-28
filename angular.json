@@ -28,7 +28,6 @@
             "assets": [
               "src/_redirects",
               "src/assets",
-              "src/webp_enc_simd.wasm",
               {
                 "glob": "**/*",
                 "input": "public"

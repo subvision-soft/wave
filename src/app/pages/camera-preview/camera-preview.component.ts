@@ -8,7 +8,6 @@ import {HttpClient} from '@angular/common/http';
 import {EndpointsUtils} from '../../utils/EndpointsUtils';
 import {CaptureButton} from '../../components/capture-button/capture-button.component';
 import {Router} from '@angular/router';
-import {compressImage} from '../../utils/image'; // set backend to webgl
 
 
 type Coordinates = {
@@ -94,13 +93,7 @@ export class CameraPreviewComponent implements OnDestroy {
     this.inputCanvasRef.nativeElement.width = fullSize ? this.videoRef.nativeElement.videoWidth : CameraPreviewComponent.PREPROCESSING_SIZE;
     this.inputCanvasRef.nativeElement.height = fullSize ? this.videoRef.nativeElement.videoHeight : CameraPreviewComponent.PREPROCESSING_SIZE;
     this.input_canvas_ctx?.drawImage(this.videoRef.nativeElement, 0, 0, this.inputCanvasRef.nativeElement.width, this.inputCanvasRef.nativeElement.height);
-    let base64Image = this.inputCanvasRef.nativeElement.toDataURL('image/jpeg');
-
-    if (fullSize) {
-        base64Image = await compressImage(this.inputCanvasRef.nativeElement) ?? base64Image;
-    }
-
-    return base64Image.replace('data:image/jpeg;base64,', '');
+    return this.inputCanvasRef.nativeElement.toDataURL('image/webp', 0.5).replace('data:image/webp;base64,', '');
   }
 
 
