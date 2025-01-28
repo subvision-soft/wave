@@ -1,4 +1,4 @@
-import {encode} from '@jsquash/webp';
+import {encode} from '@jsquash/avif';
 
 export async function compressImage(canvasElement: HTMLCanvasElement): Promise<string | null> {
   const ctx = canvasElement.getContext('2d');
