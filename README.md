@@ -88,3 +88,4 @@ git push origin feature/nouvelle-fonctionnalite
 ```
 
 5. Ouvrez une pull request sur ce dépôt en fournissant une description détaillée des modifications apportées.
+
