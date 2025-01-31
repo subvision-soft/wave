@@ -14,6 +14,10 @@ import {MessageBoxComponent} from '../../components/message-box/message-box.comp
 import {InputComponent} from '../../components/input/input.component';
 import {SelectComponent} from '../../components/select/select.component';
 import {HeaderComponent} from '../../components/header/header.component';
+import {MatFormField, MatLabel} from '@angular/material/form-field';
+import {MatOption, MatSelect} from '@angular/material/select';
+import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {MatInput} from '@angular/material/input';
 
 @Component({
   selector: 'app-teams',
@@ -33,6 +37,13 @@ import {HeaderComponent} from '../../components/header/header.component';
     SelectComponent,
     DatePipe,
     HeaderComponent,
+    MatFormField,
+    MatSelect,
+    MatOption,
+    MatLabel,
+    ReactiveFormsModule,
+    FormsModule,
+    MatInput,
   ],
 })
 export class TeamsComponent {

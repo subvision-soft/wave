@@ -26,10 +26,14 @@ import {TotalPreviewComponent} from '../../components/total-preview/total-previe
 import {TagComponent} from '../../components/tag/tag.component';
 import {HeaderComponent} from '../../components/header/header.component';
 import {TranslateModule} from '@ngx-translate/core';
-import {NgIf} from '@angular/common';
+import {NgForOf, NgIf} from '@angular/common';
 import {ParametersService} from '../../services/parameters.service';
 import {Session} from '../../models/session';
 import {getSize} from '../../utils/storage';
+import {MatFormField, MatLabel} from '@angular/material/form-field';
+import {MatOption} from '@angular/material/core';
+import {MatSelect} from '@angular/material/select';
+import {FormsModule} from '@angular/forms';
 
 @Pipe({standalone: true, name: 'pluck'})
 export class PluckPipe implements PipeTransform {
@@ -62,6 +66,12 @@ export class PluckPipe implements PipeTransform {
     TranslateModule,
     PluckPipe,
     NgIf,
+    MatFormField,
+    MatLabel,
+    MatOption,
+    MatSelect,
+    NgForOf,
+    FormsModule,
   ],
 })
 export class ResultComponent implements OnInit {
@@ -452,7 +462,13 @@ export class ResultComponent implements OnInit {
 
   async loadSessions(): Promise<void> {
     this.sessions = await this.fileService.getAllSessions()
-    this.competitors = this.sessions.at(0)?.users || []
+
+    const firstSession = this.sessions.at(0);
+    if(firstSession !== undefined) {
+      this.selectedSession = firstSession;
+      this.selectedSessionId = this.selectedSession?.path ?? ''
+      this.competitors = this.sessions.at(0)?.users || []
+    }
   }
 
   changeSession() {
@@ -460,7 +476,7 @@ export class ResultComponent implements OnInit {
       return
     }
 
-    const newSessionIdx = this.sessions.findIndex((session: Session) => session.title === this.selectedSessionId);
+    const newSessionIdx = this.sessions.findIndex((session: Session) => session.path === this.selectedSessionId);
 
     this.selectedSession = this.sessions[newSessionIdx];
 

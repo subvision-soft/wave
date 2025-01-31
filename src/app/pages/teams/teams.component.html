@@ -37,8 +37,13 @@
   <div class="error" *ngIf="!isRequired(newTeam.name)">
     Ne doit pas être vide
   </div>
-  <app-select [multiple]="true" placeholder="Aucun tireur sélectionné" [label]="'Tireurs'" [store]="storeUsers"
-              [(value)]="newTeam.users"
-              [compact]="true"></app-select>
+  <mat-form-field appearance="outline">
+    <mat-label>Tireurs</mat-label>
+    <mat-select [(ngModel)]="newTeam.users" multiple>
+      <mat-option *ngFor="let option of storeUsers" [value]="option.id">
+        {{ option.id }} - {{ option.firstname }} {{ option.lastname }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 </app-message-box>
 
