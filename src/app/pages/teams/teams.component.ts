@@ -151,6 +151,7 @@ export class TeamsComponent {
       }
       this.session.teams.push({...this.newTeam});
       this.filesService.session = this.session;
+      this.openCreateTeam = false;
     }
   }
 

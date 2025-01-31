@@ -15,7 +15,9 @@ import {UserService} from '../../services/user.services';
 import {FilesService} from '../../services/files.service';
 import {Session} from '../../models/session';
 import {Team} from '../../models/team';
-import {SelectComponent} from '../../components/select/select.component';
+import {MatFormField, MatLabel} from '@angular/material/form-field';
+import {MatOption, MatSelect} from '@angular/material/select';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-users',
@@ -32,8 +34,12 @@ import {SelectComponent} from '../../components/select/select.component';
     LongPressDirective,
     NgForOf,
     MessageBoxComponent,
-    SelectComponent,
+    MatLabel,
     DatePipe,
+    MatFormField,
+    MatSelect,
+    MatOption,
+    FormsModule,
 
   ],
 })

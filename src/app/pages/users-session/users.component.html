@@ -34,7 +34,14 @@
                  [(open)]="openCreateUser"
                  (callback)="createUserCallback($event)"
                  type="okcancel">
-  <app-select displayField="label" [label]="'Compétiteur'" [compact]="true" [store]="usersSelect()"
-              [(value)]="userToAdd" [multiple]="true"></app-select>
+  <mat-form-field appearance="outline">
+    <mat-label>Tireurs</mat-label>
+    <mat-select [(ngModel)]="userToAdd" multiple>
+      <mat-option *ngFor="let option of usersSelect()" [value]="option.id">
+        {{ option.id }} - {{ option.firstname }} {{ option.lastname }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
 </app-message-box>
 
