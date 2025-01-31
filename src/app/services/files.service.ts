@@ -39,7 +39,6 @@ export class FilesService {
   async updateSession() {
     if (this.session) {
       this.session.size = getSize(JSON.stringify(this.session));
-      console.log("session size: ", this.session);
     }
 
     await this.writeFile(this.session?.path, JSON.stringify(this.session));
@@ -52,11 +51,7 @@ export class FilesService {
     });
   }
 
-  async loadFiles(path: string, files: FileInfo[] = []): Promise<FileInfo[]> {
-    if (path.includes('app_dump')) {
-      return [];
-    }
-
+  private async loadFiles(path: string, files: FileInfo[] = []): Promise<FileInfo[]> {
     const result = await Filesystem.readdir({
       path: path,
       directory: Directory.Data,
@@ -158,7 +153,32 @@ export class FilesService {
       sessions.push(await this.openFileByFile(file));
     }
 
-    console.log(sessions)
     return sessions.sort((sessionA: Session, sessionB) => (new Date(sessionA.date)).getTime() - (new Date(sessionB.date)).getTime());
+  }
+
+  async saveImage(base64: string, path: string) {
+    try {
+      await Filesystem.writeFile({
+        path: `images/${path}`,
+        data: base64,
+        directory: Directory.Data,
+      });
+    } catch (error) {
+      console.error('Error saving image:', error);
+    }
+  }
+
+  async loadImage(path: string): Promise<string | null> {
+    try {
+      const file = await Filesystem.readFile({
+        path: `images/${path}`,
+        directory: Directory.Data,
+      });
+
+      return `data:image/webp;base64,${file.data}`;
+    } catch (error) {
+      console.error('Error loading image:', error);
+      return null;
+    }
   }
 }

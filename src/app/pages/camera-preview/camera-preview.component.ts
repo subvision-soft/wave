@@ -12,7 +12,6 @@ import {Router} from '@angular/router';
 
 type Coordinates = {
   x: number; y: number;
-
 };
 
 @Component({
@@ -26,7 +25,7 @@ export class CameraPreviewComponent implements OnDestroy {
   private static readonly MAX_FPS = 5;
   protected readonly CORRECT_COORDINATES_BEFORE_PROCESS = 10;
   private static readonly PREPROCESSING_SIZE = 500;
-  @ViewChild('videoRef') videoRef!: ElementRef;
+  @ViewChild('videoRef') videoRef!: ElementRef<HTMLVideoElement>;
   @ViewChild('inputCanvasRef') inputCanvasRef!: ElementRef<HTMLCanvasElement>;
   @ViewChild('svg') svg: ElementRef | undefined;
   private input_canvas_ctx: CanvasRenderingContext2D | null;
@@ -152,7 +151,7 @@ export class CameraPreviewComponent implements OnDestroy {
     // get user media
     this.camera_stream = await navigator.mediaDevices.getUserMedia({
       video: {
-        facingMode: 'environment', width: {ideal: 3880}, height: {ideal: 2160},
+        facingMode: 'environment', width: {max: 3880, ideal: 1920}, height: {max: 2160, ideal: 1080},
       }, audio: false,
     });
     this.videoRef.nativeElement.srcObject = this.camera_stream; // set to <video>
