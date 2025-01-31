@@ -59,7 +59,6 @@ import localeEn from '@angular/common/locales/en';
 import localeIt from '@angular/common/locales/it';
 import localeEs from '@angular/common/locales/es';
 import {LocaleService} from './services/locale.service';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -142,5 +141,5 @@ export const appConfig: ApplicationConfig = {
     provideServiceWorker('ngsw-worker.js', {
       enabled: !isDevMode(),
       registrationStrategy: 'registerWhenStable:30000'
-    }), provideAnimationsAsync()]
+    })]
 };

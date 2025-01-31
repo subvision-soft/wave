@@ -41,22 +41,12 @@
                 [(value)]="stage"></app-select>
     <app-chrono-picker [compact]="true" *ngIf="showChrono"
                        [(time)]="time"></app-chrono-picker>
-    <mat-form-field *ngIf="ParametersService.isLocalSave() && epreuve && (!superBiathlon || (superBiathlon && stage))" appearance="outline">
-      <mat-label>Session</mat-label>
-      <mat-select [(ngModel)]="selectedSessionId" (selectionChange)="changeSession()">
-        <mat-option *ngFor="let option of sessions" [value]="option.path">
-          {{ option.title }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field *ngIf="epreuve && (!superBiathlon || (superBiathlon && stage))" appearance="outline">
-      <mat-label>Compétiteur</mat-label>
-      <mat-select [(ngModel)]="selectedCompetitor">
-        <mat-option *ngFor="let option of competitors" [value]="option">
-          {{ option.id }} - {{ option.firstname }} {{ option.lastname }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
+    <app-select *ngIf="ParametersService.isLocalSave() && epreuve && (!superBiathlon || (superBiathlon && stage))" [compact]="true" [label]="'Session'"
+                [store]="sessions" [(value)]="selectedSessionId" [valueField]="'title'"  [displayField]="'title'" (valueChange)="changeSession()">
+    </app-select>
+    <app-select *ngIf="epreuve && (!superBiathlon || (superBiathlon && stage))" [compact]="true" [label]="'Compétiteur'"
+                [store]="competitors" [(value)]="selectedCompetitor">
+    </app-select>
     <div class="penalites">
       <app-input type="number" label="Mauvaise extraction de flèche"
                  [(value)]="target.badArrowExtractionsCount"></app-input>
