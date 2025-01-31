@@ -121,6 +121,7 @@ export class TargetsComponent {
         date: new Date(),
         user: 1,
         image: '',
+        imageSize: 0,
         shotsTooCloseCount: 0,
         badArrowExtractionsCount: 0,
         targetSheetNotTouchedCount: 0,

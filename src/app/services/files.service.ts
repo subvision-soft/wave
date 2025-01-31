@@ -39,6 +39,9 @@ export class FilesService {
   async updateSession() {
     if (this.session) {
       this.session.size = getSize(JSON.stringify(this.session));
+      for (const target of this.session.targets) {
+        this.session.size += target.imageSize;
+      }
     }
 
     await this.writeFile(this.session?.path, JSON.stringify(this.session));
@@ -57,7 +60,7 @@ export class FilesService {
       directory: Directory.Data,
     });
     for (const file of result.files) {
-      if (file.type === 'directory') {
+      if (file.type === 'directory' && file.name !== 'images') {
         await this.loadFiles(path + '\\' + file.name, files);
       } else if (file.name.endsWith('.subapp')) {
         files.push(file);
@@ -72,7 +75,7 @@ export class FilesService {
       directory: Directory.Data,
     });
     for (const file of result.files) {
-      if (file.type === 'file' && !file.name.endsWith('.subapp')) {
+      if ((file.type === 'file' && !file.name.endsWith('.subapp')) || file.name === 'images') {
         continue;
       }
       files.push(file);
@@ -104,17 +107,12 @@ export class FilesService {
     if (path === undefined) {
       return;
     }
-    console.log(path, content)
     await Filesystem.writeFile({
       path: path,
       data: btoa(content),
       recursive: true,
       directory: directoryInPath ? undefined : Directory.Data,
     })
-      .then(() => {
-      })
-      .catch(() => {
-      });
   }
 
   async openFileByFile(file: FileInfo) {
@@ -159,9 +157,10 @@ export class FilesService {
   async saveImage(base64: string, path: string) {
     try {
       await Filesystem.writeFile({
-        path: `images/${path}`,
+        path: `images${path}`,
         data: base64,
         directory: Directory.Data,
+        recursive: true
       });
     } catch (error) {
       console.error('Error saving image:', error);
@@ -171,7 +170,7 @@ export class FilesService {
   async loadImage(path: string): Promise<string | null> {
     try {
       const file = await Filesystem.readFile({
-        path: `images/${path}`,
+        path: `images${path}`,
         directory: Directory.Data,
       });
 
