@@ -86,15 +86,23 @@ export class SettingsComponent {
         max: 40,
       },
         {
-        id: 'THEME_SOMBRE',
-        label: 'SETTINGS.APPEARANCE.THEME_DARK',
-        value: ParametersService.get('THEME_SOMBRE').value,
-        type: 'checkbox',
-      },
+          id: 'THEME_SOMBRE',
+          label: 'SETTINGS.APPEARANCE.THEME_DARK',
+          value: ParametersService.get('THEME_SOMBRE').value,
+          type: 'checkbox',
+        },
 
       ],
     }, {
       label: 'SETTINGS.OTHERS.TITLE', parameters: [
+        {
+          id: 'VALID_SHEET_BEFORE_PROCESS',
+          label: 'SETTINGS.OTHERS.VALID_SHEET_BEFORE_PROCESS',
+          value: ParametersService.get('VALID_SHEET_BEFORE_PROCESS').value,
+          type: 'number',
+          min: 0,
+          max: 40,
+        },
         {
           id: 'LOCAL', label: 'Local save', value: ParametersService.get('LOCAL').value, type: 'checkbox',
         },

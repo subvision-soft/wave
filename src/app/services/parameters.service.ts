@@ -55,6 +55,11 @@ export class ParametersService {
       update: function (value: any, scope: any) {
       },
     },
+    VALID_SHEET_BEFORE_PROCESS: {
+      value: 5,
+      update: function (value: any) {
+      },
+    },
     COULEUR_PRINCIPALE: {
       value: '#a5c8d5',
       update: function (value: any) {

@@ -11,17 +11,17 @@
   <app-swiper>
     <app-swiper-item>
       <div class="result-preview">
+        <canvas id="canvas" height="1000" width="1000"></canvas>
+      </div>
+    </app-swiper-item>
+    <app-swiper-item>
+      <div class="result-preview">
         <app-results-preview [(selected)]="selected" [impacts]="impacts"></app-results-preview>
       </div>
     </app-swiper-item>
     <app-swiper-item>
       <div class="result-preview">
         <app-target-preview [(selected)]="selected" [impacts]="impacts"></app-target-preview>
-      </div>
-    </app-swiper-item>
-    <app-swiper-item>
-      <div class="result-preview">
-        <canvas id="canvas" height="1000" width="1000"></canvas>
       </div>
     </app-swiper-item>
   </app-swiper>
@@ -41,8 +41,10 @@
                 [(value)]="stage"></app-select>
     <app-chrono-picker [compact]="true" *ngIf="showChrono"
                        [(time)]="time"></app-chrono-picker>
-    <app-select *ngIf="ParametersService.isLocalSave() && epreuve && (!superBiathlon || (superBiathlon && stage))" [compact]="true" [label]="'Session'"
-                [store]="sessions" [(value)]="selectedSessionId" [valueField]="'title'"  [displayField]="'title'" (valueChange)="changeSession()">
+    <app-select *ngIf="ParametersService.isLocalSave() && epreuve && (!superBiathlon || (superBiathlon && stage))"
+                [compact]="true" [label]="'Session'"
+                [store]="sessions" [(value)]="selectedSessionId" [valueField]="'title'" [displayField]="'title'"
+                (valueChange)="changeSession()">
     </app-select>
     <app-select *ngIf="epreuve && (!superBiathlon || (superBiathlon && stage))" [compact]="true" [label]="'Compétiteur'"
                 [store]="competitors" [(value)]="selectedCompetitor">

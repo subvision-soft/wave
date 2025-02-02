@@ -19,7 +19,8 @@
       "BORDER_RADIUS": "Raggio dei bordi"
     },
     "OTHERS": {
-      "TITLE": "Altri"
+      "TITLE": "Altri",
+      "VALID_SHEET_BEFORE_PROCESS": "Rilevazioni riuscite prima del processo"
     },
     "SEARCH": "Cerca impostazioni",
     "TOASTS": {

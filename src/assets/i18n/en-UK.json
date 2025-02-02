@@ -20,7 +20,8 @@
       "BORDER_RADIUS": "Border radius"
     },
     "OTHERS": {
-      "TITLE": "Others"
+      "TITLE": "Others",
+      "VALID_SHEET_BEFORE_PROCESS": "Successful detections before processing"
     },
     "SEARCH": "Search settings",
     "TOASTS": {

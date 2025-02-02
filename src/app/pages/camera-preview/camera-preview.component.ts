@@ -8,6 +8,7 @@ import {HttpClient} from '@angular/common/http';
 import {EndpointsUtils} from '../../utils/EndpointsUtils';
 import {CaptureButton} from '../../components/capture-button/capture-button.component';
 import {Router} from '@angular/router';
+import {ParametersService} from '../../services/parameters.service';
 
 
 type Coordinates = {
@@ -23,7 +24,7 @@ type Coordinates = {
 })
 export class CameraPreviewComponent implements OnDestroy {
   private static readonly MAX_FPS = 5;
-  protected readonly CORRECT_COORDINATES_BEFORE_PROCESS = 10;
+  protected readonly CORRECT_COORDINATES_BEFORE_PROCESS = ParametersService.get('VALID_SHEET_BEFORE_PROCESS').value;
   private static readonly PREPROCESSING_SIZE = 500;
   @ViewChild('videoRef') videoRef!: ElementRef<HTMLVideoElement>;
   @ViewChild('inputCanvasRef') inputCanvasRef!: ElementRef<HTMLCanvasElement>;

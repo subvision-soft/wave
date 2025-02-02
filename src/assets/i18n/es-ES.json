@@ -19,7 +19,8 @@
       "BORDER_RADIUS": "Radio del borde"
     },
     "OTHERS": {
-      "TITLE": "Otros"
+      "TITLE": "Otros",
+      "VALID_SHEET_BEFORE_PROCESS": "Detecciones exitosas antes del procesamiento"
     },
     "SEARCH": "Buscar configuraciones",
     "TOASTS": {

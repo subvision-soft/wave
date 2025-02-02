@@ -32,7 +32,8 @@
       "BORDER_RADIUS": "Rayon des bordures"
     },
     "OTHERS": {
-      "TITLE": "Autres"
+      "TITLE": "Autres",
+      "VALID_SHEET_BEFORE_PROCESS": "Détections réussies avant traitement"
     },
     "SEARCH": "Rechercher des paramètres",
     "TOASTS": {
