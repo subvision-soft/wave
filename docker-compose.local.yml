@@ -1,0 +1,12 @@
+services:
+  frontend:
+    build: .
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./src:/usr/src/app/src
+    networks:
+      - app-network
+
+networks:
+  app-network:
