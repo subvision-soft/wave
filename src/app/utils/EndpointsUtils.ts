@@ -45,7 +45,7 @@ export class EndpointsUtils {
   public static getPathGenToken() {
     return [ParametersService.get("URL_API2").value, 'token']
       .filter((v) => !!v)
-      .join('/');
+      .join('/') + '/';
   }
 
   public static getPathDetectTarget() {
