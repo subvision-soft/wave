@@ -6,7 +6,6 @@ import {NgxOpenCVService} from '../../../../lib/ngx-open-cv.service';
 import {Router} from '@angular/router';
 import {PlastronService} from '../../../services/plastron.service';
 import {FilesService} from '../../../services/files.service';
-import {CameraPreview} from '@capacitor-community/camera-preview';
 
 @Component({
   selector: 'app-cv',
@@ -137,12 +136,6 @@ export class CvComponent {
     private filesService: FilesService
   ) {
     this.filesService.clearSession();
-    CameraPreview.start({
-      parent: 'cameraPreview',
-      position: 'rear',
-      disableAudio: true,
-      toBack: true,
-    }).then((r) => this.initOpencv());
   }
 
   initOpencv() {
@@ -192,42 +185,7 @@ export class CvComponent {
         return;
       }
       try {
-        CameraPreview.captureSample({
-          quality: 100,
-        }).then((result: { value: string }) => {
-          console.log('result', result);
 
-          scope._base64ToImageData(result.value, 2000, 2000).then((data) => {
-            frame = cv.matFromImageData(data);
-            // cv.flip(frame, frame, 1);
-
-            scope.width = frame.cols;
-            scope.height = frame.rows;
-            console.log('frame', scope.width);
-
-            // cv.imshow('canvas', frame);
-            if (!scope.searchingPlastron) {
-              scope.searchingPlastron = true;
-              try {
-                scope.coordinatesPercent =
-                  scope.plastronService.getSheetCoordinates(frame);
-              } catch (err) {
-                console.log(err);
-              } finally {
-                scope.searchingPlastron = false;
-              }
-
-              if (!scope.coordinatesPercent) {
-                scope.frame = null;
-                frame.delete();
-              } else {
-                scope.frame = frame;
-                scope.plastronService.setFrame(frame);
-                scope.plastronService.process();
-              }
-            }
-          });
-        });
       } catch (err) {
         console.log(err);
       }

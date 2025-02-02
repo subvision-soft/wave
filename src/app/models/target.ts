@@ -9,6 +9,7 @@ export interface Target {
   date: Date;
   user: number;
   image: string;
+  imageSize: number;
   stage?: string;
   shotsTooCloseCount: number;
   badArrowExtractionsCount: number;

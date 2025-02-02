@@ -8,12 +8,10 @@ import {HttpClient} from '@angular/common/http';
 import {EndpointsUtils} from '../../utils/EndpointsUtils';
 import {CaptureButton} from '../../components/capture-button/capture-button.component';
 import {Router} from '@angular/router';
-import {compressImage, getImageSize} from '../../utils/image'; // set backend to webgl
 
 
 type Coordinates = {
   x: number; y: number;
-
 };
 
 @Component({
@@ -27,7 +25,7 @@ export class CameraPreviewComponent implements OnDestroy {
   private static readonly MAX_FPS = 5;
   protected readonly CORRECT_COORDINATES_BEFORE_PROCESS = 10;
   private static readonly PREPROCESSING_SIZE = 500;
-  @ViewChild('videoRef') videoRef!: ElementRef;
+  @ViewChild('videoRef') videoRef!: ElementRef<HTMLVideoElement>;
   @ViewChild('inputCanvasRef') inputCanvasRef!: ElementRef<HTMLCanvasElement>;
   @ViewChild('svg') svg: ElementRef | undefined;
   private input_canvas_ctx: CanvasRenderingContext2D | null;
@@ -94,22 +92,7 @@ export class CameraPreviewComponent implements OnDestroy {
     this.inputCanvasRef.nativeElement.width = fullSize ? this.videoRef.nativeElement.videoWidth : CameraPreviewComponent.PREPROCESSING_SIZE;
     this.inputCanvasRef.nativeElement.height = fullSize ? this.videoRef.nativeElement.videoHeight : CameraPreviewComponent.PREPROCESSING_SIZE;
     this.input_canvas_ctx?.drawImage(this.videoRef.nativeElement, 0, 0, this.inputCanvasRef.nativeElement.width, this.inputCanvasRef.nativeElement.height);
-    let base64Image = this.inputCanvasRef.nativeElement.toDataURL('image/jpeg');
-
-    if (fullSize) {
-      let imageSize = getImageSize(base64Image);
-      while (imageSize > 50000) {
-        const beforeSize = imageSize;
-        base64Image = await compressImage(base64Image);
-        imageSize = getImageSize(base64Image);
-
-        if (beforeSize === imageSize) {
-          break;
-        }
-      }
-    }
-
-    return base64Image.replace('data:image/jpeg;base64,', '');
+    return this.inputCanvasRef.nativeElement.toDataURL('image/webp', 0.5).replace('data:image/webp;base64,', '');
   }
 
 
@@ -168,7 +151,7 @@ export class CameraPreviewComponent implements OnDestroy {
     // get user media
     this.camera_stream = await navigator.mediaDevices.getUserMedia({
       video: {
-        facingMode: 'environment', width: {ideal: 3880}, height: {ideal: 2160},
+        facingMode: 'environment', width: {max: 3880, ideal: 1920}, height: {max: 2160, ideal: 1080},
       }, audio: false,
     });
     this.videoRef.nativeElement.srcObject = this.camera_stream; // set to <video>
@@ -187,8 +170,7 @@ export class CameraPreviewComponent implements OnDestroy {
     if (this.CORRECT_COORDINATES_BEFORE_PROCESS <= this.numberOfValidCoordinates()) {
       // this.numberOfValidCoordinates.set(0);
       const imageBase64 = await this.getImageBase64(true);
-      console.log('Image Base64:', imageBase64);
-      const data = await lastValueFrom(this.http.post(EndpointsUtils.getPathTargetScore(), {
+      let data = await lastValueFrom(this.http.post(EndpointsUtils.getPathTargetScore(), {
         image_data: imageBase64,
       }));
 

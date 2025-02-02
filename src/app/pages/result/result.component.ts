@@ -29,6 +29,7 @@ import {TranslateModule} from '@ngx-translate/core';
 import {NgIf} from '@angular/common';
 import {ParametersService} from '../../services/parameters.service';
 import {Session} from '../../models/session';
+import {getSize} from '../../utils/storage';
 
 @Pipe({standalone: true, name: 'pluck'})
 export class PluckPipe implements PipeTransform {
@@ -189,6 +190,7 @@ export class ResultComponent implements OnInit {
 
   target: Target = {
     image: '',
+    imageSize: 0,
     impacts: [],
     total: 0,
     date: new Date(),
@@ -246,8 +248,6 @@ export class ResultComponent implements OnInit {
   ) {
     this.loadCompetitors();
     this.loadStages();
-
-    console.log(this.stageStore)
 
     if (server.isConnected()) {
       this.loadEvents();
@@ -318,10 +318,16 @@ export class ResultComponent implements OnInit {
             event: Event.PRECISION,
             user: 0,
           };
+
           const img = new Image();
           img.onload = () => {
             this.canvas.getContext('2d').drawImage(img, 0, 0, 1000, 1000);
           };
+
+          if (this.target.image.endsWith('.webp')) {
+            this.fileService.loadImage(this.target.image).then(base64 => img.src = base64 ?? '')
+            return;
+          }
           img.src = this.target.image;
         } else {
           this.toastService.initiate({
@@ -369,8 +375,13 @@ export class ResultComponent implements OnInit {
     }
 
     this.target.user = this.selectedCompetitor || 0
-    this.selectedSession.targets.push(this.target);
     this.fileService.loadSession(this.selectedSession);
+    const imagePath = this.selectedSession.path.replace('.subapp', '') + '/' + crypto.randomUUID() + '.webp';
+    this.fileService.saveImage(this.target.image, imagePath)
+    this.target.image = imagePath;
+    this.target.imageSize = getSize(this.target.image);
+    console.log(this.target);
+    this.selectedSession.targets.push(this.target);
     this.fileService.updateSession();
     this.router.navigate(['/camera']);
 

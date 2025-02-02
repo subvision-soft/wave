@@ -39,7 +39,9 @@ export class FilesService {
   async updateSession() {
     if (this.session) {
       this.session.size = getSize(JSON.stringify(this.session));
-      console.log("session size: ", this.session);
+      for (const target of this.session.targets) {
+        this.session.size += target.imageSize;
+      }
     }
 
     await this.writeFile(this.session?.path, JSON.stringify(this.session));
@@ -52,17 +54,13 @@ export class FilesService {
     });
   }
 
-  async loadFiles(path: string, files: FileInfo[] = []): Promise<FileInfo[]> {
-    if (path.includes('app_dump')) {
-      return [];
-    }
-
+  private async loadFiles(path: string, files: FileInfo[] = []): Promise<FileInfo[]> {
     const result = await Filesystem.readdir({
       path: path,
-      directory: Directory.Documents,
+      directory: Directory.Data,
     });
     for (const file of result.files) {
-      if (file.type === 'directory') {
+      if (file.type === 'directory' && file.name !== 'images') {
         await this.loadFiles(path + '\\' + file.name, files);
       } else if (file.name.endsWith('.subapp')) {
         files.push(file);
@@ -72,17 +70,13 @@ export class FilesService {
   }
 
   async loadDirectory(path: string, files: FileInfo[] = []): Promise<FileInfo[]> {
-    if (path.includes('app_dump')) {
-      return [];
-    }
-
     const result = await Filesystem.readdir({
       path: path,
-      directory: Directory.Documents,
+      directory: Directory.Data,
     });
     for (const file of result.files) {
-      if (file.type === 'file' && !file.name.endsWith('.subapp')) {
-        break;
+      if ((file.type === 'file' && !file.name.endsWith('.subapp')) || file.name === 'images') {
+        continue;
       }
       files.push(file);
     }
@@ -93,7 +87,7 @@ export class FilesService {
     try {
       await Filesystem.stat({
         path: fileName,
-        directory: Directory.Documents,
+        directory: Directory.Data,
       });
       return true;
     } catch (error) {
@@ -113,17 +107,12 @@ export class FilesService {
     if (path === undefined) {
       return;
     }
-    console.log(path, content)
     await Filesystem.writeFile({
       path: path,
       data: btoa(content),
       recursive: true,
-      directory: directoryInPath ? undefined : Directory.Documents,
+      directory: directoryInPath ? undefined : Directory.Data,
     })
-      .then(() => {
-      })
-      .catch(() => {
-      });
   }
 
   async openFileByFile(file: FileInfo) {
@@ -150,7 +139,7 @@ export class FilesService {
   async deleteFile(file: FileInfo) {
     await Filesystem.deleteFile({
       path: file.uri,
-      directory: Directory.Documents,
+      directory: Directory.Data,
     });
   }
 
@@ -162,7 +151,33 @@ export class FilesService {
       sessions.push(await this.openFileByFile(file));
     }
 
-    console.log(sessions)
     return sessions.sort((sessionA: Session, sessionB) => (new Date(sessionA.date)).getTime() - (new Date(sessionB.date)).getTime());
+  }
+
+  async saveImage(base64: string, path: string) {
+    try {
+      await Filesystem.writeFile({
+        path: `images${path}`,
+        data: base64,
+        directory: Directory.Data,
+        recursive: true
+      });
+    } catch (error) {
+      console.error('Error saving image:', error);
+    }
+  }
+
+  async loadImage(path: string): Promise<string | null> {
+    try {
+      const file = await Filesystem.readFile({
+        path: `images${path}`,
+        directory: Directory.Data,
+      });
+
+      return `data:image/webp;base64,${file.data}`;
+    } catch (error) {
+      console.error('Error loading image:', error);
+      return null;
+    }
   }
 }

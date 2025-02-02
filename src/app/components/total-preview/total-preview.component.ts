@@ -80,15 +80,15 @@ export class TotalPreviewComponent {
         .slice(0, 10);
 
       let zones: any = {};
-      zones = impacts.reduce((acc, impact) => {
+      impacts.forEach((impact) => {
         const zone = zones[impact.zone] || [];
         zone.push(impact);
         zones[impact.zone] = zone;
-        return zones;
       });
+
       impacts = [];
       //On garde les 2 meilleurs impacts de chaque visuels
-      Object.keys(zones).map((zone) => {
+      Object.keys(zones).forEach((zone) => {
         if (!Array.isArray(zones[zone])) {
           return
         }
