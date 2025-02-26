@@ -7,7 +7,7 @@
 
   &.selected,
   &.hold {
-    background: var(--color-primary-lighter-5);
+    background: var(--theme-color-1-5);
   }
 
   img {
@@ -19,7 +19,7 @@
     flex-direction: row;
 
     align-items: center;
-    border-bottom: 1px solid var(--color-primary-lighter-5);
+    border-bottom: 1px solid var(--theme-color-1-5);
     gap: var(--padding-sm);
     padding: var(--padding-sm) 0;
 
@@ -57,7 +57,8 @@
       width: 30px;
       height: 30px;
       aspect-ratio: 1;
-      background: var(--color-primary-lighter-5);
+      background: var(--theme-color-2);
+      color: var(--theme-color-1);
       border-radius: 100%;
       display: flex;
       justify-content: center;

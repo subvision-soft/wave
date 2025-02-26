@@ -55,7 +55,7 @@
 
       &.selected {
         color: var(--color-primary-darker);
-        background: var(--color-primary-lighter-5);
+        background: var(--theme-color-1-5);
         box-shadow: 0 0 0 3px var(--color-primary-darker);
       }
     }

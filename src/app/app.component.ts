@@ -1,5 +1,4 @@
-import {Component, computed, HostBinding, isDevMode, signal} from '@angular/core';
-import {fadeAnimation} from './utils/animations';
+import {Component, computed, HostBinding, signal} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {ParametersService} from './services/parameters.service';
 import {NavigationEnd, Router, RouterOutlet} from '@angular/router';
@@ -14,7 +13,6 @@ import {ContainerComponent} from './components/container/container.component';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
-  animations: [fadeAnimation],
   standalone: true,
   providers: [TranslateService],
   imports: [RouterOutlet, ToastComponent, TabBarComponent, SplashScreenComponent, ContainerComponent],
@@ -22,7 +20,7 @@ import {ContainerComponent} from './components/container/container.component';
 export class AppComponent {
   title = 'wave';
   @HostBinding('style.background-color') backgroundColor: string =
-    'var(--color-background-2)';
+    'var(--theme-color-2-5)';
   tabs: any[] = [];
   cssVariables: string = '';
   settingsLoaded = signal(false);
@@ -59,7 +57,7 @@ export class AppComponent {
         if (ev.urlAfterRedirects.includes('camera/preview')) {
           this.backgroundColor = 'transparent';
         } else {
-          this.backgroundColor = 'var(--color-background-2)';
+          this.backgroundColor = 'var(--theme-color-2-5)';
         }
       }
     });

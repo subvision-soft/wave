@@ -405,10 +405,10 @@ export class SessionsComponent {
 
   async createSessionCallback(event: any) {
     if (event.btn === 'ok' && this.isRequired(this.newSession.title) && this.isValidDate(this.newSession.date)) {
-      let path = this.path + '/' + this.newSession.title.replace(/[^a-zA-Z0-9]/g, '') + '.subapp';
+      let path = this.path + '/' + this.newSession.title.replace(/[^a-zA-Z0-9]/g, '') + '.subv';
 
       if (await this.filesService.fileExists(path)) {
-        path = path.replace('.subapp', Math.random().toString(16).slice(2) + '.subapp')
+        path = path.replace('.subv', Math.random().toString(16).slice(2) + '.subv')
       }
 
       this.newSession.path = path;

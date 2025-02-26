@@ -3,10 +3,10 @@
   align-items: stretch;
   justify-content: center;
   box-sizing: border-box;
-  background: var(--color-background-1);
+  background: var(--theme-color-1);
   height: var(--navbar-height);
   z-index: 0;
-  box-shadow: inset 0 1px 0 0 var(--color-dark2-4);
+  box-shadow: inset 0 1px 0 0 var(--theme-color-2-5);
 
   app-tab-bar-button {
     position: relative;

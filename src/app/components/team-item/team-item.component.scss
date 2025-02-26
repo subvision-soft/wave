@@ -7,14 +7,14 @@
 
   &.selected,
   &.hold {
-    background: var(--color-primary-lighter-5);
+    background: var(--theme-color-1-5);
   }
 
   .content {
     display: flex;
     flex-direction: row;
     align-items: center;
-    border-bottom: 1px solid var(--color-primary-lighter-5);
+    border-bottom: 1px solid var(--theme-color-1-5);
     gap: var(--padding-sm);
     padding: var(--padding-sm) 0;
 
@@ -37,7 +37,7 @@
         border-radius: var(--padding);
         min-width: 20px;
         text-align: center;
-        color: var(--color-background-1);
+        color: var(--theme-color-1);
       }
 
       .users {
@@ -47,7 +47,7 @@
         gap: var(--padding-sm);
 
         .user {
-          background: var(--color-primary-lighter-5);
+          background: var(--theme-color-1-5);
           font-size: var(--font-size-sm);
           font-weight: var(--font-weight-semi-bold);
           color: var(--color-dark1-1);
@@ -61,7 +61,7 @@
       width: 30px;
       height: 30px;
       aspect-ratio: 1;
-      background: var(--color-primary-lighter-5);
+      background: var(--theme-color-1-5);
       border-radius: 100%;
       display: flex;
       justify-content: center;

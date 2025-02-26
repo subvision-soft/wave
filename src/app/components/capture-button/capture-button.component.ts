@@ -28,36 +28,12 @@ export class CaptureButton {
   constructor() {
     effect(() => {
       this.clickable = this.percent() >= 100;
-
-      let paths = this.groupPath.nativeElement.querySelectorAll('path.line');
       if (this.percentPrev !== 0 && this.percent() === 0) {
-
-
         this.wait = Date.now() + 500;
-
-        requestAnimationFrame(() => {
-          paths.forEach((path: any) => {
-              path.style.setProperty('--percent', 0);
-            }
-          )
-        })
       }
       this.timeouts.forEach((timeout) => {
         clearTimeout(timeout);
       });
-      if (Date.now() >= this.wait) {
-        paths.forEach((path: any, index: number) => {
-          path.style.setProperty('--percent', this.percentPrev);
-          const time = this.percent() != 0 ? index * 100 : 0;
-          const timeout = setTimeout(() => {
-            requestAnimationFrame(() => {
-              this.timeouts = this.timeouts.filter((t) => t !== timeout);
-              path.style.setProperty('--percent', this.percent());
-            });
-          }, time);
-          this.timeouts.push(timeout);
-        });
-      }
 
 
       this.percentPrev = this.percent();

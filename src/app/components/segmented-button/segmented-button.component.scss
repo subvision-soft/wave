@@ -34,7 +34,7 @@
     left: calc(calc(100% / var(--items-count) * var(--active-item-index)));
     width: calc(100% / var(--items-count));
     height: 100%;
-    background: var(--color-background-2);
+    background: var(--theme-color-2-5);
     transition: var(--transition);
     border-radius: calc(var(--padding-sm) / 2);
     box-shadow: var(--box-shadow-3);

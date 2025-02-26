@@ -32,14 +32,13 @@
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
-    background: var(--color-background-1);
+    background: var(--theme-color-1);
     flex: 1;
     height: 100%;
 
 
-
-
   }
+
   .canvas {
     display: flex;
     justify-content: center;
@@ -56,6 +55,7 @@
     pointer-events: none;
     z-index: 1;
   }
+
   canvas {
     width: 300px;
     height: 300px;

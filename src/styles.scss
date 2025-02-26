@@ -52,7 +52,7 @@
 }
 
 html {
-  background: var(--color-background-2);
+  background: var(--theme-color-2-5);
 }
 
 
@@ -73,13 +73,40 @@ html {
 
   --color-primary: #51b6d5;
   --color-secondary: #ebcc7d;
+  --color-light: #f5f5f5;
+
   --color-indicator-1: #ff2e2e;
   --color-indicator-2: #2a9928;
   --color-indicator-3: #f4b63c;
 
   --theme-color-1: #fff;
+  --theme-color-1-5: color-mix(
+      in srgb,
+      var(--theme-color-1) 5%,
+      var(--theme-color-2)
+  );
+
+  --theme-color-1-25: color-mix(
+      in srgb,
+      var(--theme-color-1) 25%,
+      var(--theme-color-2)
+  );
+
+
+  --theme-color-2-5: color-mix(
+      in srgb,
+      var(--theme-color-2) 5%,
+      var(--theme-color-1)
+  );
+
+  --theme-color-2-25: color-mix(
+      in srgb,
+      var(--theme-color-2) 25%,
+      var(--theme-color-1)
+  );
+
   --theme-color-2: var(--dark);
-  --dark: #242e42;
+  --dark: #000;
   --color-primary-darker: color-mix(
       in srgb,
       var(--color-primary),
@@ -100,7 +127,7 @@ html {
       var(--color-primary),
       var(--theme-color-1) 60%
   );
-  --color-primary-lighter-5: color-mix(
+  --theme-color-1-5: color-mix(
       in srgb,
       var(--color-primary),
       var(--theme-color-1) 80%
@@ -177,17 +204,6 @@ html {
       var(--theme-color-1),
       var(--theme-color-2) 25%
   );
-  --color-dark2-4: color-mix(
-      in srgb,
-      var(--theme-color-1),
-      var(--theme-color-2) 5%
-  );
-  --color-background-2: color-mix(
-      in srgb,
-      color-mix(in srgb, var(--color-primary), var(--theme-color-1) 95%),
-      #000 2%
-  );
-  --color-background-1: var(--theme-color-1);
 
   --border-radius: 20px;
   --border-radius-sm: calc(var(--border-radius) / 2);
@@ -221,7 +237,7 @@ html {
 }
 
 body {
-  //background: var(--color-background-1);
+  //background: var(--theme-color-1);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;

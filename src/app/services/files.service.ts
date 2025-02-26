@@ -62,7 +62,7 @@ export class FilesService {
     for (const file of result.files) {
       if (file.type === 'directory' && file.name !== 'images') {
         await this.loadFiles(path + '\\' + file.name, files);
-      } else if (file.name.endsWith('.subapp')) {
+      } else if (file.name.endsWith('.subv')) {
         files.push(file);
       }
     }
@@ -75,7 +75,7 @@ export class FilesService {
       directory: Directory.Data,
     });
     for (const file of result.files) {
-      if ((file.type === 'file' && !file.name.endsWith('.subapp')) || file.name === 'images') {
+      if ((file.type === 'file' && !file.name.endsWith('.subv')) || file.name === 'images') {
         continue;
       }
       files.push(file);
