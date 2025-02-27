@@ -38,13 +38,16 @@ export class AppComponent {
     private http: HttpClient
   ) {
     this.parametersService.loaded.subscribe((loaded: boolean) => {
-      this.settingsLoaded.set(loaded);
+      setTimeout(() => {
+
+        this.settingsLoaded.set(loaded);
+      }, 3000);
       if (loaded) {
         fetch(EndpointsUtils.getPathGenToken(), {redirect: "follow"})
           .then((res) => res.json())
           .then(res => {
             localStorage.setItem('token', res?.token);
-            this.visionTokenRetrieved.set(true);
+              this.visionTokenRetrieved.set(true);
           })
         this.translate.addLangs(ParametersService.langs);
         this.translate.setDefaultLang('fr-FR');

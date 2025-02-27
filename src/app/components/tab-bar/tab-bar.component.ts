@@ -10,7 +10,7 @@ class Tab {
   link: string = '';
   label: string = '';
   icon: string = '';
-  hidden: boolean = false;
+  hidden: boolean | (() => boolean) = false;
 }
 
 @Component({
@@ -25,8 +25,16 @@ export class TabBarComponent {
     {icon: 'jamJoystick', label: 'Playground', link: '/playground', hidden: !isDevMode()},
     {icon: 'jamHomeF', label: 'Accueil', link: '/home', hidden: false},
     {icon: 'jamCameraF', label: 'Caméra', link: '/camera', hidden: false},
-    {icon: 'jamFolderF', label: 'Sessions', link: '/sessions', hidden: !ParametersService.isLocalSave()},
-    {icon: 'jamUser', label: 'Tireurs', link: '/users', hidden: !ParametersService.isLocalSave()},
+    {
+      icon: 'jamFolderF', label: 'Sessions', link: '/sessions', hidden: () => {
+        return !ParametersService.isLocalSave()
+      }
+    },
+    {
+      icon: 'jamUser', label: 'Tireurs', link: '/users', hidden: () => {
+        return !ParametersService.isLocalSave()
+      }
+    },
     {icon: 'jamCogF', label: 'Paramètres', link: '/settings', hidden: false},
   ];
   @Output() select = new EventEmitter<Tab>();
@@ -40,7 +48,7 @@ export class TabBarComponent {
   }
 
   getTabs(): Tab[] {
-    return this.tabs.filter(tab => !tab.hidden);
+    return this.tabs.filter(tab => !tab.hidden || (typeof tab.hidden === 'function' && !tab.hidden()));
   }
 
   private updateActive() {

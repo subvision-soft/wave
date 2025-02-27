@@ -18,18 +18,6 @@ import {Target} from '../../models/target';
   selector: 'app-targets',
   templateUrl: './targets.component.html',
   styleUrls: ['./targets.component.scss'],
-  animations: [
-    trigger('enterAnimation', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate('300ms', style({ opacity: 1 })),
-      ]),
-      transition(':leave', [
-        style({ opacity: 1 }),
-        animate('300ms', style({ opacity: 0 })),
-      ]),
-    ]),
-  ],
   standalone: true,
   imports: [
     SearchComponent,

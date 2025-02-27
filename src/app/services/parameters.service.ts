@@ -122,7 +122,6 @@ export class ParametersService {
     LOCAL: {
       value: 'true',
       update: function (value: any) {
-        location.reload();
       }
     }
   };

@@ -3,25 +3,29 @@
 </app-header>
 <div class="content">
     <app-search [(value)]="searchValue" placeholder="{{'SESSIONS.SEARCH'|translate}}"></app-search>
-    <app-add-button (click)="openCreateSession = true" [@enterAnimation] *ngIf="!searchValue"
+    <app-add-button (click)="openCreateSession = true"  *ngIf="!searchValue"
                     label="{{'SESSIONS.ADD_SESSION'|translate}}"></app-add-button>
     <div class="sessions-content">
         <div class="path">
             <app-tag ripple (click)="openRoot()">/</app-tag>
-            <app-tag ripple [@enterAnimation] (click)="openAtIndexPath(index)"
+            <app-tag ripple  (click)="openAtIndexPath(index)"
                      *ngFor="let pathItem of _path; index as index">{{pathItem}}</app-tag>
         </div>
         <div class="sessions">
-            <app-session-item *ngIf="path.length > 0" [@enterAnimation] [file]="returnFile" (click)="back()"
+            <app-session-item *ngIf="path.length > 0"  [file]="returnFile" (click)="back()"
                               [goBack]="true"></app-session-item>
-            <app-empty-text *ngIf="sessions.length === 0" [@enterAnimation] [icon]="searchValue?'jamSearch':'jamGhost'"
-                            text="{{(searchValue?'SESSIONS.NO_RESULT':'SESSIONS.EMPTY_FOLDER') | translate}}"></app-empty-text>
+
+          @if (sessions.length) {
 
             <app-session-item [selected]="session.active" long-press
                               (onLongPressing)="onLongPress($event,session)"
                               (click)="sessionClick(session)" [file]="session.file"
                               *ngFor="let session of sessions">
             </app-session-item>
+          } @else {
+            <app-empty-text *ngIf="sessions.length === 0"  [icon]="searchValue?'jamSearch':'jamGhost'"
+                            text="{{(searchValue?'SESSIONS.NO_RESULT':'SESSIONS.EMPTY_FOLDER') | translate}}"></app-empty-text>
+          }
         </div>
     </div>
 </div>

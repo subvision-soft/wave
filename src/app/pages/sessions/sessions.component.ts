@@ -26,18 +26,7 @@ import {File} from '../../models/file';
   selector: 'app-sessions',
   templateUrl: './sessions.component.html',
   styleUrls: ['./sessions.component.scss'],
-  animations: [
-    trigger('enterAnimation', [
-      transition(':enter', [
-        style({opacity: 0}),
-        animate('300ms', style({opacity: 1})),
-      ]),
-      transition(':leave', [
-        style({opacity: 1}),
-        animate('300ms', style({opacity: 0})),
-      ]),
-    ]),
-  ],
+
   standalone: true,
   imports: [
     HeaderComponent,

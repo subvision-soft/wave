@@ -45,7 +45,7 @@
         gap: var(--padding);
 
         input {
-          border: 1px solid var(--theme-color-1-5);
+          border: 1px solid var(--theme-color-2-5);
           border-radius: calc(var(--border-radius-sm) / 3);
           padding: calc(var(--padding-sm) / 3) var(--padding-sm);
           color: var(--color-dark1-1);
@@ -69,7 +69,7 @@
       align-items: center;
       justify-content: flex-end;
 
-      border-top: solid 1px var(--theme-color-1-5);
+      border-top: solid 1px var(--theme-color-2-5);
 
       button {
         flex: 1;
@@ -78,7 +78,7 @@
         font-weight: var(--font-weight-semi-bold);
         color: var(--color-dark2-1);
         padding: var(--padding-sm) var(--padding);
-        border-right: solid 1px var(--theme-color-1-5);
+        border-right: solid 1px var(--theme-color-2-5);
 
         &:last-child {
           border-right: none;

@@ -4,9 +4,10 @@ services:
     ports:
       - "4200:4200"
     volumes:
-      - ./src:/usr/src/app/src
+      - ./src:/subvision/src
     networks:
       - app-network
 
 networks:
   app-network:
+    driver: bridge

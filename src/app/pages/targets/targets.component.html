@@ -11,7 +11,7 @@
 </app-header>
 <div class="content">
   <app-search [(value)]="searchValue" placeholder="{{'TARGETS.SEARCH' | translate}}"></app-search>
-  <app-add-button [@enterAnimation] (click)="openCamera()" *ngIf="!searchValue"
+  <app-add-button (click)="openCamera()" *ngIf="!searchValue"
                   label="{{'TARGETS.ADD_TARGET' | translate}}"></app-add-button>
 
   <app-segmented-button [items]="segmentedButtonItems" [(selected)]="selectedSegmentedButton"></app-segmented-button>

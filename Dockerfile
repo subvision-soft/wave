@@ -1,11 +1,15 @@
 FROM node:alpine
 
-WORKDIR /usr/src/app
+WORKDIR /subvision
 
-COPY . /usr/src/app
+COPY ./package.json /subvision/package.json
 
 RUN npm install -g @angular/cli
 
 RUN npm install
 
-CMD ["ng", "serve", "--host", "0.0.0.0"]
+COPY . /subvision
+
+EXPOSE 4200
+
+CMD ["ng", "serve", "--host", "0.0.0.0","--poll", "500"]

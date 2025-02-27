@@ -67,24 +67,25 @@ export class SettingsComponent {
 
   initSettings() {
     this._settings = [{
-      label: 'SETTINGS.APPEARANCE.TITLE', parameters: [{
-        id: 'COULEUR_PRINCIPALE',
-        label: 'SETTINGS.APPEARANCE.FIRST_COLOR',
-        value: ParametersService.get('COULEUR_PRINCIPALE').value,
-        type: 'color',
-      }, {
-        id: 'COULEUR_SECONDAIRE',
-        label: 'SETTINGS.APPEARANCE.SECOND_COLOR',
-        value: ParametersService.get('COULEUR_SECONDAIRE').value,
-        type: 'color',
-      }, {
-        id: 'RAYON_BORDURES',
-        label: 'SETTINGS.APPEARANCE.BORDER_RADIUS',
-        value: ParametersService.get('RAYON_BORDURES').value,
-        type: 'number',
-        min: 0,
-        max: 40,
-      },
+      label: 'SETTINGS.APPEARANCE.TITLE', parameters: [
+        // {
+        //   id: 'COULEUR_PRINCIPALE',
+        //   label: 'SETTINGS.APPEARANCE.FIRST_COLOR',
+        //   value: ParametersService.get('COULEUR_PRINCIPALE').value,
+        //   type: 'color',
+        // }, {
+        //   id: 'COULEUR_SECONDAIRE',
+        //   label: 'SETTINGS.APPEARANCE.SECOND_COLOR',
+        //   value: ParametersService.get('COULEUR_SECONDAIRE').value,
+        //   type: 'color',
+        // }, {
+        //   id: 'RAYON_BORDURES',
+        //   label: 'SETTINGS.APPEARANCE.BORDER_RADIUS',
+        //   value: ParametersService.get('RAYON_BORDURES').value,
+        //   type: 'number',
+        //   min: 0,
+        //   max: 40,
+        // },
         {
           id: 'THEME_SOMBRE',
           label: 'SETTINGS.APPEARANCE.THEME_DARK',

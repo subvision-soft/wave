@@ -6,6 +6,11 @@
   src: url("./assets/fonts/WorkSans.ttf");
 }
 
+@font-face {
+  font-family: "Chillax Variable";
+  src: url("./assets/fonts/Chillax.ttf");
+}
+
 * {
   font-family: var(--primary-font);
   -webkit-user-select: none;
@@ -126,11 +131,6 @@ html {
       in srgb,
       var(--color-primary),
       var(--theme-color-1) 60%
-  );
-  --theme-color-1-5: color-mix(
-      in srgb,
-      var(--color-primary),
-      var(--theme-color-1) 80%
   );
 
   --color-secondary-darker: color-mix(
