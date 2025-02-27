@@ -4,7 +4,7 @@ import {NgIcon} from '@ng-icons/core';
 import {NgIf} from '@angular/common';
 
 @Component({
-  selector: '[waveButton]',
+  selector: '[subvisionButton]',
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss'],
   hostDirectives: [RippleDirective],

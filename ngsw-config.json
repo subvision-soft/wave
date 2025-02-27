@@ -8,6 +8,7 @@
       "resources": {
         "files": [
           "/favicon.ico",
+          "/logo.svg",
           "/index.csr.html",
           "/index.html",
           "/manifest.webmanifest",
@@ -33,7 +34,7 @@
       "urls": [
         "https://corsproxy.io/**",
         "https://everyorigin.jwvbremen.nl/**",
-        "https://wave-api-6rqq.onrender.com/**",
+        "https://subvision-api-6rqq.onrender.com/**",
         "/api/**",
         "/**"
       ],

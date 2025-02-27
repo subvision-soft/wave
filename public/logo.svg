@@ -58,11 +58,13 @@
       --final-stroke-width: calc(var(--stroke-width) * var(--stroke-width-ratio));
       stroke: #000;
       stroke-linecap: round;
-
       --duration: 0.8s;
       --interval: 0.15s;
-
-
+    }
+    @media (prefers-color-scheme: dark) {
+      line {
+        stroke: #fff;
+      }
     }
 
 

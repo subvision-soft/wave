@@ -44,7 +44,7 @@ export class ServerService {
       return;
     }
     CapacitorHttp.get({
-      url: `${uri}/is-wave-db-alive`,
+      url: `${uri}/is-subvision-db-alive`,
     }).then((res) => {
       this.connectionStatus.next(true);
       this.uri = uri;

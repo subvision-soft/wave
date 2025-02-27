@@ -18,7 +18,7 @@ import {ContainerComponent} from './components/container/container.component';
   imports: [RouterOutlet, ToastComponent, TabBarComponent, SplashScreenComponent, ContainerComponent],
 })
 export class AppComponent {
-  title = 'wave';
+  title = 'subvision';
   @HostBinding('style.background-color') backgroundColor: string =
     'var(--theme-color-2-5)';
   tabs: any[] = [];

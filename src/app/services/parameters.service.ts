@@ -51,7 +51,7 @@ export class ParametersService {
         scope.serverService.connect(value);
       },
     }, URL_API2: {
-      value: 'https://wave.crobix.ovh',
+      value: 'https://subvision.crobix.ovh',
       update: function (value: any, scope: any) {
       },
     },
