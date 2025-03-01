@@ -32,7 +32,6 @@ export class RippleDirective {
 
     x = e.pageX - this.hostEl.getBoundingClientRect().left - ink.offsetWidth / 2;
     y = e.pageY - this.hostEl.getBoundingClientRect().top - ink.offsetHeight / 2;
-    // debugger;
     this.renderer.setStyle(ink, 'top', y + 'px');
     this.renderer.setStyle(ink, 'left', x + 'px');
     this.renderer.addClass(ink, 'animate');

@@ -55,7 +55,6 @@ export class FilesService {
   }
 
   private async loadFiles(path: string, files: FileInfo[] = []): Promise<FileInfo[]> {
-    debugger
     const result = await Filesystem.readdir({
       path: path,
       directory: Directory.Data,
