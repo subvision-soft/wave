@@ -1,16 +1,21 @@
 :host {
-  background: var(--theme-color-2);
+  background: var(--theme-color-1);
   padding: var(--padding-sm) var(--padding-sm);
   border-radius: var(--border-radius-sm);
   display: flex;
   align-items: center;
   justify-content: center;
   min-width: fit-content;
-  border: none;
-  color: var(--theme-color-1);
+  color: var(--theme-color-2);
+  border: solid 1px var(--theme-color-2);
 
   span {
     font-weight: var(--font-weight-bold);
     font-size: var(--font-size-sm);
+  }
+
+  &.primary {
+    background: var(--theme-color-2);
+    color: var(--theme-color-1);
   }
 }

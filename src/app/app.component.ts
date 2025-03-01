@@ -41,7 +41,7 @@ export class AppComponent {
       setTimeout(() => {
 
         this.settingsLoaded.set(loaded);
-      }, 3000);
+      }, 0);
       if (loaded) {
         fetch(EndpointsUtils.getPathGenToken(), {redirect: "follow"})
           .then((res) => res.json())

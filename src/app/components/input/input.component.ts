@@ -6,6 +6,8 @@ import {
   Input,
   Output,
   ViewChild,
+  InputSignal,
+  input
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';
@@ -21,6 +23,8 @@ export class InputComponent {
   get value(): any {
     return this._value;
   }
+
+  errors: InputSignal<string[]> = input<string[]>([]);
 
   @Input() @HostBinding('class.horizontal') horizontal: boolean = false;
 

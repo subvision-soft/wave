@@ -13,8 +13,8 @@
   </div>
 
   <div class="buttons">
-    <button class="cancel" *ngIf="OKCANCEL || PROMPT" (click)="click('cancel')">Annuler</button>
-    <button class="ok" (click)="click('ok')" *ngIf="OKCANCEL || PROMPT">Ok</button>
+    <button subvisionButton type="dashed" class="cancel" *ngIf="OKCANCEL || PROMPT" (click)="click('cancel')">Annuler</button>
+    <button subvisionButton class="ok" type="primary" (click)="click('ok')" *ngIf="OKCANCEL || PROMPT">Ok</button>
   </div>
 </div>
 <div (click)="close()" class="mask"></div>
