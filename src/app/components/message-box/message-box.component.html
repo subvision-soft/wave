@@ -1,10 +1,10 @@
-<div class="message-box" (keydown.enter)="click('ok')">
+<div class="message-box" subvisionContainer maxWidth="800px" (keydown.enter)="click('ok')">
   <div class="message-box-content">
     <div class="message-title">
-      <span>{{title}}</span>
+      <span>{{ title }}</span>
     </div>
     <div class="message-content">
-      <span *ngIf="message && !PROMPT">{{message}}</span>
+      <span *ngIf="message && !PROMPT">{{ message }}</span>
       <div class="component-content" *ngIf="!message">
         <ng-content></ng-content>
       </div>
@@ -13,7 +13,8 @@
   </div>
 
   <div class="buttons">
-    <button subvisionButton type="dashed" class="cancel" *ngIf="OKCANCEL || PROMPT" (click)="click('cancel')">Annuler</button>
+    <button subvisionButton type="dashed" class="cancel" *ngIf="OKCANCEL || PROMPT" (click)="click('cancel')">Annuler
+    </button>
     <button subvisionButton class="ok" type="primary" (click)="click('ok')" *ngIf="OKCANCEL || PROMPT">Ok</button>
   </div>
 </div>

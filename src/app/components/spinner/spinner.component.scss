@@ -64,7 +64,7 @@
         &.active {
           opacity: 1;
           transform: scale(1);
-          color: var(--color-primary-darker);
+          color: var(--theme-color-1);
           font-weight: var(--font-weight-semi-bold);
 
           &:before {

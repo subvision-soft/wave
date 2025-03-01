@@ -12,6 +12,7 @@
     bottom: -100%;
     right: var(--padding);
     left: var(--padding);
+    width: auto;
     background: var(--theme-color-1);
     z-index: 1000;
     border-radius: var(--border-radius-sm);
@@ -73,24 +74,13 @@
 
       padding: var(--padding);
       gap: var(--padding);
+
       button {
-        flex:1
+        flex: 1
       }
     }
   }
 
-  .mask {
-    opacity: 0;
-    pointer-events: none;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100vw;
-    height: 100dvh;
-    z-index: 999;
-    transition: opacity var(--transition-slow);
-    background: rgba(0, 0, 0, 0.1);
-  }
 
   &.open {
     pointer-events: auto;

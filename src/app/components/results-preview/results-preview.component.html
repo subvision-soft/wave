@@ -1,9 +1,10 @@
 @for (zone of zones; track zone.type) {
   <div class="zone" [class]="zone.type">
     @for (impact of getImpactsByZone(zone.type); track impact.id) {
-      <app-tag [class.selected]="selected === impact"
-               (click)="select(impact)">{{ getDisplayPoints(impact) }}
-      </app-tag>
+      <button [type]="selected === impact ? 'primary' : 'default'" subvisionButton
+              [class.selected]="selected === impact"
+              (click)="select(impact)">{{ getDisplayPoints(impact) }}
+      </button>
     }
   </div>
 }

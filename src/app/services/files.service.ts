@@ -55,13 +55,14 @@ export class FilesService {
   }
 
   private async loadFiles(path: string, files: FileInfo[] = []): Promise<FileInfo[]> {
+    debugger
     const result = await Filesystem.readdir({
       path: path,
       directory: Directory.Data,
     });
     for (const file of result.files) {
       if (file.type === 'directory' && file.name !== 'images') {
-        await this.loadFiles(path + '\\' + file.name, files);
+        await this.loadFiles(path + '/' + file.name, files);
       } else if (file.name.endsWith('.subv')) {
         files.push(file);
       }
@@ -145,7 +146,7 @@ export class FilesService {
 
   async getAllSessions(): Promise<Session[]> {
     const files = await this.loadFiles('');
-
+    console.log(files);
     const sessions: Session[] = [];
     for (const file of files) {
       sessions.push(await this.openFileByFile(file));
