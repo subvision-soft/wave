@@ -262,7 +262,7 @@ body {
   left: 0;
   width: 100vw;
   height: 100dvh;
-  background: color-mix(in srgb, var(--theme-color-2) 25%, transparent);
+  background: color-mix(in srgb, var(--theme-color-2) 20%, transparent);
   z-index: 999;
   transition: opacity var(--transition);
   backdrop-filter: blur(2px);
