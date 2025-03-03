@@ -54,6 +54,12 @@
     font-size: var(--font-size);
     padding: calc(var(--padding-sm) / 3) var(--space-left-input);
     border-radius: var(--border-radius-sm);
+
+    box-sizing: border-box;
+
+    &:not([type="checkbox"]) {
+      border: var(--subtle-border);
+    }
   }
 
   .input-content {

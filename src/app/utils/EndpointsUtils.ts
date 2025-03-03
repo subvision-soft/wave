@@ -43,25 +43,25 @@ export class EndpointsUtils {
 
 
   public static getPathGenToken() {
-    return [ParametersService.get("URL_API2").value, 'token']
+    return [ParametersService.get("URL_API_SUBVISION").value, 'token']
       .filter((v) => !!v)
       .join('/') + "/";
   }
 
   public static getPathDetectTarget() {
-    return [ParametersService.get("URL_API2").value, 'target', 'detect']
+    return [ParametersService.get("URL_API_SUBVISION").value, 'target', 'detect']
       .filter((v) => !!v)
       .join('/');
   }
 
   public static getPathTargetScore() {
-    return [ParametersService.get("URL_API2").value, 'target', 'process']
+    return [ParametersService.get("URL_API_SUBVISION").value, 'target', 'process']
       .filter((v) => !!v)
       .join('/');
   }
 
   public static getPathNews() {
-    return [ParametersService.get("URL_API2").value, 'news']
+    return [ParametersService.get("URL_API_SUBVISION").value, 'news']
       .filter((v) => !!v)
       .join('/');
   }

@@ -6,10 +6,10 @@
   color: var(--color-dark1-1);
   border-radius: 100px;
   background: var(--theme-color-2-5);
-  box-shadow: var(--box-shadow-1);
   padding: var(--padding-sm) var(--padding);
   gap: var(--padding);
   overflow: hidden;
+  border: var(--subtle-border);
 
   ng-icon {
     color: var(--color-dark2-1);

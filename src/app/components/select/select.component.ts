@@ -1,13 +1,8 @@
-import {
-  Component,
-  EventEmitter,
-  HostBinding,
-  Input,
-  Output,
-} from '@angular/core';
-import { NgForOf, NgIf } from '@angular/common';
-import { NgIcon } from '@ng-icons/core';
-import { SlideSheetComponent } from '../slide-sheet/slide-sheet.component';
+import {Component, EventEmitter, HostBinding, Input, Output,} from '@angular/core';
+import {NgForOf, NgIf} from '@angular/common';
+import {NgIcon} from '@ng-icons/core';
+import {SlideSheetComponent} from '../slide-sheet/slide-sheet.component';
+import {jamCheck} from '@ng-icons/jam-icons';
 
 @Component({
   selector: 'app-select',
@@ -73,9 +68,12 @@ export class SelectComponent {
 
   open: boolean = false;
 
-  constructor() {}
+  constructor() {
+  }
 
   openChange(open: boolean) {
     this.open = open;
   }
+
+  protected readonly jamCheck = jamCheck;
 }

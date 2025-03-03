@@ -5,6 +5,8 @@
   height: 100%;
   width: 100%;
   box-sizing: border-box;
+  border-radius: calc(max(var(--safe-area-inset-top), var(--safe-area-inset-bottom), var(--safe-area-inset-left), var(--safe-area-inset-right), 20px) - 5px);
+  overflow: hidden;
 
   .flash-overlay {
     position: absolute;

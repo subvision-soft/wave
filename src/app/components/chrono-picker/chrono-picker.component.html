@@ -1,15 +1,21 @@
 <a class="input" (click)="openChange(true)">
-  <ng-icon size="20" name="iconoirTimer"></ng-icon>
-  <span>{{minutes.toLocaleString("en-US", {
-    minimumIntegerDigits: 2,
-    useGrouping: false,
-  })}}:{{seconds.toLocaleString("en-US", {
-    minimumIntegerDigits: 2,
-    useGrouping: false,
-  })}}.{{centiseconds.toLocaleString("en-US", {
-    minimumIntegerDigits: 2,
-    useGrouping: false,
-  })}}</span>
+  <ng-icon size="20" [svg]="jamChronometer"></ng-icon>
+  <span>{{
+      minutes.toLocaleString("en-US", {
+        minimumIntegerDigits: 2,
+        useGrouping: false,
+      })
+    }}:{{
+      seconds.toLocaleString("en-US", {
+        minimumIntegerDigits: 2,
+        useGrouping: false,
+      })
+    }}.{{
+      centiseconds.toLocaleString("en-US", {
+        minimumIntegerDigits: 2,
+        useGrouping: false,
+      })
+    }}</span>
 </a>
 <app-slide-sheet [(open)]="open">
   <div class="number-pickers">

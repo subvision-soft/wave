@@ -25,6 +25,7 @@
       color: var(--theme-color-2);
       font-weight: var(--font-weight-bold);
     }
+
     &.active {
       color: var(--theme-color-1);
     }
@@ -40,6 +41,8 @@
     background: var(--theme-color-2);
     transition: var(--transition);
     border-radius: calc(var(--padding-sm) / 2);
-    box-shadow: var(--box-shadow-3);
+
+    border: var(--subtle-border);
+    box-sizing: border-box;
   }
 }

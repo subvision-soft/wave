@@ -105,13 +105,19 @@ export class SettingsComponent {
           max: 40,
         },
         {
-          id: 'LOCAL', label: 'Local save', value: ParametersService.get('LOCAL').value, type: 'checkbox',
+          id: 'LOCAL',
+          label: 'SETTINGS.OTHERS.LOCAL_SAVE',
+          value: ParametersService.get('LOCAL').value,
+          type: 'checkbox',
         },
         {
           id: 'URL_API', label: 'URL API', value: ParametersService.get('URL_API').value, type: 'text',
         },
         {
-          id: 'URL_API2', label: 'URL API VISION', value: ParametersService.get('URL_API2')?.value, type: 'text',
+          id: 'URL_API_SUBVISION',
+          label: 'SETTINGS.OTHERS.SUBVISION_API_URL',
+          value: ParametersService.get('URL_API_SUBVISION')?.value,
+          type: 'text',
         },
         {
           id: 'LANGUE', label: 'Langue', value: ParametersService.get('LANGUE').value, type: 'select', store: [{

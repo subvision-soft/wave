@@ -33,7 +33,9 @@
     },
     "OTHERS": {
       "TITLE": "Autres",
-      "VALID_SHEET_BEFORE_PROCESS": "Détections réussies avant traitement"
+      "VALID_SHEET_BEFORE_PROCESS": "Détections réussies avant traitement",
+      "LOCAL_SAVE": "Sauvegarde locale",
+      "SUBVISION_API_URL": "URL API Subvision"
     },
     "SEARCH": "Rechercher des paramètres",
     "TOASTS": {

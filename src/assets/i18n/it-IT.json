@@ -1,6 +1,7 @@
 {
   "HOME": {
     "ACTUALITIES": "Notizie",
+    "TECHNICAL_INFORMATIONS": "Informazioni tecniche",
     "RECENTLY_OPENED": "Aperto di recente",
     "SHOW_ALL": "Mostra tutto",
     "NO_ACTUALITY": "Nessuna notizia",
@@ -20,7 +21,9 @@
     },
     "OTHERS": {
       "TITLE": "Altri",
-      "VALID_SHEET_BEFORE_PROCESS": "Rilevazioni riuscite prima del processo"
+      "VALID_SHEET_BEFORE_PROCESS": "Rilevazioni riuscite prima del processo",
+      "LOCAL_SAVE": "Salvataggio locale",
+      "SUBVISION_API_URL": "URL API Subvision"
     },
     "SEARCH": "Cerca impostazioni",
     "TOASTS": {

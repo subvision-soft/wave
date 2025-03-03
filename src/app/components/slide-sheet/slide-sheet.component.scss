@@ -10,6 +10,7 @@
   .menu {
     max-height: 80dvh;
     overflow: auto;
+    border: var(--subtle-border);
     width: 100%;
     position: fixed;
     padding: 20px;

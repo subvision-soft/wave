@@ -2,7 +2,6 @@
   <app-icon-button icon="jamChevronLeft" (click)="goBack()"></app-icon-button>
 </div>
 <div class="header-item">
-
 </div>
 <div class="header-item content">
   <ng-content></ng-content>
@@ -11,7 +10,13 @@
 <div *ngIf="!showMenu" class="header-item">
 
 </div>
-<app-server-connect *ngIf="!ParametersService.isLocalSave()" class="header-item server"></app-server-connect>
+@if (!ParametersService.isLocalSave()) {
+
+  <app-server-connect class="header-item server"></app-server-connect>
+} @else {
+  <div class="header-item server">
+  </div>
+}
 
 <ng-container #menuButton>
   <div *ngIf="showMenu" class="header-item menu">

@@ -1,13 +1,8 @@
-import {
-  Component,
-  EventEmitter,
-  HostBinding,
-  Input,
-  Output,
-} from '@angular/core';
-import { NgIcon } from '@ng-icons/core';
-import { SlideSheetComponent } from '../slide-sheet/slide-sheet.component';
-import { NumberSpinnerComponent } from '../number-spinner/number-spinner.component';
+import {Component, EventEmitter, HostBinding, Input, Output,} from '@angular/core';
+import {NgIcon} from '@ng-icons/core';
+import {SlideSheetComponent} from '../slide-sheet/slide-sheet.component';
+import {NumberSpinnerComponent} from '../number-spinner/number-spinner.component';
+import {jamChronometer} from '@ng-icons/jam-icons';
 
 @Component({
   selector: 'app-chrono-picker',
@@ -23,7 +18,8 @@ export class ChronoPickerComponent {
   @Output() timeChange = new EventEmitter<number>();
   open: boolean = false;
 
-  constructor() {}
+  constructor() {
+  }
 
   get minutes(): number {
     return Math.floor(this._time / (60 * 1000)) % 60;
@@ -63,4 +59,6 @@ export class ChronoPickerComponent {
   openChange(open: boolean) {
     this.open = open;
   }
+
+  protected readonly jamChronometer = jamChronometer;
 }

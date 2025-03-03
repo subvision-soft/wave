@@ -1,13 +1,11 @@
 :host {
-  overflow: hidden;
-
   &.compact {
     .input {
       height: auto;
       padding: calc(var(--padding-sm) / 2) var(--padding);
       border-radius: var(--border-radius-sm);
-      font-weight: var(--font-weight-normal);
-      box-shadow: none;
+      font-weight: var(--font-weight-semi-bold);
+      border: var(--subtle-border);
     }
   }
 
@@ -32,13 +30,12 @@
     align-items: center;
     justify-content: space-between;
     flex-direction: row;
-    color: var(--color-dark1-1);
+    color: var(--theme-color-1-25);
     font-size: var(--font-size);
     font-weight: var(--font-weight-semi-bold);
     border-radius: 1000px;
     height: 50px;
     background: var(--theme-color-2-5);
-    box-shadow: var(--box-shadow-1);
     padding: 0 var(--padding);
     overflow: hidden;
 
@@ -65,7 +62,6 @@
     &:active {
       color: var(--colorPrimary);
       transition: var(--transition);
-      border-color: var(--colorPrimary);
     }
   }
 

@@ -30,7 +30,7 @@
       background: var(--theme-color-2-5);
       border-radius: var(--border-radius);
       padding: var(--padding-sm);
-      box-shadow: var(--box-shadow-1);
+      border: var(--subtle-border);
       flex: 1;
       max-width: 440px;
       min-width: 200px;
@@ -94,7 +94,7 @@
     font-weight: var(--font-weight-bold);
     text-align: left;
 
-    
+
   }
 
   .informations {

@@ -223,7 +223,8 @@ html {
 
   --box-shadow-1: 0px 0px 20px 0px color-mix(in srgb, #000 2%, transparent);
   --box-shadow-2: 0px 0px 20px 0px color-mix(in srgb, #000 10%, transparent);
-  --box-shadow-3: 0px 1px 2px 1px color-mix(in srgb, #000 10%, transparent);
+
+  --subtle-border: 1px solid color-mix(in srgb, var(--theme-color-2) 2%, transparent);
 
   --font-weight-bold: 700;
   --font-weight-semi-bold: 600;
