@@ -15,7 +15,7 @@ export class ModalService {
     setTimeout(() => {
       this.applicationRef.detachView(ref.hostView);
       ref.destroy();
-    }, ref.instance.animationDuration);
+    }, ref.instance.animationDuration - 50);
   }
 
   close(modal: Modal) {
