@@ -24,7 +24,7 @@
   }
 
   .modal {
-    background-color: #fff;
+    background-color: var(--theme-color-1);
     border-radius: calc(max(var(--safe-area-inset-top), var(--safe-area-inset-bottom), var(--safe-area-inset-left), var(--safe-area-inset-right), 20px) - 5px);
     margin-bottom: 0;
     padding: var(--padding);
