@@ -35,13 +35,13 @@ export class AppComponent {
     private translate: TranslateService,
     private parametersService: ParametersService,
     private router: Router,
-    private http: HttpClient
+    private http: HttpClient,
   ) {
     this.parametersService.loaded.subscribe((loaded: boolean) => {
-      setTimeout(() => {
 
+      setTimeout(() => {
         this.settingsLoaded.set(loaded);
-      }, 3000);
+      }, 0);
       if (loaded) {
         fetch(EndpointsUtils.getPathGenToken(), {redirect: "follow"})
           .then((res) => res.json())

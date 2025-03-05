@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {User} from '../../models/user';
 import {Action} from '../../models/action';
 import {Category} from '../../models/category';
@@ -14,6 +14,7 @@ import {MessageBoxComponent} from '../../components/message-box/message-box.comp
 import {InputComponent} from '../../components/input/input.component';
 import {SelectComponent} from '../../components/select/select.component';
 import {UserService} from '../../services/user.services';
+import {ModalService} from '../../components/modal/service/modal.service';
 
 @Component({
   selector: 'app-users',
@@ -38,18 +39,26 @@ export class UsersComponent {
   create: boolean = true;
   searchValue = '';
   openCreateUser = false;
+  private modalService: ModalService = inject(ModalService);
   menuActions = [
     new Action(
       'Supprimer le tireur',
       undefined,
       () => {
-        if (!confirm("Etes vous sur de vouloir supprimer \"" + this.selectedUsers[0].firstname + " " + this.selectedUsers[0].lastname + "\" ?")) {
-          return;
-        }
-        for (const selectedUser of this.selectedUsers) {
-          this.userService.delete(selectedUser.id)
-        }
-        this.selectedUsers = [];
+        this.modalService.open({
+          title: 'Supprimer la sélection ?',
+          content: 'Êtes-vous sur de vouloir supprimer la sélection ?',
+          type: 'yesno',
+          closeable: true,
+        }).response.then((response) => {
+            if (response) {
+              for (const selectedUser of this.selectedUsers) {
+                this.userService.delete(selectedUser.id)
+              }
+              this.selectedUsers = [];
+            }
+          }
+        );
       },
       undefined,
       () => this.selectedUsers.length > 0
@@ -96,7 +105,7 @@ export class UsersComponent {
 
   createUserCallback(event: any) {
     if (event.btn === 'ok' && this.isRequired(this.newUser.id) && this.isRequired(this.newUser.firstname) && this.isRequired(this.newUser.lastname) && (!this.create || (this.create && !this.alreadyExist()))) {
-      if(this.create) {
+      if (this.create) {
         this.userService.create(this.newUser);
       } else {
         this.userService.update(this.newUser);

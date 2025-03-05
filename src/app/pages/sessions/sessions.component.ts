@@ -1,7 +1,6 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {FilesService} from '../../services/files.service';
 import {Directory, FileInfo, Filesystem} from '@capacitor/filesystem';
-import {animate, style, transition, trigger} from '@angular/animations';
 import {Action} from '../../models/action';
 import {Session} from '../../models/session';
 import {Router} from '@angular/router';
@@ -21,6 +20,7 @@ import {MessageBoxComponent} from '../../components/message-box/message-box.comp
 import {InputComponent} from '../../components/input/input.component';
 import {SessionService} from '../../services/session.service';
 import {File} from '../../models/file';
+import {ModalService} from '../../components/modal/service/modal.service';
 
 @Component({
   selector: 'app-sessions',
@@ -56,6 +56,8 @@ export class SessionsComponent {
     path: '',
     size: 0
   };
+
+  private modalService: ModalService = inject(ModalService);
 
   get sortActions(): Action[] {
     return [
@@ -139,16 +141,24 @@ export class SessionsComponent {
         'SESSIONS.MENU.DELETE.TITLE',
         '',
         () => {
-          if (!confirm('Etes vous sur de vouloir supprimer la selection ?')) {
-            return;
-          }
-          const sessionsToDelete = this._sessions.filter(
-            (session) => session.active
+
+          this.modalService.open({
+            title: 'Supprimer la sélection ?',
+            content: 'Êtes-vous sur de vouloir supprimer la sélection ?',
+            type: 'yesno',
+            closeable: true,
+          }).response.then((response) => {
+              if (response) {
+                const sessionsToDelete = this._sessions.filter(
+                  (session) => session.active
+                );
+                this.sessionService.remove(sessionsToDelete).then(() => {
+                  this.openPath();
+                  this.initializeMenuActions();
+                })
+              }
+            }
           );
-          this.sessionService.remove(sessionsToDelete).then(() => {
-            this.openPath();
-            this.initializeMenuActions();
-          })
         },
         undefined,
         () => {

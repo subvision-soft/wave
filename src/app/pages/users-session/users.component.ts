@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {User} from '../../models/user';
 import {Action} from '../../models/action';
 import {Category} from '../../models/category';
@@ -16,6 +16,7 @@ import {FilesService} from '../../services/files.service';
 import {Session} from '../../models/session';
 import {Team} from '../../models/team';
 import {SelectComponent} from '../../components/select/select.component';
+import {ModalService} from '../../components/modal/service/modal.service';
 
 @Component({
   selector: 'app-users',
@@ -40,19 +41,27 @@ import {SelectComponent} from '../../components/select/select.component';
 export class UsersSessionComponent {
   searchValue = '';
   openCreateUser = false;
+  private modalService: ModalService = inject(ModalService);
   menuActions = [
     new Action(
       'Supprimer le tireur',
       undefined,
       () => {
-        if (!confirm("Etes vous sur de vouloir supprimer \"" + this.selectedUsers[0].firstname + " " + this.selectedUsers[0].lastname + "\" ?")) {
-          return;
-        }
-        for (const selectedUser of this.selectedUsers) {
-          this.session.users = this.session.users.filter(user => user.id !== selectedUser.id)
-        }
-        this.filesService.updateSession()
-        this.selectedUsers = [];
+        this.modalService.open({
+          title: 'Supprimer la sélection ?',
+          content: 'Êtes-vous sur de vouloir supprimer la sélection ?',
+          type: 'yesno',
+          closeable: true,
+        }).response.then((response) => {
+          if (response) {
+            for (const selectedUser of this.selectedUsers) {
+              this.session.users = this.session.users.filter(user => user.id !== selectedUser.id)
+            }
+            this.filesService.updateSession()
+            this.selectedUsers = [];
+          }
+        })
+
       },
       undefined,
       () => this.selectedUsers.length > 0
