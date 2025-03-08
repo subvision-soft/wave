@@ -120,7 +120,7 @@ export class CvComponent {
   getPath() {
     let result = '';
     if (!this._coordinatesPercent) {
-      return;
+      return '';
     }
     for (const coordinate of this._coordinatesPercent) {
       result += `${coordinate.x},${coordinate.y} `;

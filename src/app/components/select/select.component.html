@@ -7,10 +7,11 @@
   </span>
   <ng-icon class="icon" size="16" name="iconoirNavArrowDown"></ng-icon>
 </a>
-<app-slide-sheet [(open)]="open">
+
+<ng-template #modalContent>
   <div *ngFor="let record of store" [class]="isSelected(record) ? 'row active' : 'row'"
        (click)="select(record[valueField])">
     <span>{{ record[displayField] }}</span>
     <ng-icon class="icon" size="25" [svg]="jamCheck"></ng-icon>
   </div>
-</app-slide-sheet>
+</ng-template>

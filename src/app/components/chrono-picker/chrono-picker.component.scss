@@ -42,11 +42,10 @@
     }
   }
 
-  app-slide-sheet {
-    .number-pickers {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-  }
+}
+
+.number-pickers {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

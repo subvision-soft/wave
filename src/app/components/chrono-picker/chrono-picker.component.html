@@ -17,10 +17,12 @@
       })
     }}</span>
 </a>
-<app-slide-sheet [(open)]="open">
+<ng-template #modalContent>
   <div class="number-pickers">
     <app-number-spinner [min]="0" [max]="10" [(value)]="minutes" title="min"></app-number-spinner>
     <app-number-spinner [min]="0" [max]="59" [(value)]="seconds" title="sec"></app-number-spinner>
     <app-number-spinner [min]="0" [max]="99" [(value)]="centiseconds" title="cs"></app-number-spinner>
   </div>
-</app-slide-sheet>
+</ng-template>
+
+

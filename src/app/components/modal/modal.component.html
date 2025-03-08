@@ -1,15 +1,18 @@
-<div (click)="params()?.closeable ? onDismiss.emit() : null" [@fade]="open()" class="overlay">
+<div (click)="maskClose() ? onDismiss.emit() : null" [@fade]="open()" class="overlay">
 
 </div>
 <div #modal [@fade]="open()" [@slide]="open()" class="modal"
      subvisionContainer
      maxWidth="800px">
-  <div class="header">
-    <h2>{{ params()?.title }}</h2>
-    @if (params()?.closeable) {
-      <button subvisionButton (click)="onDismiss.emit()" [icon]="jamClose" class="close"></button>
-    }
-  </div>
+  @if (params().title?.length && displayCloseButton()) {
+    <div class="header">
+      <h2>{{ params()?.title }}</h2>
+      @if (displayCloseButton()) {
+        <button subvisionButton (click)="onDismiss.emit()" [icon]="jamClose" class="close"></button>
+      }
+    </div>
+  }
+
   <div class="body">
     @if (contentTemplate()) {
       <ng-container *ngTemplateOutlet="contentTemplate()"></ng-container>

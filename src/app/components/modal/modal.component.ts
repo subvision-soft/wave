@@ -9,7 +9,7 @@ import {
   TemplateRef,
   WritableSignal
 } from '@angular/core';
-import {OpenModalsParams} from './type/OpenModalsParams';
+import {OpenModalsCloseParams, OpenModalsParams} from './type/OpenModalsParams';
 import {NgForOf, NgTemplateOutlet} from '@angular/common';
 import {ButtonComponent} from '../button/button.component';
 import {jamClose} from '@ng-icons/jam-icons';
@@ -86,6 +86,14 @@ export class ModalComponent implements AfterViewInit {
       console.log('ModalComponent', this.open());
     });
   }
+
+  displayCloseButton = computed<boolean>(() => {
+    return this.params()?.closeable instanceof Object ? (this.params()?.closeable as OpenModalsCloseParams).closeButton : this.params()?.closeable as boolean;
+  })
+
+  maskClose = computed<boolean>(() => {
+    return this.params()?.closeable instanceof Object ? (this.params()?.closeable as OpenModalsCloseParams).maskClose : this.params()?.closeable as boolean;
+  })
 
   ngAfterViewInit(): void {
     this.open.set(true)

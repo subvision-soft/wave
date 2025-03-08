@@ -83,7 +83,7 @@ export class UsersSessionComponent {
       teams: Team[];
       title: string;
       users: User[] = [];
-      targets = [];
+      targets: any[] = [];
       path: '';
       size: 0
     }
