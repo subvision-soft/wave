@@ -1,9 +1,12 @@
-<app-empty-text *ngIf="targets.length === 0" [icon]="emptyIcon"
-                text="{{emptyText | translate}}"></app-empty-text>
+@if (targets.length){
 
-<app-target-item [selected]="isTargetSelected(target)" long-press
-                 (onLongPressing)="onLongPress($event,target)"
-                 (click)="targetClick(target)" [target]="target"
-                 [user]="getUserById(target.user)"
-                 *ngFor="let target of targets">
-</app-target-item>
+  <app-target-item [selected]="isTargetSelected(target)" long-press
+                   (onLongPressing)="onLongPress($event,target)"
+                   (click)="targetClick(target)" [target]="target"
+                   [user]="getUserById(target.user)"
+                   *ngFor="let target of targets">
+  </app-target-item>
+} @else {
+  <app-empty-text *ngIf="targets.length === 0" [icon]="emptyIcon"
+                  text="{{emptyText | translate}}"></app-empty-text>
+}

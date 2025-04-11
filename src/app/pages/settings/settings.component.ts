@@ -67,24 +67,25 @@ export class SettingsComponent {
 
   initSettings() {
     this._settings = [{
-      label: 'SETTINGS.APPEARANCE.TITLE', parameters: [{
-        id: 'COULEUR_PRINCIPALE',
-        label: 'SETTINGS.APPEARANCE.FIRST_COLOR',
-        value: ParametersService.get('COULEUR_PRINCIPALE').value,
-        type: 'color',
-      }, {
-        id: 'COULEUR_SECONDAIRE',
-        label: 'SETTINGS.APPEARANCE.SECOND_COLOR',
-        value: ParametersService.get('COULEUR_SECONDAIRE').value,
-        type: 'color',
-      }, {
-        id: 'RAYON_BORDURES',
-        label: 'SETTINGS.APPEARANCE.BORDER_RADIUS',
-        value: ParametersService.get('RAYON_BORDURES').value,
-        type: 'number',
-        min: 0,
-        max: 40,
-      },
+      label: 'SETTINGS.APPEARANCE.TITLE', parameters: [
+        // {
+        //   id: 'COULEUR_PRINCIPALE',
+        //   label: 'SETTINGS.APPEARANCE.FIRST_COLOR',
+        //   value: ParametersService.get('COULEUR_PRINCIPALE').value,
+        //   type: 'color',
+        // }, {
+        //   id: 'COULEUR_SECONDAIRE',
+        //   label: 'SETTINGS.APPEARANCE.SECOND_COLOR',
+        //   value: ParametersService.get('COULEUR_SECONDAIRE').value,
+        //   type: 'color',
+        // }, {
+        //   id: 'RAYON_BORDURES',
+        //   label: 'SETTINGS.APPEARANCE.BORDER_RADIUS',
+        //   value: ParametersService.get('RAYON_BORDURES').value,
+        //   type: 'number',
+        //   min: 0,
+        //   max: 40,
+        // },
         {
           id: 'THEME_SOMBRE',
           label: 'SETTINGS.APPEARANCE.THEME_DARK',
@@ -104,13 +105,19 @@ export class SettingsComponent {
           max: 40,
         },
         {
-          id: 'LOCAL', label: 'Local save', value: ParametersService.get('LOCAL').value, type: 'checkbox',
+          id: 'LOCAL',
+          label: 'SETTINGS.OTHERS.LOCAL_SAVE',
+          value: ParametersService.get('LOCAL').value,
+          type: 'checkbox',
         },
         {
           id: 'URL_API', label: 'URL API', value: ParametersService.get('URL_API').value, type: 'text',
         },
         {
-          id: 'URL_API2', label: 'URL API VISION', value: ParametersService.get('URL_API2')?.value, type: 'text',
+          id: 'URL_API_SUBVISION',
+          label: 'SETTINGS.OTHERS.SUBVISION_API_URL',
+          value: ParametersService.get('URL_API_SUBVISION')?.value,
+          type: 'text',
         },
         {
           id: 'LANGUE', label: 'Langue', value: ParametersService.get('LANGUE').value, type: 'select', store: [{

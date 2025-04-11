@@ -4,7 +4,7 @@ import {NgIcon} from '@ng-icons/core';
 import {NgIf} from '@angular/common';
 
 @Component({
-  selector: '[waveButton]',
+  selector: '[subvisionButton]',
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss'],
   hostDirectives: [RippleDirective],
@@ -70,11 +70,11 @@ export class ButtonComponent {
   @HostBinding('class.color-primary') primary: boolean = true;
   @HostBinding('class.color-success') success: boolean = false;
 
-  @HostBinding('class.type-default') _typeDefault: boolean = true;
-  @HostBinding('class.type-dashed') _typeDashed: boolean = false;
-  @HostBinding('class.type-link') _typeLink: boolean = false;
-  @HostBinding('class.type-primary') _typePrimary: boolean = false;
-  @HostBinding('class.type-text') _typeText: boolean = false;
+  @HostBinding('class.default') _typeDefault: boolean = true;
+  @HostBinding('class.dashed') _typeDashed: boolean = false;
+  @HostBinding('class.link') _typeLink: boolean = false;
+  @HostBinding('class.primary') _typePrimary: boolean = false;
+  @HostBinding('class.text') _typeText: boolean = false;
   @HostBinding('class.focus') public focus: boolean = false;
 
   @HostListener('focus')

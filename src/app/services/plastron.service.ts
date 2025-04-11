@@ -32,7 +32,7 @@ export class PlastronService {
 
   private PICTURE_SIZE_SHEET_DETECTION: number = 1000;
 
-  private impactColor = null;
+  private impactColor: any = null;
 
   constructor(
     private logger: LogService,

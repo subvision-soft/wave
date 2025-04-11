@@ -22,7 +22,7 @@
     }
 
     img {
-      background: var(--color-background-2);
+      background: var(--theme-color-2-5);
       border-radius: var(--border-radius);
       box-shadow: var(--box-shadow-1);
       flex: 1;
@@ -46,7 +46,7 @@
       color: var(--color-dark1-1);
       text-decoration: none;
       font-size: var(--font-size-sm);
-      background: var(--color-primary-lighter-5);
+      background: var(--theme-color-1-5);
       border-radius: calc(var(--border-radius-sm) / 2);
       padding: calc(var(--padding-sm) / 2) var(--padding-sm);
     }

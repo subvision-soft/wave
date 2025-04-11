@@ -1,16 +1,15 @@
-import { Component } from '@angular/core';
-import { Session } from '../../models/session';
-import { Category } from '../../models/category';
-import { FilesService } from '../../services/files.service';
-import { Event } from '../../models/event';
-import { animate, style, transition, trigger } from '@angular/animations';
-import { Router } from '@angular/router';
-import { SearchComponent } from '../../components/search/search.component';
-import { AddButtonComponent } from '../../components/add-button/add-button.component';
-import { HeaderComponent } from '../../components/header/header.component';
-import { SegmentedButtonComponent } from '../../components/segmented-button/segmented-button.component';
-import { ListTargetsComponent } from '../../components/list-targets/list-targets.component';
-import { TranslateModule } from '@ngx-translate/core';
+import {Component} from '@angular/core';
+import {Session} from '../../models/session';
+import {Category} from '../../models/category';
+import {FilesService} from '../../services/files.service';
+import {Event} from '../../models/event';
+import {Router} from '@angular/router';
+import {SearchComponent} from '../../components/search/search.component';
+import {AddButtonComponent} from '../../components/add-button/add-button.component';
+import {HeaderComponent} from '../../components/header/header.component';
+import {SegmentedButtonComponent} from '../../components/segmented-button/segmented-button.component';
+import {ListTargetsComponent} from '../../components/list-targets/list-targets.component';
+import {TranslateModule} from '@ngx-translate/core';
 import {DatePipe, NgIf} from '@angular/common';
 import {Target} from '../../models/target';
 
@@ -18,18 +17,6 @@ import {Target} from '../../models/target';
   selector: 'app-targets',
   templateUrl: './targets.component.html',
   styleUrls: ['./targets.component.scss'],
-  animations: [
-    trigger('enterAnimation', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate('300ms', style({ opacity: 1 })),
-      ]),
-      transition(':leave', [
-        style({ opacity: 1 }),
-        animate('300ms', style({ opacity: 0 })),
-      ]),
-    ]),
-  ],
   standalone: true,
   imports: [
     SearchComponent,
@@ -94,7 +81,7 @@ export class TargetsComponent {
   ];
   selectedSegmentedButton = 'all';
 
-  menuActions = [];
+  menuActions: any[] = [];
 
   selectedTargets: any[] = [];
 
@@ -139,11 +126,11 @@ export class TargetsComponent {
   }
 
   storeCategories = [
-    { id: Category.MINIME, label: 'Minime' },
-    { id: Category.CADET, label: 'Cadet' },
-    { id: Category.JUNIOR, label: 'Junior' },
-    { id: Category.SENIOR, label: 'Sénior' },
-    { id: Category.MASTER, label: 'Master' },
+    {id: Category.MINIME, label: 'Minime'},
+    {id: Category.CADET, label: 'Cadet'},
+    {id: Category.JUNIOR, label: 'Junior'},
+    {id: Category.SENIOR, label: 'Sénior'},
+    {id: Category.MASTER, label: 'Master'},
   ];
 
   parseDate(dateString: string): Date {

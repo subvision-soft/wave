@@ -7,11 +7,15 @@
   pointer-events: none;
   z-index: 1000;
 
+  section {
+    position: relative;
+  }
+
   .menu {
-    position: fixed;
+    position: absolute;
     top: var(--padding-sm);
     right: var(--padding);
-    background: var(--color-background-1);
+    background: var(--theme-color-1);
     z-index: 1000;
     border-radius: calc(var(--border-radius-sm) / 2);
     box-sizing: border-box;
@@ -23,18 +27,6 @@
     height: fit-content;
   }
 
-  .mask {
-    opacity: 0;
-    pointer-events: none;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100vw;
-    height: 100dvh;
-    z-index: 999;
-    transition: opacity var(--transition-fast);
-    background: rgba(0, 0, 0, 0.1);
-  }
 
   &.open {
     pointer-events: auto;

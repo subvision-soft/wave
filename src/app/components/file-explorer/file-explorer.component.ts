@@ -11,18 +11,7 @@ import { NgForOf, NgIf } from '@angular/common';
   selector: 'app-file-explorer',
   templateUrl: './file-explorer.component.html',
   styleUrls: ['./file-explorer.component.scss'],
-  animations: [
-    trigger('enterAnimation', [
-      transition(':enter', [
-        style({ opacity: 0 }),
-        animate('300ms', style({ opacity: 1 })),
-      ]),
-      transition(':leave', [
-        style({ opacity: 1 }),
-        animate('300ms', style({ opacity: 0 })),
-      ]),
-    ]),
-  ],
+
   standalone: true,
   imports: [EmptyTextComponent, SessionItemComponent, NgForOf, NgIf],
 })

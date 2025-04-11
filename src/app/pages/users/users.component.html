@@ -11,15 +11,19 @@
                   label="Ajouter un tireur"></app-add-button>
 
   <div class="users">
+    @if (users.length) {
+      <app-user-item [selected]="isUserSelected(user)" long-press
+                     (onLongPressing)="onLongPress($event,user)"
+                     (click)="userClick(user)" [user]="user"
+                     *ngFor="let user of users">
+      </app-user-item>
+    } @else {
+      <app-empty-text *ngIf="users.length === 0" [icon]="searchValue?'jamSearch':'jamGhost'"
+                      [text]="searchValue?'Pas de résultat':'Aucun tireur enregistré'"></app-empty-text>
+    }
 
-    <app-empty-text *ngIf="users.length === 0" [icon]="searchValue?'jamSearch':'jamGhost'"
-                    [text]="searchValue?'Pas de résultat':'Aucun tireur enregistré'"></app-empty-text>
 
-    <app-user-item [selected]="isUserSelected(user)" long-press
-                   (onLongPressing)="onLongPress($event,user)"
-                   (click)="userClick(user)" [user]="user"
-                   *ngFor="let user of users">
-    </app-user-item>
+
   </div>
 </div>
 

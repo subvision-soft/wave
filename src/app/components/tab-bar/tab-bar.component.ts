@@ -4,13 +4,14 @@ import {Router} from '@angular/router';
 import {TabBarButtonComponent} from '../tab-bar-button/tab-bar-button.component';
 import {NgForOf} from '@angular/common';
 import {ParametersService} from '../../services/parameters.service';
+import {jamCamera, jamCog, jamFolder, jamHome, jamJoystick, jamUser} from '@ng-icons/jam-icons';
 
 class Tab {
   active?: boolean = false;
   link: string = '';
   label: string = '';
   icon: string = '';
-  hidden: boolean = false;
+  hidden: boolean | (() => boolean) = false;
 }
 
 @Component({
@@ -22,12 +23,20 @@ class Tab {
 })
 export class TabBarComponent {
   tabs: Tab[] = [
-    {icon: 'jamJoystick', label: 'Playground', link: '/playground', hidden: !isDevMode()},
-    {icon: 'jamHomeF', label: 'Accueil', link: '/home', hidden: false},
-    {icon: 'jamCameraF', label: 'Caméra', link: '/camera', hidden: false},
-    {icon: 'jamFolderF', label: 'Sessions', link: '/sessions', hidden: !ParametersService.isLocalSave()},
-    {icon: 'jamUser', label: 'Tireurs', link: '/users', hidden: !ParametersService.isLocalSave()},
-    {icon: 'jamCogF', label: 'Paramètres', link: '/settings', hidden: false},
+    {icon: jamJoystick, label: 'Playground', link: '/playground', hidden: !isDevMode()},
+    {icon: jamHome, label: 'Accueil', link: '/home', hidden: false},
+    {icon: jamCamera, label: 'Caméra', link: '/camera', hidden: false},
+    {
+      icon: jamFolder, label: 'Sessions', link: '/sessions', hidden: () => {
+        return !ParametersService.isLocalSave()
+      }
+    },
+    {
+      icon: jamUser, label: 'Tireurs', link: '/users', hidden: () => {
+        return !ParametersService.isLocalSave()
+      }
+    },
+    {icon: jamCog, label: 'Paramètres', link: '/settings', hidden: false},
   ];
   @Output() select = new EventEmitter<Tab>();
 
@@ -40,7 +49,7 @@ export class TabBarComponent {
   }
 
   getTabs(): Tab[] {
-    return this.tabs.filter(tab => !tab.hidden);
+    return this.tabs.filter(tab => !tab.hidden || (typeof tab.hidden === 'function' && !tab.hidden()));
   }
 
   private updateActive() {

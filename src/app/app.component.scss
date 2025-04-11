@@ -17,7 +17,7 @@
     margin-top: 5px;
     margin-bottom: 5px;
     box-sizing: border-box;
-    background: var(--color-background-1);
+    background: var(--theme-color-1);
     border-radius: calc(max(var(--safe-area-inset-top), var(--safe-area-inset-bottom), var(--safe-area-inset-left), var(--safe-area-inset-right), 20px) - 5px);
     overflow: hidden;
     flex: 1;

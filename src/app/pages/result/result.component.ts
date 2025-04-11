@@ -376,7 +376,7 @@ export class ResultComponent implements OnInit {
 
     this.target.user = this.selectedCompetitor || 0
     this.fileService.loadSession(this.selectedSession);
-    const imagePath = this.selectedSession.path.replace('.subapp', '') + '/' + crypto.randomUUID() + '.webp';
+    const imagePath = this.selectedSession.path.replace('.subv', '') + '/' + crypto.randomUUID() + '.webp';
     this.fileService.saveImage(this.target.image, imagePath)
     this.target.image = imagePath;
     this.target.imageSize = getSize(this.target.image);

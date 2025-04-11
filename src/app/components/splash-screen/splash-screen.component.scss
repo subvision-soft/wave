@@ -19,9 +19,193 @@
     visibility: visible;
   }
 
-  img {
+  svg {
     width: 50%;
     height: 50%;
     object-fit: contain;
+
+
+
+    .very-small {
+      --stroke-width: 8;
+      stroke-width: 0;
+      stroke-linecap: round;
+    }
+
+
+    .small {
+      --stroke-width: 14;
+      stroke-linecap: round;
+      stroke-width: 0;
+    }
+
+
+    .medium {
+      --stroke-width: 18;
+      stroke-width: 0;
+      stroke-linecap: round;
+    }
+
+
+    .large {
+      --stroke-width: 22;
+      stroke-width: 0;
+      stroke-linecap: round;
+    }
+
+
+    .big {
+      --stroke-width: 26;
+      stroke-width: 0;
+      stroke-linecap: round;
+
+    }
+
+    /*.major {*/
+    /*  --stroke-width: 29;*/
+    /*  stroke-width: 0;*/
+    /*  stroke-linecap: round;*/
+    /*}*/
+
+
+    .very-big {
+      --stroke-width: 30;
+      stroke-width: 0;
+      stroke-linecap: round;
+    }
+
+
+    line {
+      --stroke-width-ratio: 1;
+      --final-stroke-width: calc(var(--stroke-width) * var(--stroke-width-ratio));
+      stroke: var(--theme-color-2);
+      animation-name: animation;
+      --duration: 0.8s;
+      --interval: 0.15s;
+      animation-duration: var(--duration);
+      animation-timing-function: cubic-bezier(.18, .89, .32, 1.28);
+      animation-fill-mode: forwards;
+      animation-iteration-count: 1;
+      animation-play-state: paused;
+    }
+
+    text {
+      font-family: 'Chillax Variable', sans-serif;
+      font-weight: 600;
+      font-size: 100px;
+      --duration: 0.5s;
+      fill: transparent;
+    }
+
+    tspan {
+
+    }
+
+
+    tspan {
+      font-family: "Chillax Variable", sans-serif;
+      font-size: 100px;
+
+      --interval-duration: 0.1s;
+      animation-name: animation-text;
+      animation-duration: var(--duration);
+      animation-timing-function: ease-in-out;
+      animation-fill-mode: forwards;
+      animation-iteration-count: 1;
+      animation-delay: calc(0.15s * 10 + (var(--interval-duration) * var(--index)));
+      font-weight: calc(500 - var(--index) * 25);
+    }
+
+
+    text > tspan:nth-child(1) {
+      --index: 0;
+    }
+
+    text > tspan:nth-child(2) {
+      --index: 1;
+    }
+
+    text > tspan:nth-child(3) {
+      --index: 2;
+    }
+
+    text > tspan:nth-child(4) {
+      --index: 3;
+    }
+
+    text > tspan:nth-child(5) {
+      --index: 4;
+    }
+
+    text > tspan:nth-child(6) {
+      --index: 5;
+    }
+
+    text > tspan:nth-child(7) {
+      --index: 6;
+    }
+
+    text > tspan:nth-child(8) {
+      --index: 7;
+    }
+
+    text > tspan:nth-child(9) {
+      --index: 8;
+    }
+
+    text > tspan:nth-child(10) {
+      --index: 9;
+    }
+
+    text > tspan:nth-child(11) {
+      --index: 10;
+    }
+
+
+    g line {
+      animation-play-state: running;
+    }
+
+    .major {
+      /*animation-name: animation-start;*/
+      /*animation-duration: calc((var(--duration)) * 2 );*/
+      animation-delay: calc(var(--interval) * 2);
+
+    }
+
+
+    .large {
+      animation-delay: calc(var(--interval) * 4);
+    }
+
+    .small {
+      animation-delay: calc(var(--interval) * 5);
+    }
+
+    .very-small {
+      animation-delay: calc(var(--interval) * 6);
+    }
+
+    @keyframes animation-text {
+      0% {
+        fill: transparent;
+      }
+      100% {
+        fill: var(--theme-color-2);
+      }
+    }
+
+
+    @keyframes animation {
+      0% {
+        stroke-width: 0;
+      }
+      100% {
+        stroke-width: var(--stroke-width);
+      }
+      /*100%{*/
+      /*  stroke-width: 0;*/
+      /*}*/
+    }
   }
 }

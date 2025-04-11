@@ -50,9 +50,9 @@
       text-align: center;
       justify-content: center;
       align-items: center;
-      border: 1px dashed var(--color-secondary-darker);
-      background: var(--color-primary-lighter-5);
-      color: var(--color-dark1-4);
+      border: 1px dashed var(--theme-color-2);
+      background: var(--theme-color-2-5);
+      color: var(--theme-color-1-25);
 
       &.tireurs {
         grid-column: 1/3;

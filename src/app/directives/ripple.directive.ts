@@ -1,8 +1,7 @@
-import { Directive, ElementRef, HostListener, Renderer2 } from '@angular/core';
+import {Directive, ElementRef, HostListener, Renderer2} from '@angular/core';
 
 @Directive({
-  selector: '[ripple]',
-  standalone: true,
+  selector: '[ripple]', standalone: true,
 })
 export class RippleDirective {
   hostEl;
@@ -13,7 +12,6 @@ export class RippleDirective {
   }
 
   @HostListener('click', ['$event']) onClick(e: MouseEvent) {
-    console.log(e);
 
     let ink, d, x, y;
     if (this.hostEl.querySelector('.ink') === null) {
@@ -32,24 +30,8 @@ export class RippleDirective {
       this.renderer.setStyle(ink, 'height', d + 'px');
     }
 
-    x =
-      e.pageX - this.hostEl.getBoundingClientRect().left - ink.offsetWidth / 2;
-    y =
-      e.pageY - this.hostEl.getBoundingClientRect().top - ink.offsetHeight / 2;
-
-    console.log(
-      'x',
-      `${e.pageX} - ${this.hostEl.getBoundingClientRect().left} - ${
-        ink.offsetWidth / 2
-      } = ${x}`
-    );
-    console.log(
-      'y',
-      `${e.pageY} - ${this.hostEl.getBoundingClientRect().top} - ${
-        ink.offsetHeight / 2
-      } = ${x}`
-    );
-    // debugger;
+    x = e.pageX - this.hostEl.getBoundingClientRect().left - ink.offsetWidth / 2;
+    y = e.pageY - this.hostEl.getBoundingClientRect().top - ink.offsetHeight / 2;
     this.renderer.setStyle(ink, 'top', y + 'px');
     this.renderer.setStyle(ink, 'left', x + 'px');
     this.renderer.addClass(ink, 'animate');

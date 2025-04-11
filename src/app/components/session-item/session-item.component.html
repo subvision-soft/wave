@@ -1,18 +1,18 @@
 <div class="content">
   <ng-icon *ngIf="file?.type === 'directory' && !goBack" name="jamFolder"
            size="20"></ng-icon>
-  <app-logo *ngIf="showLogo || file?.type === 'file'"/>
+  <app-logo [size]="20" *ngIf="showLogo || file?.type === 'file'"/>
   <ng-icon *ngIf="goBack" name="jamArrowLeft" size="20"></ng-icon>
   <div *ngIf="file && !session" class="infos">
-    <h1>{{file.name}}</h1>
+    <h1>{{ file.name }}</h1>
   </div>
   <div *ngIf="session" class="infos">
-    <h1>{{session.title}}</h1>
-    <p>{{session.date | date:'dd/MM/yyyy'}}</p>
-    <p>{{session.size.toFixed(1)}}Mo</p>
+    <h1>{{ session.title }}</h1>
+    <p>{{ session.date | date:'dd/MM/yyyy' }}</p>
+    <p>{{ session.size.toFixed(1) }}Mo</p>
   </div>
   <div *ngIf="url" class="fileInfos">
-    <span>{{url}}</span>
+    <span>{{ url }}</span>
   </div>
   <a *ngIf="!goBack">
     <ng-icon [name]="selected?'jamCheck':'jamChevronRight'" size="20"></ng-icon>

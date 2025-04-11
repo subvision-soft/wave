@@ -1,14 +1,9 @@
-import {
-  Component,
-  EventEmitter,
-  HostBinding,
-  Input,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import {Component, EventEmitter, HostBinding, Input, Output, ViewChild,} from '@angular/core';
 import {animate, style, transition, trigger} from '@angular/animations';
 import {InputComponent} from '../input/input.component';
 import {NgIf} from '@angular/common';
+import {ButtonComponent} from '../button/button.component';
+import {ContainerComponent} from '../container/container.component';
 
 interface Callback {
   btn: 'ok' | 'cancel';
@@ -41,7 +36,7 @@ interface Callback {
     ]),
   ],
   standalone: true,
-  imports: [InputComponent, NgIf],
+  imports: [InputComponent, NgIf, ButtonComponent, ContainerComponent],
 })
 export class MessageBoxComponent {
   get open(): boolean {

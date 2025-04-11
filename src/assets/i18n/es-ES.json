@@ -1,6 +1,7 @@
 {
   "HOME": {
     "ACTUALITIES": "Noticias",
+    "TECHNICAL_INFORMATIONS": "Informaciones técnicas",
     "RECENTLY_OPENED": "Recientemente abierto",
     "SHOW_ALL": "Mostrar todo",
     "NO_ACTUALITY": "Sin noticias",
@@ -20,7 +21,9 @@
     },
     "OTHERS": {
       "TITLE": "Otros",
-      "VALID_SHEET_BEFORE_PROCESS": "Detecciones exitosas antes del procesamiento"
+      "VALID_SHEET_BEFORE_PROCESS": "Detecciones exitosas antes del procesamiento",
+      "LOCAL_SAVE": "Guardado local",
+      "SUBVISION_API_URL": "URL API Subvision"
     },
     "SEARCH": "Buscar configuraciones",
     "TOASTS": {

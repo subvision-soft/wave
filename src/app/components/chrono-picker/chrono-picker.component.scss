@@ -26,7 +26,7 @@
     transition: var(--transition);
     overflow: hidden;
     width: fit-content;
-    background: var(--color-background-2);
+    background: var(--theme-color-2-5);
     box-shadow: var(--box-shadow-1);
     font-size: var(--font-size);
 
@@ -42,11 +42,10 @@
     }
   }
 
-  app-slide-sheet {
-    .number-pickers {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-  }
+}
+
+.number-pickers {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

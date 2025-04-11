@@ -1,0 +1,44 @@
+<div (click)="maskClose() ? onDismiss.emit() : null" [@fade]="open()" class="overlay">
+
+</div>
+<div #modal [@fade]="open()" [@slide]="open()" class="modal"
+     subvisionContainer
+     maxWidth="800px">
+  @if (params().title?.length && displayCloseButton()) {
+    <div class="header">
+      <h2>{{ params()?.title }}</h2>
+      @if (displayCloseButton()) {
+        <button subvisionButton (click)="onDismiss.emit()" [icon]="jamClose" class="close"></button>
+      }
+    </div>
+  }
+
+  <div class="body">
+    @if (contentTemplate()) {
+      <ng-container *ngTemplateOutlet="contentTemplate()"></ng-container>
+    } @else if (contentArray().length) {
+      @for (item of contentArray(); track i; let i = $index) {
+        <p>{{ item }}</p>
+      }
+    } @else {
+      <p>{{ params()?.content }}</p>
+    }
+  </div>
+  @if (params()?.type !== 'custom') {
+    <div class="footer">
+      @if (params()?.type === 'yesno') {
+        <button subvisionButton (click)="onClose.emit(false)" class="cancel">
+          {{ params()?.cancelLabel || 'Annuler' }}
+        </button>
+        <button subvisionButton type="primary" (click)="onClose.emit(true)" class="confirm">
+          {{ params()?.confirmLabel || 'Confirmer' }}
+        </button>
+      } @else {
+        <button subvisionButton (click)="onClose.emit(true)" class="confirm" type="primary">
+          {{ params()?.confirmLabel || 'Confirmer' }}
+        </button>
+      }
+    </div>
+  }
+</div>
+

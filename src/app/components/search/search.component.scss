@@ -5,11 +5,11 @@
   justify-content: left;
   color: var(--color-dark1-1);
   border-radius: 100px;
-  background: var(--color-background-2);
-  box-shadow: var(--box-shadow-1);
+  background: var(--theme-color-2-5);
   padding: var(--padding-sm) var(--padding);
   gap: var(--padding);
   overflow: hidden;
+  border: var(--subtle-border);
 
   ng-icon {
     color: var(--color-dark2-1);

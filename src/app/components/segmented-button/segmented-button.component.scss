@@ -21,9 +21,13 @@
     font-weight: var(--font-weight-semi-bold);
     color: var(--color-dark2-2);
 
-    &:active,
+    &:active {
+      color: var(--theme-color-2);
+      font-weight: var(--font-weight-bold);
+    }
+
     &.active {
-      color: var(--color-dark1-1);
+      color: var(--theme-color-1);
     }
   }
 
@@ -34,9 +38,11 @@
     left: calc(calc(100% / var(--items-count) * var(--active-item-index)));
     width: calc(100% / var(--items-count));
     height: 100%;
-    background: var(--color-background-2);
+    background: var(--theme-color-2);
     transition: var(--transition);
     border-radius: calc(var(--padding-sm) / 2);
-    box-shadow: var(--box-shadow-3);
+
+    border: var(--subtle-border);
+    box-sizing: border-box;
   }
 }

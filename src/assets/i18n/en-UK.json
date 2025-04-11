@@ -21,7 +21,9 @@
     },
     "OTHERS": {
       "TITLE": "Others",
-      "VALID_SHEET_BEFORE_PROCESS": "Successful detections before processing"
+      "VALID_SHEET_BEFORE_PROCESS": "Successful detections before processing",
+      "LOCAL_SAVE": "Local save",
+      "SUBVISION_API_URL": "Subvision API URL"
     },
     "SEARCH": "Search settings",
     "TOASTS": {

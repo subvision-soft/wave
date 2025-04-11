@@ -1,20 +1,28 @@
 <a class="input" (click)="openChange(true)">
-  <ng-icon size="20" name="iconoirTimer"></ng-icon>
-  <span>{{minutes.toLocaleString("en-US", {
-    minimumIntegerDigits: 2,
-    useGrouping: false,
-  })}}:{{seconds.toLocaleString("en-US", {
-    minimumIntegerDigits: 2,
-    useGrouping: false,
-  })}}.{{centiseconds.toLocaleString("en-US", {
-    minimumIntegerDigits: 2,
-    useGrouping: false,
-  })}}</span>
+  <ng-icon size="20" [svg]="jamChronometer"></ng-icon>
+  <span>{{
+      minutes.toLocaleString("en-US", {
+        minimumIntegerDigits: 2,
+        useGrouping: false,
+      })
+    }}:{{
+      seconds.toLocaleString("en-US", {
+        minimumIntegerDigits: 2,
+        useGrouping: false,
+      })
+    }}.{{
+      centiseconds.toLocaleString("en-US", {
+        minimumIntegerDigits: 2,
+        useGrouping: false,
+      })
+    }}</span>
 </a>
-<app-slide-sheet [(open)]="open">
+<ng-template #modalContent>
   <div class="number-pickers">
     <app-number-spinner [min]="0" [max]="10" [(value)]="minutes" title="min"></app-number-spinner>
     <app-number-spinner [min]="0" [max]="59" [(value)]="seconds" title="sec"></app-number-spinner>
     <app-number-spinner [min]="0" [max]="99" [(value)]="centiseconds" title="cs"></app-number-spinner>
   </div>
-</app-slide-sheet>
+</ng-template>
+
+

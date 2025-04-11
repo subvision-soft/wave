@@ -2,19 +2,27 @@ import {
   Component,
   EventEmitter,
   HostBinding,
+  inject,
   Input,
   Output,
+  Signal,
+  signal,
+  TemplateRef,
+  viewChild,
+  WritableSignal,
 } from '@angular/core';
-import { NgForOf, NgIf } from '@angular/common';
-import { NgIcon } from '@ng-icons/core';
-import { SlideSheetComponent } from '../slide-sheet/slide-sheet.component';
+import {NgForOf, NgIf} from '@angular/common';
+import {NgIcon} from '@ng-icons/core';
+import {jamCheck} from '@ng-icons/jam-icons';
+import {ModalService} from '../modal/service/modal.service';
+import {Modal} from '../modal/type/Modal';
 
 @Component({
   selector: 'app-select',
   templateUrl: './select.component.html',
   styleUrls: ['./select.component.scss'],
   standalone: true,
-  imports: [NgForOf, NgIf, NgIcon, SlideSheetComponent],
+  imports: [NgForOf, NgIf, NgIcon],
 })
 export class SelectComponent {
   @Input() store: any[] = [];
@@ -27,6 +35,12 @@ export class SelectComponent {
   @Output() valueChange = new EventEmitter<any>();
 
   @Input() @HostBinding('class.compact') compact: boolean = false;
+
+  private modalService: ModalService = inject(ModalService);
+
+  private modal: WritableSignal<Modal> = signal<Modal>(null);
+
+  private modalContent: Signal<TemplateRef<any>> = viewChild<TemplateRef<any>>('modalContent');
 
   get displayedField(): string[] {
     if (Array.isArray(this.value)) {
@@ -73,9 +87,24 @@ export class SelectComponent {
 
   open: boolean = false;
 
-  constructor() {}
+  constructor() {
+  }
 
   openChange(open: boolean) {
     this.open = open;
+    if (!open && this.modal()) {
+      this.modalService.close(this.modal())
+    } else if (open) {
+      this.modal.set(this.modalService.open({
+        content: this.modalContent(),
+        closeable: {
+          maskClose: true,
+        },
+        type: 'custom',
+      }));
+    }
+
   }
+
+  protected readonly jamCheck = jamCheck;
 }

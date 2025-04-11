@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {Action} from '../../models/action';
 import {Team} from '../../models/team';
 import {Session} from '../../models/session';
@@ -14,6 +14,7 @@ import {MessageBoxComponent} from '../../components/message-box/message-box.comp
 import {InputComponent} from '../../components/input/input.component';
 import {SelectComponent} from '../../components/select/select.component';
 import {HeaderComponent} from '../../components/header/header.component';
+import {ModalService} from '../../components/modal/service/modal.service';
 
 @Component({
   selector: 'app-teams',
@@ -39,19 +40,28 @@ export class TeamsComponent {
   searchValue = '';
   openCreateTeam = false;
   create: boolean = true;
+  private modalService: ModalService = inject(ModalService);
   menuActions = [
     new Action(
       'Supprimer l\'équipe',
       undefined,
       () => {
-        if (!confirm("Etes vous sur de vouloir supprimer l'équipe \"" + this.selectedTeams[0].name + "\"")) {
-          return;
-        }
-        this.session.teams = this.session.teams.filter(
-          (team) => !this.selectedTeams.includes(team)
+
+        this.modalService.open({
+          title: 'Supprimer la sélection ?',
+          content: 'Êtes-vous sur de vouloir supprimer la sélection ?',
+          type: 'yesno',
+          closeable: true,
+        }).response.then((response) => {
+            if (response) {
+              this.session.teams = this.session.teams.filter(
+                (team) => !this.selectedTeams.includes(team)
+              );
+              this.filesService.session = this.session;
+              this.selectedTeams = [];
+            }
+          }
         );
-        this.filesService.session = this.session;
-        this.selectedTeams = [];
       },
       undefined,
       () => this.selectedTeams.length > 0
@@ -172,6 +182,7 @@ export class TeamsComponent {
       // Ouvrir page team
     }
   }
+
   createTeam(): void {
     this.openCreateTeam = true;
     this.create = true;

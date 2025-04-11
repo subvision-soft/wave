@@ -6,9 +6,8 @@
   gap: var(--padding);
   align-self: stretch;
   border-radius: calc(var(--padding-sm) / 2);
-  border: 1px dashed var(--color-primary-darker);
-  background: var(--color-primary-lighter-5);
-  color: var(--color-dark1-4);
+  border: 1px dashed var(--theme-color-2);
+  background: var(--theme-color-2-5);
 
   h1 {
     font-size: var(--font-size);

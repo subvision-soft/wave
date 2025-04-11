@@ -61,8 +61,8 @@ export class FilesService {
     });
     for (const file of result.files) {
       if (file.type === 'directory' && file.name !== 'images') {
-        await this.loadFiles(path + '\\' + file.name, files);
-      } else if (file.name.endsWith('.subapp')) {
+        await this.loadFiles(path + '/' + file.name, files);
+      } else if (file.name.endsWith('.subv')) {
         files.push(file);
       }
     }
@@ -75,7 +75,7 @@ export class FilesService {
       directory: Directory.Data,
     });
     for (const file of result.files) {
-      if ((file.type === 'file' && !file.name.endsWith('.subapp')) || file.name === 'images') {
+      if ((file.type === 'file' && !file.name.endsWith('.subv')) || file.name === 'images') {
         continue;
       }
       files.push(file);
@@ -145,7 +145,7 @@ export class FilesService {
 
   async getAllSessions(): Promise<Session[]> {
     const files = await this.loadFiles('');
-
+    console.log(files);
     const sessions: Session[] = [];
     for (const file of files) {
       sessions.push(await this.openFileByFile(file));

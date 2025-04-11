@@ -17,7 +17,7 @@
     }
 
     .penalites {
-      border-top: 1px solid var(--color-primary-lighter-5);
+      border-top: 1px solid var(--theme-color-2-5);
       padding-top: var(--padding);
       display: flex;
       flex-direction: column;
@@ -88,9 +88,9 @@
         height: 30px;
         width: 30px;
         background: color-mix(
-          in srgb,
-          var(--color-background-1),
-          transparent 50%
+            in srgb,
+            var(--theme-color-1),
+            transparent 50%
         );
       }
 

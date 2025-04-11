@@ -1,7 +1,7 @@
 <div class="sessions">
-  <app-session-item *ngIf="pathString.length > 0" [@enterAnimation] [file]="returnFile" (click)="back()"
+  <app-session-item *ngIf="pathString.length > 0"  [file]="returnFile" (click)="back()"
                     [goBack]="true"></app-session-item>
-  <app-empty-text *ngIf="sessions.length === 0" [@enterAnimation] [icon]="'jamGhost'"
+  <app-empty-text *ngIf="sessions.length === 0"  [icon]="'jamGhost'"
                   [text]="'Le dossier est vide'"></app-empty-text>
 
   <app-session-item

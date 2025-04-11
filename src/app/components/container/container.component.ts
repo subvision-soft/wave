@@ -1,7 +1,7 @@
 import {Component, HostBinding, input} from '@angular/core';
 
 @Component({
-  selector: '[waveContainer]',
+  selector: '[subvisionContainer]',
   standalone: true,
   imports: [],
   templateUrl: './container.component.html',

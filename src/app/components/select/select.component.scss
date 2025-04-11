@@ -1,13 +1,11 @@
 :host {
-  overflow: hidden;
-
   &.compact {
     .input {
       height: auto;
       padding: calc(var(--padding-sm) / 2) var(--padding);
       border-radius: var(--border-radius-sm);
-      font-weight: var(--font-weight-normal);
-      box-shadow: none;
+      font-weight: var(--font-weight-semi-bold);
+      border: var(--subtle-border);
     }
   }
 
@@ -21,7 +19,7 @@
   &.multiple {
     .item {
       border-radius: var(--border-radius-sm);
-      background: var(--color-primary-lighter-5);
+      background: var(--theme-color-1-5);
       font-size: calc(var(--font-size) * 0.9);
       padding: calc(var(--padding-sm) / 3) var(--padding);
     }
@@ -32,13 +30,12 @@
     align-items: center;
     justify-content: space-between;
     flex-direction: row;
-    color: var(--color-dark1-1);
+    color: var(--theme-color-1-25);
     font-size: var(--font-size);
     font-weight: var(--font-weight-semi-bold);
     border-radius: 1000px;
     height: 50px;
-    background: var(--color-background-2);
-    box-shadow: var(--box-shadow-1);
+    background: var(--theme-color-2-5);
     padding: 0 var(--padding);
     overflow: hidden;
 
@@ -65,43 +62,44 @@
     &:active {
       color: var(--colorPrimary);
       transition: var(--transition);
-      border-color: var(--colorPrimary);
     }
   }
 
-  & .row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: var(--padding-sm);
-    flex-direction: row;
-    padding: var(--padding-sm);
+
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--padding-sm);
+  flex-direction: row;
+  padding: var(--padding-sm);
+  transition: var(--transition);
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-size);
+  font-weight: var(--font-weight-normal);
+  color: var(--color-dark1-1);
+
+  & .icon {
+    visibility: hidden;
+    opacity: 0;
     transition: var(--transition);
-    border-radius: var(--border-radius-sm);
-    font-size: var(--font-size);
-    font-weight: var(--font-weight-normal);
-    color: var(--color-dark1-1);
+  }
+
+  &:active {
+    background: var(--theme-color-2);
+    color: var(--theme-color-1);
+  }
+
+  &.active {
+    color: var(--theme-color-1);
+    background: var(--theme-color-2);
+    font-weight: var(--font-weight-semi-bold);
 
     & .icon {
-      visibility: hidden;
-      opacity: 0;
-      transition: var(--transition);
-    }
-
-    &:active {
-      background: var(--color-primary-lighter-5);
-      color: var(--color-primary-darker);
-    }
-
-    &.active {
-      color: var(--color-primary-darker);
-      background: var(--color-primary-lighter-5);
-      font-weight: var(--font-weight-semi-bold);
-
-      & .icon {
-        visibility: visible;
-        opacity: 1;
-      }
+      visibility: visible;
+      opacity: 1;
     }
   }
 }

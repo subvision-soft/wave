@@ -17,8 +17,8 @@
     margin: calc($visuelSize / $plastronSize * 100%);
     display: flex;
     justify-content: center;
-    align-items: stretch;
     flex-direction: column;
+    align-items: center;
     gap: var(--padding-sm);
 
     &.TOP_LEFT {
@@ -46,18 +46,6 @@
       left: 50%;
       transform: translate(-50%, -50%);
       margin: 0;
-    }
-
-    app-tag {
-      text-align: center;
-      box-shadow: 0 0 0 0 var(--color-primary-darker);
-      font-size: var(--font-size);
-
-      &.selected {
-        color: var(--color-primary-darker);
-        background: var(--color-primary-lighter-5);
-        box-shadow: 0 0 0 3px var(--color-primary-darker);
-      }
     }
   }
 }
